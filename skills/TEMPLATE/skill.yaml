@@ -1,0 +1,17 @@
+id: domain.skill-name
+version: 0.1.0
+name: Skill Name
+description: Short description of what the skill does.
+
+inputs:
+
+outputs:
+
+steps:
+
+  - id: step_id
+    uses: capability.name
+
+    input:
+
+    output:

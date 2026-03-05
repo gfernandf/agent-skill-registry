@@ -20,3 +20,33 @@ This repository stores reusable agent skills and capability definitions.
 
 - .github/workflows/
   CI validation for skills and capabilities.
+
+  ## Skill directory structure
+
+Skills are organized by domain to keep the repository navigable as the number of skills grows.
+
+The directory structure is:
+
+skills/<channel>/<domain>/<skill-name>/
+
+Example:
+
+skills/
+  official/
+    pdf/
+      batch-summarize/
+        skill.yaml
+    text/
+      hello-world/
+        skill.yaml
+  community/
+  experimental/
+
+The domain directory is intended only as a lightweight organizational aid and does not define a strict taxonomy.
+
+The canonical identifier of a skill is defined inside `skill.yaml` using the `id` field.
+
+Example:
+
+```yaml
+id: pdf.batch-summarize

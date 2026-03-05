@@ -130,3 +130,19 @@ These fields help runners, catalogs, and agents make better decisions
 but are not required for capability registration.
 
 Examples include execution properties, cost hints, tags, or examples.
+
+## Dependencies (optional)
+
+Capabilities may declare optional dependencies on other capabilities.
+
+Use the `requires` field to list capability ids that are typically needed to implement this capability.
+
+This field is optional and is used for discovery and planning. Runtimes and bindings may satisfy a capability without explicitly providing its dependencies.
+
+Example:
+
+```yaml
+id: pdf.read
+version: 1.0.0
+requires:
+  - fs.read

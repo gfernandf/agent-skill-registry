@@ -1,0 +1,27 @@
+id: text.hello-world
+version: 0.1.0
+name: Hello World
+description: Minimal example skill demonstrating template rendering.
+
+inputs:
+  name:
+    type: string
+    description: Name to greet.
+
+outputs:
+  greeting:
+    type: string
+    description: Generated greeting message.
+
+steps:
+
+  - id: render_greeting
+    uses: text.template
+
+    input:
+      template: "Hello {{name}}"
+      variables:
+        name: inputs.name
+
+    output:
+      text: outputs.greeting
