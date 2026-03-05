@@ -1,0 +1,15 @@
+version: 0.1
+
+capabilities:
+
+  - id: text.template
+    status: draft
+    description: Render a text template using provided variables.
+
+  - id: text.summarize
+    status: draft
+    description: Produce a condensed version of a text preserving key points.
+
+  - id: pdf.read
+    status: draft
+    description: Read a PDF document and extract text and metadata.
