@@ -1,0 +1,16 @@
+id: text.summarize
+version: 1.0.0
+description: Produce a condensed version of text preserving key ideas.
+
+inputs:
+  text:
+    type: string
+    required: true
+
+  max_length:
+    type: integer
+    required: false
+
+outputs:
+  summary:
+    type: string

@@ -1,0 +1,16 @@
+id: text.template
+version: 1.0.0
+description: Render a text template using variables.
+
+inputs:
+  template:
+    type: string
+    required: true
+
+  variables:
+    type: object
+    required: true
+
+outputs:
+  text:
+    type: string

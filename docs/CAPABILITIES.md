@@ -121,3 +121,12 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+  ## Optional metadata
+
+Capabilities may include optional metadata fields.
+
+These fields help runners, catalogs, and agents make better decisions
+but are not required for capability registration.
+
+Examples include execution properties, cost hints, tags, or examples.
