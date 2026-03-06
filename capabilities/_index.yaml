@@ -10,6 +10,10 @@ capabilities:
     status: draft
     description: Produce a condensed version of a text preserving key points.
 
+  - id: fs.read
+    status: draft
+    description: Read content from a filesystem path.
+
   - id: pdf.read
     status: draft
     description: Read a PDF document and extract text and metadata.

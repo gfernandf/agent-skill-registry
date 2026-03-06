@@ -59,3 +59,6 @@ Project maintainers decide on:
 - deprecations
 
 Community members may propose changes through pull requests and issue discussions.
+
+
+Skills that use skill composition (uses: skill:...) should be placed in skills/experimental unless explicitly promoted by maintainers.

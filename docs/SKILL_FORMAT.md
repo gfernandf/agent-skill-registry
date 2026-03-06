@@ -69,3 +69,24 @@ steps:
 
     output:
       text: outputs.greeting
+
+# Skill composition (optional)
+
+A step may optionally reference another skill instead of a capability.
+
+This enables reuse of workflows built as skills.
+
+Support for skill composition is optional for runtimes. Skills that depend on composition should be treated as experimental unless the runtime explicitly supports it.
+
+A composed skill is referenced using the prefix `skill:`.
+
+Example:
+
+```yaml
+- id: summarize_pdf
+  uses: skill:pdf.batch-summarize
+  input:
+    files: inputs.pdf_files
+  output:
+    summary: outputs.summary
+
