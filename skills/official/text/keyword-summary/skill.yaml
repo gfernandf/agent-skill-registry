@@ -1,0 +1,40 @@
+id: text.keyword-summary
+version: 0.1.0
+name: Keyword and Summary Extraction
+description: Extracts keywords and generates a summary from text input.
+
+inputs:
+  text:
+    type: string
+    required: true
+
+outputs:
+  summary:
+    type: string
+    required: true
+  keywords:
+    type: array
+    required: true
+
+steps:
+
+  - id: extract_text
+    uses: text.extract
+    input:
+      text: inputs.text
+    output:
+      text: vars.cleaned_text
+
+  - id: extract_keywords
+    uses: text.keywords
+    input:
+      text: vars.cleaned_text
+    output:
+      keywords: outputs.keywords
+
+  - id: summarize_text
+    uses: text.summarize
+    input:
+      text: vars.cleaned_text
+    output:
+      summary: outputs.summary

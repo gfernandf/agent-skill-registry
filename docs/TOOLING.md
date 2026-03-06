@@ -273,3 +273,120 @@ Possible extensions include:
 - registry statistics
 
 All future tools will be documented in this file.
+
+---
+
+# Skill Creation Tool
+
+File:
+
+```
+tools/create_skill.py
+```
+
+This tool generates a new skill skeleton following the repository structure.
+
+It simplifies the process of adding new skills to the registry and ensures that the correct directory layout and identifiers are used.
+
+---
+
+# Usage
+
+From the root of the repository:
+
+```bash
+python tools/create_skill.py --channel <channel> --domain <domain> --slug <slug>
+```
+
+Example:
+
+```bash
+python tools/create_skill.py --channel official --domain text --slug simple-summarize
+```
+
+This will generate:
+
+```
+skills/official/text/simple-summarize/skill.yaml
+```
+
+---
+
+# Parameters
+
+| Parameter | Description |
+|----------|-------------|
+| `--channel` | Registry channel (e.g. `official`, `community`, `experimental`) |
+| `--domain` | Skill domain (e.g. `text`, `web`, `data`) |
+| `--slug` | Skill name used in the path |
+
+The canonical skill identifier is generated automatically:
+
+```
+id = <domain>.<slug>
+```
+
+Example:
+
+```
+text.simple-summarize
+```
+
+---
+
+# Generated Skill Template
+
+The tool creates a minimal skill definition:
+
+```yaml
+id: text.simple-summarize
+version: 0.1.0
+name: Simple Summarize
+description: Describe what this skill does.
+
+inputs: {}
+
+outputs: {}
+
+steps: []
+```
+
+The user should edit this file to define:
+
+- inputs
+- outputs
+- workflow steps
+
+---
+
+# Typical Contribution Workflow
+
+1. Create a skill skeleton:
+
+```
+python tools/create_skill.py --channel community --domain text --slug my-skill
+```
+
+2. Edit the generated `skill.yaml`.
+
+3. Validate the registry:
+
+```
+python tools/validate_registry.py
+```
+
+4. Regenerate the catalog:
+
+```
+python tools/generate_catalog.py
+```
+
+5. Commit and submit a pull request.
+
+---
+
+# Safety Behavior
+
+The tool will **not overwrite existing skills**.
+
+If the destination file already exists, the command will fail to prevent accidental data loss.

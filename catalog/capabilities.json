@@ -50,6 +50,56 @@
     ]
   },
   {
+    "id": "text.extract",
+    "version": "1.0.0",
+    "description": "Extract relevant text content from an input text block.",
+    "file": "capabilities/text.extract.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Source text to process."
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Extracted or cleaned text content."
+      }
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.keywords",
+    "version": "1.0.0",
+    "description": "Extract keywords from a text block.",
+    "file": "capabilities/text.keywords.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Source text to analyze."
+      }
+    },
+    "outputs": {
+      "keywords": {
+        "type": "array",
+        "required": true,
+        "description": "Extracted keywords."
+      }
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "text.summarize",
     "version": "1.0.0",
     "description": "Produce a condensed version of text preserving key ideas.",
@@ -89,6 +139,31 @@
       "text": {
         "type": "string"
       }
+    }
+  },
+  {
+    "id": "web.fetch",
+    "version": "1.0.0",
+    "description": "Fetch content from a web URL.",
+    "file": "capabilities/web.fetch.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true,
+        "description": "URL to retrieve."
+      }
+    },
+    "outputs": {
+      "content": {
+        "type": "string",
+        "required": true,
+        "description": "Retrieved web page content."
+      }
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   }
 ]

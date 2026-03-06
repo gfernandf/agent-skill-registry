@@ -39,5 +39,167 @@
       "text.template"
     ],
     "uses_skills": []
+  },
+  {
+    "id": "text.keyword-summary",
+    "version": "0.1.0",
+    "name": "Keyword and Summary Extraction",
+    "description": "Extracts keywords and generates a summary from text input.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "keyword-summary",
+    "file": "skills/official/text/keyword-summary/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true
+      },
+      "keywords": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_text",
+        "uses": "text.extract",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "text": "vars.cleaned_text"
+        }
+      },
+      {
+        "id": "extract_keywords",
+        "uses": "text.keywords",
+        "input": {
+          "text": "vars.cleaned_text"
+        },
+        "output": {
+          "keywords": "outputs.keywords"
+        }
+      },
+      {
+        "id": "summarize_text",
+        "uses": "text.summarize",
+        "input": {
+          "text": "vars.cleaned_text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.extract",
+      "text.keywords",
+      "text.summarize"
+    ],
+    "uses_skills": []
+  },
+  {
+    "id": "text.simple-summarize",
+    "version": "0.1.0",
+    "name": "Simple Summarize",
+    "description": "Simple summarization pipeline.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "simple-summarize",
+    "file": "skills/official/text/simple-summarize/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.summarize"
+    ],
+    "uses_skills": []
+  },
+  {
+    "id": "web.fetch-summary",
+    "version": "0.1.0",
+    "name": "Fetch and Summarize Web Page",
+    "description": "Fetches a web page and returns a summarized version of its main text.",
+    "channel": "official",
+    "domain": "web",
+    "slug": "fetch-summary",
+    "file": "skills/official/web/fetch-summary/skill.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "fetch_page",
+        "uses": "web.fetch",
+        "input": {
+          "url": "inputs.url"
+        },
+        "output": {
+          "content": "vars.page_content"
+        }
+      },
+      {
+        "id": "extract_text",
+        "uses": "text.extract",
+        "input": {
+          "text": "vars.page_content"
+        },
+        "output": {
+          "text": "vars.cleaned_text"
+        }
+      },
+      {
+        "id": "summarize_text",
+        "uses": "text.summarize",
+        "input": {
+          "text": "vars.cleaned_text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.extract",
+      "text.summarize",
+      "web.fetch"
+    ],
+    "uses_skills": []
   }
 ]

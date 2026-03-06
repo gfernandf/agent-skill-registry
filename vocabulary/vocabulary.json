@@ -1,0 +1,178 @@
+{
+  "domains": {
+    "text": {
+      "description": "Operations on natural language text."
+    },
+    "web": {
+      "description": "Operations involving web resources."
+    },
+    "data": {
+      "description": "Operations on structured or semi-structured data."
+    },
+    "pdf": {
+      "description": "Operations on PDF documents."
+    },
+    "fs": {
+      "description": "Filesystem operations."
+    },
+    "image": {
+      "description": "Operations on images."
+    },
+    "audio": {
+      "description": "Operations on audio signals."
+    },
+    "video": {
+      "description": "Operations on video content."
+    },
+    "table": {
+      "description": "Operations on tabular data."
+    },
+    "model": {
+      "description": "Operations involving machine learning models."
+    }
+  },
+
+  "nouns": {
+    "json": {
+      "description": "JSON structured data."
+    },
+    "csv": {
+      "description": "CSV structured data."
+    },
+    "page": {
+      "description": "Web page content."
+    },
+    "document": {
+      "description": "Generic document content."
+    },
+    "language": {
+      "description": "Language-related text entity."
+    },
+    "entity": {
+      "description": "Named entity extracted from text."
+    },
+    "keyword": {
+      "description": "Keyword extracted from text."
+    },
+    "embedding": {
+      "description": "Vector embedding representation."
+    },
+    "schema": {
+      "description": "Structured schema definition."
+    },
+    "metadata": {
+      "description": "Metadata extracted from resources."
+    },
+    "table": {
+      "description": "Tabular representation of data."
+    },
+    "row": {
+      "description": "Row element in tabular data."
+    },
+    "column": {
+      "description": "Column element in tabular data."
+    },
+    "image": {
+      "description": "Image resource."
+    },
+    "frame": {
+      "description": "Frame extracted from video."
+    }
+  },
+
+  "verbs": {
+    "read": {
+      "description": "Read content from a source."
+    },
+    "write": {
+      "description": "Write content to a destination."
+    },
+    "fetch": {
+      "description": "Retrieve content from a remote resource."
+    },
+    "search": {
+      "description": "Search for resources matching a query."
+    },
+    "list": {
+      "description": "List available items in a collection."
+    },
+    "get": {
+      "description": "Retrieve a specific resource."
+    },
+
+    "extract": {
+      "description": "Extract relevant content from input."
+    },
+    "summarize": {
+      "description": "Produce a concise summary of content."
+    },
+    "translate": {
+      "description": "Translate text between languages."
+    },
+    "classify": {
+      "description": "Assign content to a category."
+    },
+    "detect": {
+      "description": "Detect attributes or properties."
+    },
+    "identify": {
+      "description": "Identify specific elements in content."
+    },
+    "score": {
+      "description": "Compute a score or ranking metric."
+    },
+    "rank": {
+      "description": "Order items by relevance."
+    },
+
+    "parse": {
+      "description": "Parse structured input into a usable representation."
+    },
+    "split": {
+      "description": "Split content into smaller units."
+    },
+    "merge": {
+      "description": "Combine multiple inputs."
+    },
+    "filter": {
+      "description": "Filter elements based on criteria."
+    },
+    "map": {
+      "description": "Apply transformation to each element."
+    },
+    "convert": {
+      "description": "Convert content between formats."
+    },
+    "normalize": {
+      "description": "Normalize content representation."
+    },
+
+    "generate": {
+      "description": "Generate new content."
+    },
+    "template": {
+      "description": "Render content using a template."
+    },
+    "embed": {
+      "description": "Generate vector embeddings."
+    },
+
+    "validate": {
+      "description": "Validate content against rules."
+    },
+    "compare": {
+      "description": "Compare two or more inputs."
+    },
+    "measure": {
+      "description": "Compute quantitative metrics."
+    }
+  },
+
+  "rules": {
+    "capability_id_forms": [
+      "domain.verb",
+      "domain.noun.verb"
+    ],
+    "max_segments": 3
+  }
+}

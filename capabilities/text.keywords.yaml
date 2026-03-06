@@ -1,0 +1,20 @@
+id: text.keywords
+version: 1.0.0
+description: Extract keywords from a text block.
+
+inputs:
+  text:
+    type: string
+    required: true
+    description: Source text to analyze.
+
+outputs:
+  keywords:
+    type: array
+    required: true
+    description: Extracted keywords.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
