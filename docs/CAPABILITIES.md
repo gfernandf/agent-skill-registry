@@ -1,148 +1,281 @@
-# Capabilities (v0.1)
+# Capabilities
 
-## What is a capability?
-A capability is a stable, tool-agnostic contract describing WHAT can be done.
-Tools or agents are implementations bound at runtime.
+This document defines the structure and rules for **capabilities** in the Agent Skill Registry.
 
-A capability definition must specify:
-- capability id (global name)
-- version (semver)
-- inputs schema
-- outputs schema
-- semantics (human description)
-- execution properties (determinism, side-effects)
+Capabilities represent **abstract functions** that can be used by skills.
 
-## Naming
+They define **what can be done**, not **how it is implemented**.
 
-Capability ids follow dot-namespace.
+Capabilities are **tool-agnostic** and describe only the interface between a workflow and an implementation.
 
-Primary form:
-<domain>.<verb>
+---
 
-Extended form (only when needed):
-<domain>.<noun>.<verb>
+# Core Concept
 
-Examples:
+A capability defines a **contract** consisting of:
 
-- pdf.read
-- text.summarize
-- text.template
-- web.fetch
-- data.csv.read
-
-## Domains (v0.1)
-
-Allowed top-level domains:
-
-- text
-- pdf
-- web
-- data
-- fs
-
-New domains require governance approval.
-
-## Verbs
-
-Verbs must come from the list defined in docs/VERBS.md.
-
-## Versioning
-
-Capability ids must not include version suffixes.
-
-Incorrect:
-text.summarize.v2
-
-Correct:
-id: text.summarize
-version: 2.0.0
-
-Versioning follows semantic versioning:
-
-- MAJOR: breaking changes
-- MINOR: backward-compatible additions
-- PATCH: fixes or clarifications
-
-## Deprecation and aliases
-
-Capabilities may be deprecated with a replacement id.
-
-Aliases may be provided to map legacy ids to canonical ids.
-
-Deprecated capabilities remain available for compatibility but should not be used in new skills.
-
-## Capability file format
-
-Capabilities are stored under:
-
-capabilities/<capability-id>.yaml
-
-Minimum required fields:
-
-- id
+- identifier
 - version
 - description
-- inputs
-- outputs
+- input schema
+- output schema
 
-Recommended fields:
+Skills invoke capabilities through workflow steps.
 
-- tags
-- examples
-- properties
+Capabilities do not define runtime implementations.
 
-Execution properties may include:
+---
 
-- deterministic
-- side_effects
-- idempotent
+# Capability File
 
-## Example
+Each capability is defined in a YAML file located in:
+
+```
+capabilities/
+```
+
+Example:
+
+```
+capabilities/text.summarize.yaml
+```
+
+---
+
+# Minimal Capability Structure
 
 ```yaml
-id: text.template
+id: text.summarize
 version: 1.0.0
-description: Render a text template using provided variables.
+description: Summarize a block of text.
 
 inputs:
-  template:
+  text:
     type: string
-    required: true
-
-  variables:
-    type: object
     required: true
 
 outputs:
-  text:
+  summary:
     type: string
+    required: true
+```
 
-properties:
-  deterministic: true
-  side_effects: false
-  idempotent: true
+---
 
-  ## Optional metadata
+# Capability Fields
 
-Capabilities may include optional metadata fields.
+## id
 
-These fields help runners, catalogs, and agents make better decisions
-but are not required for capability registration.
+Unique identifier of the capability.
 
-Examples include execution properties, cost hints, tags, or examples.
+Naming convention:
 
-## Dependencies (optional)
+```
+<domain>.<verb>
+```
 
-Capabilities may declare optional dependencies on other capabilities.
+or when needed:
 
-Use the `requires` field to list capability ids that are typically needed to implement this capability.
+```
+<domain>.<noun>.<verb>
+```
 
-This field is optional and is used for discovery and planning. Runtimes and bindings may satisfy a capability without explicitly providing its dependencies.
+Examples:
+
+```
+text.summarize
+pdf.read
+data.json.parse
+```
+
+Rules:
+
+- id must be globally unique
+- id must not include version information
+- id must follow the domain and verb conventions
+
+---
+
+## version
+
+Semantic version of the capability.
+
+Examples:
+
+```
+1.0.0
+1.2.0
+2.0.0
+```
+
+Version is independent from the identifier.
+
+Breaking interface changes require a major version increase.
+
+---
+
+## description
+
+Short explanation of what the capability does.
+
+---
+
+# Inputs
+
+Inputs define the parameters required by the capability.
 
 Example:
 
 ```yaml
-id: pdf.read
-version: 1.0.0
+inputs:
+  text:
+    type: string
+    required: true
+```
+
+Each input field may define:
+
+```
+type
+required
+description
+```
+
+Example:
+
+```yaml
+inputs:
+  text:
+    type: string
+    required: true
+    description: Text to summarize
+```
+
+---
+
+# Outputs
+
+Outputs define the results returned by the capability.
+
+Example:
+
+```yaml
+outputs:
+  summary:
+    type: string
+    required: true
+```
+
+Each output field may define:
+
+```
+type
+required
+description
+```
+
+---
+
+# Properties (Optional)
+
+Capabilities may define execution characteristics.
+
+Example:
+
+```yaml
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+```
+
+Properties allow runtimes to reason about execution behavior.
+
+Available properties:
+
+```
+deterministic
+side_effects
+idempotent
+```
+
+---
+
+# Dependencies (Optional)
+
+Capabilities may declare dependencies on other capabilities.
+
+Example:
+
+```yaml
 requires:
   - fs.read
+```
+
+Dependencies indicate that an implementation of this capability may require other capabilities to function.
+
+Dependencies are used for discovery and planning.
+
+---
+
+# Deprecation (Optional)
+
+Capabilities may be marked as deprecated.
+
+Example:
+
+```yaml
+deprecated: true
+replacement: text.extract
+```
+
+Deprecation indicates that a capability should no longer be used for new skills.
+
+Existing skills may continue to function.
+
+---
+
+# Aliases (Optional)
+
+Capabilities may define aliases for backwards compatibility.
+
+Example:
+
+```yaml
+aliases:
+  - text.summarise
+```
+
+Aliases allow migration from older identifiers.
+
+---
+
+# Examples (Optional)
+
+Capabilities may include usage examples.
+
+Example:
+
+```yaml
+examples:
+  - description: Summarize a paragraph
+    input:
+      text: "Long article text..."
+    output:
+      summary: "Short summary..."
+```
+
+Examples help contributors understand how the capability is intended to be used.
+
+---
+
+# Design Principles
+
+Capabilities follow these principles:
+
+- tool-agnostic
+- stable interface contracts
+- reusable across environments
+- independent from runtime implementations
+
+Capabilities describe **what can be done**, not **how it is executed**.

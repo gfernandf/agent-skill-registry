@@ -12,12 +12,13 @@ Skills are **declarative** and describe a **dataflow graph** where data moves th
 
 A skill defines:
 
+- identifier
 - metadata
 - inputs
 - outputs
 - steps
 
-Steps invoke **capabilities** or other **skills**.
+Steps invoke **capabilities** or optionally other **skills**.
 
 Skills do not define runtime implementations.
 
@@ -44,9 +45,10 @@ skills/official/text/hello-world/skill.yaml
 # Minimal Skill Structure
 
 ```yaml
-name: text.hello-world
+id: text.hello-world
 version: 0.1.0
-description: Minimal example skill.
+name: Hello World
+description: Minimal example skill demonstrating template rendering.
 
 inputs:
   name:
@@ -73,9 +75,9 @@ steps:
 
 # Skill Fields
 
-## name
+## id
 
-Unique identifier of the skill.
+Canonical identifier of the skill.
 
 Naming convention:
 
@@ -90,12 +92,24 @@ text.hello-world
 pdf.batch-summarize
 ```
 
-The skill name should match its repository location.
+Rules:
+
+- id must be globally unique
+- id must follow the domain naming conventions
+- id must not include version information
+
+The identifier must match the repository path.
 
 Example:
 
 ```
 skills/official/text/hello-world/skill.yaml
+```
+
+→ expected id:
+
+```
+text.hello-world
 ```
 
 ---
@@ -110,6 +124,25 @@ Examples:
 0.1.0
 1.0.0
 ```
+
+---
+
+## name
+
+Human-readable name of the skill.
+
+Examples:
+
+```
+Hello World
+Batch PDF Summarization
+```
+
+Rules:
+
+- name is descriptive only
+- name is not used as an identifier
+- name does not participate in references between skills
 
 ---
 
@@ -196,7 +229,7 @@ Rules:
 
 Steps define the workflow execution graph.
 
-Each step invokes a **capability** or another **skill**.
+Each step invokes a **capability** or optionally another **skill**.
 
 Minimal step structure:
 
@@ -211,15 +244,19 @@ Minimal step structure:
 
 ---
 
-## Step Fields
+# Step Fields
 
-### id
+## id
 
 Unique identifier of the step within the skill.
 
+Rules:
+
+- must be unique inside the skill
+
 ---
 
-### uses
+## uses
 
 Reference to the capability or skill executed by the step.
 
@@ -236,11 +273,11 @@ Optional skill composition:
 uses: skill:text.normalize
 ```
 
-Skill composition is an optional extension and may not be supported by all runtimes.
+Skill composition is optional and may not be supported by all runtimes.
 
 ---
 
-### input
+## input
 
 Mapping of parameters passed to the capability.
 
@@ -256,7 +293,7 @@ input:
 
 ---
 
-### output
+## output
 
 Mapping of values produced by the step.
 
