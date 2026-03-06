@@ -26,3 +26,6 @@ jobs:
 
       - name: Run registry validator
         run: python tools/validate_registry.py
+
+      - name: Generate catalog
+        run: python tools/generate_catalog.py

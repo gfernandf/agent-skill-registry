@@ -1,13 +1,19 @@
 # Tooling
 
-This document describes the internal tools used to maintain the integrity of the **Agent Skill Registry**.
+This document describes the internal tools used to maintain the integrity and usability of the **Agent Skill Registry**.
 
 The registry contains structured definitions of:
 
 - capabilities
 - skills
 
-To ensure consistency and correctness across the repository, automated validation tools are provided.
+To ensure the registry remains consistent and easy to consume, the repository includes a small set of tooling scripts located in:
+
+```
+tools/
+```
+
+These tools validate the registry and generate derived artifacts used for discovery and indexing.
 
 ---
 
@@ -19,7 +25,7 @@ File:
 tools/validate_registry.py
 ```
 
-The registry validator verifies that all **skills** and **capabilities** in the repository follow the specification and maintain internal consistency.
+The registry validator verifies that all **skills** and **capabilities** follow the specification and remain internally consistent.
 
 The validator is intended to be used in two ways:
 
@@ -76,7 +82,7 @@ The validator verifies that each capability:
 - defines input and output schemas correctly
 - references valid dependencies in `requires`
 - references valid capabilities in `replacement`
-- uses only supported execution properties
+- uses supported execution properties
 - matches the expected filename convention
 
 ---
@@ -144,19 +150,125 @@ The validator returns standard exit codes:
 1  validation failed
 ```
 
-This behavior allows the tool to be integrated with automated CI pipelines.
+This allows the tool to be integrated with CI pipelines.
+
+---
+
+# Catalog Generator
+
+File:
+
+```
+tools/generate_catalog.py
+```
+
+The catalog generator produces **derived index files** that describe the contents of the registry.
+
+These files provide a machine-readable overview of all capabilities and skills.
+
+The catalog is generated from the YAML definitions in the repository.
+
+---
+
+# Generated Files
+
+The generator produces the following files:
+
+```
+catalog/capabilities.json
+catalog/skills.json
+```
+
+These files are **derived artifacts** and represent a snapshot of the current registry.
+
+They are regenerated whenever the registry changes.
+
+---
+
+# Usage
+
+From the root of the repository:
+
+```bash
+python tools/generate_catalog.py
+```
+
+The script will:
+
+1. discover all capabilities and skills
+2. extract relevant metadata
+3. generate deterministic JSON indexes
+4. overwrite the catalog files
+
+Example output:
+
+```
+CATALOG GENERATED
+Capabilities: 4
+Skills: 1
+Written:
+- catalog/capabilities.json
+- catalog/skills.json
+```
+
+---
+
+# Catalog Design
+
+The catalog is intentionally simple and static.
+
+Key design principles:
+
+- the catalog is **derived from source definitions**
+- it is **fully regenerated each time**
+- it is **deterministic and sorted**
+- it is **versioned with the repository**
+
+This ensures that the catalog always reflects the current state of the registry.
+
+---
+
+# Why the Catalog Is Regenerated
+
+The catalog is rebuilt from scratch instead of updated incrementally.
+
+This approach guarantees:
+
+- consistency with the source YAML files
+- no stale entries after renames or deletions
+- deterministic output
+- simpler tooling logic
+
+Even for large registries, regenerating the catalog remains inexpensive.
+
+---
+
+# Catalog Consumers
+
+The catalog enables external tools and systems to easily consume the registry.
+
+Examples:
+
+- skill discovery tools
+- documentation generators
+- registry browsers
+- agent runtimes
+- future web interfaces
+
+Because the catalog is static JSON, it can be consumed directly from the repository.
 
 ---
 
 # Future Tooling
 
-Additional tooling may be added to the `tools/` directory.
+Additional tools may be added to the `tools/` directory in the future.
 
-Planned tools may include:
+Possible extensions include:
 
-- catalog generation
-- registry indexing
-- documentation generation
 - dependency visualization
+- registry documentation generators
+- schema validation tools
+- CLI helpers for skill creation
+- registry statistics
 
-These tools will also be documented in this file as they are introduced.
+All future tools will be documented in this file.

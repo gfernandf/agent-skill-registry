@@ -1,0 +1,94 @@
+[
+  {
+    "id": "fs.read",
+    "version": "1.0.0",
+    "description": "Read content from a filesystem path.",
+    "file": "capabilities/fs.read.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "text | binary (implementation-defined)."
+      }
+    },
+    "outputs": {
+      "content": {
+        "type": "string",
+        "description": "Content read as text (if mode is text or default)."
+      },
+      "bytes": {
+        "type": "object",
+        "description": "Raw bytes (if mode is binary)."
+      }
+    }
+  },
+  {
+    "id": "pdf.read",
+    "version": "1.0.0",
+    "description": "Read a PDF document and extract textual content.",
+    "file": "capabilities/pdf.read.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string"
+      },
+      "metadata": {
+        "type": "object"
+      }
+    },
+    "requires": [
+      "fs.read"
+    ]
+  },
+  {
+    "id": "text.summarize",
+    "version": "1.0.0",
+    "description": "Produce a condensed version of text preserving key ideas.",
+    "file": "capabilities/text.summarize.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "max_length": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string"
+      }
+    }
+  },
+  {
+    "id": "text.template",
+    "version": "1.0.0",
+    "description": "Render a text template using variables.",
+    "file": "capabilities/text.template.yaml",
+    "inputs": {
+      "template": {
+        "type": "string",
+        "required": true
+      },
+      "variables": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string"
+      }
+    }
+  }
+]

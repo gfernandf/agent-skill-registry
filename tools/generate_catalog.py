@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+
+def load_yaml(path: Path) -> Any:
+    with path.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def discover_capability_files(base: Path) -> list[Path]:
+    cap_dir = base / "capabilities"
+    if not cap_dir.exists():
+        return []
+    return sorted(
+        p.resolve()
+        for p in cap_dir.glob("*.yaml")
+        if p.name != "_index.yaml"
+    )
+
+
+def discover_skill_files(base: Path) -> list[Path]:
+    skills_dir = base / "skills"
+    if not skills_dir.exists():
+        return []
+    return sorted(p.resolve() for p in skills_dir.glob("*/*/*/skill.yaml"))
+
+
+def relative_posix(path: Path, base: Path) -> str:
+    return path.relative_to(base).as_posix()
+
+
+def extract_skill_path_metadata(path: Path, base: Path) -> dict[str, str | None]:
+    rel = path.relative_to(base)
+    parts = rel.parts
+    # skills/<channel>/<domain>/<skill-name>/skill.yaml
+    if len(parts) == 5 and parts[0] == "skills" and parts[4] == "skill.yaml":
+        return {
+            "channel": parts[1],
+            "domain": parts[2],
+            "slug": parts[3],
+        }
+    return {
+        "channel": None,
+        "domain": None,
+        "slug": None,
+    }
+
+
+def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:
+    entry: dict[str, Any] = {
+        "id": data.get("id"),
+        "version": data.get("version"),
+        "description": data.get("description"),
+        "file": relative_posix(path, base),
+        "inputs": data.get("inputs", {}),
+        "outputs": data.get("outputs", {}),
+    }
+
+    if "properties" in data:
+        entry["properties"] = data.get("properties", {})
+    if "requires" in data:
+        entry["requires"] = data.get("requires", [])
+    if "deprecated" in data:
+        entry["deprecated"] = data.get("deprecated")
+    if "replacement" in data:
+        entry["replacement"] = data.get("replacement")
+    if "aliases" in data:
+        entry["aliases"] = data.get("aliases", [])
+    if "examples" in data:
+        entry["examples"] = data.get("examples", [])
+
+    return entry
+
+
+def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:
+    path_meta = extract_skill_path_metadata(path, base)
+    steps = data.get("steps", [])
+
+    uses_capabilities: list[str] = []
+    uses_skills: list[str] = []
+
+    if isinstance(steps, list):
+        for step in steps:
+            if not isinstance(step, dict):
+                continue
+            uses = step.get("uses")
+            if not isinstance(uses, str):
+                continue
+            if uses.startswith("skill:"):
+                uses_skills.append(uses.split("skill:", 1)[1])
+            else:
+                uses_capabilities.append(uses)
+
+    uses_capabilities = sorted(dict.fromkeys(uses_capabilities))
+    uses_skills = sorted(dict.fromkeys(uses_skills))
+
+    entry: dict[str, Any] = {
+        "id": data.get("id"),
+        "version": data.get("version"),
+        "name": data.get("name"),
+        "description": data.get("description"),
+        "channel": path_meta["channel"],
+        "domain": path_meta["domain"],
+        "slug": path_meta["slug"],
+        "file": relative_posix(path, base),
+        "inputs": data.get("inputs", {}),
+        "outputs": data.get("outputs", {}),
+        "steps": steps,
+        "uses_capabilities": uses_capabilities,
+        "uses_skills": uses_skills,
+    }
+
+    return entry
+
+
+def write_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False, sort_keys=False)
+        f.write("\n")
+
+
+def generate_catalog(base: Path) -> tuple[int, int]:
+    capability_files = discover_capability_files(base)
+    skill_files = discover_skill_files(base)
+
+    capabilities: list[dict[str, Any]] = []
+    skills: list[dict[str, Any]] = []
+
+    for path in capability_files:
+        data = load_yaml(path)
+        if isinstance(data, dict):
+            capabilities.append(extract_capability_entry(path, data, base))
+
+    for path in skill_files:
+        data = load_yaml(path)
+        if isinstance(data, dict):
+            skills.append(extract_skill_entry(path, data, base))
+
+    capabilities.sort(key=lambda x: (str(x.get("id") or ""), str(x.get("version") or "")))
+    skills.sort(key=lambda x: (str(x.get("id") or ""), str(x.get("version") or "")))
+
+    catalog_dir = base / "catalog"
+    write_json(catalog_dir / "capabilities.json", capabilities)
+    write_json(catalog_dir / "skills.json", skills)
+
+    return len(capabilities), len(skills)
+
+
+def main() -> int:
+    base = Path.cwd()
+
+    try:
+        capability_count, skill_count = generate_catalog(base)
+    except Exception as e:
+        print(f"CATALOG GENERATION FAILED: {e}")
+        return 1
+
+    print("CATALOG GENERATED")
+    print(f"Capabilities: {capability_count}")
+    print(f"Skills: {skill_count}")
+    print("Written:")
+    print("- catalog/capabilities.json")
+    print("- catalog/skills.json")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
