@@ -257,6 +257,7 @@ Examples:
 
 Because the catalog is static JSON, it can be consumed directly from the repository.
 
+Contributors should regenerate the catalog after modifying skills or capabilities, since CI verifies that catalog artifacts are up to date.
 ---
 
 # Future Tooling

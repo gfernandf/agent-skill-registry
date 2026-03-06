@@ -29,3 +29,6 @@ jobs:
 
       - name: Generate catalog
         run: python tools/generate_catalog.py
+
+      - name: Check catalog is up to date
+        run: git diff --exit-code -- catalog
