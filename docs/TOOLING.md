@@ -13,7 +13,7 @@ To ensure the registry remains consistent and easy to consume, the repository in
 tools/
 ```
 
-These tools validate the registry and generate derived artifacts used for discovery and indexing.
+These tools validate the registry, scaffold new artifacts, and generate derived catalogs used for discovery and indexing.
 
 ---
 
@@ -80,6 +80,7 @@ The validator verifies that each capability:
 - uses a valid capability identifier
 - uses valid semantic versioning
 - defines input and output schemas correctly
+- matches the controlled vocabulary
 - references valid dependencies in `requires`
 - references valid capabilities in `replacement`
 - uses supported execution properties
@@ -103,6 +104,30 @@ The validator verifies that each skill:
 - produces all declared outputs
 - does not write the same target multiple times
 - matches the expected repository path
+
+---
+
+# Vocabulary Validation
+
+Capability identifiers are validated against the controlled vocabulary defined in:
+
+```
+vocabulary/vocabulary.json
+```
+
+This includes validation of:
+
+- domains
+- nouns
+- verbs
+- allowed identifier structure
+
+The validator enforces the allowed identifier forms:
+
+```
+domain.verb
+domain.noun.verb
+```
 
 ---
 
@@ -177,6 +202,7 @@ The generator produces the following files:
 ```
 catalog/capabilities.json
 catalog/skills.json
+catalog/graph.json
 ```
 
 These files are **derived artifacts** and represent a snapshot of the current registry.
@@ -204,11 +230,12 @@ Example output:
 
 ```
 CATALOG GENERATED
-Capabilities: 4
-Skills: 1
+Capabilities: 7
+Skills: 4
 Written:
 - catalog/capabilities.json
 - catalog/skills.json
+- catalog/graph.json
 ```
 
 ---
@@ -243,6 +270,71 @@ Even for large registries, regenerating the catalog remains inexpensive.
 
 ---
 
+# Graph Generation
+
+The catalog generator also produces a dependency graph describing how skills depend on capabilities and other skills.
+
+Output file:
+
+```
+catalog/graph.json
+```
+
+The graph contains the dependencies of each skill.
+
+Example:
+
+```json
+{
+  "skills": {
+    "web.fetch-summary": {
+      "capabilities": [
+        "web.fetch",
+        "text.extract",
+        "text.summarize"
+      ],
+      "skills": []
+    }
+  }
+}
+```
+
+Two dependency types are tracked:
+
+- **capabilities** — capabilities used by the skill
+- **skills** — other skills invoked by the skill
+
+Dependencies are extracted from the `uses` field of each step.
+
+Example step:
+
+```
+uses: text.summarize
+```
+
+or
+
+```
+uses: skill:text.simple-summarize
+```
+
+The graph allows tools and agents to:
+
+- analyze registry structure
+- detect commonly used capabilities
+- visualize workflow dependencies
+- discover reusable components
+
+The graph is generated automatically by:
+
+```
+tools/generate_catalog.py
+```
+
+and should not be edited manually.
+
+---
+
 # Catalog Consumers
 
 The catalog enables external tools and systems to easily consume the registry.
@@ -256,23 +348,6 @@ Examples:
 - future web interfaces
 
 Because the catalog is static JSON, it can be consumed directly from the repository.
-
-Contributors should regenerate the catalog after modifying skills or capabilities, since CI verifies that catalog artifacts are up to date.
----
-
-# Future Tooling
-
-Additional tools may be added to the `tools/` directory in the future.
-
-Possible extensions include:
-
-- dependency visualization
-- registry documentation generators
-- schema validation tools
-- CLI helpers for skill creation
-- registry statistics
-
-All future tools will be documented in this file.
 
 ---
 
@@ -359,7 +434,7 @@ The user should edit this file to define:
 
 ---
 
-# Typical Contribution Workflow
+# Typical Contribution Workflow for Skills
 
 1. Create a skill skeleton:
 
@@ -385,8 +460,178 @@ python tools/generate_catalog.py
 
 ---
 
-# Safety Behavior
+# Safety Behavior for Skill Creation
 
 The tool will **not overwrite existing skills**.
 
 If the destination file already exists, the command will fail to prevent accidental data loss.
+
+---
+
+# Capability Creation Tool
+
+File:
+
+```
+tools/create_capability.py
+```
+
+This tool generates a new capability skeleton following the repository conventions and controlled vocabulary model.
+
+It supports the two allowed capability identifier forms:
+
+```
+domain.verb
+domain.noun.verb
+```
+
+---
+
+# Usage
+
+Create a capability without noun:
+
+```bash
+python tools/create_capability.py --domain text --verb summarize
+```
+
+This will generate:
+
+```
+capabilities/text.summarize.yaml
+```
+
+Create a capability with noun:
+
+```bash
+python tools/create_capability.py --domain data --noun json --verb parse
+```
+
+This will generate:
+
+```
+capabilities/data.json.parse.yaml
+```
+
+---
+
+# Parameters
+
+| Parameter | Description |
+|----------|-------------|
+| `--domain` | Capability domain (e.g. `text`, `web`, `data`) |
+| `--verb` | Capability verb (e.g. `summarize`, `fetch`, `parse`) |
+| `--noun` | Optional noun used in the `domain.noun.verb` form |
+
+The canonical capability identifier is generated automatically.
+
+Examples:
+
+```
+text.summarize
+data.json.parse
+text.keyword.extract
+```
+
+---
+
+# Vocabulary Enforcement in Capability Creation
+
+Capability creation is governed by the controlled vocabulary defined in:
+
+```
+vocabulary/vocabulary.json
+```
+
+The capability creation process should respect the same naming model enforced by the validator:
+
+- allowed domains
+- allowed nouns
+- allowed verbs
+- allowed identifier structure
+
+This helps preserve consistency in the registry core language.
+
+---
+
+# Generated Capability Template
+
+The tool creates a minimal capability definition:
+
+```yaml
+id: text.classify
+version: 1.0.0
+description: Describe what this capability does.
+
+inputs: {}
+
+outputs: {}
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+```
+
+The user should edit this file to define:
+
+- description
+- inputs
+- outputs
+- execution properties when needed
+
+---
+
+# Typical Contribution Workflow for Capabilities
+
+1. Create a capability skeleton:
+
+```
+python tools/create_capability.py --domain text --verb classify
+```
+
+or:
+
+```
+python tools/create_capability.py --domain text --noun keyword --verb extract
+```
+
+2. Edit the generated capability YAML.
+
+3. Validate the registry:
+
+```
+python tools/validate_registry.py
+```
+
+4. Regenerate the catalog:
+
+```
+python tools/generate_catalog.py
+```
+
+5. Commit and submit a pull request.
+
+---
+
+# Safety Behavior for Capability Creation
+
+The tool will **not overwrite existing capabilities**.
+
+If the destination file already exists, the command will fail to prevent accidental data loss.
+
+---
+
+# Future Tooling
+
+Additional tools may be added to the `tools/` directory in the future.
+
+Possible extensions include:
+
+- dependency visualization
+- registry documentation generators
+- schema validation tools
+- CLI helpers for registry maintenance
+- registry statistics
+
+All future tools will be documented in this file.

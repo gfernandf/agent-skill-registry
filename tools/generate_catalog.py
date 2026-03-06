@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+
 import yaml
 
 
@@ -80,10 +81,7 @@ def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> di
     return entry
 
 
-def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:
-    path_meta = extract_skill_path_metadata(path, base)
-    steps = data.get("steps", [])
-
+def extract_skill_dependencies(steps: Any) -> tuple[list[str], list[str]]:
     uses_capabilities: list[str] = []
     uses_skills: list[str] = []
 
@@ -91,9 +89,11 @@ def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[st
         for step in steps:
             if not isinstance(step, dict):
                 continue
+
             uses = step.get("uses")
             if not isinstance(uses, str):
                 continue
+
             if uses.startswith("skill:"):
                 uses_skills.append(uses.split("skill:", 1)[1])
             else:
@@ -101,6 +101,13 @@ def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[st
 
     uses_capabilities = sorted(dict.fromkeys(uses_capabilities))
     uses_skills = sorted(dict.fromkeys(uses_skills))
+    return uses_capabilities, uses_skills
+
+
+def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:
+    path_meta = extract_skill_path_metadata(path, base)
+    steps = data.get("steps", [])
+    uses_capabilities, uses_skills = extract_skill_dependencies(steps)
 
     entry: dict[str, Any] = {
         "id": data.get("id"),
@@ -119,6 +126,22 @@ def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[st
     }
 
     return entry
+
+
+def build_graph(skills: list[dict[str, Any]]) -> dict[str, Any]:
+    graph_skills: dict[str, Any] = {}
+
+    for skill in skills:
+        skill_id = skill.get("id")
+        if not isinstance(skill_id, str):
+            continue
+
+        graph_skills[skill_id] = {
+            "capabilities": skill.get("uses_capabilities", []),
+            "skills": skill.get("uses_skills", []),
+        }
+
+    return {"skills": graph_skills}
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -148,9 +171,12 @@ def generate_catalog(base: Path) -> tuple[int, int]:
     capabilities.sort(key=lambda x: (str(x.get("id") or ""), str(x.get("version") or "")))
     skills.sort(key=lambda x: (str(x.get("id") or ""), str(x.get("version") or "")))
 
+    graph = build_graph(skills)
+
     catalog_dir = base / "catalog"
     write_json(catalog_dir / "capabilities.json", capabilities)
     write_json(catalog_dir / "skills.json", skills)
+    write_json(catalog_dir / "graph.json", graph)
 
     return len(capabilities), len(skills)
 
@@ -170,6 +196,7 @@ def main() -> int:
     print("Written:")
     print("- catalog/capabilities.json")
     print("- catalog/skills.json")
+    print("- catalog/graph.json")
     return 0
 
 

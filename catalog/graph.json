@@ -1,0 +1,32 @@
+{
+  "skills": {
+    "text.hello-world": {
+      "capabilities": [
+        "text.template"
+      ],
+      "skills": []
+    },
+    "text.keyword-summary": {
+      "capabilities": [
+        "text.extract",
+        "text.keyword.extract",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "text.simple-summarize": {
+      "capabilities": [
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "web.fetch-summary": {
+      "capabilities": [
+        "text.extract",
+        "text.summarize",
+        "web.fetch"
+      ],
+      "skills": []
+    }
+  }
+}
