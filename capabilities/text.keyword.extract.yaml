@@ -1,4 +1,4 @@
-id: text.keywords
+id: text.keyword.extract
 version: 1.0.0
 description: Extract keywords from a text block.
 

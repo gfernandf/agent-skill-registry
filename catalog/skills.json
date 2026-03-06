@@ -78,7 +78,7 @@
       },
       {
         "id": "extract_keywords",
-        "uses": "text.keywords",
+        "uses": "text.keyword.extract",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -99,7 +99,7 @@
     ],
     "uses_capabilities": [
       "text.extract",
-      "text.keywords",
+      "text.keyword.extract",
       "text.summarize"
     ],
     "uses_skills": []

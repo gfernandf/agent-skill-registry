@@ -1,281 +1,300 @@
+# Registry Structure
+
+This document describes the directory structure of the **Agent Skill Registry** and the role of each component.
+
+The registry is designed to provide a structured, versioned environment for defining:
+
+- **capabilities** (reusable functional primitives)
+- **skills** (composed workflows built from capabilities)
+
+It also includes tooling and generated catalogs to support validation and discovery.
+
+---
+
+# Repository Layout
+
+The repository is organized as follows:
+
+```
+agent-skill-registry/
+
+capabilities/
+  *.yaml
+
+skills/
+  official/
+  community/
+  experimental/
+
+catalog/
+
+vocabulary/
+  vocabulary.json
+
+tools/
+
+docs/
+```
+
+Each of these components serves a specific purpose in the registry.
+
+---
+
 # Capabilities
-
-This document defines the structure and rules for **capabilities** in the Agent Skill Registry.
-
-Capabilities represent **abstract functions** that can be used by skills.
-
-They define **what can be done**, not **how it is implemented**.
-
-Capabilities are **tool-agnostic** and describe only the interface between a workflow and an implementation.
-
----
-
-# Core Concept
-
-A capability defines a **contract** consisting of:
-
-- identifier
-- version
-- description
-- input schema
-- output schema
-
-Skills invoke capabilities through workflow steps.
-
-Capabilities do not define runtime implementations.
-
----
-
-# Capability File
-
-Each capability is defined in a YAML file located in:
 
 ```
 capabilities/
+  <capability-id>.yaml
 ```
+
+Capabilities define **reusable functional operations** that skills can invoke.
+
+Each capability is stored as an individual YAML file.
 
 Example:
 
 ```
 capabilities/text.summarize.yaml
+capabilities/text.keyword.extract.yaml
+capabilities/data.json.parse.yaml
 ```
 
----
+Capabilities represent the **core vocabulary of the registry** and must follow the controlled vocabulary rules.
 
-# Minimal Capability Structure
-
-```yaml
-id: text.summarize
-version: 1.0.0
-description: Summarize a block of text.
-
-inputs:
-  text:
-    type: string
-    required: true
-
-outputs:
-  summary:
-    type: string
-    required: true
-```
-
----
-
-# Capability Fields
-
-## id
-
-Unique identifier of the capability.
-
-Naming convention:
+The identifier must follow one of the allowed forms:
 
 ```
-<domain>.<verb>
-```
-
-or when needed:
-
-```
-<domain>.<noun>.<verb>
+domain.verb
+domain.noun.verb
 ```
 
 Examples:
 
 ```
 text.summarize
-pdf.read
+text.keyword.extract
+web.page.fetch
 data.json.parse
 ```
 
-Rules:
-
-- id must be globally unique
-- id must not include version information
-- id must follow the domain and verb conventions
-
----
-
-## version
-
-Semantic version of the capability.
-
-Examples:
+Capability identifiers are validated against the controlled vocabulary defined in:
 
 ```
-1.0.0
-1.2.0
-2.0.0
+vocabulary/vocabulary.json
 ```
 
-Version is independent from the identifier.
-
-Breaking interface changes require a major version increase.
-
 ---
 
-## description
+# Skills
 
-Short explanation of what the capability does.
+```
+skills/<channel>/<domain>/<skill-name>/skill.yaml
+```
 
----
-
-# Inputs
-
-Inputs define the parameters required by the capability.
+Skills define **workflows that compose capabilities** into higher-level operations.
 
 Example:
 
-```yaml
-inputs:
-  text:
-    type: string
-    required: true
+```
+skills/
+  official/
+    text/
+      simple-summarize/
+        skill.yaml
 ```
 
-Each input field may define:
+A skill may call:
+
+- capabilities
+- other skills
+
+via the `uses` field.
+
+Example step:
 
 ```
-type
-required
-description
+uses: text.summarize
 ```
 
-Example:
+or
 
-```yaml
-inputs:
-  text:
-    type: string
-    required: true
-    description: Text to summarize
+```
+uses: skill:text.simple-summarize
+```
+
+Skills are grouped by **channel** and **domain**.
+
+---
+
+# Channels
+
+Skills are organized into channels that reflect stability and governance level.
+
+## official
+
+```
+skills/official/
+```
+
+Maintained by the core maintainers.
+
+Characteristics:
+
+- stable
+- reviewed
+- recommended for production use
+
+---
+
+## community
+
+```
+skills/community/
+```
+
+Community-contributed skills.
+
+Characteristics:
+
+- open contributions
+- validated automatically
+- maintained on a best-effort basis
+
+---
+
+## experimental
+
+```
+skills/experimental/
+```
+
+Used for early ideas and evolving workflows.
+
+Characteristics:
+
+- unstable
+- breaking changes allowed
+- rapid iteration
+
+---
+
+# Vocabulary
+
+```
+vocabulary/vocabulary.json
+```
+
+Defines the **controlled vocabulary** used by capability identifiers.
+
+The vocabulary contains:
+
+- domains
+- nouns
+- verbs
+- composition rules
+
+Example sections:
+
+```
+domains
+nouns
+verbs
+rules
+```
+
+The vocabulary is the **source of truth** used by validation and tooling.
+
+Human-readable documentation of the vocabulary is provided in:
+
+```
+docs/VOCABULARY.md
 ```
 
 ---
 
-# Outputs
-
-Outputs define the results returned by the capability.
-
-Example:
-
-```yaml
-outputs:
-  summary:
-    type: string
-    required: true
-```
-
-Each output field may define:
+# Catalog
 
 ```
-type
-required
-description
+catalog/
 ```
+
+Contains generated indexes of registry content.
+
+These files are produced automatically by tooling and should not be edited manually.
+
+Typical outputs include:
+
+```
+catalog/capabilities.json
+catalog/skills.json
+```
+
+These catalogs allow tools, agents, or external systems to:
+
+- discover available capabilities
+- discover available skills
+- analyze dependencies
+
+The catalog is regenerated using tooling.
 
 ---
 
-# Properties (Optional)
-
-Capabilities may define execution characteristics.
-
-Example:
-
-```yaml
-properties:
-  deterministic: true
-  side_effects: false
-  idempotent: true
-```
-
-Properties allow runtimes to reason about execution behavior.
-
-Available properties:
+# Tooling
 
 ```
-deterministic
-side_effects
-idempotent
+tools/
 ```
+
+Contains scripts used to maintain and validate the registry.
+
+Examples include:
+
+```
+tools/validate_registry.py
+tools/generate_catalog.py
+tools/create_skill.py
+tools/create_capability.py
+```
+
+These tools support tasks such as:
+
+- validating registry consistency
+- enforcing vocabulary rules
+- generating catalogs
+- scaffolding new capabilities and skills
 
 ---
 
-# Dependencies (Optional)
+# Documentation
 
-Capabilities may declare dependencies on other capabilities.
-
-Example:
-
-```yaml
-requires:
-  - fs.read
+```
+docs/
 ```
 
-Dependencies indicate that an implementation of this capability may require other capabilities to function.
+Contains explanatory documentation describing the registry design.
 
-Dependencies are used for discovery and planning.
+Key documents include:
+
+```
+CAPABILITIES.md
+SKILL_FORMAT.md
+REGISTRY_STRUCTURE.md
+VOCABULARY.md
+GOVERNANCE.md
+```
+
+These documents explain the design principles, formats, and governance rules used in the registry.
 
 ---
 
-# Deprecation (Optional)
+# Design Philosophy
 
-Capabilities may be marked as deprecated.
+The registry structure follows several principles:
 
-Example:
+- **clarity** — simple and predictable directory layout
+- **discoverability** — content easily browsed and indexed
+- **validation** — automated consistency checks
+- **controlled vocabulary** — stable naming of capabilities
+- **composability** — skills can build on other capabilities or skills
 
-```yaml
-deprecated: true
-replacement: text.extract
-```
-
-Deprecation indicates that a capability should no longer be used for new skills.
-
-Existing skills may continue to function.
-
----
-
-# Aliases (Optional)
-
-Capabilities may define aliases for backwards compatibility.
-
-Example:
-
-```yaml
-aliases:
-  - text.summarise
-```
-
-Aliases allow migration from older identifiers.
-
----
-
-# Examples (Optional)
-
-Capabilities may include usage examples.
-
-Example:
-
-```yaml
-examples:
-  - description: Summarize a paragraph
-    input:
-      text: "Long article text..."
-    output:
-      summary: "Short summary..."
-```
-
-Examples help contributors understand how the capability is intended to be used.
-
----
-
-# Design Principles
-
-Capabilities follow these principles:
-
-- tool-agnostic
-- stable interface contracts
-- reusable across environments
-- independent from runtime implementations
-
-Capabilities describe **what can be done**, not **how it is executed**.
+This structure supports long-term growth of the ecosystem while maintaining consistency and readability.

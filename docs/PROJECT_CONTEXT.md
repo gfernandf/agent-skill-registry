@@ -1,203 +1,209 @@
 # Project Context
 
-## Project Name
+The Agent Skill Registry provides a structured environment for defining, sharing, and discovering reusable **agent workflows**.
 
-Agent Skill Registry
+The project separates two fundamental concepts:
 
-## Vision
+- **Capabilities** — primitive functional operations
+- **Skills** — workflows that compose capabilities
 
-Agent Skill Registry is an open specification and repository for reusable AI agent workflows called **skills**.
-
-The goal is to create a shared ecosystem where workflows can be:
-
-- defined once
-- reused across environments
-- executed by different agents or runtimes
-
-The system separates **workflow logic from implementation details**.
+This separation allows the ecosystem to evolve in a modular and scalable way.
 
 ---
 
-# Core Concept
+# Problem Statement
 
-A **skill** describes how to solve a task using abstract capabilities.
+Modern AI systems often rely on complex workflows composed of many operations such as:
 
-Example task:
+- retrieving data
+- processing text
+- transforming structured information
+- interacting with external resources
 
-Summarize a set of PDF documents.
+Without a shared framework, these workflows become:
 
-A skill defines the workflow:
+- inconsistent
+- difficult to reuse
+- hard to discover
+- difficult to maintain
 
-1. read PDFs
-2. process text
-3. summarize
-4. produce final result
+The Agent Skill Registry addresses this by providing:
 
-Skills do not bind to specific tools or AI models.
-
-They only reference **capabilities**.
+- a **standard vocabulary for capabilities**
+- a **structured format for workflows**
+- **validation tooling**
+- **discoverable catalogs**
 
 ---
 
-# Architectural Layers
+# Key Concepts
 
-The system separates three layers:
+## Capabilities
 
-skills → workflows  
-capabilities → abstract functions  
-tools / agents → implementations  
-
-### Skills
-
-Reusable workflows that solve tasks.
-
-Skills are portable and declarative.
-
-### Capabilities
-
-Abstract functions used by skills.
+Capabilities represent **primitive operations** that can be reused across workflows.
 
 Examples:
 
-text.summarize  
-pdf.read  
-fs.read  
+```
+text.summarize
+text.classify
+text.keyword.extract
+data.json.parse
+web.fetch
+fs.read
+```
 
-Capabilities define **contracts**, not implementations.
+Capabilities are defined in:
 
-### Tools / Agents
+```
+capabilities/<capability-id>.yaml
+```
 
-Actual implementations that satisfy capabilities.
-
-Examples:
-
-- local tools
-- MCP tools
-- APIs
-- AI models
+They follow strict naming rules enforced by a controlled vocabulary.
 
 ---
 
-# Repository Structure
+## Skills
 
-skills/
-  official/
-  community/
-  experimental/
-  TEMPLATE/
+Skills represent **workflows composed from capabilities**.
 
+A skill may invoke:
+
+- one or more capabilities
+- other skills
+
+Skills are defined in:
+
+```
+skills/<channel>/<domain>/<skill-name>/skill.yaml
+```
+
+Example workflow:
+
+```
+web.fetch-summary
+
+web.fetch
+→ text.extract
+→ text.summarize
+```
+
+---
+
+# Controlled Vocabulary
+
+Capability identifiers are governed by a **controlled vocabulary**.
+
+The authoritative vocabulary is defined in:
+
+```
+vocabulary/vocabulary.json
+```
+
+This vocabulary defines:
+
+- domains
+- nouns
+- verbs
+- identifier composition rules
+
+Examples of valid identifiers:
+
+```
+text.summarize
+data.json.parse
+text.keyword.extract
+web.page.fetch
+```
+
+Human-readable documentation is available in:
+
+```
+docs/VOCABULARY.md
+```
+
+---
+
+# Registry Structure
+
+The registry is organized into several components.
+
+```
 capabilities/
-  _index.yaml
-  *.yaml
-
-docs/
-  REGISTRY_STRUCTURE.md
-  SKILL_FORMAT.md
-  CAPABILITIES.md
-  VERBS.md
-  GOVERNANCE.md
-  PROJECT_CONTEXT.md
-  ARCHITECTURE.md
-
+skills/
 catalog/
+vocabulary/
 tools/
-.github/
+docs/
+```
+
+Each component plays a specific role in defining, validating, and discovering workflows.
 
 ---
 
-# Skill Organization
+# Validation
 
-Skills are organized by domain:
+All registry content is validated automatically using:
 
-skills/<channel>/<domain>/<skill-name>/
+```
+tools/validate_registry.py
+```
 
-Example:
+Validation ensures:
 
-skills/official/text/hello-world/
+- correct YAML structure
+- valid capability identifiers
+- controlled vocabulary compliance
+- valid skill references
+- workflow consistency
 
-Channels represent governance level:
-
-official  
-community  
-experimental  
-
-The canonical skill identifier is defined in `skill.yaml`.
-
-Example:
-
-id: text.hello-world
+This guarantees that the registry remains internally coherent.
 
 ---
 
-# Capability Model
+# Catalog Generation
 
-Capabilities define:
+Machine-readable catalogs are generated automatically:
 
-- inputs schema
-- outputs schema
-- optional dependencies
+```
+catalog/capabilities.json
+catalog/skills.json
+```
 
-Example capability:
+These catalogs allow tools, agents, and external systems to discover available functionality.
 
-pdf.read
+Catalogs are generated using:
 
-may declare:
-
-requires:
-  - fs.read
-
-Dependencies are optional and used primarily for discovery and planning.
+```
+tools/generate_catalog.py
+```
 
 ---
 
-# Skill Execution Model
+# Contribution Model
 
-Skills define workflows as explicit dataflow graphs.
+The registry supports contributions from both maintainers and the community.
 
-Namespaces used in workflows:
+Skills are organized into channels that reflect stability:
 
-inputs.*  
-vars.*  
-outputs.*  
+```
+official
+community
+experimental
+```
 
-Example references:
-
-inputs.file  
-vars.document_text  
-outputs.summary  
-
-Steps execute based on dependency resolution.
-
-Steps may run sequentially or in parallel depending on data dependencies.
+Capabilities are more strictly governed because they define the shared vocabulary of the ecosystem.
 
 ---
 
-# Current Status
+# Project Goals
 
-Specification version:
+The registry aims to provide:
 
-v0.1
+- a **shared language for agent workflows**
+- reusable functional primitives
+- composable workflow definitions
+- machine-readable catalogs
+- strong validation guarantees
 
-Implemented elements:
-
-- registry structure
-- skill specification
-- capability specification
-- governance rules
-- initial capabilities
-- example skill
-
----
-
-# Future Directions
-
-Possible future components:
-
-- CLI tooling
-- capability discovery
-- skill validation tools
-- runtime execution engine
-- hosted execution environment
-- skill marketplace
-
-The project currently focuses on **the specification and registry**, not the runtime.
+This foundation enables a growing ecosystem of reusable workflows that remain consistent and discoverable over time.

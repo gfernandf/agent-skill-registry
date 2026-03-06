@@ -1,218 +1,251 @@
 # Architecture
 
-This document describes the architecture of the Agent Skill Registry ecosystem.
+The Agent Skill Registry is designed as a **structured repository of reusable agent functionality**.
 
-The project is designed as a **specification-first system**.
+The architecture separates three fundamental layers:
 
-The registry defines the structure and contracts that enable portable AI workflows.
+- vocabulary
+- capabilities
+- skills
 
----
-
-# Architectural Philosophy
-
-The architecture is based on separation of concerns.
-
-skills → workflows  
-capabilities → functions  
-tools → implementations  
-
-This separation enables:
-
-- portability
-- interoperability
-- reuse
-- vendor independence
+This layered design ensures both flexibility and long-term consistency.
 
 ---
 
-# Layer 1 — Skills
+# Architectural Layers
 
-Skills define workflows that solve tasks.
+The registry architecture can be understood as three layers.
 
-A skill is a declarative specification.
+```
+Skills
+↑
+Capabilities
+↑
+Controlled Vocabulary
+```
 
-Skills contain:
-
-metadata  
-inputs  
-outputs  
-steps  
-
-Example skill:
-
-pdf.batch-summarize
-
-A skill references capabilities through steps.
-
-Example step:
-
-uses: text.summarize
+Each layer builds on the layer below.
 
 ---
 
-# Skill Dataflow Model
+# Controlled Vocabulary Layer
 
-Skills use **explicit dataflow**.
+The lowest layer defines the **language used to name capabilities**.
 
-Data moves through three namespaces:
+The vocabulary is stored in:
 
-inputs  
-vars  
-outputs  
+```
+vocabulary/vocabulary.json
+```
 
-### inputs
+It defines:
 
-External parameters provided when invoking the skill.
+- allowed domains
+- allowed nouns
+- allowed verbs
+- identifier composition rules
 
-### vars
+Capability identifiers must follow one of the allowed forms:
 
-Intermediate values produced by steps.
+```
+domain.verb
+domain.noun.verb
+```
 
-### outputs
+Examples:
 
-Final results exposed by the skill.
+```
+text.summarize
+text.keyword.extract
+data.json.parse
+web.page.fetch
+```
 
----
+The vocabulary ensures:
 
-# Step Execution Model
-
-Steps define the workflow graph.
-
-Each step contains:
-
-id  
-uses  
-input  
-output  
-
-Example:
-
-- id: summarize
-  uses: text.summarize
-
-Execution order is determined by data dependencies.
-
-Steps may execute in parallel when dependencies allow.
+- semantic consistency
+- predictable naming
+- discoverability of capabilities
 
 ---
 
-# Layer 2 — Capabilities
+# Capability Layer
 
-Capabilities represent abstract functions.
+Capabilities define **primitive operations** available to workflows.
 
-Capabilities define **what can be done**, not **how it is implemented**.
+Examples:
 
-Example capabilities:
+```
+text.summarize
+text.classify
+text.keyword.extract
+data.json.parse
+web.fetch
+fs.read
+```
 
-text.summarize  
-pdf.read  
-fs.read  
+Capabilities are stored as YAML definitions:
+
+```
+capabilities/<capability-id>.yaml
+```
 
 Each capability defines:
 
-id  
-version  
-inputs schema  
-outputs schema  
+- inputs
+- outputs
+- execution properties
 
-Capabilities may optionally declare dependencies.
-
-Example:
-
-pdf.read
-  requires:
-    - fs.read
+Capabilities represent the **core reusable functionality** of the registry.
 
 ---
 
-# Capability Graph
+# Skill Layer
 
-Capabilities may form dependency graphs.
+Skills define **workflows composed from capabilities**.
 
-Example:
+A skill may invoke:
 
-pdf.read
-  ↓
-fs.read
+- multiple capabilities
+- other skills
 
-This allows complex functionality to be built from simpler primitives.
+Example workflow:
 
----
+```
+web.fetch-summary
 
-# Layer 3 — Tool Bindings
+web.fetch
+→ text.extract
+→ text.summarize
+```
 
-Capabilities are satisfied by runtime implementations.
+Skills are stored as:
 
-Possible implementations include:
+```
+skills/<channel>/<domain>/<skill-name>/skill.yaml
+```
 
-- local libraries
-- APIs
-- MCP tools
-- AI models
-- other agents
-
-The registry does not define the runtime layer.
-
-This allows different environments to execute the same skill.
+This allows workflows to be built hierarchically.
 
 ---
 
-# Skill Composition (Future Extension)
+# Validation Layer
 
-Skills may optionally compose other skills.
+The registry enforces structural integrity through automated validation.
 
-Example:
+Validation is performed by:
 
-contract.review
-    ↓
-pdf.batch-summarize
-    ↓
-pdf.read
+```
+tools/validate_registry.py
+```
 
-Skill composition is optional and may be introduced gradually.
+The validator checks:
 
-The current specification primarily focuses on **skills using capabilities**.
+- YAML schema correctness
+- controlled vocabulary compliance
+- valid capability references
+- valid skill references
+- workflow structure
 
----
-
-# Registry Role
-
-The repository acts as a **registry of definitions**, not an execution environment.
-
-It stores:
-
-skills  
-capabilities  
-documentation  
-
-Execution runtimes are external to the registry.
+This prevents invalid or inconsistent registry content.
 
 ---
 
-# Evolution Strategy
+# Catalog Layer
 
-The project follows an incremental growth strategy.
+The registry produces machine-readable catalogs describing available functionality.
 
-Phase 1  
-Specification + registry.
+Generated files include:
 
-Phase 2  
-Tooling (CLI, validation, discovery).
+```
+catalog/capabilities.json
+catalog/skills.json
+```
 
-Phase 3  
-Runtime ecosystem.
+These catalogs allow:
 
-Phase 4  
-Hosted execution platforms.
+- discovery of capabilities
+- discovery of skills
+- tooling integration
+- agent introspection
+
+Catalogs are generated by:
+
+```
+tools/generate_catalog.py
+```
 
 ---
 
-# Design Goals
+# Tooling Layer
 
-The architecture prioritizes:
+Tooling simplifies maintenance and contribution.
 
-- simplicity
-- extensibility
-- composability
-- ecosystem growth
-- low barrier to contribution
+Tools are located in:
+
+```
+tools/
+```
+
+Examples:
+
+```
+create_capability.py
+create_skill.py
+validate_registry.py
+generate_catalog.py
+```
+
+These tools support:
+
+- scaffolding new definitions
+- validating registry integrity
+- generating catalogs
+
+---
+
+# Design Principles
+
+The registry architecture is guided by several principles.
+
+### Controlled Language
+
+Capability identifiers follow a controlled vocabulary to ensure long-term consistency.
+
+---
+
+### Composability
+
+Complex workflows are built by composing smaller capabilities.
+
+---
+
+### Reusability
+
+Capabilities are designed as reusable primitives.
+
+---
+
+### Discoverability
+
+Machine-readable catalogs allow external systems to explore the registry.
+
+---
+
+### Automation
+
+Validation and catalog generation ensure that the registry remains coherent as it grows.
+
+---
+
+# Summary
+
+The architecture of the Agent Skill Registry combines:
+
+- controlled vocabulary
+- reusable capabilities
+- composable skills
+- automated validation
+- machine-readable catalogs
+
+This structure enables the development of a scalable ecosystem of reusable agent workflows.
