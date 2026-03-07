@@ -24,6 +24,12 @@
         "type": "object",
         "description": "Raw bytes (if mode is binary)."
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     }
   },
   {
@@ -44,6 +50,12 @@
       "metadata": {
         "type": "object"
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     },
     "requires": [
       "fs.read"
@@ -78,6 +90,12 @@
         "description": "Confidence score for the classification."
       }
     },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
     "properties": {
       "deterministic": false,
       "side_effects": false,
@@ -102,6 +120,12 @@
         "required": true,
         "description": "Extracted or cleaned text content."
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     },
     "properties": {
       "deterministic": true,
@@ -128,6 +152,12 @@
         "description": "Extracted keywords."
       }
     },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
     "properties": {
       "deterministic": true,
       "side_effects": false,
@@ -153,6 +183,12 @@
       "summary": {
         "type": "string"
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     }
   },
   {
@@ -174,6 +210,12 @@
       "text": {
         "type": "string"
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     }
   },
   {
@@ -194,6 +236,12 @@
         "required": true,
         "description": "Retrieved web page content."
       }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
     },
     "properties": {
       "deterministic": false,

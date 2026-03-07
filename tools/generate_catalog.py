@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 import yaml
 
 
@@ -55,6 +54,29 @@ def extract_skill_path_metadata(path: Path, base: Path) -> dict[str, str | None]
     }
 
 
+def normalize_capability_metadata(raw_metadata: Any) -> dict[str, Any]:
+    metadata = raw_metadata if isinstance(raw_metadata, dict) else {}
+
+    return {
+        "tags": metadata.get("tags", []) if isinstance(metadata.get("tags", []), list) else [],
+        "category": metadata.get("category", None) if isinstance(metadata.get("category", None), str) or metadata.get("category", None) is None else None,
+        "status": metadata.get("status", "unspecified") if isinstance(metadata.get("status", "unspecified"), str) else "unspecified",
+        "examples": metadata.get("examples", []) if isinstance(metadata.get("examples", []), list) else [],
+    }
+
+
+def normalize_skill_metadata(raw_metadata: Any) -> dict[str, Any]:
+    metadata = raw_metadata if isinstance(raw_metadata, dict) else {}
+
+    return {
+        "tags": metadata.get("tags", []) if isinstance(metadata.get("tags", []), list) else [],
+        "category": metadata.get("category", None) if isinstance(metadata.get("category", None), str) or metadata.get("category", None) is None else None,
+        "status": metadata.get("status", "unspecified") if isinstance(metadata.get("status", "unspecified"), str) else "unspecified",
+        "use_cases": metadata.get("use_cases", []) if isinstance(metadata.get("use_cases", []), list) else [],
+        "examples": metadata.get("examples", []) if isinstance(metadata.get("examples", []), list) else [],
+    }
+
+
 def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:
     entry: dict[str, Any] = {
         "id": data.get("id"),
@@ -63,6 +85,7 @@ def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> di
         "file": relative_posix(path, base),
         "inputs": data.get("inputs", {}),
         "outputs": data.get("outputs", {}),
+        "metadata": normalize_capability_metadata(data.get("metadata")),
     }
 
     if "properties" in data:
@@ -123,6 +146,7 @@ def extract_skill_entry(path: Path, data: dict[str, Any], base: Path) -> dict[st
         "steps": steps,
         "uses_capabilities": uses_capabilities,
         "uses_skills": uses_skills,
+        "metadata": normalize_skill_metadata(data.get("metadata")),
     }
 
     return entry

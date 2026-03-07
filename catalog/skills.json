@@ -38,7 +38,14 @@
     "uses_capabilities": [
       "text.template"
     ],
-    "uses_skills": []
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
   },
   {
     "id": "text.keyword-summary",
@@ -102,7 +109,14 @@
       "text.keyword.extract",
       "text.summarize"
     ],
-    "uses_skills": []
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
   },
   {
     "id": "text.simple-summarize",
@@ -140,7 +154,14 @@
     "uses_capabilities": [
       "text.summarize"
     ],
-    "uses_skills": []
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
   },
   {
     "id": "web.fetch-summary",
@@ -200,6 +221,13 @@
       "text.summarize",
       "web.fetch"
     ],
-    "uses_skills": []
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
   }
 ]

@@ -152,6 +152,72 @@ Short explanation of what the skill does.
 
 ---
 
+## metadata (Optional)
+
+Skills may optionally include a `metadata` block used for discovery, categorization, and documentation.
+
+Example:
+
+```yaml
+metadata:
+  tags:
+    - web
+    - summarization
+  category: content-processing
+  status: stable
+  use_cases:
+    - Summarize a web page from a URL
+  examples:
+    - description: Summarize an article
+      input:
+        url: "https://example.com/article"
+      output:
+        summary: "Short summary..."
+```
+
+The `metadata` block is optional and does not affect workflow execution semantics.
+
+If omitted, tools may treat it as an empty/default metadata block.
+
+### Suggested Fields
+
+The following optional fields may appear inside `metadata`:
+
+- `tags`
+- `category`
+- `status`
+- `use_cases`
+- `examples`
+
+### Logical Defaults
+
+If metadata is omitted, tools may interpret it as:
+
+```yaml
+metadata:
+  tags: []
+  category: null
+  status: unspecified
+  use_cases: []
+  examples: []
+```
+
+These defaults are conceptual and do not need to be materialized in source YAML.
+
+### Intended Purpose
+
+Skill metadata is intended to support:
+
+- discovery
+- categorization
+- registry browsing
+- documentation
+- future statistics and analytics
+
+It is not intended to change the meaning of the workflow itself.
+
+---
+
 # Dataflow Model
 
 Skills use an **explicit dataflow model**.

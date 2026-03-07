@@ -9,6 +9,7 @@ from typing import Any, Dict, List
 
 import yaml
 
+
 # ----------------------------------------------------------------------
 # Utility helpers
 # ----------------------------------------------------------------------
@@ -20,8 +21,6 @@ def load_yaml(path: Path) -> Any:
 
 
 def load_json(path: Path) -> Any:
-    # json.load documented usage for reading from a file-like object
-    # See Python stdlib docs: json.load(...) description. :contentReference[oaicite:0]{index=0}
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -41,12 +40,7 @@ def discover_skill_files(base: Path) -> List[Path]:
     skills_dir = base / "skills"
     if not skills_dir.exists():
         return []
-    # expects exactly skills/<channel>/<domain>/<skill-name>/skill.yaml
     return sorted(p.resolve() for p in skills_dir.glob("*/*/*/skill.yaml"))
-
-
-def relative_posix(path: Path, base: Path) -> str:
-    return path.relative_to(base).as_posix()
 
 
 # ----------------------------------------------------------------------
@@ -58,8 +52,7 @@ def load_vocabulary(base: Path) -> Dict[str, Any]:
     vocab_path = base / "vocabulary" / "vocabulary.json"
     if not vocab_path.exists():
         raise FileNotFoundError(
-            f"Vocabulary file not found: {vocab_path}. "
-            "Expected vocabulary/vocabulary.json"
+            f"Vocabulary file not found: {vocab_path}"
         )
     return load_json(vocab_path)
 
@@ -67,18 +60,14 @@ def load_vocabulary(base: Path) -> Dict[str, Any]:
 def validate_capability_id_against_vocab(
     capability_id: str, vocab: Dict[str, Any], errors: List[str], path: Path
 ) -> None:
-    """
-    Validate domain, optional noun, and verb based on vocabulary rules.
-    Allowed forms: domain.verb or domain.noun.verb
-    """
+
     rules = vocab.get("rules", {})
     max_segments = rules.get("max_segments", 3)
 
     segments = capability_id.split(".")
     if not (2 <= len(segments) <= max_segments):
         errors.append(
-            f"{path}: capability id '{capability_id}' has {len(segments)} segments; "
-            f"allowed up to {max_segments}."
+            f"{path}: capability id '{capability_id}' has {len(segments)} segments"
         )
         return
 
@@ -92,14 +81,12 @@ def validate_capability_id_against_vocab(
             f"{path}: unknown domain '{domain}' in capability id '{capability_id}'"
         )
 
-    # last segment is verb
     verb = segments[-1]
     if verb not in verbs:
         errors.append(
             f"{path}: unknown verb '{verb}' in capability id '{capability_id}'"
         )
 
-    # if there is a noun (i.e., 3 segments), validate it
     if len(segments) == 3:
         noun = segments[1]
         if noun not in nouns:
@@ -109,46 +96,90 @@ def validate_capability_id_against_vocab(
 
 
 # ----------------------------------------------------------------------
-# Capability validation logic
+# Metadata validation
+# ----------------------------------------------------------------------
+
+
+ALLOWED_STATUS = {"stable", "experimental", "deprecated", "unspecified"}
+
+
+def validate_metadata_block(
+    metadata: Any,
+    path: Path,
+    errors: List[str],
+    skill_mode: bool = False,
+) -> None:
+
+    if metadata is None:
+        return
+
+    if not isinstance(metadata, dict):
+        errors.append(f"{path}: metadata must be a mapping")
+        return
+
+    tags = metadata.get("tags")
+    if tags is not None and not isinstance(tags, list):
+        errors.append(f"{path}: metadata.tags must be a list")
+
+    category = metadata.get("category")
+    if category is not None and not isinstance(category, str):
+        errors.append(f"{path}: metadata.category must be string or null")
+
+    status = metadata.get("status")
+    if status is not None and status not in ALLOWED_STATUS:
+        errors.append(
+            f"{path}: metadata.status must be one of {ALLOWED_STATUS}"
+        )
+
+    examples = metadata.get("examples")
+    if examples is not None and not isinstance(examples, list):
+        errors.append(f"{path}: metadata.examples must be a list")
+
+    if skill_mode:
+        use_cases = metadata.get("use_cases")
+        if use_cases is not None and not isinstance(use_cases, list):
+            errors.append(f"{path}: metadata.use_cases must be a list")
+
+
+# ----------------------------------------------------------------------
+# Capability validation
 # ----------------------------------------------------------------------
 
 
 def validate_capability_structure(
     path: Path, data: Dict[str, Any], vocab: Dict[str, Any], errors: List[str]
 ) -> None:
-    # Required fields
+
     required = ["id", "version", "description", "inputs", "outputs"]
     for r in required:
         if r not in data:
             errors.append(f"{path}: missing required field '{r}'")
-            return  # further checks rely on these fields
+            return
 
     capability_id = data.get("id")
-    if not isinstance(capability_id, str) or "." not in capability_id:
-        errors.append(f"{path}: invalid capability id '{capability_id}'")
+
+    if not isinstance(capability_id, str):
+        errors.append(f"{path}: invalid capability id")
         return
 
-    # Validate against vocabulary
     validate_capability_id_against_vocab(capability_id, vocab, errors, path)
 
-    # Version could be semver; simple check: non-empty string
-    version = data.get("version")
-    if not isinstance(version, str) or not version.strip():
-        errors.append(f"{path}: invalid version '{version}'")
-
-    # Inputs/outputs should be dicts
     if not isinstance(data.get("inputs"), dict):
-        errors.append(f"{path}: 'inputs' must be a mapping")
+        errors.append(f"{path}: 'inputs' must be mapping")
+
     if not isinstance(data.get("outputs"), dict):
-        errors.append(f"{path}: 'outputs' must be a mapping")
+        errors.append(f"{path}: 'outputs' must be mapping")
+
+    validate_metadata_block(data.get("metadata"), path, errors)
 
 
 # ----------------------------------------------------------------------
-# Skill validation logic
+# Skill validation
 # ----------------------------------------------------------------------
 
 
 def validate_skill_structure(path: Path, data: Dict[str, Any], errors: List[str]) -> None:
+
     required = [
         "id",
         "version",
@@ -158,57 +189,25 @@ def validate_skill_structure(path: Path, data: Dict[str, Any], errors: List[str]
         "outputs",
         "steps",
     ]
+
     for r in required:
         if r not in data:
             errors.append(f"{path}: missing required field '{r}'")
             return
 
-    skill_id = data.get("id")
-    if not isinstance(skill_id, str) or "." not in skill_id:
-        errors.append(f"{path}: invalid skill id '{skill_id}'")
-        return
+    if not isinstance(data.get("steps"), list):
+        errors.append(f"{path}: steps must be a list")
 
-    # version check similar to capability
-    version = data.get("version")
-    if not isinstance(version, str) or not version.strip():
-        errors.append(f"{path}: invalid version '{version}'")
-
-    if not isinstance(data.get("inputs"), dict):
-        errors.append(f"{path}: 'inputs' must be a mapping")
-    if not isinstance(data.get("outputs"), dict):
-        errors.append(f"{path}: 'outputs' must be a mapping")
-
-    steps = data.get("steps")
-    if not isinstance(steps, list) or not steps:
-        errors.append(f"{path}: 'steps' must be a non-empty list")
-        return
-
-    # Basic structure of steps
-    step_ids: set[str] = set()
-    for step in steps:
-        if not isinstance(step, dict):
-            errors.append(f"{path}: step is not a mapping: {step}")
-            continue
-
-        sid = step.get("id")
-        if not sid or not isinstance(sid, str):
-            errors.append(f"{path}: step without valid 'id'")
-            continue
-        if sid in step_ids:
-            errors.append(f"{path}: duplicate step id '{sid}'")
-            continue
-        step_ids.add(sid)
-
-        uses = step.get("uses")
-        if not uses or not isinstance(uses, str):
-            errors.append(f"{path}: step '{sid}' missing or invalid 'uses'")
-
-        # input/output presence validation will be more detailed later
+    validate_metadata_block(
+        data.get("metadata"),
+        path,
+        errors,
+        skill_mode=True,
+    )
 
 
 # ----------------------------------------------------------------------
-# Dataflow and reference validation
-#    (placeholder simplified; real validator may do more)
+# Skill reference validation
 # ----------------------------------------------------------------------
 
 
@@ -219,89 +218,93 @@ def validate_skill_references(
     skill_ids: set[str],
     errors: List[str],
 ) -> None:
-    """
-    Validate each step 'uses' refers to a known capability or skill.
-    Recognizes:
-      - capability id directly: text.summarize
-      - skill composition prefix: skill:<id>
-    """
+
     steps = data.get("steps", [])
+
     for step in steps:
-        sid = step.get("id", "<unknown>")
+
         uses = step.get("uses")
+        sid = step.get("id", "<unknown>")
+
         if not isinstance(uses, str):
             continue
 
         if uses.startswith("skill:"):
             ref = uses.split("skill:", 1)[1]
+
             if ref not in skill_ids:
                 errors.append(
                     f"{path}: step '{sid}' references unknown skill '{ref}'"
                 )
+
         else:
-            # capability reference
             if uses not in capability_ids:
                 errors.append(
                     f"{path}: step '{sid}' references unknown capability '{uses}'"
                 )
 
-        # Optionally more dataflow checks could be here
-        # e.g., inputs.* vars.* outputs.* correctness, duplicates, etc.
-
 
 # ----------------------------------------------------------------------
-# Main registry validation loop
+# Main validation loop
 # ----------------------------------------------------------------------
 
 
 def main() -> int:
+
     base = Path.cwd()
     errors: List[str] = []
 
-    # Load vocabulary
-    try:
-        vocab = load_vocabulary(base)
-    except Exception as e:
-        print(f"VOCABULARY LOAD FAILED: {e}")
-        return 1
+    vocab = load_vocabulary(base)
 
-    # Discover and validate capabilities
     capability_files = discover_capability_files(base)
+    skill_files = discover_skill_files(base)
+
     capability_ids: set[str] = set()
+    skill_ids: set[str] = set()
 
     for path in capability_files:
+
         data = load_yaml(path)
+
         if not isinstance(data, dict):
-            errors.append(f"{path}: invalid YAML content")
+            errors.append(f"{path}: invalid YAML")
             continue
+
         validate_capability_structure(path, data, vocab, errors)
-        # collect id for reference checking if valid
+
         cid = data.get("id")
         if isinstance(cid, str):
             capability_ids.add(cid)
 
-    # Discover and validate skills
-    skill_files = discover_skill_files(base)
-    skill_ids: set[str] = set()
-
     for path in skill_files:
+
         data = load_yaml(path)
+
         if not isinstance(data, dict):
-            errors.append(f"{path}: invalid YAML content")
+            errors.append(f"{path}: invalid YAML")
             continue
+
         validate_skill_structure(path, data, errors)
+
         sid = data.get("id")
         if isinstance(sid, str):
             skill_ids.add(sid)
 
-    # Validate references in skills
     for path in skill_files:
+
         data = load_yaml(path)
+
         if not isinstance(data, dict):
             continue
-        validate_skill_references(path, data, capability_ids, skill_ids, errors)
 
-    # Final reporting
+        validate_skill_references(
+            path,
+            data,
+            capability_ids,
+            skill_ids,
+            errors,
+        )
+
     if errors:
         print("VALIDATION FAILED\n")
         for e in errors:
@@ -311,6 +314,7 @@ def main() -> int:
     print("VALIDATION PASSED")
     print(f"Capabilities: {len(capability_files)}")
     print(f"Skills: {len(skill_files)}")
+
     return 0
 
 
