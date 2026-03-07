@@ -1,0 +1,65 @@
+{
+  "summary": {
+    "capability_count": 8,
+    "skill_count": 4,
+    "domain_count": 4,
+    "channel_count": 1
+  },
+  "skills": {
+    "by_domain": {
+      "text": 3,
+      "web": 1
+    },
+    "by_channel": {
+      "official": 4
+    },
+    "average_steps": 2.0,
+    "with_skill_dependencies": 0
+  },
+  "capabilities": {
+    "by_domain": {
+      "text": 5,
+      "fs": 1,
+      "pdf": 1,
+      "web": 1
+    },
+    "most_used": [
+      {
+        "id": "text.summarize",
+        "count": 3
+      },
+      {
+        "id": "text.extract",
+        "count": 2
+      },
+      {
+        "id": "text.keyword.extract",
+        "count": 1
+      },
+      {
+        "id": "text.template",
+        "count": 1
+      },
+      {
+        "id": "web.fetch",
+        "count": 1
+      }
+    ],
+    "unused": [
+      "fs.read",
+      "pdf.read",
+      "text.classify"
+    ]
+  },
+  "dependencies": {
+    "skill_to_capability_edges": 8,
+    "skill_to_skill_edges": 0,
+    "max_capabilities_per_skill": 3
+  },
+  "metadata": {
+    "skills_with_nondefault_metadata": 0,
+    "capabilities_with_nondefault_metadata": 0,
+    "top_skill_tags": [],
+    "top_capability_tags": []
+  }
+}
