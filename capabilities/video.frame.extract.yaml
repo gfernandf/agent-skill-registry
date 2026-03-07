@@ -1,0 +1,17 @@
+id: video.frame.extract
+version: 1.0.0
+description: Extract frames from a video.
+inputs:
+  video:
+    type: string
+    required: true
+    description: Video input or path.
+outputs:
+  frames:
+    type: array
+    required: true
+    description: Extracted frames.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

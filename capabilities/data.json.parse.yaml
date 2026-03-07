@@ -1,0 +1,17 @@
+id: data.json.parse
+version: 1.0.0
+description: Parse JSON content into a structured representation.
+inputs:
+  text:
+    type: string
+    required: true
+    description: JSON text.
+outputs:
+  data:
+    type: object
+    required: true
+    description: Parsed JSON object.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

@@ -1,0 +1,21 @@
+id: code.diff.extract
+version: 1.0.0
+description: Extract differences between two code versions.
+inputs:
+  code_a:
+    type: string
+    required: true
+    description: First code version.
+  code_b:
+    type: string
+    required: true
+    description: Second code version.
+outputs:
+  diff:
+    type: string
+    required: true
+    description: Computed code diff.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

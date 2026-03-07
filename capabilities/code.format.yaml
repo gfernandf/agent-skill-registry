@@ -1,0 +1,21 @@
+id: code.format
+version: 1.0.0
+description: Format source code.
+inputs:
+  code:
+    type: string
+    required: true
+    description: Source code.
+  language:
+    type: string
+    required: true
+    description: Programming language.
+outputs:
+  formatted_code:
+    type: string
+    required: true
+    description: Formatted source code.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

@@ -1,8 +1,8 @@
 {
   "summary": {
-    "capability_count": 8,
+    "capability_count": 33,
     "skill_count": 4,
-    "domain_count": 4,
+    "domain_count": 15,
     "channel_count": 1
   },
   "skills": {
@@ -18,10 +18,21 @@
   },
   "capabilities": {
     "by_domain": {
-      "text": 5,
+      "text": 9,
+      "agent": 3,
+      "code": 3,
+      "web": 3,
+      "data": 2,
+      "email": 2,
+      "image": 2,
+      "memory": 2,
+      "audio": 1,
+      "doc": 1,
       "fs": 1,
+      "message": 1,
       "pdf": 1,
-      "web": 1
+      "table": 1,
+      "video": 1
     },
     "most_used": [
       {
@@ -46,9 +57,34 @@
       }
     ],
     "unused": [
+      "agent.delegate",
+      "agent.plan.generate",
+      "agent.route",
+      "audio.transcribe",
+      "code.diff.extract",
+      "code.execute",
+      "code.format",
+      "data.json.parse",
+      "data.schema.validate",
+      "doc.chunk",
+      "email.read",
+      "email.send",
       "fs.read",
+      "image.caption.generate",
+      "image.classify",
+      "memory.retrieve",
+      "memory.store",
+      "message.send",
       "pdf.read",
-      "text.classify"
+      "table.filter",
+      "text.classify",
+      "text.embed",
+      "text.entity.extract",
+      "text.language.detect",
+      "text.translate",
+      "video.frame.extract",
+      "web.page.extract",
+      "web.search"
     ]
   },
   "dependencies": {

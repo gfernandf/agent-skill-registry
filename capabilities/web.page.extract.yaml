@@ -1,0 +1,17 @@
+id: web.page.extract
+version: 1.0.0
+description: Extract main textual content from a web page.
+inputs:
+  content:
+    type: string
+    required: true
+    description: Raw page content.
+outputs:
+  text:
+    type: string
+    required: true
+    description: Extracted main text.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

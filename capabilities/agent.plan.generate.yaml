@@ -1,0 +1,17 @@
+id: agent.plan.generate
+version: 1.0.0
+description: Generate a plan for solving a task or objective.
+inputs:
+  objective:
+    type: string
+    required: true
+    description: Objective to solve.
+outputs:
+  plan:
+    type: object
+    required: true
+    description: Generated plan.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

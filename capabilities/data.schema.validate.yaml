@@ -1,0 +1,25 @@
+id: data.schema.validate
+version: 1.0.0
+description: Validate structured data against a schema.
+inputs:
+  data:
+    type: object
+    required: true
+    description: Structured data.
+  schema:
+    type: object
+    required: true
+    description: Validation schema.
+outputs:
+  valid:
+    type: boolean
+    required: true
+    description: Whether validation passed.
+  errors:
+    type: array
+    required: false
+    description: Validation errors, if any.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

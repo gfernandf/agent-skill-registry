@@ -1,5 +1,437 @@
 [
   {
+    "id": "agent.delegate",
+    "version": "1.0.0",
+    "description": "Delegate a task to another agent or subsystem.",
+    "file": "capabilities/agent.delegate.yaml",
+    "inputs": {
+      "task": {
+        "type": "object",
+        "required": true,
+        "description": "Task to delegate."
+      },
+      "agent": {
+        "type": "string",
+        "required": true,
+        "description": "Target agent identifier."
+      }
+    },
+    "outputs": {
+      "accepted": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether delegation was accepted."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "agent.plan.generate",
+    "version": "1.0.0",
+    "description": "Generate a plan for solving a task or objective.",
+    "file": "capabilities/agent.plan.generate.yaml",
+    "inputs": {
+      "objective": {
+        "type": "string",
+        "required": true,
+        "description": "Objective to solve."
+      }
+    },
+    "outputs": {
+      "plan": {
+        "type": "object",
+        "required": true,
+        "description": "Generated plan."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "agent.route",
+    "version": "1.0.0",
+    "description": "Route an input to the appropriate handler or agent.",
+    "file": "capabilities/agent.route.yaml",
+    "inputs": {
+      "input": {
+        "type": "object",
+        "required": true,
+        "description": "Input to route."
+      }
+    },
+    "outputs": {
+      "route": {
+        "type": "string",
+        "required": true,
+        "description": "Selected route or handler."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "audio.transcribe",
+    "version": "1.0.0",
+    "description": "Convert speech audio to text.",
+    "file": "capabilities/audio.transcribe.yaml",
+    "inputs": {
+      "audio": {
+        "type": "string",
+        "required": true,
+        "description": "Audio input or path."
+      }
+    },
+    "outputs": {
+      "transcript": {
+        "type": "string",
+        "required": true,
+        "description": "Generated transcript."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "code.diff.extract",
+    "version": "1.0.0",
+    "description": "Extract differences between two code versions.",
+    "file": "capabilities/code.diff.extract.yaml",
+    "inputs": {
+      "code_a": {
+        "type": "string",
+        "required": true,
+        "description": "First code version."
+      },
+      "code_b": {
+        "type": "string",
+        "required": true,
+        "description": "Second code version."
+      }
+    },
+    "outputs": {
+      "diff": {
+        "type": "string",
+        "required": true,
+        "description": "Computed code diff."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "code.execute",
+    "version": "1.0.0",
+    "description": "Execute a code snippet.",
+    "file": "capabilities/code.execute.yaml",
+    "inputs": {
+      "code": {
+        "type": "string",
+        "required": true,
+        "description": "Code to execute."
+      },
+      "language": {
+        "type": "string",
+        "required": true,
+        "description": "Programming language."
+      }
+    },
+    "outputs": {
+      "result": {
+        "type": "object",
+        "required": false,
+        "description": "Structured execution result."
+      },
+      "stdout": {
+        "type": "string",
+        "required": false,
+        "description": "Standard output."
+      },
+      "stderr": {
+        "type": "string",
+        "required": false,
+        "description": "Standard error."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "code.format",
+    "version": "1.0.0",
+    "description": "Format source code.",
+    "file": "capabilities/code.format.yaml",
+    "inputs": {
+      "code": {
+        "type": "string",
+        "required": true,
+        "description": "Source code."
+      },
+      "language": {
+        "type": "string",
+        "required": true,
+        "description": "Programming language."
+      }
+    },
+    "outputs": {
+      "formatted_code": {
+        "type": "string",
+        "required": true,
+        "description": "Formatted source code."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "data.json.parse",
+    "version": "1.0.0",
+    "description": "Parse JSON content into a structured representation.",
+    "file": "capabilities/data.json.parse.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "JSON text."
+      }
+    },
+    "outputs": {
+      "data": {
+        "type": "object",
+        "required": true,
+        "description": "Parsed JSON object."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "data.schema.validate",
+    "version": "1.0.0",
+    "description": "Validate structured data against a schema.",
+    "file": "capabilities/data.schema.validate.yaml",
+    "inputs": {
+      "data": {
+        "type": "object",
+        "required": true,
+        "description": "Structured data."
+      },
+      "schema": {
+        "type": "object",
+        "required": true,
+        "description": "Validation schema."
+      }
+    },
+    "outputs": {
+      "valid": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether validation passed."
+      },
+      "errors": {
+        "type": "array",
+        "required": false,
+        "description": "Validation errors, if any."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "doc.chunk",
+    "version": "1.0.0",
+    "description": "Split a document or text into chunks.",
+    "file": "capabilities/doc.chunk.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Document text."
+      },
+      "chunk_size": {
+        "type": "number",
+        "required": false,
+        "description": "Optional chunk size."
+      },
+      "overlap": {
+        "type": "number",
+        "required": false,
+        "description": "Optional overlap size."
+      }
+    },
+    "outputs": {
+      "chunks": {
+        "type": "array",
+        "required": true,
+        "description": "Document chunks."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "email.read",
+    "version": "1.0.0",
+    "description": "Read email messages from a mailbox.",
+    "file": "capabilities/email.read.yaml",
+    "inputs": {
+      "mailbox": {
+        "type": "string",
+        "required": true,
+        "description": "Mailbox or folder name."
+      }
+    },
+    "outputs": {
+      "messages": {
+        "type": "array",
+        "required": true,
+        "description": "Retrieved email messages."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "email.send",
+    "version": "1.0.0",
+    "description": "Send an email message.",
+    "file": "capabilities/email.send.yaml",
+    "inputs": {
+      "to": {
+        "type": "string",
+        "required": true,
+        "description": "Recipient email address."
+      },
+      "subject": {
+        "type": "string",
+        "required": true,
+        "description": "Email subject."
+      },
+      "body": {
+        "type": "string",
+        "required": true,
+        "description": "Email body."
+      }
+    },
+    "outputs": {
+      "sent": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether sending succeeded."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
     "id": "fs.read",
     "version": "1.0.0",
     "description": "Read content from a filesystem path.",
@@ -33,6 +465,186 @@
     }
   },
   {
+    "id": "image.caption.generate",
+    "version": "1.0.0",
+    "description": "Generate a caption for an image.",
+    "file": "capabilities/image.caption.generate.yaml",
+    "inputs": {
+      "image": {
+        "type": "string",
+        "required": true,
+        "description": "Image input or path."
+      }
+    },
+    "outputs": {
+      "caption": {
+        "type": "string",
+        "required": true,
+        "description": "Generated caption."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "image.classify",
+    "version": "1.0.0",
+    "description": "Classify an image into one or more categories.",
+    "file": "capabilities/image.classify.yaml",
+    "inputs": {
+      "image": {
+        "type": "string",
+        "required": true,
+        "description": "Image input or path."
+      },
+      "labels": {
+        "type": "array",
+        "required": false,
+        "description": "Optional candidate labels."
+      }
+    },
+    "outputs": {
+      "label": {
+        "type": "string",
+        "required": true,
+        "description": "Predicted image label."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Optional confidence score."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "memory.retrieve",
+    "version": "1.0.0",
+    "description": "Retrieve content from a memory system.",
+    "file": "capabilities/memory.retrieve.yaml",
+    "inputs": {
+      "key": {
+        "type": "string",
+        "required": true,
+        "description": "Memory key."
+      }
+    },
+    "outputs": {
+      "value": {
+        "type": "object",
+        "required": false,
+        "description": "Retrieved value."
+      },
+      "found": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the key was found."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "memory.store",
+    "version": "1.0.0",
+    "description": "Store content in a memory system.",
+    "file": "capabilities/memory.store.yaml",
+    "inputs": {
+      "key": {
+        "type": "string",
+        "required": true,
+        "description": "Memory key."
+      },
+      "value": {
+        "type": "object",
+        "required": true,
+        "description": "Value to store."
+      }
+    },
+    "outputs": {
+      "stored": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether storage succeeded."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "message.send",
+    "version": "1.0.0",
+    "description": "Send a generic message.",
+    "file": "capabilities/message.send.yaml",
+    "inputs": {
+      "recipient": {
+        "type": "string",
+        "required": true,
+        "description": "Message recipient."
+      },
+      "message": {
+        "type": "string",
+        "required": true,
+        "description": "Message body."
+      }
+    },
+    "outputs": {
+      "sent": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether sending succeeded."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
     "id": "pdf.read",
     "version": "1.0.0",
     "description": "Read a PDF document and extract textual content.",
@@ -62,6 +674,42 @@
     ]
   },
   {
+    "id": "table.filter",
+    "version": "1.0.0",
+    "description": "Filter rows in tabular data according to a condition.",
+    "file": "capabilities/table.filter.yaml",
+    "inputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Input table rows."
+      },
+      "condition": {
+        "type": "object",
+        "required": true,
+        "description": "Filtering condition."
+      }
+    },
+    "outputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Filtered table rows."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "text.classify",
     "version": "1.0.0",
     "description": "Classify a text into one or more predefined categories.",
@@ -88,6 +736,68 @@
         "type": "number",
         "required": false,
         "description": "Confidence score for the classification."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.embed",
+    "version": "1.0.0",
+    "description": "Generate vector embeddings from text.",
+    "file": "capabilities/text.embed.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Input text."
+      }
+    },
+    "outputs": {
+      "embedding": {
+        "type": "array",
+        "required": true,
+        "description": "Generated embedding vector."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.entity.extract",
+    "version": "1.0.0",
+    "description": "Extract named entities from a text block.",
+    "file": "capabilities/text.entity.extract.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Input text."
+      }
+    },
+    "outputs": {
+      "entities": {
+        "type": "array",
+        "required": true,
+        "description": "Extracted entities."
       }
     },
     "metadata": {
@@ -165,6 +875,42 @@
     }
   },
   {
+    "id": "text.language.detect",
+    "version": "1.0.0",
+    "description": "Detect the language of a text.",
+    "file": "capabilities/text.language.detect.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to analyze."
+      }
+    },
+    "outputs": {
+      "language": {
+        "type": "string",
+        "required": true,
+        "description": "Detected language."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Optional confidence score."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "text.summarize",
     "version": "1.0.0",
     "description": "Produce a condensed version of text preserving key ideas.",
@@ -219,6 +965,78 @@
     }
   },
   {
+    "id": "text.translate",
+    "version": "1.0.0",
+    "description": "Translate text from one language to another.",
+    "file": "capabilities/text.translate.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to translate."
+      },
+      "target_language": {
+        "type": "string",
+        "required": true,
+        "description": "Target language."
+      },
+      "source_language": {
+        "type": "string",
+        "required": false,
+        "description": "Optional source language."
+      }
+    },
+    "outputs": {
+      "translation": {
+        "type": "string",
+        "required": true,
+        "description": "Translated text."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "video.frame.extract",
+    "version": "1.0.0",
+    "description": "Extract frames from a video.",
+    "file": "capabilities/video.frame.extract.yaml",
+    "inputs": {
+      "video": {
+        "type": "string",
+        "required": true,
+        "description": "Video input or path."
+      }
+    },
+    "outputs": {
+      "frames": {
+        "type": "array",
+        "required": true,
+        "description": "Extracted frames."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "web.fetch",
     "version": "1.0.0",
     "description": "Fetch content from a web URL.",
@@ -235,6 +1053,73 @@
         "type": "string",
         "required": true,
         "description": "Retrieved web page content."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "web.page.extract",
+    "version": "1.0.0",
+    "description": "Extract main textual content from a web page.",
+    "file": "capabilities/web.page.extract.yaml",
+    "inputs": {
+      "content": {
+        "type": "string",
+        "required": true,
+        "description": "Raw page content."
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Extracted main text."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "web.search",
+    "version": "1.0.0",
+    "description": "Search the web for results matching a query.",
+    "file": "capabilities/web.search.yaml",
+    "inputs": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "Search query."
+      },
+      "limit": {
+        "type": "number",
+        "required": false,
+        "description": "Optional maximum number of results."
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Search results."
       }
     },
     "metadata": {

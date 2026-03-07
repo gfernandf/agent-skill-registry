@@ -1,0 +1,21 @@
+id: text.language.detect
+version: 1.0.0
+description: Detect the language of a text.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Text to analyze.
+outputs:
+  language:
+    type: string
+    required: true
+    description: Detected language.
+  confidence:
+    type: number
+    required: false
+    description: Optional confidence score.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

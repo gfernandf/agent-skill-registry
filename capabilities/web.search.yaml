@@ -1,0 +1,21 @@
+id: web.search
+version: 1.0.0
+description: Search the web for results matching a query.
+inputs:
+  query:
+    type: string
+    required: true
+    description: Search query.
+  limit:
+    type: number
+    required: false
+    description: Optional maximum number of results.
+outputs:
+  results:
+    type: array
+    required: true
+    description: Search results.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

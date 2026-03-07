@@ -1,0 +1,21 @@
+id: memory.retrieve
+version: 1.0.0
+description: Retrieve content from a memory system.
+inputs:
+  key:
+    type: string
+    required: true
+    description: Memory key.
+outputs:
+  value:
+    type: object
+    required: false
+    description: Retrieved value.
+  found:
+    type: boolean
+    required: true
+    description: Whether the key was found.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

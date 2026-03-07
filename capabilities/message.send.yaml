@@ -1,0 +1,21 @@
+id: message.send
+version: 1.0.0
+description: Send a generic message.
+inputs:
+  recipient:
+    type: string
+    required: true
+    description: Message recipient.
+  message:
+    type: string
+    required: true
+    description: Message body.
+outputs:
+  sent:
+    type: boolean
+    required: true
+    description: Whether sending succeeded.
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true

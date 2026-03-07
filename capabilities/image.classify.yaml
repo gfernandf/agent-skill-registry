@@ -1,0 +1,25 @@
+id: image.classify
+version: 1.0.0
+description: Classify an image into one or more categories.
+inputs:
+  image:
+    type: string
+    required: true
+    description: Image input or path.
+  labels:
+    type: array
+    required: false
+    description: Optional candidate labels.
+outputs:
+  label:
+    type: string
+    required: true
+    description: Predicted image label.
+  confidence:
+    type: number
+    required: false
+    description: Optional confidence score.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

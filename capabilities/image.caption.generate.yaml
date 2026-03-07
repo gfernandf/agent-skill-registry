@@ -1,0 +1,17 @@
+id: image.caption.generate
+version: 1.0.0
+description: Generate a caption for an image.
+inputs:
+  image:
+    type: string
+    required: true
+    description: Image input or path.
+outputs:
+  caption:
+    type: string
+    required: true
+    description: Generated caption.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

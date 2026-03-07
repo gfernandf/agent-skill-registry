@@ -1,0 +1,17 @@
+id: text.entity.extract
+version: 1.0.0
+description: Extract named entities from a text block.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Input text.
+outputs:
+  entities:
+    type: array
+    required: true
+    description: Extracted entities.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
