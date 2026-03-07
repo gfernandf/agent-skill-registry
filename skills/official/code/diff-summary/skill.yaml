@@ -1,0 +1,32 @@
+id: code.diff-summary
+version: 0.1.0
+name: Diff Summary
+description: Extract a code diff and summarize it.
+inputs:
+  code_a:
+    type: string
+    required: true
+  code_b:
+    type: string
+    required: true
+outputs:
+  diff:
+    type: string
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: extract_diff
+  uses: code.diff.extract
+  input:
+    code_a: inputs.code_a
+    code_b: inputs.code_b
+  output:
+    diff: outputs.diff
+- id: summarize_diff
+  uses: text.summarize
+  input:
+    text: outputs.diff
+  output:
+    summary: outputs.summary

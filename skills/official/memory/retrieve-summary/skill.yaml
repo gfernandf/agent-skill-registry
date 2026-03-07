@@ -1,0 +1,32 @@
+id: memory.retrieve-summary
+version: 0.1.0
+name: Retrieve Summary
+description: Retrieve a memory value and summarize it.
+inputs:
+  key:
+    type: string
+    required: true
+outputs:
+  value:
+    type: object
+    required: false
+  found:
+    type: boolean
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: retrieve_memory
+  uses: memory.retrieve
+  input:
+    key: inputs.key
+  output:
+    value: outputs.value
+    found: outputs.found
+- id: summarize_value
+  uses: text.summarize
+  input:
+    text: outputs.value
+  output:
+    summary: outputs.summary

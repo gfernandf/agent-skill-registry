@@ -1,5 +1,149 @@
 {
   "skills": {
+    "agent.plan-and-route": {
+      "capabilities": [
+        "agent.plan.generate",
+        "agent.route"
+      ],
+      "skills": []
+    },
+    "agent.plan-from-objective": {
+      "capabilities": [
+        "agent.plan.generate"
+      ],
+      "skills": []
+    },
+    "audio.transcribe-summary": {
+      "capabilities": [
+        "audio.transcribe",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "code.diff-summary": {
+      "capabilities": [
+        "code.diff.extract",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "data.parse-and-validate": {
+      "capabilities": [
+        "data.json.parse",
+        "data.schema.validate"
+      ],
+      "skills": []
+    },
+    "doc.chunk-and-embed": {
+      "capabilities": [
+        "doc.chunk",
+        "text.embed"
+      ],
+      "skills": []
+    },
+    "doc.chunk-text": {
+      "capabilities": [
+        "doc.chunk"
+      ],
+      "skills": []
+    },
+    "email.read-summary": {
+      "capabilities": [
+        "email.read",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "image.caption-and-classify": {
+      "capabilities": [
+        "image.caption.generate",
+        "image.classify"
+      ],
+      "skills": []
+    },
+    "memory.retrieve-summary": {
+      "capabilities": [
+        "memory.retrieve",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "memory.store-embedding": {
+      "capabilities": [
+        "memory.store",
+        "text.embed"
+      ],
+      "skills": []
+    },
+    "memory.store-summary": {
+      "capabilities": [
+        "memory.store",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "pdf.chunk-and-embed": {
+      "capabilities": [
+        "doc.chunk",
+        "pdf.read",
+        "text.embed"
+      ],
+      "skills": []
+    },
+    "pdf.read-keyword-summary": {
+      "capabilities": [
+        "pdf.read",
+        "text.keyword.extract",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "pdf.read-summary": {
+      "capabilities": [
+        "pdf.read",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "table.filter-summary": {
+      "capabilities": [
+        "table.filter",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "text.classify-input": {
+      "capabilities": [
+        "text.classify"
+      ],
+      "skills": []
+    },
+    "text.detect-language-and-classify": {
+      "capabilities": [
+        "text.classify",
+        "text.language.detect"
+      ],
+      "skills": []
+    },
+    "text.entity-summary": {
+      "capabilities": [
+        "text.entity.extract",
+        "text.summarize"
+      ],
+      "skills": []
+    },
+    "text.extract-entities": {
+      "capabilities": [
+        "text.entity.extract"
+      ],
+      "skills": []
+    },
+    "text.extract-keywords": {
+      "capabilities": [
+        "text.keyword.extract"
+      ],
+      "skills": []
+    },
     "text.hello-world": {
       "capabilities": [
         "text.template"
@@ -14,9 +158,31 @@
       ],
       "skills": []
     },
+    "text.language-summary": {
+      "capabilities": [
+        "text.language.detect",
+        "text.summarize"
+      ],
+      "skills": []
+    },
     "text.simple-summarize": {
       "capabilities": [
         "text.summarize"
+      ],
+      "skills": []
+    },
+    "text.translate-summary": {
+      "capabilities": [
+        "text.summarize",
+        "text.translate"
+      ],
+      "skills": []
+    },
+    "web.fetch-classify": {
+      "capabilities": [
+        "text.classify",
+        "web.fetch",
+        "web.page.extract"
       ],
       "skills": []
     },
@@ -25,6 +191,29 @@
         "text.extract",
         "text.summarize",
         "web.fetch"
+      ],
+      "skills": []
+    },
+    "web.page-chunk-and-embed": {
+      "capabilities": [
+        "doc.chunk",
+        "text.embed",
+        "web.fetch",
+        "web.page.extract"
+      ],
+      "skills": []
+    },
+    "web.page-summary": {
+      "capabilities": [
+        "text.summarize",
+        "web.page.extract"
+      ],
+      "skills": []
+    },
+    "web.search-summary": {
+      "capabilities": [
+        "text.summarize",
+        "web.search"
       ],
       "skills": []
     }

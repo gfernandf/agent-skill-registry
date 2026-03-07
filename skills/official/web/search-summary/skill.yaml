@@ -1,0 +1,32 @@
+id: web.search-summary
+version: 0.1.0
+name: Search Summary
+description: Search the web and summarize the search results.
+inputs:
+  query:
+    type: string
+    required: true
+  limit:
+    type: number
+    required: false
+outputs:
+  results:
+    type: array
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: search
+  uses: web.search
+  input:
+    query: inputs.query
+    limit: inputs.limit
+  output:
+    results: outputs.results
+- id: summarize_results
+  uses: text.summarize
+  input:
+    text: outputs.results
+  output:
+    summary: outputs.summary

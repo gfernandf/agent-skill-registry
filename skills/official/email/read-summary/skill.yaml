@@ -1,0 +1,28 @@
+id: email.read-summary
+version: 0.1.0
+name: Read Email Summary
+description: Read emails from a mailbox and summarize their content.
+inputs:
+  mailbox:
+    type: string
+    required: true
+outputs:
+  messages:
+    type: array
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: read_email
+  uses: email.read
+  input:
+    mailbox: inputs.mailbox
+  output:
+    messages: outputs.messages
+- id: summarize_messages
+  uses: text.summarize
+  input:
+    text: outputs.messages
+  output:
+    summary: outputs.summary

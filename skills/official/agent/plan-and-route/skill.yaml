@@ -1,0 +1,28 @@
+id: agent.plan-and-route
+version: 0.1.0
+name: Plan and Route
+description: Generate a plan from an objective and route it.
+inputs:
+  objective:
+    type: string
+    required: true
+outputs:
+  plan:
+    type: object
+    required: true
+  route:
+    type: string
+    required: true
+steps:
+- id: generate_plan
+  uses: agent.plan.generate
+  input:
+    objective: inputs.objective
+  output:
+    plan: outputs.plan
+- id: route_plan
+  uses: agent.route
+  input:
+    input: outputs.plan
+  output:
+    route: outputs.route

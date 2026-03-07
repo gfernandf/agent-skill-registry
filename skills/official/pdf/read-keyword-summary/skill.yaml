@@ -1,0 +1,37 @@
+id: pdf.read-keyword-summary
+version: 0.1.0
+name: Read PDF Keyword Summary
+description: Read a PDF, extract keywords, and summarize its text.
+inputs:
+  path:
+    type: string
+    required: true
+outputs:
+  text:
+    type: string
+    required: true
+  keywords:
+    type: array
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: read_pdf
+  uses: pdf.read
+  input:
+    path: inputs.path
+  output:
+    text: outputs.text
+- id: extract_keywords
+  uses: text.keyword.extract
+  input:
+    text: outputs.text
+  output:
+    keywords: outputs.keywords
+- id: summarize
+  uses: text.summarize
+  input:
+    text: outputs.text
+  output:
+    summary: outputs.summary

@@ -1,0 +1,32 @@
+id: memory.store-summary
+version: 0.1.0
+name: Store Summary
+description: Summarize text and store the summary in memory.
+inputs:
+  text:
+    type: string
+    required: true
+  key:
+    type: string
+    required: true
+outputs:
+  summary:
+    type: string
+    required: true
+  stored:
+    type: boolean
+    required: true
+steps:
+- id: summarize
+  uses: text.summarize
+  input:
+    text: inputs.text
+  output:
+    summary: outputs.summary
+- id: store_memory
+  uses: memory.store
+  input:
+    key: inputs.key
+    value: outputs.summary
+  output:
+    stored: outputs.stored

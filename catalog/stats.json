@@ -1,17 +1,27 @@
 {
   "summary": {
     "capability_count": 33,
-    "skill_count": 4,
+    "skill_count": 31,
     "domain_count": 15,
     "channel_count": 1
   },
   "skills": {
     "by_domain": {
-      "text": 3,
-      "web": 1
+      "text": 10,
+      "web": 5,
+      "memory": 3,
+      "pdf": 3,
+      "agent": 2,
+      "doc": 2,
+      "audio": 1,
+      "code": 1,
+      "data": 1,
+      "email": 1,
+      "image": 1,
+      "table": 1
     },
     "by_channel": {
-      "official": 4
+      "official": 31
     },
     "average_steps": 2.0,
     "with_skill_dependencies": 0
@@ -37,14 +47,94 @@
     "most_used": [
       {
         "id": "text.summarize",
+        "count": 16
+      },
+      {
+        "id": "doc.chunk",
+        "count": 4
+      },
+      {
+        "id": "text.embed",
+        "count": 4
+      },
+      {
+        "id": "pdf.read",
         "count": 3
+      },
+      {
+        "id": "text.classify",
+        "count": 3
+      },
+      {
+        "id": "text.keyword.extract",
+        "count": 3
+      },
+      {
+        "id": "web.fetch",
+        "count": 3
+      },
+      {
+        "id": "web.page.extract",
+        "count": 3
+      },
+      {
+        "id": "agent.plan.generate",
+        "count": 2
+      },
+      {
+        "id": "memory.store",
+        "count": 2
+      },
+      {
+        "id": "text.entity.extract",
+        "count": 2
       },
       {
         "id": "text.extract",
         "count": 2
       },
       {
-        "id": "text.keyword.extract",
+        "id": "text.language.detect",
+        "count": 2
+      },
+      {
+        "id": "agent.route",
+        "count": 1
+      },
+      {
+        "id": "audio.transcribe",
+        "count": 1
+      },
+      {
+        "id": "code.diff.extract",
+        "count": 1
+      },
+      {
+        "id": "data.json.parse",
+        "count": 1
+      },
+      {
+        "id": "data.schema.validate",
+        "count": 1
+      },
+      {
+        "id": "email.read",
+        "count": 1
+      },
+      {
+        "id": "image.caption.generate",
+        "count": 1
+      },
+      {
+        "id": "image.classify",
+        "count": 1
+      },
+      {
+        "id": "memory.retrieve",
+        "count": 1
+      },
+      {
+        "id": "table.filter",
         "count": 1
       },
       {
@@ -52,45 +142,28 @@
         "count": 1
       },
       {
-        "id": "web.fetch",
+        "id": "text.translate",
+        "count": 1
+      },
+      {
+        "id": "web.search",
         "count": 1
       }
     ],
     "unused": [
       "agent.delegate",
-      "agent.plan.generate",
-      "agent.route",
-      "audio.transcribe",
-      "code.diff.extract",
       "code.execute",
       "code.format",
-      "data.json.parse",
-      "data.schema.validate",
-      "doc.chunk",
-      "email.read",
       "email.send",
       "fs.read",
-      "image.caption.generate",
-      "image.classify",
-      "memory.retrieve",
-      "memory.store",
       "message.send",
-      "pdf.read",
-      "table.filter",
-      "text.classify",
-      "text.embed",
-      "text.entity.extract",
-      "text.language.detect",
-      "text.translate",
-      "video.frame.extract",
-      "web.page.extract",
-      "web.search"
+      "video.frame.extract"
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 8,
+    "skill_to_capability_edges": 62,
     "skill_to_skill_edges": 0,
-    "max_capabilities_per_skill": 3
+    "max_capabilities_per_skill": 4
   },
   "metadata": {
     "skills_with_nondefault_metadata": 0,

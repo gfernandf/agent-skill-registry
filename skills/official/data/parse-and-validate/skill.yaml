@@ -1,0 +1,36 @@
+id: data.parse-and-validate
+version: 0.1.0
+name: Parse and Validate
+description: Parse JSON text and validate it against a schema.
+inputs:
+  text:
+    type: string
+    required: true
+  schema:
+    type: object
+    required: true
+outputs:
+  data:
+    type: object
+    required: true
+  valid:
+    type: boolean
+    required: true
+  errors:
+    type: array
+    required: false
+steps:
+- id: parse_json
+  uses: data.json.parse
+  input:
+    text: inputs.text
+  output:
+    data: outputs.data
+- id: validate_schema
+  uses: data.schema.validate
+  input:
+    data: outputs.data
+    schema: inputs.schema
+  output:
+    valid: outputs.valid
+    errors: outputs.errors

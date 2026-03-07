@@ -1,0 +1,27 @@
+id: text.classify-input
+version: 0.1.0
+name: Classify Input
+description: Classify text input into a label.
+inputs:
+  text:
+    type: string
+    required: true
+  labels:
+    type: array
+    required: false
+outputs:
+  label:
+    type: string
+    required: true
+  confidence:
+    type: number
+    required: false
+steps:
+- id: classify
+  uses: text.classify
+  input:
+    text: inputs.text
+    labels: inputs.labels
+  output:
+    label: outputs.label
+    confidence: outputs.confidence

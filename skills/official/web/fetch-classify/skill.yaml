@@ -1,0 +1,45 @@
+id: web.fetch-classify
+version: 0.1.0
+name: Fetch and Classify
+description: Fetch a web page, extract its main text, and classify the content.
+inputs:
+  url:
+    type: string
+    required: true
+  labels:
+    type: array
+    required: false
+outputs:
+  content:
+    type: string
+    required: true
+  text:
+    type: string
+    required: true
+  label:
+    type: string
+    required: true
+  confidence:
+    type: number
+    required: false
+steps:
+- id: fetch
+  uses: web.fetch
+  input:
+    url: inputs.url
+  output:
+    content: outputs.content
+- id: extract_page
+  uses: web.page.extract
+  input:
+    content: outputs.content
+  output:
+    text: outputs.text
+- id: classify
+  uses: text.classify
+  input:
+    text: outputs.text
+    labels: inputs.labels
+  output:
+    label: outputs.label
+    confidence: outputs.confidence

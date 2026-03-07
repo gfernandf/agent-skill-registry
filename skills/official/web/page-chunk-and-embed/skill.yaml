@@ -1,0 +1,54 @@
+id: web.page-chunk-and-embed
+version: 0.1.0
+name: Web Page Chunk and Embed
+description: Fetch a web page, extract main text, chunk it, and generate embeddings.
+inputs:
+  url:
+    type: string
+    required: true
+  chunk_size:
+    type: number
+    required: false
+  overlap:
+    type: number
+    required: false
+outputs:
+  content:
+    type: string
+    required: true
+  text:
+    type: string
+    required: true
+  chunks:
+    type: array
+    required: true
+  embedding:
+    type: array
+    required: true
+steps:
+- id: fetch
+  uses: web.fetch
+  input:
+    url: inputs.url
+  output:
+    content: outputs.content
+- id: extract_page
+  uses: web.page.extract
+  input:
+    content: outputs.content
+  output:
+    text: outputs.text
+- id: chunk
+  uses: doc.chunk
+  input:
+    text: outputs.text
+    chunk_size: inputs.chunk_size
+    overlap: inputs.overlap
+  output:
+    chunks: outputs.chunks
+- id: embed
+  uses: text.embed
+  input:
+    text: outputs.text
+  output:
+    embedding: outputs.embedding

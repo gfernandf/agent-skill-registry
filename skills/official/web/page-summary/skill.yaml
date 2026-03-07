@@ -1,0 +1,28 @@
+id: web.page-summary
+version: 0.1.0
+name: Page Summary
+description: Extract main text from page content and summarize it.
+inputs:
+  content:
+    type: string
+    required: true
+outputs:
+  text:
+    type: string
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: extract_page
+  uses: web.page.extract
+  input:
+    content: inputs.content
+  output:
+    text: outputs.text
+- id: summarize
+  uses: text.summarize
+  input:
+    text: outputs.text
+  output:
+    summary: outputs.summary

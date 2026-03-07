@@ -1,0 +1,28 @@
+id: text.language-summary
+version: 0.1.0
+name: Language Summary
+description: Detect the language of a text and summarize it.
+inputs:
+  text:
+    type: string
+    required: true
+outputs:
+  language:
+    type: string
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: detect_language
+  uses: text.language.detect
+  input:
+    text: inputs.text
+  output:
+    language: outputs.language
+- id: summarize
+  uses: text.summarize
+  input:
+    text: inputs.text
+  output:
+    summary: outputs.summary

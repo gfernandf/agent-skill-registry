@@ -1,0 +1,32 @@
+id: table.filter-summary
+version: 0.1.0
+name: Filter Table Summary
+description: Filter a table and summarize the filtered rows.
+inputs:
+  table:
+    type: array
+    required: true
+  condition:
+    type: object
+    required: true
+outputs:
+  table:
+    type: array
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: filter_table
+  uses: table.filter
+  input:
+    table: inputs.table
+    condition: inputs.condition
+  output:
+    table: outputs.table
+- id: summarize_table
+  uses: text.summarize
+  input:
+    text: outputs.table
+  output:
+    summary: outputs.summary

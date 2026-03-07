@@ -1,0 +1,28 @@
+id: audio.transcribe-summary
+version: 0.1.0
+name: Transcribe Summary
+description: Transcribe audio and summarize the transcript.
+inputs:
+  audio:
+    type: string
+    required: true
+outputs:
+  transcript:
+    type: string
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: transcribe_audio
+  uses: audio.transcribe
+  input:
+    audio: inputs.audio
+  output:
+    transcript: outputs.transcript
+- id: summarize_transcript
+  uses: text.summarize
+  input:
+    text: outputs.transcript
+  output:
+    summary: outputs.summary

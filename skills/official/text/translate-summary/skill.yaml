@@ -1,0 +1,32 @@
+id: text.translate-summary
+version: 0.1.0
+name: Translate Summary
+description: Translate text and then summarize the translation.
+inputs:
+  text:
+    type: string
+    required: true
+  target_language:
+    type: string
+    required: true
+outputs:
+  translation:
+    type: string
+    required: true
+  summary:
+    type: string
+    required: true
+steps:
+- id: translate
+  uses: text.translate
+  input:
+    text: inputs.text
+    target_language: inputs.target_language
+  output:
+    translation: outputs.translation
+- id: summarize
+  uses: text.summarize
+  input:
+    text: outputs.translation
+  output:
+    summary: outputs.summary

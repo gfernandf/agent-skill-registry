@@ -1,5 +1,1315 @@
 [
   {
+    "id": "agent.plan-and-route",
+    "version": "0.1.0",
+    "name": "Plan and Route",
+    "description": "Generate a plan from an objective and route it.",
+    "channel": "official",
+    "domain": "agent",
+    "slug": "plan-and-route",
+    "file": "skills/official/agent/plan-and-route/skill.yaml",
+    "inputs": {
+      "objective": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "plan": {
+        "type": "object",
+        "required": true
+      },
+      "route": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "generate_plan",
+        "uses": "agent.plan.generate",
+        "input": {
+          "objective": "inputs.objective"
+        },
+        "output": {
+          "plan": "outputs.plan"
+        }
+      },
+      {
+        "id": "route_plan",
+        "uses": "agent.route",
+        "input": {
+          "input": "outputs.plan"
+        },
+        "output": {
+          "route": "outputs.route"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.plan.generate",
+      "agent.route"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "agent.plan-from-objective",
+    "version": "0.1.0",
+    "name": "Plan From Objective",
+    "description": "Generate a plan from an objective.",
+    "channel": "official",
+    "domain": "agent",
+    "slug": "plan-from-objective",
+    "file": "skills/official/agent/plan-from-objective/skill.yaml",
+    "inputs": {
+      "objective": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "plan": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "generate_plan",
+        "uses": "agent.plan.generate",
+        "input": {
+          "objective": "inputs.objective"
+        },
+        "output": {
+          "plan": "outputs.plan"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.plan.generate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "audio.transcribe-summary",
+    "version": "0.1.0",
+    "name": "Transcribe Summary",
+    "description": "Transcribe audio and summarize the transcript.",
+    "channel": "official",
+    "domain": "audio",
+    "slug": "transcribe-summary",
+    "file": "skills/official/audio/transcribe-summary/skill.yaml",
+    "inputs": {
+      "audio": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "transcript": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "transcribe_audio",
+        "uses": "audio.transcribe",
+        "input": {
+          "audio": "inputs.audio"
+        },
+        "output": {
+          "transcript": "outputs.transcript"
+        }
+      },
+      {
+        "id": "summarize_transcript",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.transcript"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "audio.transcribe",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "code.diff-summary",
+    "version": "0.1.0",
+    "name": "Diff Summary",
+    "description": "Extract a code diff and summarize it.",
+    "channel": "official",
+    "domain": "code",
+    "slug": "diff-summary",
+    "file": "skills/official/code/diff-summary/skill.yaml",
+    "inputs": {
+      "code_a": {
+        "type": "string",
+        "required": true
+      },
+      "code_b": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "diff": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_diff",
+        "uses": "code.diff.extract",
+        "input": {
+          "code_a": "inputs.code_a",
+          "code_b": "inputs.code_b"
+        },
+        "output": {
+          "diff": "outputs.diff"
+        }
+      },
+      {
+        "id": "summarize_diff",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.diff"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "code.diff.extract",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "data.parse-and-validate",
+    "version": "0.1.0",
+    "name": "Parse and Validate",
+    "description": "Parse JSON text and validate it against a schema.",
+    "channel": "official",
+    "domain": "data",
+    "slug": "parse-and-validate",
+    "file": "skills/official/data/parse-and-validate/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "schema": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "outputs": {
+      "data": {
+        "type": "object",
+        "required": true
+      },
+      "valid": {
+        "type": "boolean",
+        "required": true
+      },
+      "errors": {
+        "type": "array",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "parse_json",
+        "uses": "data.json.parse",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "data": "outputs.data"
+        }
+      },
+      {
+        "id": "validate_schema",
+        "uses": "data.schema.validate",
+        "input": {
+          "data": "outputs.data",
+          "schema": "inputs.schema"
+        },
+        "output": {
+          "valid": "outputs.valid",
+          "errors": "outputs.errors"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.json.parse",
+      "data.schema.validate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "doc.chunk-and-embed",
+    "version": "0.1.0",
+    "name": "Chunk and Embed",
+    "description": "Split text into chunks and generate embeddings for the original text.",
+    "channel": "official",
+    "domain": "doc",
+    "slug": "chunk-and-embed",
+    "file": "skills/official/doc/chunk-and-embed/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "chunk_size": {
+        "type": "number",
+        "required": false
+      },
+      "overlap": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "outputs": {
+      "chunks": {
+        "type": "array",
+        "required": true
+      },
+      "embedding": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "chunk",
+        "uses": "doc.chunk",
+        "input": {
+          "text": "inputs.text",
+          "chunk_size": "inputs.chunk_size",
+          "overlap": "inputs.overlap"
+        },
+        "output": {
+          "chunks": "outputs.chunks"
+        }
+      },
+      {
+        "id": "embed",
+        "uses": "text.embed",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "embedding": "outputs.embedding"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "doc.chunk",
+      "text.embed"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "doc.chunk-text",
+    "version": "0.1.0",
+    "name": "Chunk Text",
+    "description": "Split text into chunks.",
+    "channel": "official",
+    "domain": "doc",
+    "slug": "chunk-text",
+    "file": "skills/official/doc/chunk-text/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "chunk_size": {
+        "type": "number",
+        "required": false
+      },
+      "overlap": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "outputs": {
+      "chunks": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "chunk",
+        "uses": "doc.chunk",
+        "input": {
+          "text": "inputs.text",
+          "chunk_size": "inputs.chunk_size",
+          "overlap": "inputs.overlap"
+        },
+        "output": {
+          "chunks": "outputs.chunks"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "doc.chunk"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "email.read-summary",
+    "version": "0.1.0",
+    "name": "Read Email Summary",
+    "description": "Read emails from a mailbox and summarize their content.",
+    "channel": "official",
+    "domain": "email",
+    "slug": "read-summary",
+    "file": "skills/official/email/read-summary/skill.yaml",
+    "inputs": {
+      "mailbox": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "messages": {
+        "type": "array",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "read_email",
+        "uses": "email.read",
+        "input": {
+          "mailbox": "inputs.mailbox"
+        },
+        "output": {
+          "messages": "outputs.messages"
+        }
+      },
+      {
+        "id": "summarize_messages",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.messages"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "email.read",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "image.caption-and-classify",
+    "version": "0.1.0",
+    "name": "Caption and Classify Image",
+    "description": "Generate a caption for an image and classify it.",
+    "channel": "official",
+    "domain": "image",
+    "slug": "caption-and-classify",
+    "file": "skills/official/image/caption-and-classify/skill.yaml",
+    "inputs": {
+      "image": {
+        "type": "string",
+        "required": true
+      },
+      "labels": {
+        "type": "array",
+        "required": false
+      }
+    },
+    "outputs": {
+      "caption": {
+        "type": "string",
+        "required": true
+      },
+      "label": {
+        "type": "string",
+        "required": true
+      },
+      "confidence": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "caption_image",
+        "uses": "image.caption.generate",
+        "input": {
+          "image": "inputs.image"
+        },
+        "output": {
+          "caption": "outputs.caption"
+        }
+      },
+      {
+        "id": "classify_image",
+        "uses": "image.classify",
+        "input": {
+          "image": "inputs.image",
+          "labels": "inputs.labels"
+        },
+        "output": {
+          "label": "outputs.label",
+          "confidence": "outputs.confidence"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "image.caption.generate",
+      "image.classify"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "memory.retrieve-summary",
+    "version": "0.1.0",
+    "name": "Retrieve Summary",
+    "description": "Retrieve a memory value and summarize it.",
+    "channel": "official",
+    "domain": "memory",
+    "slug": "retrieve-summary",
+    "file": "skills/official/memory/retrieve-summary/skill.yaml",
+    "inputs": {
+      "key": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "value": {
+        "type": "object",
+        "required": false
+      },
+      "found": {
+        "type": "boolean",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "retrieve_memory",
+        "uses": "memory.retrieve",
+        "input": {
+          "key": "inputs.key"
+        },
+        "output": {
+          "value": "outputs.value",
+          "found": "outputs.found"
+        }
+      },
+      {
+        "id": "summarize_value",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.value"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "memory.retrieve",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "memory.store-embedding",
+    "version": "0.1.0",
+    "name": "Store Embedding",
+    "description": "Generate an embedding from text and store it in memory.",
+    "channel": "official",
+    "domain": "memory",
+    "slug": "store-embedding",
+    "file": "skills/official/memory/store-embedding/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "key": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "embedding": {
+        "type": "array",
+        "required": true
+      },
+      "stored": {
+        "type": "boolean",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "embed_text",
+        "uses": "text.embed",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "embedding": "outputs.embedding"
+        }
+      },
+      {
+        "id": "store_embedding",
+        "uses": "memory.store",
+        "input": {
+          "key": "inputs.key",
+          "value": "outputs.embedding"
+        },
+        "output": {
+          "stored": "outputs.stored"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "memory.store",
+      "text.embed"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "memory.store-summary",
+    "version": "0.1.0",
+    "name": "Store Summary",
+    "description": "Summarize text and store the summary in memory.",
+    "channel": "official",
+    "domain": "memory",
+    "slug": "store-summary",
+    "file": "skills/official/memory/store-summary/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "key": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true
+      },
+      "stored": {
+        "type": "boolean",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      },
+      {
+        "id": "store_memory",
+        "uses": "memory.store",
+        "input": {
+          "key": "inputs.key",
+          "value": "outputs.summary"
+        },
+        "output": {
+          "stored": "outputs.stored"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "memory.store",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "pdf.chunk-and-embed",
+    "version": "0.1.0",
+    "name": "PDF Chunk and Embed",
+    "description": "Read a PDF, chunk its text, and generate embeddings for the full text.",
+    "channel": "official",
+    "domain": "pdf",
+    "slug": "chunk-and-embed",
+    "file": "skills/official/pdf/chunk-and-embed/skill.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true
+      },
+      "chunk_size": {
+        "type": "number",
+        "required": false
+      },
+      "overlap": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "chunks": {
+        "type": "array",
+        "required": true
+      },
+      "embedding": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "read_pdf",
+        "uses": "pdf.read",
+        "input": {
+          "path": "inputs.path"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "chunk",
+        "uses": "doc.chunk",
+        "input": {
+          "text": "outputs.text",
+          "chunk_size": "inputs.chunk_size",
+          "overlap": "inputs.overlap"
+        },
+        "output": {
+          "chunks": "outputs.chunks"
+        }
+      },
+      {
+        "id": "embed",
+        "uses": "text.embed",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "embedding": "outputs.embedding"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "doc.chunk",
+      "pdf.read",
+      "text.embed"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "pdf.read-keyword-summary",
+    "version": "0.1.0",
+    "name": "Read PDF Keyword Summary",
+    "description": "Read a PDF, extract keywords, and summarize its text.",
+    "channel": "official",
+    "domain": "pdf",
+    "slug": "read-keyword-summary",
+    "file": "skills/official/pdf/read-keyword-summary/skill.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "keywords": {
+        "type": "array",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "read_pdf",
+        "uses": "pdf.read",
+        "input": {
+          "path": "inputs.path"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "extract_keywords",
+        "uses": "text.keyword.extract",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "keywords": "outputs.keywords"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "pdf.read",
+      "text.keyword.extract",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "pdf.read-summary",
+    "version": "0.1.0",
+    "name": "Read PDF Summary",
+    "description": "Read a PDF and summarize its text.",
+    "channel": "official",
+    "domain": "pdf",
+    "slug": "read-summary",
+    "file": "skills/official/pdf/read-summary/skill.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "read_pdf",
+        "uses": "pdf.read",
+        "input": {
+          "path": "inputs.path"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "pdf.read",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "table.filter-summary",
+    "version": "0.1.0",
+    "name": "Filter Table Summary",
+    "description": "Filter a table and summarize the filtered rows.",
+    "channel": "official",
+    "domain": "table",
+    "slug": "filter-summary",
+    "file": "skills/official/table/filter-summary/skill.yaml",
+    "inputs": {
+      "table": {
+        "type": "array",
+        "required": true
+      },
+      "condition": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "outputs": {
+      "table": {
+        "type": "array",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "filter_table",
+        "uses": "table.filter",
+        "input": {
+          "table": "inputs.table",
+          "condition": "inputs.condition"
+        },
+        "output": {
+          "table": "outputs.table"
+        }
+      },
+      {
+        "id": "summarize_table",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.table"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "table.filter",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.classify-input",
+    "version": "0.1.0",
+    "name": "Classify Input",
+    "description": "Classify text input into a label.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "classify-input",
+    "file": "skills/official/text/classify-input/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "labels": {
+        "type": "array",
+        "required": false
+      }
+    },
+    "outputs": {
+      "label": {
+        "type": "string",
+        "required": true
+      },
+      "confidence": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "classify",
+        "uses": "text.classify",
+        "input": {
+          "text": "inputs.text",
+          "labels": "inputs.labels"
+        },
+        "output": {
+          "label": "outputs.label",
+          "confidence": "outputs.confidence"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.classify"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.detect-language-and-classify",
+    "version": "0.1.0",
+    "name": "Detect Language and Classify",
+    "description": "Detect the language of a text and classify it.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "detect-language-and-classify",
+    "file": "skills/official/text/detect-language-and-classify/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "labels": {
+        "type": "array",
+        "required": false
+      }
+    },
+    "outputs": {
+      "language": {
+        "type": "string",
+        "required": true
+      },
+      "label": {
+        "type": "string",
+        "required": true
+      },
+      "confidence": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "detect_language",
+        "uses": "text.language.detect",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "language": "outputs.language"
+        }
+      },
+      {
+        "id": "classify",
+        "uses": "text.classify",
+        "input": {
+          "text": "inputs.text",
+          "labels": "inputs.labels"
+        },
+        "output": {
+          "label": "outputs.label",
+          "confidence": "outputs.confidence"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.classify",
+      "text.language.detect"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.entity-summary",
+    "version": "0.1.0",
+    "name": "Entity Summary",
+    "description": "Extract named entities and summarize text.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "entity-summary",
+    "file": "skills/official/text/entity-summary/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "entities": {
+        "type": "array",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_entities",
+        "uses": "text.entity.extract",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "entities": "outputs.entities"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.entity.extract",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.extract-entities",
+    "version": "0.1.0",
+    "name": "Extract Entities",
+    "description": "Extract named entities from text.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "extract-entities",
+    "file": "skills/official/text/extract-entities/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "entities": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_entities",
+        "uses": "text.entity.extract",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "entities": "outputs.entities"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.entity.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.extract-keywords",
+    "version": "0.1.0",
+    "name": "Extract Keywords",
+    "description": "Extract keywords from text.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "extract-keywords",
+    "file": "skills/official/text/extract-keywords/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "keywords": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_keywords",
+        "uses": "text.keyword.extract",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "keywords": "outputs.keywords"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.keyword.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
     "id": "text.hello-world",
     "version": "0.1.0",
     "name": "Hello World",
@@ -119,6 +1429,66 @@
     }
   },
   {
+    "id": "text.language-summary",
+    "version": "0.1.0",
+    "name": "Language Summary",
+    "description": "Detect the language of a text and summarize it.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "language-summary",
+    "file": "skills/official/text/language-summary/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "language": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "detect_language",
+        "uses": "text.language.detect",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "language": "outputs.language"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.language.detect",
+      "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
     "id": "text.simple-summarize",
     "version": "0.1.0",
     "name": "Simple Summarize",
@@ -153,6 +1523,156 @@
     ],
     "uses_capabilities": [
       "text.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "text.translate-summary",
+    "version": "0.1.0",
+    "name": "Translate Summary",
+    "description": "Translate text and then summarize the translation.",
+    "channel": "official",
+    "domain": "text",
+    "slug": "translate-summary",
+    "file": "skills/official/text/translate-summary/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "target_language": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "translation": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "translate",
+        "uses": "text.translate",
+        "input": {
+          "text": "inputs.text",
+          "target_language": "inputs.target_language"
+        },
+        "output": {
+          "translation": "outputs.translation"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.translation"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.summarize",
+      "text.translate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "web.fetch-classify",
+    "version": "0.1.0",
+    "name": "Fetch and Classify",
+    "description": "Fetch a web page, extract its main text, and classify the content.",
+    "channel": "official",
+    "domain": "web",
+    "slug": "fetch-classify",
+    "file": "skills/official/web/fetch-classify/skill.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true
+      },
+      "labels": {
+        "type": "array",
+        "required": false
+      }
+    },
+    "outputs": {
+      "content": {
+        "type": "string",
+        "required": true
+      },
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "label": {
+        "type": "string",
+        "required": true
+      },
+      "confidence": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "fetch",
+        "uses": "web.fetch",
+        "input": {
+          "url": "inputs.url"
+        },
+        "output": {
+          "content": "outputs.content"
+        }
+      },
+      {
+        "id": "extract_page",
+        "uses": "web.page.extract",
+        "input": {
+          "content": "outputs.content"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "classify",
+        "uses": "text.classify",
+        "input": {
+          "text": "outputs.text",
+          "labels": "inputs.labels"
+        },
+        "output": {
+          "label": "outputs.label",
+          "confidence": "outputs.confidence"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.classify",
+      "web.fetch",
+      "web.page.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -220,6 +1740,231 @@
       "text.extract",
       "text.summarize",
       "web.fetch"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "web.page-chunk-and-embed",
+    "version": "0.1.0",
+    "name": "Web Page Chunk and Embed",
+    "description": "Fetch a web page, extract main text, chunk it, and generate embeddings.",
+    "channel": "official",
+    "domain": "web",
+    "slug": "page-chunk-and-embed",
+    "file": "skills/official/web/page-chunk-and-embed/skill.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true
+      },
+      "chunk_size": {
+        "type": "number",
+        "required": false
+      },
+      "overlap": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "outputs": {
+      "content": {
+        "type": "string",
+        "required": true
+      },
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "chunks": {
+        "type": "array",
+        "required": true
+      },
+      "embedding": {
+        "type": "array",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "fetch",
+        "uses": "web.fetch",
+        "input": {
+          "url": "inputs.url"
+        },
+        "output": {
+          "content": "outputs.content"
+        }
+      },
+      {
+        "id": "extract_page",
+        "uses": "web.page.extract",
+        "input": {
+          "content": "outputs.content"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "chunk",
+        "uses": "doc.chunk",
+        "input": {
+          "text": "outputs.text",
+          "chunk_size": "inputs.chunk_size",
+          "overlap": "inputs.overlap"
+        },
+        "output": {
+          "chunks": "outputs.chunks"
+        }
+      },
+      {
+        "id": "embed",
+        "uses": "text.embed",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "embedding": "outputs.embedding"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "doc.chunk",
+      "text.embed",
+      "web.fetch",
+      "web.page.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "web.page-summary",
+    "version": "0.1.0",
+    "name": "Page Summary",
+    "description": "Extract main text from page content and summarize it.",
+    "channel": "official",
+    "domain": "web",
+    "slug": "page-summary",
+    "file": "skills/official/web/page-summary/skill.yaml",
+    "inputs": {
+      "content": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_page",
+        "uses": "web.page.extract",
+        "input": {
+          "content": "inputs.content"
+        },
+        "output": {
+          "text": "outputs.text"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.summarize",
+      "web.page.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "use_cases": [],
+      "examples": []
+    }
+  },
+  {
+    "id": "web.search-summary",
+    "version": "0.1.0",
+    "name": "Search Summary",
+    "description": "Search the web and summarize the search results.",
+    "channel": "official",
+    "domain": "web",
+    "slug": "search-summary",
+    "file": "skills/official/web/search-summary/skill.yaml",
+    "inputs": {
+      "query": {
+        "type": "string",
+        "required": true
+      },
+      "limit": {
+        "type": "number",
+        "required": false
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true
+      },
+      "summary": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "steps": [
+      {
+        "id": "search",
+        "uses": "web.search",
+        "input": {
+          "query": "inputs.query",
+          "limit": "inputs.limit"
+        },
+        "output": {
+          "results": "outputs.results"
+        }
+      },
+      {
+        "id": "summarize_results",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.results"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "text.summarize",
+      "web.search"
     ],
     "uses_skills": [],
     "metadata": {

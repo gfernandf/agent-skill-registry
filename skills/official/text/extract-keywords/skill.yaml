@@ -1,0 +1,19 @@
+id: text.extract-keywords
+version: 0.1.0
+name: Extract Keywords
+description: Extract keywords from text.
+inputs:
+  text:
+    type: string
+    required: true
+outputs:
+  keywords:
+    type: array
+    required: true
+steps:
+- id: extract_keywords
+  uses: text.keyword.extract
+  input:
+    text: inputs.text
+  output:
+    keywords: outputs.keywords
