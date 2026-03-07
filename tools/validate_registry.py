@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set
 
 import yaml
 
@@ -51,16 +51,13 @@ def discover_skill_files(base: Path) -> List[Path]:
 def load_vocabulary(base: Path) -> Dict[str, Any]:
     vocab_path = base / "vocabulary" / "vocabulary.json"
     if not vocab_path.exists():
-        raise FileNotFoundError(
-            f"Vocabulary file not found: {vocab_path}"
-        )
+        raise FileNotFoundError(f"Vocabulary file not found: {vocab_path}")
     return load_json(vocab_path)
 
 
 def validate_capability_id_against_vocab(
     capability_id: str, vocab: Dict[str, Any], errors: List[str], path: Path
 ) -> None:
-
     rules = vocab.get("rules", {})
     max_segments = rules.get("max_segments", 3)
 
@@ -109,7 +106,6 @@ def validate_metadata_block(
     errors: List[str],
     skill_mode: bool = False,
 ) -> None:
-
     if metadata is None:
         return
 
@@ -118,8 +114,13 @@ def validate_metadata_block(
         return
 
     tags = metadata.get("tags")
-    if tags is not None and not isinstance(tags, list):
-        errors.append(f"{path}: metadata.tags must be a list")
+    if tags is not None:
+        if not isinstance(tags, list):
+            errors.append(f"{path}: metadata.tags must be a list")
+        else:
+            for tag in tags:
+                if not isinstance(tag, str):
+                    errors.append(f"{path}: metadata.tags entries must be strings")
 
     category = metadata.get("category")
     if category is not None and not isinstance(category, str):
@@ -127,9 +128,7 @@ def validate_metadata_block(
 
     status = metadata.get("status")
     if status is not None and status not in ALLOWED_STATUS:
-        errors.append(
-            f"{path}: metadata.status must be one of {ALLOWED_STATUS}"
-        )
+        errors.append(f"{path}: metadata.status must be one of {sorted(ALLOWED_STATUS)}")
 
     examples = metadata.get("examples")
     if examples is not None and not isinstance(examples, list):
@@ -137,8 +136,13 @@ def validate_metadata_block(
 
     if skill_mode:
         use_cases = metadata.get("use_cases")
-        if use_cases is not None and not isinstance(use_cases, list):
-            errors.append(f"{path}: metadata.use_cases must be a list")
+        if use_cases is not None:
+            if not isinstance(use_cases, list):
+                errors.append(f"{path}: metadata.use_cases must be a list")
+            else:
+                for use_case in use_cases:
+                    if not isinstance(use_case, str):
+                        errors.append(f"{path}: metadata.use_cases entries must be strings")
 
 
 # ----------------------------------------------------------------------
@@ -149,7 +153,6 @@ def validate_metadata_block(
 def validate_capability_structure(
     path: Path, data: Dict[str, Any], vocab: Dict[str, Any], errors: List[str]
 ) -> None:
-
     required = ["id", "version", "description", "inputs", "outputs"]
     for r in required:
         if r not in data:
@@ -164,6 +167,12 @@ def validate_capability_structure(
 
     validate_capability_id_against_vocab(capability_id, vocab, errors, path)
 
+    if not isinstance(data.get("version"), str) or not data.get("version"):
+        errors.append(f"{path}: version must be a non-empty string")
+
+    if not isinstance(data.get("description"), str) or not data.get("description"):
+        errors.append(f"{path}: description must be a non-empty string")
+
     if not isinstance(data.get("inputs"), dict):
         errors.append(f"{path}: 'inputs' must be mapping")
 
@@ -173,13 +182,39 @@ def validate_capability_structure(
     validate_metadata_block(data.get("metadata"), path, errors)
 
 
+def validate_capability_semantics(
+    path: Path,
+    data: Dict[str, Any],
+    capability_ids: Set[str],
+    errors: List[str],
+) -> None:
+    metadata = data.get("metadata", {})
+    status = None
+    if isinstance(metadata, dict):
+        status = metadata.get("status")
+
+    replacement = data.get("replacement")
+
+    if status == "deprecated":
+        if not isinstance(replacement, str) or not replacement:
+            errors.append(
+                f"{path}: deprecated capability must define a non-empty 'replacement'"
+            )
+        elif replacement not in capability_ids:
+            errors.append(
+                f"{path}: replacement '{replacement}' does not reference an existing capability"
+            )
+
+    if replacement is not None and not isinstance(replacement, str):
+        errors.append(f"{path}: replacement must be a string when present")
+
+
 # ----------------------------------------------------------------------
 # Skill validation
 # ----------------------------------------------------------------------
 
 
 def validate_skill_structure(path: Path, data: Dict[str, Any], errors: List[str]) -> None:
-
     required = [
         "id",
         "version",
@@ -195,8 +230,47 @@ def validate_skill_structure(path: Path, data: Dict[str, Any], errors: List[str]
             errors.append(f"{path}: missing required field '{r}'")
             return
 
-    if not isinstance(data.get("steps"), list):
+    if not isinstance(data.get("id"), str) or not data.get("id"):
+        errors.append(f"{path}: id must be a non-empty string")
+
+    if not isinstance(data.get("version"), str) or not data.get("version"):
+        errors.append(f"{path}: version must be a non-empty string")
+
+    if not isinstance(data.get("name"), str) or not data.get("name"):
+        errors.append(f"{path}: name must be a non-empty string")
+
+    if not isinstance(data.get("description"), str) or not data.get("description"):
+        errors.append(f"{path}: description must be a non-empty string")
+
+    if not isinstance(data.get("inputs"), dict):
+        errors.append(f"{path}: inputs must be a mapping")
+
+    if not isinstance(data.get("outputs"), dict):
+        errors.append(f"{path}: outputs must be a mapping")
+
+    steps = data.get("steps")
+    if not isinstance(steps, list):
         errors.append(f"{path}: steps must be a list")
+    else:
+        step_ids: Set[str] = set()
+        for step in steps:
+            if not isinstance(step, dict):
+                errors.append(f"{path}: each step must be a mapping")
+                continue
+
+            step_id = step.get("id")
+            if not isinstance(step_id, str) or not step_id:
+                errors.append(f"{path}: each step must have a non-empty string 'id'")
+            else:
+                if step_id in step_ids:
+                    errors.append(f"{path}: duplicate step id '{step_id}'")
+                step_ids.add(step_id)
+
+            uses = step.get("uses")
+            if not isinstance(uses, str) or not uses:
+                errors.append(
+                    f"{path}: step '{step_id if isinstance(step_id, str) else '<unknown>'}' must define a non-empty string 'uses'"
+                )
 
     validate_metadata_block(
         data.get("metadata"),
@@ -214,14 +288,15 @@ def validate_skill_structure(path: Path, data: Dict[str, Any], errors: List[str]
 def validate_skill_references(
     path: Path,
     data: Dict[str, Any],
-    capability_ids: set[str],
-    skill_ids: set[str],
+    capability_ids: Set[str],
+    skill_ids: Set[str],
     errors: List[str],
 ) -> None:
-
     steps = data.get("steps", [])
 
     for step in steps:
+        if not isinstance(step, dict):
+            continue
 
         uses = step.get("uses")
         sid = step.get("id", "<unknown>")
@@ -231,17 +306,69 @@ def validate_skill_references(
 
         if uses.startswith("skill:"):
             ref = uses.split("skill:", 1)[1]
-
             if ref not in skill_ids:
                 errors.append(
                     f"{path}: step '{sid}' references unknown skill '{ref}'"
                 )
-
         else:
             if uses not in capability_ids:
                 errors.append(
                     f"{path}: step '{sid}' references unknown capability '{uses}'"
                 )
+
+
+def build_skill_dependency_graph(skill_docs: Dict[str, Dict[str, Any]]) -> Dict[str, Set[str]]:
+    graph: Dict[str, Set[str]] = {}
+
+    for skill_id, data in skill_docs.items():
+        deps: Set[str] = set()
+        steps = data.get("steps", [])
+        if isinstance(steps, list):
+            for step in steps:
+                if not isinstance(step, dict):
+                    continue
+                uses = step.get("uses")
+                if isinstance(uses, str) and uses.startswith("skill:"):
+                    deps.add(uses.split("skill:", 1)[1])
+        graph[skill_id] = deps
+
+    return graph
+
+
+def detect_skill_cycles(graph: Dict[str, Set[str]], errors: List[str]) -> None:
+    visited: Set[str] = set()
+    visiting: Set[str] = set()
+    stack: List[str] = []
+
+    def dfs(node: str) -> None:
+        if node in visiting:
+            try:
+                start_idx = stack.index(node)
+                cycle = stack[start_idx:] + [node]
+            except ValueError:
+                cycle = stack + [node]
+            errors.append(
+                "skill dependency cycle detected: " + " -> ".join(cycle)
+            )
+            return
+
+        if node in visited:
+            return
+
+        visiting.add(node)
+        stack.append(node)
+
+        for neighbor in graph.get(node, set()):
+            if neighbor in graph:
+                dfs(neighbor)
+
+        stack.pop()
+        visiting.remove(node)
+        visited.add(node)
+
+    for node in graph:
+        if node not in visited:
+            dfs(node)
 
 
 # ----------------------------------------------------------------------
@@ -250,7 +377,6 @@ def validate_skill_references(
 
 
 def main() -> int:
-
     base = Path.cwd()
     errors: List[str] = []
 
@@ -259,11 +385,13 @@ def main() -> int:
     capability_files = discover_capability_files(base)
     skill_files = discover_skill_files(base)
 
-    capability_ids: set[str] = set()
-    skill_ids: set[str] = set()
+    capability_ids: Set[str] = set()
+    skill_ids: Set[str] = set()
+
+    capability_docs: Dict[str, Dict[str, Any]] = {}
+    skill_docs: Dict[str, Dict[str, Any]] = {}
 
     for path in capability_files:
-
         data = load_yaml(path)
 
         if not isinstance(data, dict):
@@ -275,9 +403,9 @@ def main() -> int:
         cid = data.get("id")
         if isinstance(cid, str):
             capability_ids.add(cid)
+            capability_docs[cid] = data
 
     for path in skill_files:
-
         data = load_yaml(path)
 
         if not isinstance(data, dict):
@@ -289,9 +417,15 @@ def main() -> int:
         sid = data.get("id")
         if isinstance(sid, str):
             skill_ids.add(sid)
+            skill_docs[sid] = data
+
+    for path in capability_files:
+        data = load_yaml(path)
+        if not isinstance(data, dict):
+            continue
+        validate_capability_semantics(path, data, capability_ids, errors)
 
     for path in skill_files:
-
         data = load_yaml(path)
 
         if not isinstance(data, dict):
@@ -304,6 +438,9 @@ def main() -> int:
             skill_ids,
             errors,
         )
+
+    skill_graph = build_skill_dependency_graph(skill_docs)
+    detect_skill_cycles(skill_graph, errors)
 
     if errors:
         print("VALIDATION FAILED\n")

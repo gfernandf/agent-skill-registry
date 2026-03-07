@@ -1,178 +1,118 @@
 {
+  "rules": {
+    "max_segments": 3,
+    "allowed_forms": [
+      "domain.verb",
+      "domain.noun.verb"
+    ]
+  },
+
   "domains": {
-    "text": {
-      "description": "Operations on natural language text."
-    },
-    "web": {
-      "description": "Operations involving web resources."
-    },
-    "data": {
-      "description": "Operations on structured or semi-structured data."
-    },
-    "pdf": {
-      "description": "Operations on PDF documents."
-    },
-    "fs": {
-      "description": "Filesystem operations."
-    },
-    "image": {
-      "description": "Operations on images."
-    },
-    "audio": {
-      "description": "Operations on audio signals."
-    },
-    "video": {
-      "description": "Operations on video content."
-    },
-    "table": {
-      "description": "Operations on tabular data."
-    },
-    "model": {
-      "description": "Operations involving machine learning models."
-    }
+    "text": "Natural language text processing",
+    "web": "Web resources and pages",
+    "data": "Structured data processing",
+    "pdf": "PDF document handling",
+    "fs": "Filesystem operations",
+    "image": "Image processing and analysis",
+    "audio": "Audio processing",
+    "video": "Video processing",
+    "table": "Tabular data operations",
+    "model": "Machine learning and AI model operations",
+    "code": "Source code generation and analysis",
+    "doc": "General document processing",
+    "agent": "Agent orchestration and planning",
+    "task": "Task and workflow automation",
+    "memory": "Agent or system memory operations",
+    "message": "Generic messaging operations",
+    "email": "Email communication"
   },
 
   "nouns": {
-    "json": {
-      "description": "JSON structured data."
-    },
-    "csv": {
-      "description": "CSV structured data."
-    },
-    "page": {
-      "description": "Web page content."
-    },
-    "document": {
-      "description": "Generic document content."
-    },
-    "language": {
-      "description": "Language-related text entity."
-    },
-    "entity": {
-      "description": "Named entity extracted from text."
-    },
-    "keyword": {
-      "description": "Keyword extracted from text."
-    },
-    "embedding": {
-      "description": "Vector embedding representation."
-    },
-    "schema": {
-      "description": "Structured schema definition."
-    },
-    "metadata": {
-      "description": "Metadata extracted from resources."
-    },
-    "table": {
-      "description": "Tabular representation of data."
-    },
-    "row": {
-      "description": "Row element in tabular data."
-    },
-    "column": {
-      "description": "Column element in tabular data."
-    },
-    "image": {
-      "description": "Image resource."
-    },
-    "frame": {
-      "description": "Frame extracted from video."
-    }
+    "json": "JSON data structure",
+    "csv": "CSV data format",
+    "page": "Web page",
+    "document": "Generic document",
+    "language": "Language identifier or code",
+    "entity": "Named entity",
+    "keyword": "Keyword or key phrase",
+    "embedding": "Vector embedding",
+    "schema": "Data schema definition",
+    "metadata": "Metadata information",
+    "table": "Tabular dataset",
+    "row": "Table row",
+    "column": "Table column",
+    "image": "Image content",
+    "frame": "Video frame",
+    "html": "HTML document",
+    "xml": "XML document",
+    "docx": "Microsoft Word document",
+    "markdown": "Markdown document",
+    "query": "Search or data query",
+    "chunk": "Segment of text or document",
+    "label": "Classification label",
+    "summary": "Generated summary",
+    "caption": "Image or video caption",
+    "transcript": "Speech transcript",
+    "audio": "Audio content",
+    "video": "Video content",
+    "code": "Source code",
+    "diff": "Code difference",
+    "plan": "Agent plan or strategy",
+    "response": "Generated response",
+    "prompt": "Model prompt",
+    "message": "Message content",
+    "email": "Email message",
+    "attachment": "File attachment",
+    "memory": "Stored memory entry",
+    "vector": "Vector representation"
   },
 
   "verbs": {
-    "read": {
-      "description": "Read content from a source."
-    },
-    "write": {
-      "description": "Write content to a destination."
-    },
-    "fetch": {
-      "description": "Retrieve content from a remote resource."
-    },
-    "search": {
-      "description": "Search for resources matching a query."
-    },
-    "list": {
-      "description": "List available items in a collection."
-    },
-    "get": {
-      "description": "Retrieve a specific resource."
-    },
-
-    "extract": {
-      "description": "Extract relevant content from input."
-    },
-    "summarize": {
-      "description": "Produce a concise summary of content."
-    },
-    "translate": {
-      "description": "Translate text between languages."
-    },
-    "classify": {
-      "description": "Assign content to a category."
-    },
-    "detect": {
-      "description": "Detect attributes or properties."
-    },
-    "identify": {
-      "description": "Identify specific elements in content."
-    },
-    "score": {
-      "description": "Compute a score or ranking metric."
-    },
-    "rank": {
-      "description": "Order items by relevance."
-    },
-
-    "parse": {
-      "description": "Parse structured input into a usable representation."
-    },
-    "split": {
-      "description": "Split content into smaller units."
-    },
-    "merge": {
-      "description": "Combine multiple inputs."
-    },
-    "filter": {
-      "description": "Filter elements based on criteria."
-    },
-    "map": {
-      "description": "Apply transformation to each element."
-    },
-    "convert": {
-      "description": "Convert content between formats."
-    },
-    "normalize": {
-      "description": "Normalize content representation."
-    },
-
-    "generate": {
-      "description": "Generate new content."
-    },
-    "template": {
-      "description": "Render content using a template."
-    },
-    "embed": {
-      "description": "Generate vector embeddings."
-    },
-
-    "validate": {
-      "description": "Validate content against rules."
-    },
-    "compare": {
-      "description": "Compare two or more inputs."
-    },
-    "measure": {
-      "description": "Compute quantitative metrics."
-    }
-  },
-
-  "rules": {
-    "capability_id_forms": [
-      "domain.verb",
-      "domain.noun.verb"
-    ],
-    "max_segments": 3
+    "read": "Read data from a source",
+    "write": "Write data to a destination",
+    "fetch": "Retrieve resource over network",
+    "search": "Search within a dataset or index",
+    "list": "List available resources",
+    "get": "Retrieve a specific item",
+    "extract": "Extract structured information",
+    "summarize": "Produce a concise summary",
+    "translate": "Translate content between languages",
+    "classify": "Assign a category label",
+    "detect": "Detect the presence of a feature",
+    "identify": "Identify a specific entity",
+    "score": "Assign a numerical score",
+    "rank": "Order items by relevance",
+    "parse": "Parse structured content",
+    "split": "Split content into parts",
+    "merge": "Merge multiple inputs",
+    "filter": "Filter elements by condition",
+    "map": "Apply transformation to elements",
+    "convert": "Convert between formats",
+    "normalize": "Normalize content representation",
+    "generate": "Generate new content",
+    "template": "Render using a template",
+    "embed": "Generate vector embeddings",
+    "validate": "Validate against schema or rules",
+    "compare": "Compare two inputs",
+    "measure": "Compute a metric",
+    "analyze": "Analyze structure or meaning",
+    "transform": "Transform structure or representation",
+    "annotate": "Add annotations or labels",
+    "transcribe": "Convert speech to text",
+    "chunk": "Segment content into chunks",
+    "route": "Route to appropriate handler",
+    "plan": "Create a plan or strategy",
+    "delegate": "Delegate to another agent or system",
+    "store": "Store in persistent memory",
+    "retrieve": "Retrieve from memory or index",
+    "send": "Send a message or communication",
+    "reply": "Reply to a message",
+    "update": "Update an existing resource",
+    "delete": "Delete a resource",
+    "create": "Create a new resource",
+    "execute": "Execute a command or code",
+    "run": "Run a process or task",
+    "format": "Format content",
+    "redact": "Remove or mask sensitive information"
   }
 }
