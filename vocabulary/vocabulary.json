@@ -24,7 +24,12 @@
     "task": "Task and workflow automation",
     "memory": "Agent or system memory operations",
     "message": "Generic messaging operations",
-    "email": "Email communication"
+    "email": "Email communication",
+    "policy": "Policy and constraint enforcement",
+    "security": "Security and compliance operations",
+    "eval": "Evaluation and quality scoring",
+    "provenance": "Source provenance and evidence tracking",
+    "ops": "Operational monitoring and cost controls"
   },
 
   "nouns": {
@@ -64,7 +69,19 @@
     "email": "Email message",
     "attachment": "File attachment",
     "memory": "Stored memory entry",
-    "vector": "Vector representation"
+    "vector": "Vector representation",
+    "citation": "Structured citation",
+    "source": "Information source",
+    "claim": "Verifiable claim",
+    "risk": "Risk signal",
+    "pii": "Personally identifiable information",
+    "secret": "Secret or credential",
+    "trace": "Execution trace",
+    "budget": "Execution cost or token budget",
+    "constraint": "Execution constraint",
+    "decision": "Structured decision",
+    "output": "Generated output artifact",
+    "record": "Structured data record"
   },
 
   "verbs": {
@@ -113,6 +130,16 @@
     "execute": "Execute a command or code",
     "run": "Run a process or task",
     "format": "Format content",
-    "redact": "Remove or mask sensitive information"
+    "redact": "Remove or mask sensitive information",
+    "verify": "Verify against evidence or policy",
+    "justify": "Provide structured justification",
+    "reconcile": "Reconcile conflicting inputs",
+    "sanitize": "Sanitize unsafe content",
+    "deduplicate": "Remove duplicate items",
+    "estimate": "Estimate cost or effort",
+    "monitor": "Monitor runtime state",
+    "escalate": "Escalate for review or intervention",
+    "gate": "Allow or block based on rules",
+    "cite": "Attach source citations"
   }
 }

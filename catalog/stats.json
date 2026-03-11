@@ -1,8 +1,8 @@
 {
   "summary": {
-    "capability_count": 33,
+    "capability_count": 45,
     "skill_count": 31,
-    "domain_count": 15,
+    "domain_count": 20,
     "channel_count": 1
   },
   "skills": {
@@ -29,18 +29,23 @@
   "capabilities": {
     "by_domain": {
       "text": 9,
+      "security": 4,
+      "web": 4,
       "agent": 3,
       "code": 3,
-      "web": 3,
-      "data": 2,
+      "data": 3,
       "email": 2,
       "image": 2,
       "memory": 2,
+      "ops": 2,
+      "provenance": 2,
       "audio": 1,
       "doc": 1,
+      "eval": 1,
       "fs": 1,
       "message": 1,
       "pdf": 1,
+      "policy": 1,
       "table": 1,
       "video": 1
     },
@@ -154,10 +159,22 @@
       "agent.delegate",
       "code.execute",
       "code.format",
+      "data.record.deduplicate",
       "email.send",
+      "eval.output.score",
       "fs.read",
       "message.send",
-      "video.frame.extract"
+      "ops.budget.estimate",
+      "ops.trace.monitor",
+      "policy.constraint.validate",
+      "provenance.citation.generate",
+      "provenance.claim.verify",
+      "security.output.gate",
+      "security.pii.detect",
+      "security.pii.redact",
+      "security.secret.detect",
+      "video.frame.extract",
+      "web.source.verify"
     ]
   },
   "dependencies": {

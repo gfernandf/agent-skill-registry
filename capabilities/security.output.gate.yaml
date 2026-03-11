@@ -1,0 +1,25 @@
+id: security.output.gate
+version: 1.0.0
+description: Apply policy gates to decide whether an output can be released.
+inputs:
+  output:
+    type: object
+    required: true
+    description: Output artifact to gate.
+  policy:
+    type: object
+    required: true
+    description: Gating policy definition.
+outputs:
+  allowed:
+    type: boolean
+    required: true
+    description: Whether output is allowed.
+  reasons:
+    type: array
+    required: false
+    description: Reasons for blocking or warnings.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

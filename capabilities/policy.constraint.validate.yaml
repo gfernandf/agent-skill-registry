@@ -1,0 +1,25 @@
+id: policy.constraint.validate
+version: 1.0.0
+description: Validate an output payload against an explicit constraint policy.
+inputs:
+  payload:
+    type: object
+    required: true
+    description: Payload to validate.
+  constraint:
+    type: object
+    required: true
+    description: Constraint policy definition.
+outputs:
+  valid:
+    type: boolean
+    required: true
+    description: Whether the payload satisfies the constraint.
+  violations:
+    type: array
+    required: false
+    description: List of violated rules.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

@@ -1,0 +1,21 @@
+id: security.pii.detect
+version: 1.0.0
+description: Detect personally identifiable information in text content.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Text to inspect.
+outputs:
+  contains_pii:
+    type: boolean
+    required: true
+    description: Whether PII was detected.
+  findings:
+    type: array
+    required: false
+    description: Detected PII findings with types and spans.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

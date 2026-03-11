@@ -1,0 +1,25 @@
+id: eval.output.score
+version: 1.0.0
+description: Score the quality of an output against a rubric.
+inputs:
+  output:
+    type: object
+    required: true
+    description: Output artifact to evaluate.
+  rubric:
+    type: object
+    required: false
+    description: Optional scoring rubric with weighted dimensions.
+outputs:
+  score:
+    type: number
+    required: true
+    description: Overall quality score.
+  dimensions:
+    type: object
+    required: false
+    description: Per-dimension scoring details.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

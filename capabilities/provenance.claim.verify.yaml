@@ -1,0 +1,29 @@
+id: provenance.claim.verify
+version: 1.0.0
+description: Verify whether a claim is supported by provided sources.
+inputs:
+  claim:
+    type: string
+    required: true
+    description: Claim text to verify.
+  sources:
+    type: array
+    required: true
+    description: Candidate evidence sources.
+outputs:
+  verified:
+    type: boolean
+    required: true
+    description: Whether the claim is verified.
+  evidence:
+    type: array
+    required: false
+    description: Supporting evidence snippets.
+  rationale:
+    type: string
+    required: false
+    description: Explanation for verification result.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

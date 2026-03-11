@@ -1,0 +1,29 @@
+id: ops.budget.estimate
+version: 1.0.0
+description: Estimate execution budget for a plan.
+inputs:
+  plan:
+    type: object
+    required: true
+    description: Plan structure including steps.
+  limits:
+    type: object
+    required: false
+    description: Optional budget limits.
+outputs:
+  estimated_cost:
+    type: number
+    required: true
+    description: Estimated cost value.
+  estimated_duration_ms:
+    type: number
+    required: false
+    description: Estimated execution duration in milliseconds.
+  within_budget:
+    type: boolean
+    required: false
+    description: Whether estimate fits provided limits.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

@@ -278,6 +278,47 @@
     }
   },
   {
+    "id": "data.record.deduplicate",
+    "version": "1.0.0",
+    "description": "Deduplicate structured records using key fields.",
+    "file": "capabilities/data.record.deduplicate.yaml",
+    "inputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "Input records."
+      },
+      "key_fields": {
+        "type": "array",
+        "required": false,
+        "description": "Optional key fields used to identify duplicates."
+      }
+    },
+    "outputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "Deduplicated records."
+      },
+      "duplicates": {
+        "type": "integer",
+        "required": false,
+        "description": "Number of removed duplicates."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "data.schema.validate",
     "version": "1.0.0",
     "description": "Validate structured data against a schema.",
@@ -428,6 +469,47 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "eval.output.score",
+    "version": "1.0.0",
+    "description": "Score the quality of an output against a rubric.",
+    "file": "capabilities/eval.output.score.yaml",
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "Output artifact to evaluate."
+      },
+      "rubric": {
+        "type": "object",
+        "required": false,
+        "description": "Optional scoring rubric with weighted dimensions."
+      }
+    },
+    "outputs": {
+      "score": {
+        "type": "number",
+        "required": true,
+        "description": "Overall quality score."
+      },
+      "dimensions": {
+        "type": "object",
+        "required": false,
+        "description": "Per-dimension scoring details."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
       "idempotent": true
     }
   },
@@ -645,6 +727,93 @@
     }
   },
   {
+    "id": "ops.budget.estimate",
+    "version": "1.0.0",
+    "description": "Estimate execution budget for a plan.",
+    "file": "capabilities/ops.budget.estimate.yaml",
+    "inputs": {
+      "plan": {
+        "type": "object",
+        "required": true,
+        "description": "Plan structure including steps."
+      },
+      "limits": {
+        "type": "object",
+        "required": false,
+        "description": "Optional budget limits."
+      }
+    },
+    "outputs": {
+      "estimated_cost": {
+        "type": "number",
+        "required": true,
+        "description": "Estimated cost value."
+      },
+      "estimated_duration_ms": {
+        "type": "number",
+        "required": false,
+        "description": "Estimated execution duration in milliseconds."
+      },
+      "within_budget": {
+        "type": "boolean",
+        "required": false,
+        "description": "Whether estimate fits provided limits."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "ops.trace.monitor",
+    "version": "1.0.0",
+    "description": "Monitor a trace against thresholds and raise alerts.",
+    "file": "capabilities/ops.trace.monitor.yaml",
+    "inputs": {
+      "trace": {
+        "type": "object",
+        "required": true,
+        "description": "Trace payload to inspect."
+      },
+      "thresholds": {
+        "type": "object",
+        "required": false,
+        "description": "Alert thresholds."
+      }
+    },
+    "outputs": {
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Overall monitoring status."
+      },
+      "alerts": {
+        "type": "array",
+        "required": false,
+        "description": "Raised alerts."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "pdf.read",
     "version": "1.0.0",
     "description": "Read a PDF document and extract textual content.",
@@ -672,6 +841,283 @@
     "requires": [
       "fs.read"
     ]
+  },
+  {
+    "id": "policy.constraint.validate",
+    "version": "1.0.0",
+    "description": "Validate an output payload against an explicit constraint policy.",
+    "file": "capabilities/policy.constraint.validate.yaml",
+    "inputs": {
+      "payload": {
+        "type": "object",
+        "required": true,
+        "description": "Payload to validate."
+      },
+      "constraint": {
+        "type": "object",
+        "required": true,
+        "description": "Constraint policy definition."
+      }
+    },
+    "outputs": {
+      "valid": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the payload satisfies the constraint."
+      },
+      "violations": {
+        "type": "array",
+        "required": false,
+        "description": "List of violated rules."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "provenance.citation.generate",
+    "version": "1.0.0",
+    "description": "Generate a structured citation for a source fragment.",
+    "file": "capabilities/provenance.citation.generate.yaml",
+    "inputs": {
+      "source": {
+        "type": "object",
+        "required": true,
+        "description": "Source descriptor including origin metadata."
+      },
+      "excerpt": {
+        "type": "string",
+        "required": false,
+        "description": "Optional quoted excerpt."
+      },
+      "locator": {
+        "type": "string",
+        "required": false,
+        "description": "Optional source locator such as page or section."
+      }
+    },
+    "outputs": {
+      "citation": {
+        "type": "object",
+        "required": true,
+        "description": "Structured citation object."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "provenance.claim.verify",
+    "version": "1.0.0",
+    "description": "Verify whether a claim is supported by provided sources.",
+    "file": "capabilities/provenance.claim.verify.yaml",
+    "inputs": {
+      "claim": {
+        "type": "string",
+        "required": true,
+        "description": "Claim text to verify."
+      },
+      "sources": {
+        "type": "array",
+        "required": true,
+        "description": "Candidate evidence sources."
+      }
+    },
+    "outputs": {
+      "verified": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the claim is verified."
+      },
+      "evidence": {
+        "type": "array",
+        "required": false,
+        "description": "Supporting evidence snippets."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Explanation for verification result."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "security.output.gate",
+    "version": "1.0.0",
+    "description": "Apply policy gates to decide whether an output can be released.",
+    "file": "capabilities/security.output.gate.yaml",
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "Output artifact to gate."
+      },
+      "policy": {
+        "type": "object",
+        "required": true,
+        "description": "Gating policy definition."
+      }
+    },
+    "outputs": {
+      "allowed": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether output is allowed."
+      },
+      "reasons": {
+        "type": "array",
+        "required": false,
+        "description": "Reasons for blocking or warnings."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "security.pii.detect",
+    "version": "1.0.0",
+    "description": "Detect personally identifiable information in text content.",
+    "file": "capabilities/security.pii.detect.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to inspect."
+      }
+    },
+    "outputs": {
+      "contains_pii": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether PII was detected."
+      },
+      "findings": {
+        "type": "array",
+        "required": false,
+        "description": "Detected PII findings with types and spans."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "security.pii.redact",
+    "version": "1.0.0",
+    "description": "Redact personally identifiable information in text content.",
+    "file": "capabilities/security.pii.redact.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to redact."
+      }
+    },
+    "outputs": {
+      "redacted_text": {
+        "type": "string",
+        "required": true,
+        "description": "Redacted text output."
+      },
+      "findings": {
+        "type": "array",
+        "required": false,
+        "description": "Redaction findings with type metadata."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "security.secret.detect",
+    "version": "1.0.0",
+    "description": "Detect secret-like tokens in text content.",
+    "file": "capabilities/security.secret.detect.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to inspect."
+      }
+    },
+    "outputs": {
+      "contains_secret": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether secret-like patterns were detected."
+      },
+      "findings": {
+        "type": "array",
+        "required": false,
+        "description": "Detected secret findings."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
   },
   {
     "id": "table.filter",
@@ -1130,6 +1576,47 @@
     },
     "properties": {
       "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "web.source.verify",
+    "version": "1.0.0",
+    "description": "Verify trust and integrity signals for a web source URL.",
+    "file": "capabilities/web.source.verify.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true,
+        "description": "Source URL."
+      }
+    },
+    "outputs": {
+      "trusted": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether source is considered trusted."
+      },
+      "reason": {
+        "type": "string",
+        "required": false,
+        "description": "Reason for trust decision."
+      },
+      "normalized_source": {
+        "type": "object",
+        "required": false,
+        "description": "Normalized source details."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
       "side_effects": false,
       "idempotent": true
     }

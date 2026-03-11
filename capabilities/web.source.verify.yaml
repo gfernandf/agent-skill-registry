@@ -1,0 +1,25 @@
+id: web.source.verify
+version: 1.0.0
+description: Verify trust and integrity signals for a web source URL.
+inputs:
+  url:
+    type: string
+    required: true
+    description: Source URL.
+outputs:
+  trusted:
+    type: boolean
+    required: true
+    description: Whether source is considered trusted.
+  reason:
+    type: string
+    required: false
+    description: Reason for trust decision.
+  normalized_source:
+    type: object
+    required: false
+    description: Normalized source details.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

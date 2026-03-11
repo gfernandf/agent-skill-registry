@@ -1,0 +1,25 @@
+id: provenance.citation.generate
+version: 1.0.0
+description: Generate a structured citation for a source fragment.
+inputs:
+  source:
+    type: object
+    required: true
+    description: Source descriptor including origin metadata.
+  excerpt:
+    type: string
+    required: false
+    description: Optional quoted excerpt.
+  locator:
+    type: string
+    required: false
+    description: Optional source locator such as page or section.
+outputs:
+  citation:
+    type: object
+    required: true
+    description: Structured citation object.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

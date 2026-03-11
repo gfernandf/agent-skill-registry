@@ -1,0 +1,25 @@
+id: ops.trace.monitor
+version: 1.0.0
+description: Monitor a trace against thresholds and raise alerts.
+inputs:
+  trace:
+    type: object
+    required: true
+    description: Trace payload to inspect.
+  thresholds:
+    type: object
+    required: false
+    description: Alert thresholds.
+outputs:
+  status:
+    type: string
+    required: true
+    description: Overall monitoring status.
+  alerts:
+    type: array
+    required: false
+    description: Raised alerts.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true

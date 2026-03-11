@@ -1,0 +1,21 @@
+id: security.pii.redact
+version: 1.0.0
+description: Redact personally identifiable information in text content.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Text to redact.
+outputs:
+  redacted_text:
+    type: string
+    required: true
+    description: Redacted text output.
+  findings:
+    type: array
+    required: false
+    description: Redaction findings with type metadata.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

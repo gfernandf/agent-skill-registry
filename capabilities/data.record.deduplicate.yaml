@@ -1,0 +1,25 @@
+id: data.record.deduplicate
+version: 1.0.0
+description: Deduplicate structured records using key fields.
+inputs:
+  records:
+    type: array
+    required: true
+    description: Input records.
+  key_fields:
+    type: array
+    required: false
+    description: Optional key fields used to identify duplicates.
+outputs:
+  records:
+    type: array
+    required: true
+    description: Deduplicated records.
+  duplicates:
+    type: integer
+    required: false
+    description: Number of removed duplicates.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
