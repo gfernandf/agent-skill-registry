@@ -27,6 +27,8 @@
     "email": "Email communication",
     "policy": "Policy and constraint enforcement",
     "security": "Security and compliance operations",
+    "identity": "Identity, access, and authorization operations",
+    "integration": "Cross-system integration and synchronization operations",
     "eval": "Evaluation and quality scoring",
     "provenance": "Source provenance and evidence tracking",
     "ops": "Operational monitoring and cost controls"
@@ -81,7 +83,22 @@
     "constraint": "Execution constraint",
     "decision": "Structured decision",
     "output": "Generated output artifact",
-    "record": "Structured data record"
+    "record": "Structured data record",
+    "obligation": "Business or legal obligation",
+    "priority": "Priority level",
+    "ticket": "Support or service ticket",
+    "case": "Case or dossier",
+    "incident": "Operational or security incident",
+    "approval": "Approval decision artifact",
+    "sla": "Service-level agreement target",
+    "state": "Workflow or lifecycle state",
+    "milestone": "Workflow milestone",
+    "assignee": "Assigned owner",
+    "role": "Access or organizational role",
+    "permission": "Access permission",
+    "connector": "External system connector",
+    "mapping": "Field mapping or translation map",
+    "event": "Domain event"
   },
 
   "verbs": {
@@ -140,6 +157,15 @@
     "monitor": "Monitor runtime state",
     "escalate": "Escalate for review or intervention",
     "gate": "Allow or block based on rules",
-    "cite": "Attach source citations"
+    "cite": "Attach source citations",
+    "assign": "Assign to owner or queue",
+    "approve": "Approve a request or transition",
+    "reject": "Reject a request or transition",
+    "schedule": "Schedule for future execution",
+    "sync": "Synchronize state between systems",
+    "upsert": "Create or update idempotently",
+    "close": "Close a case, ticket, or process",
+    "acknowledge": "Acknowledge receipt or state",
+    "transition": "Transition between workflow states"
   }
 }

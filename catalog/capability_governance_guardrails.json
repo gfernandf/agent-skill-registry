@@ -2,12 +2,14 @@
   "summary": {
     "capabilities_total": 45,
     "covered_domains": 20,
-    "uncovered_domains": 2,
+    "uncovered_domains": 4,
     "semantic_family_alerts": 2,
     "duplicate_description_alerts": 0,
     "metadata_issues": 45
   },
   "uncovered_domains": [
+    "identity",
+    "integration",
     "model",
     "task"
   ],
