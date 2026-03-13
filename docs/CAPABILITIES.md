@@ -277,6 +277,20 @@ Capability metadata is intended to support:
 
 It is not intended to change execution behavior.
 
+### Deprecation Lifecycle Metadata
+
+When `metadata.status` is set to `deprecated`, lifecycle dates are required by
+policy:
+
+- `metadata.deprecation_date` (YYYY-MM-DD)
+- `metadata.sunset_date` (YYYY-MM-DD)
+
+Deprecated capabilities must also define top-level `replacement`.
+
+See:
+
+- `docs/CAPABILITY_SUNSET_POLICY.md`
+
 ---
 
 ## properties

@@ -24,6 +24,15 @@ List overlapping existing IDs and explain why extension/reuse is insufficient.
 - [ ] I verified this does not introduce avoidable semantic duplication
 - [ ] If overlap exists, I documented merge/deprecation rationale
 
+## Capability Language Governance (Required for new/changed capabilities)
+
+- [ ] I reviewed `docs/CAPABILITY_ADMISSION_POLICY.md`
+- [ ] I reviewed `docs/CAPABILITY_COMPATIBILITY_POLICY.md`
+- [ ] I reviewed `docs/CAPABILITY_SUNSET_POLICY.md`
+- [ ] I ran `python tools/capability_governance_guardrails.py`
+- [ ] I documented compatibility impact (non-breaking / breaking)
+- [ ] If deprecated, I added replacement + deprecation_date + sunset_date
+
 ## Contract and Metadata Quality
 
 - [ ] Inputs/outputs are stable and reusable
@@ -43,6 +52,8 @@ Paste command outputs:
 python tools/validate_registry.py
 python tools/generate_catalog.py
 python tools/governance_guardrails.py
+python tools/capability_governance_guardrails.py
+python tools/enforce_capability_sunset.py
 ```
 
 ## Notes for Maintainers

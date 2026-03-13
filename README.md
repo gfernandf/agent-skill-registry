@@ -252,7 +252,9 @@ Commands:
 python tools/validate_registry.py\
 python tools/generate_catalog.py\
 python tools/registry_stats.py\
-python tools/governance_guardrails.py
+python tools/governance_guardrails.py\
+python tools/capability_governance_guardrails.py\
+python tools/enforce_capability_sunset.py
 
 ------------------------------------------------------------------------
 
@@ -321,11 +323,15 @@ docs/CAPABILITIES.md\
 docs/SKILL_FORMAT.md\
 docs/GOVERNANCE.md\
 docs/SKILL_ADMISSION_POLICY.md\
-docs/SEMANTIC_FAMILY_MAP.md
+docs/SEMANTIC_FAMILY_MAP.md\
+docs/CAPABILITY_ADMISSION_POLICY.md\
+docs/CAPABILITY_COMPATIBILITY_POLICY.md\
+docs/CAPABILITY_SUNSET_POLICY.md
 
 Governance artifact:
 
-catalog/governance_guardrails.json
+catalog/governance_guardrails.json\
+catalog/capability_governance_guardrails.json
 
 ------------------------------------------------------------------------
 

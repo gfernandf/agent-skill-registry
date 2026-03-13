@@ -347,6 +347,64 @@ python tools/governance_guardrails.py --fail-on-overlap
 This tool is intended as an anti-proliferation signal and complements
 `tools/validate_registry.py`.
 
+---
+
+# Capability Governance Guardrails
+
+File:
+
+```
+tools/capability_governance_guardrails.py
+```
+
+This script generates capability-level governance signals, including:
+
+- uncovered vocabulary domains
+- semantic family alerts by `domain+verb`
+- duplicate/near-duplicate description alerts
+- capability metadata quality gaps
+
+Default output:
+
+```
+catalog/capability_governance_guardrails.json
+```
+
+Usage:
+
+```bash
+python tools/capability_governance_guardrails.py
+```
+
+---
+
+# Capability Sunset Enforcement
+
+File:
+
+```
+tools/enforce_capability_sunset.py
+```
+
+This script enforces lifecycle constraints for deprecated capabilities:
+
+- replacement is required
+- deprecation_date and sunset_date are required and valid
+- minimum sunset window is respected
+- expired sunsets fail checks
+
+Usage:
+
+```bash
+python tools/enforce_capability_sunset.py
+```
+
+Optional minimum window override:
+
+```bash
+python tools/enforce_capability_sunset.py --minimum-window-days 45
+```
+
 Example step:
 
 ```

@@ -1,0 +1,366 @@
+{
+  "summary": {
+    "capabilities_total": 45,
+    "covered_domains": 20,
+    "uncovered_domains": 2,
+    "semantic_family_alerts": 2,
+    "duplicate_description_alerts": 0,
+    "metadata_issues": 45
+  },
+  "uncovered_domains": [
+    "model",
+    "task"
+  ],
+  "semantic_family_alerts": [
+    {
+      "domain": "security",
+      "verb": "detect",
+      "capability_ids": [
+        "security.pii.detect",
+        "security.secret.detect"
+      ],
+      "noun_variants": [
+        "pii",
+        "secret"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "text",
+      "verb": "extract",
+      "capability_ids": [
+        "text.entity.extract",
+        "text.extract",
+        "text.keyword.extract"
+      ],
+      "noun_variants": [
+        "entity",
+        "keyword"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    }
+  ],
+  "duplicate_description_alerts": [],
+  "metadata_issues": [
+    {
+      "capability_id": "agent.delegate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "agent.plan.generate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "agent.route",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "audio.transcribe",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "code.diff.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "code.execute",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "code.format",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "data.json.parse",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "data.record.deduplicate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "data.schema.validate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "doc.chunk",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "email.read",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "email.send",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "eval.output.score",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "fs.read",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "image.caption.generate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "image.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "memory.retrieve",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "memory.store",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "message.send",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "ops.budget.estimate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "ops.trace.monitor",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "pdf.read",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "policy.constraint.validate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "provenance.citation.generate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "provenance.claim.verify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "security.output.gate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "security.pii.detect",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "security.pii.redact",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "security.secret.detect",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "table.filter",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.embed",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.entity.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.keyword.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.language.detect",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.summarize",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.template",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.translate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "video.frame.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "web.fetch",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "web.page.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "web.search",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "web.source.verify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    }
+  ],
+  "policy_hints": {
+    "admission": "New capability IDs require differentiation from existing domain/verb families.",
+    "compatibility": "Prefer additive evolution; avoid breaking contract changes in place.",
+    "sunset": "Deprecated capabilities must include replacement and lifecycle dates."
+  }
+}

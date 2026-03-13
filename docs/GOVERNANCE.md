@@ -13,6 +13,10 @@ Additional governance artifacts:
 - `docs/SKILL_ADMISSION_POLICY.md`
 - `docs/SEMANTIC_FAMILY_MAP.md`
 - `catalog/governance_guardrails.json`
+- `docs/CAPABILITY_ADMISSION_POLICY.md`
+- `docs/CAPABILITY_COMPATIBILITY_POLICY.md`
+- `docs/CAPABILITY_SUNSET_POLICY.md`
+- `catalog/capability_governance_guardrails.json`
 
 The registry distinguishes between two main artifact types:
 
@@ -162,6 +166,13 @@ A new capability must:
 - define inputs and outputs
 - pass validation
 
+Capability proposals must also satisfy the stricter admission and compatibility
+policies in:
+
+- `docs/CAPABILITY_ADMISSION_POLICY.md`
+- `docs/CAPABILITY_COMPATIBILITY_POLICY.md`
+- `docs/CAPABILITY_SUNSET_POLICY.md`
+
 Capabilities must be stored as:
 
 ```
@@ -201,12 +212,16 @@ All contributions are automatically validated using:
 
 ```
 tools/validate_registry.py
+```
 
 Governance signals can also be generated using:
 
 ```
 tools/governance_guardrails.py
-```
+
+tools/capability_governance_guardrails.py
+
+tools/enforce_capability_sunset.py
 ```
 
 The validator checks:

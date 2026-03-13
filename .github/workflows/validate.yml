@@ -33,5 +33,11 @@ jobs:
       - name: Generate governance guardrails report
         run: python tools/governance_guardrails.py
 
+      - name: Generate capability governance guardrails report
+        run: python tools/capability_governance_guardrails.py
+
+      - name: Enforce capability sunset policy
+        run: python tools/enforce_capability_sunset.py
+
       - name: Check catalog is up to date
         run: git diff --exit-code -- catalog
