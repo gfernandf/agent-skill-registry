@@ -1,0 +1,11 @@
+﻿id: model.output.generate
+version: 1.0.0
+description: TODO define capability contract for model.output.generate.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

@@ -1,0 +1,11 @@
+﻿id: model.prompt.template
+version: 1.0.0
+description: TODO define capability contract for model.prompt.template.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

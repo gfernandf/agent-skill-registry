@@ -1,0 +1,11 @@
+﻿id: integration.mapping.validate
+version: 1.0.0
+description: TODO define capability contract for integration.mapping.validate.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

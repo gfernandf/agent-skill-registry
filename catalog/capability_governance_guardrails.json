@@ -1,19 +1,91 @@
 {
   "summary": {
-    "capabilities_total": 45,
-    "covered_domains": 20,
-    "uncovered_domains": 4,
-    "semantic_family_alerts": 2,
+    "capabilities_total": 100,
+    "covered_domains": 24,
+    "uncovered_domains": 0,
+    "semantic_family_alerts": 9,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 45
+    "metadata_issues": 100
   },
-  "uncovered_domains": [
-    "identity",
-    "integration",
-    "model",
-    "task"
-  ],
+  "uncovered_domains": [],
   "semantic_family_alerts": [
+    {
+      "domain": "identity",
+      "verb": "get",
+      "capability_ids": [
+        "identity.permission.get",
+        "identity.role.get"
+      ],
+      "noun_variants": [
+        "permission",
+        "role"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "identity",
+      "verb": "list",
+      "capability_ids": [
+        "identity.permission.list",
+        "identity.role.list"
+      ],
+      "noun_variants": [
+        "permission",
+        "role"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "memory",
+      "verb": "store",
+      "capability_ids": [
+        "memory.record.store",
+        "memory.store"
+      ],
+      "noun_variants": [
+        "record"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "model",
+      "verb": "generate",
+      "capability_ids": [
+        "model.embedding.generate",
+        "model.output.generate"
+      ],
+      "noun_variants": [
+        "embedding",
+        "output"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "model",
+      "verb": "score",
+      "capability_ids": [
+        "model.output.score",
+        "model.risk.score"
+      ],
+      "noun_variants": [
+        "output",
+        "risk"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "ops",
+      "verb": "monitor",
+      "capability_ids": [
+        "ops.event.monitor",
+        "ops.trace.monitor"
+      ],
+      "noun_variants": [
+        "event",
+        "trace"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
     {
       "domain": "security",
       "verb": "detect",
@@ -24,6 +96,19 @@
       "noun_variants": [
         "pii",
         "secret"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "task",
+      "verb": "create",
+      "capability_ids": [
+        "task.case.create",
+        "task.incident.create"
+      ],
+      "noun_variants": [
+        "case",
+        "incident"
       ],
       "recommendation": "review-for-canonical-operation"
     },
@@ -150,6 +235,76 @@
       ]
     },
     {
+      "capability_id": "identity.assignee.identify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.decision.justify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.permission.gate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.permission.get",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.permission.list",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.permission.verify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.risk.score",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.role.assign",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.role.get",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "identity.role.list",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "image.caption.generate",
       "issues": [
         "missing_tags",
@@ -158,6 +313,97 @@
     },
     {
       "capability_id": "image.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.connector.get",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.connector.list",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.connector.sync",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.event.acknowledge",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.mapping.transform",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.mapping.validate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.compare",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.create",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.delete",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.reconcile",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.update",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "integration.record.upsert",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "memory.record.store",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -178,6 +424,20 @@
       ]
     },
     {
+      "capability_id": "memory.vector.search",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "message.priority.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "message.send",
       "issues": [
         "missing_tags",
@@ -185,7 +445,84 @@
       ]
     },
     {
+      "capability_id": "model.embedding.generate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.output.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.output.generate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.output.sanitize",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.output.score",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.prompt.template",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.response.validate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "model.risk.score",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "ops.budget.estimate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "ops.event.acknowledge",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "ops.event.monitor",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "ops.trace.analyze",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -206,7 +543,35 @@
       ]
     },
     {
+      "capability_id": "policy.constraint.gate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "policy.constraint.validate",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "policy.decision.justify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "policy.risk.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "policy.risk.score",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -256,6 +621,111 @@
     },
     {
       "capability_id": "table.filter",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.approval.approve",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.approval.reject",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.assignee.assign",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.close",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.create",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.get",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.list",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.search",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.case.update",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.event.acknowledge",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.incident.create",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.milestone.schedule",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.priority.classify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.sla.monitor",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "task.state.transition",
       "issues": [
         "missing_tags",
         "missing_examples"

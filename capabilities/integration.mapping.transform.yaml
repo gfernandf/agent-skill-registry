@@ -1,0 +1,11 @@
+﻿id: integration.mapping.transform
+version: 1.0.0
+description: TODO define capability contract for integration.mapping.transform.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

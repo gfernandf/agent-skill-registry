@@ -1,0 +1,11 @@
+﻿id: ops.event.monitor
+version: 1.0.0
+description: TODO define capability contract for ops.event.monitor.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

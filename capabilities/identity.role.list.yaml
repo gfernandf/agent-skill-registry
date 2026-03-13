@@ -1,0 +1,11 @@
+﻿id: identity.role.list
+version: 1.0.0
+description: TODO define capability contract for identity.role.list.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

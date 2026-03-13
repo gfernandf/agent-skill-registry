@@ -1,0 +1,11 @@
+﻿id: task.incident.create
+version: 1.0.0
+description: TODO define capability contract for task.incident.create.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

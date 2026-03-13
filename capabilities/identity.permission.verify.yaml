@@ -1,0 +1,11 @@
+﻿id: identity.permission.verify
+version: 1.0.0
+description: TODO define capability contract for identity.permission.verify.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

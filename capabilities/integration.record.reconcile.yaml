@@ -1,0 +1,11 @@
+﻿id: integration.record.reconcile
+version: 1.0.0
+description: TODO define capability contract for integration.record.reconcile.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

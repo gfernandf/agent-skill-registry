@@ -1,0 +1,11 @@
+﻿id: identity.risk.score
+version: 1.0.0
+description: TODO define capability contract for identity.risk.score.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

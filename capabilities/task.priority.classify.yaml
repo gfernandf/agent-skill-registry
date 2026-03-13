@@ -1,0 +1,11 @@
+﻿id: task.priority.classify
+version: 1.0.0
+description: TODO define capability contract for task.priority.classify.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

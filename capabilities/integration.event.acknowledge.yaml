@@ -1,0 +1,11 @@
+﻿id: integration.event.acknowledge
+version: 1.0.0
+description: TODO define capability contract for integration.event.acknowledge.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

@@ -1,0 +1,11 @@
+﻿id: task.approval.approve
+version: 1.0.0
+description: TODO define capability contract for task.approval.approve.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

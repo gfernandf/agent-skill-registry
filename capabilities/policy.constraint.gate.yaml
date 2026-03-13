@@ -1,0 +1,11 @@
+﻿id: policy.constraint.gate
+version: 1.0.0
+description: TODO define capability contract for policy.constraint.gate.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

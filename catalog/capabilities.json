@@ -547,6 +547,146 @@
     }
   },
   {
+    "id": "identity.assignee.identify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.assignee.identify.",
+    "file": "capabilities/identity.assignee.identify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.decision.justify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.decision.justify.",
+    "file": "capabilities/identity.decision.justify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.permission.gate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.permission.gate.",
+    "file": "capabilities/identity.permission.gate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.permission.get",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.permission.get.",
+    "file": "capabilities/identity.permission.get.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.permission.list",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.permission.list.",
+    "file": "capabilities/identity.permission.list.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.permission.verify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.permission.verify.",
+    "file": "capabilities/identity.permission.verify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.risk.score",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.risk.score.",
+    "file": "capabilities/identity.risk.score.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.role.assign",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.role.assign.",
+    "file": "capabilities/identity.role.assign.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.role.get",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.role.get.",
+    "file": "capabilities/identity.role.get.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "identity.role.list",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for identity.role.list.",
+    "file": "capabilities/identity.role.list.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
     "id": "image.caption.generate",
     "version": "1.0.0",
     "description": "Generate a caption for an image.",
@@ -616,6 +756,188 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "integration.connector.get",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.connector.get.",
+    "file": "capabilities/integration.connector.get.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.connector.list",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.connector.list.",
+    "file": "capabilities/integration.connector.list.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.connector.sync",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.connector.sync.",
+    "file": "capabilities/integration.connector.sync.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.event.acknowledge",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.event.acknowledge.",
+    "file": "capabilities/integration.event.acknowledge.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.mapping.transform",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.mapping.transform.",
+    "file": "capabilities/integration.mapping.transform.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.mapping.validate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.mapping.validate.",
+    "file": "capabilities/integration.mapping.validate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.compare",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.compare.",
+    "file": "capabilities/integration.record.compare.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.create",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.create.",
+    "file": "capabilities/integration.record.create.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.delete",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.delete.",
+    "file": "capabilities/integration.record.delete.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.reconcile",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.reconcile.",
+    "file": "capabilities/integration.record.reconcile.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.update",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.update.",
+    "file": "capabilities/integration.record.update.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "integration.record.upsert",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for integration.record.upsert.",
+    "file": "capabilities/integration.record.upsert.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "memory.record.store",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for memory.record.store.",
+    "file": "capabilities/memory.record.store.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {
@@ -691,6 +1013,34 @@
     }
   },
   {
+    "id": "memory.vector.search",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for memory.vector.search.",
+    "file": "capabilities/memory.vector.search.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "message.priority.classify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for message.priority.classify.",
+    "file": "capabilities/message.priority.classify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
     "id": "message.send",
     "version": "1.0.0",
     "description": "Send a generic message.",
@@ -724,6 +1074,118 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    }
+  },
+  {
+    "id": "model.embedding.generate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.embedding.generate.",
+    "file": "capabilities/model.embedding.generate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.output.classify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.output.classify.",
+    "file": "capabilities/model.output.classify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.output.generate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.output.generate.",
+    "file": "capabilities/model.output.generate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.output.sanitize",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.output.sanitize.",
+    "file": "capabilities/model.output.sanitize.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.output.score",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.output.score.",
+    "file": "capabilities/model.output.score.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.prompt.template",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.prompt.template.",
+    "file": "capabilities/model.prompt.template.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.response.validate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.response.validate.",
+    "file": "capabilities/model.response.validate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "model.risk.score",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for model.risk.score.",
+    "file": "capabilities/model.risk.score.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {
@@ -770,6 +1232,48 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "ops.event.acknowledge",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for ops.event.acknowledge.",
+    "file": "capabilities/ops.event.acknowledge.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "ops.event.monitor",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for ops.event.monitor.",
+    "file": "capabilities/ops.event.monitor.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "ops.trace.analyze",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for ops.trace.analyze.",
+    "file": "capabilities/ops.trace.analyze.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {
@@ -843,6 +1347,20 @@
     ]
   },
   {
+    "id": "policy.constraint.gate",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for policy.constraint.gate.",
+    "file": "capabilities/policy.constraint.gate.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
     "id": "policy.constraint.validate",
     "version": "1.0.0",
     "description": "Validate an output payload against an explicit constraint policy.",
@@ -881,6 +1399,48 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "policy.decision.justify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for policy.decision.justify.",
+    "file": "capabilities/policy.decision.justify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "policy.risk.classify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for policy.risk.classify.",
+    "file": "capabilities/policy.risk.classify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "policy.risk.score",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for policy.risk.score.",
+    "file": "capabilities/policy.risk.score.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {
@@ -1153,6 +1713,216 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "task.approval.approve",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.approval.approve.",
+    "file": "capabilities/task.approval.approve.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.approval.reject",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.approval.reject.",
+    "file": "capabilities/task.approval.reject.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.assignee.assign",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.assignee.assign.",
+    "file": "capabilities/task.assignee.assign.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.close",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.close.",
+    "file": "capabilities/task.case.close.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.create",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.create.",
+    "file": "capabilities/task.case.create.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.get",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.get.",
+    "file": "capabilities/task.case.get.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.list",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.list.",
+    "file": "capabilities/task.case.list.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.search",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.search.",
+    "file": "capabilities/task.case.search.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.case.update",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.case.update.",
+    "file": "capabilities/task.case.update.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.event.acknowledge",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.event.acknowledge.",
+    "file": "capabilities/task.event.acknowledge.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.incident.create",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.incident.create.",
+    "file": "capabilities/task.incident.create.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.milestone.schedule",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.milestone.schedule.",
+    "file": "capabilities/task.milestone.schedule.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.priority.classify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.priority.classify.",
+    "file": "capabilities/task.priority.classify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.sla.monitor",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.sla.monitor.",
+    "file": "capabilities/task.sla.monitor.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
+    "id": "task.state.transition",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for task.state.transition.",
+    "file": "capabilities/task.state.transition.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {

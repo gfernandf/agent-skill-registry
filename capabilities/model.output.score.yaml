@@ -1,0 +1,11 @@
+﻿id: model.output.score
+version: 1.0.0
+description: TODO define capability contract for model.output.score.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

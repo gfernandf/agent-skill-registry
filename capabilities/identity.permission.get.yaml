@@ -1,0 +1,11 @@
+﻿id: identity.permission.get
+version: 1.0.0
+description: TODO define capability contract for identity.permission.get.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

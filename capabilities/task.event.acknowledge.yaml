@@ -1,0 +1,11 @@
+﻿id: task.event.acknowledge
+version: 1.0.0
+description: TODO define capability contract for task.event.acknowledge.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+

@@ -1,0 +1,11 @@
+﻿id: identity.permission.gate
+version: 1.0.0
+description: TODO define capability contract for identity.permission.gate.
+
+inputs: {}
+
+outputs: {}
+
+metadata:
+  status: experimental
+
