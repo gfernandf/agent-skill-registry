@@ -251,7 +251,8 @@ Commands:
 
 python tools/validate_registry.py\
 python tools/generate_catalog.py\
-python tools/registry_stats.py
+python tools/registry_stats.py\
+python tools/governance_guardrails.py
 
 ------------------------------------------------------------------------
 
@@ -318,7 +319,13 @@ Additional documentation:
 docs/LANGUAGE.md\
 docs/CAPABILITIES.md\
 docs/SKILL_FORMAT.md\
-docs/GOVERNANCE.md
+docs/GOVERNANCE.md\
+docs/SKILL_ADMISSION_POLICY.md\
+docs/SEMANTIC_FAMILY_MAP.md
+
+Governance artifact:
+
+catalog/governance_guardrails.json
 
 ------------------------------------------------------------------------
 

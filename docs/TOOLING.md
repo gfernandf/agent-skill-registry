@@ -15,6 +15,9 @@ tools/
 
 These tools validate the registry, scaffold new artifacts, and generate derived catalogs used for discovery and indexing.
 
+Governance-specific guardrails are also available to detect overlap and
+metadata quality issues for skills.
+
 ---
 
 # Registry Validator
@@ -305,6 +308,44 @@ Two dependency types are tracked:
 - **skills** — other skills invoked by the skill
 
 Dependencies are extracted from the `uses` field of each step.
+
+---
+
+# Governance Guardrails
+
+File:
+
+```
+tools/governance_guardrails.py
+```
+
+This script analyzes generated catalogs and produces a governance report with:
+
+- skills missing governance-oriented metadata
+- high-overlap skill pairs (possible duplication)
+- unknown capability references in skill dependency lists
+
+Default output:
+
+```
+catalog/governance_guardrails.json
+```
+
+Usage:
+
+```bash
+python tools/governance_guardrails.py
+```
+
+Useful options:
+
+```bash
+python tools/governance_guardrails.py --overlap-threshold 0.85
+python tools/governance_guardrails.py --fail-on-overlap
+```
+
+This tool is intended as an anti-proliferation signal and complements
+`tools/validate_registry.py`.
 
 Example step:
 

@@ -1,0 +1,298 @@
+{
+  "summary": {
+    "skills_total": 31,
+    "skills_with_metadata_issues": 31,
+    "overlap_alerts": 0,
+    "unknown_capability_references": 0,
+    "overlap_threshold": 0.8,
+    "min_shared_capabilities": 2
+  },
+  "skills_with_metadata_issues": [
+    {
+      "skill_id": "agent.plan-and-route",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "agent.plan-from-objective",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "audio.transcribe-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "code.diff-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "data.parse-and-validate",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "doc.chunk-and-embed",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "doc.chunk-text",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "email.read-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "image.caption-and-classify",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "memory.retrieve-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "memory.store-embedding",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "memory.store-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "pdf.chunk-and-embed",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "pdf.read-keyword-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "pdf.read-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "table.filter-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.classify-input",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.detect-language-and-classify",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.entity-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.extract-entities",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.extract-keywords",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.hello-world",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.keyword-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.language-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.simple-summarize",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "text.translate-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "web.fetch-classify",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "web.fetch-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "web.page-chunk-and-embed",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "web.page-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "web.search-summary",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags"
+      ]
+    }
+  ],
+  "overlap_alerts": [],
+  "unknown_capability_references": {},
+  "policy_hints": {
+    "canonical_first": "Prefer one canonical skill per job-to-be-done; model variants with inputs/profiles.",
+    "new_skill_gate": "Require explicit differentiation from existing skills with similar capability graph.",
+    "sunset": "If overlap remains unresolved and usage is low, deprecate duplicate skill IDs."
+  }
+}

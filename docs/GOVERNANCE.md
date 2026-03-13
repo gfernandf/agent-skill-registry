@@ -8,6 +8,12 @@ The goal of governance is to balance:
 - consistency of the registry
 - long-term ecosystem stability
 
+Additional governance artifacts:
+
+- `docs/SKILL_ADMISSION_POLICY.md`
+- `docs/SEMANTIC_FAMILY_MAP.md`
+- `catalog/governance_guardrails.json`
+
 The registry distinguishes between two main artifact types:
 
 - **capabilities** — reusable functional primitives
@@ -126,6 +132,9 @@ Skills are relatively easy to contribute and primarily require:
 - valid references to capabilities or skills
 - passing registry validation
 
+In addition, new skills should follow the mandatory admission checklist in
+`docs/SKILL_ADMISSION_POLICY.md`.
+
 Skills may be added to the:
 
 ```
@@ -192,6 +201,12 @@ All contributions are automatically validated using:
 
 ```
 tools/validate_registry.py
+
+Governance signals can also be generated using:
+
+```
+tools/governance_guardrails.py
+```
 ```
 
 The validator checks:
@@ -204,6 +219,9 @@ The validator checks:
 - dataflow structure
 
 If validation fails, the contribution cannot be merged.
+
+Guardrails are advisory by default and designed to expose overlap risk,
+metadata quality gaps, and potential consolidation candidates.
 
 ---
 
@@ -285,6 +303,10 @@ Capabilities should be relatively stable.
 Once widely used, changes should avoid breaking existing skills.
 
 If a capability requires significant redesign, consider introducing a **new capability identifier** instead of modifying the original.
+
+For skills, prefer extending canonical skills with parameters when possible.
+Creating a new skill ID should be justified by a clear business-level
+differentiation, not stylistic variation.
 
 ---
 

@@ -30,5 +30,8 @@ jobs:
       - name: Generate catalog
         run: python tools/generate_catalog.py
 
+      - name: Generate governance guardrails report
+        run: python tools/governance_guardrails.py
+
       - name: Check catalog is up to date
         run: git diff --exit-code -- catalog
