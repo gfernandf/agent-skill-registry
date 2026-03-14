@@ -36,6 +36,70 @@
     }
   },
   {
+    "id": "agent.plan.create",
+    "version": "1.0.0",
+    "description": "Generates a valid skill YAML definition from a natural language intent description. Uses the local capability catalog as context so the generated skill only references capabilities that are registered and available.\n",
+    "file": "capabilities/agent.plan.create.yaml",
+    "inputs": {
+      "intent_description": {
+        "type": "string",
+        "required": true,
+        "description": "Natural language description of the workflow to automate. Example: \"receive an email, classify its urgency, and route it to the right team channel with a confirmation reply\".\n"
+      },
+      "registry_root": {
+        "type": "string",
+        "required": false,
+        "description": "Absolute path to the agent-skill-registry root directory. Auto-detected from environment or sibling-directory convention if omitted.\n"
+      },
+      "target_channel": {
+        "type": "string",
+        "required": false,
+        "description": "Target skill channel: local, experimental, or community. Defaults to local.\n"
+      }
+    },
+    "outputs": {
+      "skill_yaml": {
+        "type": "string",
+        "description": "Complete, validated skill YAML ready to write to disk."
+      },
+      "suggested_id": {
+        "type": "string",
+        "description": "Suggested workflow skill id (domain.slug) inferred from the intent."
+      },
+      "capabilities_used": {
+        "type": "array",
+        "description": "Capability IDs referenced in the generated steps."
+      },
+      "validation_errors": {
+        "type": "array",
+        "description": "List of validation error strings found in the generated output. Empty list means the YAML is valid.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "meta",
+        "scaffolding",
+        "developer-tools"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "intent_description": "Receive a PDF invoice, extract the text, classify if it is overdue, and store a summary in memory.\n",
+          "expected_outputs": {
+            "suggested_id": "pdf.invoice-overdue-check",
+            "capabilities_used": [
+              "pdf.read",
+              "text.extract",
+              "text.classify",
+              "memory.store"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
     "id": "agent.plan.generate",
     "version": "1.0.0",
     "description": "Generate a plan for solving a task or objective.",
