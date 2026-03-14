@@ -10,6 +10,11 @@ from typing import Any
 import yaml
 
 
+def _default_base() -> Path:
+    # Resolve repo root from this script location to avoid cwd-dependent writes.
+    return Path(__file__).resolve().parent.parent
+
+
 def load_yaml(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f)
@@ -206,7 +211,7 @@ def generate_catalog(base: Path) -> tuple[int, int]:
 
 
 def main() -> int:
-    base = Path.cwd()
+    base = _default_base()
 
     try:
         capability_count, skill_count = generate_catalog(base)

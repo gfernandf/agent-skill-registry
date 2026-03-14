@@ -8,6 +8,11 @@ from pathlib import Path
 from typing import Any
 
 
+def _default_base() -> Path:
+    # Resolve repo root from this script location to avoid cwd-dependent writes.
+    return Path(__file__).resolve().parent.parent
+
+
 def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
@@ -142,7 +147,12 @@ def build_report(base: Path) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="capability_governance_guardrails")
-    parser.add_argument("--base", type=Path, default=Path.cwd())
+    parser.add_argument(
+        "--base",
+        type=Path,
+        default=_default_base(),
+        help="Repository root (default: script-relative repo root).",
+    )
     parser.add_argument(
         "--report",
         type=Path,

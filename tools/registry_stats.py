@@ -9,6 +9,11 @@ from pathlib import Path
 from typing import Any
 
 
+def _default_base() -> Path:
+    # Resolve repo root from this script location to avoid cwd-dependent writes.
+    return Path(__file__).resolve().parent.parent
+
+
 DEFAULT_CAPABILITY_METADATA = {
     "tags": [],
     "category": None,
@@ -61,7 +66,7 @@ def is_nondefault_metadata(metadata: Any, defaults: dict[str, Any]) -> bool:
 
 
 def main() -> int:
-    base = Path.cwd()
+    base = _default_base()
     catalog_dir = base / "catalog"
 
     capabilities_path = catalog_dir / "capabilities.json"

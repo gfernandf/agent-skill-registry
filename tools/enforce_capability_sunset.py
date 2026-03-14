@@ -10,6 +10,11 @@ from typing import Any
 import yaml
 
 
+def _default_base() -> Path:
+    # Resolve repo root from this script location to avoid cwd-dependent writes.
+    return Path(__file__).resolve().parent.parent
+
+
 def _load_yaml(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f)
@@ -83,7 +88,12 @@ def validate_sunset(base: Path, minimum_window_days: int) -> tuple[list[str], in
 
 def main() -> int:
     parser = argparse.ArgumentParser(prog="enforce_capability_sunset")
-    parser.add_argument("--base", type=Path, default=Path.cwd())
+    parser.add_argument(
+        "--base",
+        type=Path,
+        default=_default_base(),
+        help="Repository root (default: script-relative repo root).",
+    )
     parser.add_argument("--minimum-window-days", type=int, default=30)
     args = parser.parse_args()
 

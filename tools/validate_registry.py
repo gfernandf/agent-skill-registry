@@ -2,12 +2,18 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
 import yaml
+
+
+def _default_base() -> Path:
+    # Resolve repo root from this script location to avoid cwd-dependent writes.
+    return Path(__file__).resolve().parent.parent
 
 
 # ----------------------------------------------------------------------
@@ -377,7 +383,16 @@ def detect_skill_cycles(graph: Dict[str, Set[str]], errors: List[str]) -> None:
 
 
 def main() -> int:
-    base = Path.cwd()
+    parser = argparse.ArgumentParser(prog="validate_registry")
+    parser.add_argument(
+        "--base",
+        type=Path,
+        default=_default_base(),
+        help="Repository root (default: script-relative repo root).",
+    )
+    args = parser.parse_args()
+
+    base = args.base.resolve()
     errors: List[str] = []
 
     vocab = load_vocabulary(base)
