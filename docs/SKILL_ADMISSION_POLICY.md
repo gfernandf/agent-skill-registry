@@ -1,7 +1,36 @@
 # Skill Admission Policy
 
-This document defines mandatory admission criteria for new skills to prevent
-catalog proliferation and maintain a high-value core set.
+This document defines mandatory admission criteria for new skills and the
+**channel model** through which skills flow from user-defined experiments to
+the verified official catalog.
+
+## Channel Model
+
+Skills in this registry — and in each local `agent-skills` instance — are
+organized into channels.  The channel determines governance requirements,
+quality expectations, and who owns maintenance.
+
+| Channel | Location | Maintained by | Requirements |
+|---------|----------|---------------|--------------|
+| `local` | `<agent-skills>/skills/local/` | Individual instance owner | None — fully private to the instance; never committed to the shared registry |
+| `experimental` | `skills/experimental/` | Contributor (PR) | Basic schema validity; `metadata.status: experimental`; no stability guarantee |
+| `community` | `skills/community/` | Contributor (PR) | Full admission checklist below; peer review required |
+| `official` | `skills/official/` | Maintainers | Admission checklist; two-maintainer review; integration smoke-test passing |
+
+### How a skill moves through channels
+
+```
+[instance author] → skills/local/   (runs locally, no PR)
+                        ↓  promote
+[contributor PR]  → skills/experimental/  (schema valid, self-assessed)
+                        ↓  peer review
+[contributor PR]  → skills/community/     (full checklist, peer review)
+                        ↓  maintainer review
+[maintainer PR]   → skills/official/      (two-maintainer sign-off)
+```
+
+A skill does **not** have to follow every step.  It is valid to submit
+directly to `community/` if the checklist is already complete.
 
 ## Policy Goal
 
@@ -20,9 +49,10 @@ A new skill must not be introduced if the same business outcome can be
 achieved by adding parameters, profiles, or metadata to an existing canonical
 skill.
 
-## Admission Checklist (Required)
+## Admission Checklist (Required for `community/` and `official/`)
 
-Every PR introducing a new skill must answer all of the following:
+Every PR introducing a skill at `community/` or `official/` level must answer
+all of the following:
 
 1. Problem statement:
 - What concrete user workflow does this skill solve?
@@ -44,6 +74,8 @@ Every PR introducing a new skill must answer all of the following:
 - If this supersedes another skill, identify deprecation target and migration path.
 
 PRs missing the checklist should not be merged.
+
+For `experimental/` channel, only items 1 and 4 are required.
 
 ## Anti-Proliferation Heuristics
 
