@@ -304,7 +304,7 @@ skill → step resolution → capability provider → execution
 
 Current registry includes:
 
--   33 capabilities
+-   101 capabilities
 -   31 skills
 -   validation tooling
 -   dependency graph generation
