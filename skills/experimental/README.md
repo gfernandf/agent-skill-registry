@@ -5,8 +5,8 @@ gone through peer review.
 
 ## Who can contribute
 
-Any contributor.  No approval needed before publishing here — this is where
-new ideas land first.
+Any contributor via PR.  No pre-approval is needed before submitting here —
+this is where new ideas usually land first.
 
 ## Requirements
 
@@ -22,5 +22,6 @@ release.
 
 ## Next step
 
-Open a PR moving the skill to `community/` once peer review is sought.
+Move the skill to `community/` once the full admission checklist, evidence,
+and peer review expectations are in scope.
 See `docs/SKILL_ADMISSION_POLICY.md` for the full channel model.

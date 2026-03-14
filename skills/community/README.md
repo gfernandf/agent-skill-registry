@@ -23,4 +23,5 @@ require a semver major bump and a migration note.
 
 Maintainers promote community skills to `official/` after they demonstrate
 sufficient usage and quality evidence (smoke tests, lab verification score).
+`official/` is maintainer-led curation, not the default first publication step.
 See `docs/SKILL_ADMISSION_POLICY.md` for the full channel model.

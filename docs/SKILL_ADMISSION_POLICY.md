@@ -32,6 +32,15 @@ quality expectations, and who owns maintenance.
 A skill does **not** have to follow every step.  It is valid to submit
 directly to `community/` if the checklist is already complete.
 
+In practice, most user-authored skills follow this path:
+
+- local instance iteration in `<agent-skills>/skills/local/`
+- `experimental/` for early shared review
+- `community/` once evidence and checklist quality are in place
+
+Promotion to `official/` is maintainer-led and should be treated as the final
+curation step, not the default first shared target.
+
 ## Policy Goal
 
 The registry must optimize for:
