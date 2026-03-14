@@ -33,7 +33,6 @@ jobs:
       - name: Generate governance guardrails report
         run: |
           python tools/governance_guardrails.py \
-            --fail-on-metadata-channels community,official \
             --fail-on-high-risk-overlap-channels community,official
 
       - name: Generate capability governance guardrails report

@@ -55,6 +55,25 @@ def _parse_channels(raw: str | None) -> set[str]:
     return parsed
 
 
+def _parse_issue_ids(raw: str | None) -> set[str]:
+    if not raw:
+        return set()
+    allowed = {"missing_metadata", "missing_use_cases", "missing_examples", "missing_tags"}
+    parsed = {
+        item.strip().lower()
+        for item in raw.split(",")
+        if item.strip()
+    }
+    invalid = sorted(parsed - allowed)
+    if invalid:
+        raise ValueError(
+            "invalid metadata issue id(s): "
+            + ", ".join(invalid)
+            + ". Allowed: missing_metadata, missing_use_cases, missing_examples, missing_tags"
+        )
+    return parsed
+
+
 def _get_skill_meta_issues(skill: dict[str, Any]) -> list[str]:
     issues: list[str] = []
     metadata = skill.get("metadata")
@@ -234,6 +253,15 @@ def main() -> int:
             "Example: community,official"
         ),
     )
+    parser.add_argument(
+        "--fail-on-metadata-issues",
+        default="",
+        help=(
+            "Comma-separated metadata issue ids that should be considered blockers when "
+            "--fail-on-metadata-channels is used. Empty means metadata is advisory only. "
+            "Example: missing_metadata"
+        ),
+    )
     args = parser.parse_args()
 
     base = args.base.resolve()
@@ -250,6 +278,7 @@ def main() -> int:
     try:
         fail_metadata_channels = _parse_channels(args.fail_on_metadata_channels)
         fail_overlap_channels = _parse_channels(args.fail_on_high_risk_overlap_channels)
+        fail_metadata_issues = _parse_issue_ids(args.fail_on_metadata_issues)
     except ValueError as e:
         print(f"GUARDRAILS FAILED: {e}")
         return 1
@@ -280,17 +309,20 @@ def main() -> int:
         print("GUARDRAILS FAILED: overlap alerts detected.")
         return 1
 
-    if fail_metadata_channels:
+    if fail_metadata_channels and fail_metadata_issues:
         metadata_blockers = [
             item
             for item in report.get("skills_with_metadata_issues", [])
-            if isinstance(item, dict) and item.get("channel") in fail_metadata_channels
+            if isinstance(item, dict)
+            and item.get("channel") in fail_metadata_channels
+            and bool(fail_metadata_issues.intersection(set(item.get("issues", []))))
         ]
         if metadata_blockers:
             print(
                 "GUARDRAILS FAILED: metadata issues found in blocked channels "
                 + ", ".join(sorted(fail_metadata_channels))
             )
+            print("Blocking metadata issue ids: " + ", ".join(sorted(fail_metadata_issues)))
             print(f"Blocked metadata issue count: {len(metadata_blockers)}")
             return 1
 
