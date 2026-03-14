@@ -36,6 +36,25 @@ def _jaccard(left: set[str], right: set[str]) -> float:
     return len(left & right) / len(union)
 
 
+def _parse_channels(raw: str | None) -> set[str]:
+    if not raw:
+        return set()
+    allowed = {"experimental", "community", "official"}
+    parsed = {
+        item.strip().lower()
+        for item in raw.split(",")
+        if item.strip()
+    }
+    invalid = sorted(parsed - allowed)
+    if invalid:
+        raise ValueError(
+            "invalid channel(s): "
+            + ", ".join(invalid)
+            + ". Allowed: experimental, community, official"
+        )
+    return parsed
+
+
 def _get_skill_meta_issues(skill: dict[str, Any]) -> list[str]:
     issues: list[str] = []
     metadata = skill.get("metadata")
@@ -199,6 +218,22 @@ def main() -> int:
         action="store_true",
         help="Exit with code 1 when overlap alerts exist.",
     )
+    parser.add_argument(
+        "--fail-on-metadata-channels",
+        default="",
+        help=(
+            "Comma-separated channels that should fail when metadata issues are detected. "
+            "Example: community,official"
+        ),
+    )
+    parser.add_argument(
+        "--fail-on-high-risk-overlap-channels",
+        default="",
+        help=(
+            "Comma-separated channels that should fail when high-risk overlaps are detected. "
+            "Example: community,official"
+        ),
+    )
     args = parser.parse_args()
 
     base = args.base.resolve()
@@ -210,6 +245,13 @@ def main() -> int:
 
     if args.min_shared_capabilities < 1:
         print("GUARDRAILS FAILED: --min-shared-capabilities must be >= 1.")
+        return 1
+
+    try:
+        fail_metadata_channels = _parse_channels(args.fail_on_metadata_channels)
+        fail_overlap_channels = _parse_channels(args.fail_on_high_risk_overlap_channels)
+    except ValueError as e:
+        print(f"GUARDRAILS FAILED: {e}")
         return 1
 
     try:
@@ -237,6 +279,39 @@ def main() -> int:
     if args.fail_on_overlap and overlaps > 0:
         print("GUARDRAILS FAILED: overlap alerts detected.")
         return 1
+
+    if fail_metadata_channels:
+        metadata_blockers = [
+            item
+            for item in report.get("skills_with_metadata_issues", [])
+            if isinstance(item, dict) and item.get("channel") in fail_metadata_channels
+        ]
+        if metadata_blockers:
+            print(
+                "GUARDRAILS FAILED: metadata issues found in blocked channels "
+                + ", ".join(sorted(fail_metadata_channels))
+            )
+            print(f"Blocked metadata issue count: {len(metadata_blockers)}")
+            return 1
+
+    if fail_overlap_channels:
+        overlap_blockers = [
+            item
+            for item in report.get("overlap_alerts", [])
+            if isinstance(item, dict)
+            and item.get("risk") == "high"
+            and (
+                item.get("left_channel") in fail_overlap_channels
+                or item.get("right_channel") in fail_overlap_channels
+            )
+        ]
+        if overlap_blockers:
+            print(
+                "GUARDRAILS FAILED: high-risk overlap alerts found in blocked channels "
+                + ", ".join(sorted(fail_overlap_channels))
+            )
+            print(f"Blocked overlap issue count: {len(overlap_blockers)}")
+            return 1
 
     return 0
 

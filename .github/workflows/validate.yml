@@ -31,7 +31,10 @@ jobs:
         run: python tools/generate_catalog.py
 
       - name: Generate governance guardrails report
-        run: python tools/governance_guardrails.py
+        run: |
+          python tools/governance_guardrails.py \
+            --fail-on-metadata-channels community,official \
+            --fail-on-high-risk-overlap-channels community,official
 
       - name: Generate capability governance guardrails report
         run: python tools/capability_governance_guardrails.py
