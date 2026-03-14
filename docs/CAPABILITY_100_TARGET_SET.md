@@ -1,12 +1,24 @@
 # Capability 100 Target Set
 
-This document defines a curated target set of 100 capabilities:
+This document records the planning baseline that guided expansion from an
+initial 45-capability core toward a 100-capability language target.
 
-- 45 currently available capabilities
-- 55 proposed capabilities
+Current status:
 
-Goal: provide a practical language baseline to cover most business workflows
-without semantic duplication or unnecessary fragmentation.
+- The 100-capability milestone has been reached and exceeded.
+- Current registry scope is now tracked as 101 capabilities in
+    [README.md](../README.md).
+
+Use this document as historical context and taxonomy rationale, not as the
+live source of truth for exact capability counts.
+
+For current operational scope and governance, use:
+
+- [README.md](../README.md)
+- [CAPABILITIES.md](CAPABILITIES.md)
+- [CAPABILITY_ADMISSION_POLICY.md](CAPABILITY_ADMISSION_POLICY.md)
+- [CAPABILITY_COMPATIBILITY_POLICY.md](CAPABILITY_COMPATIBILITY_POLICY.md)
+- [CAPABILITY_SUNSET_POLICY.md](CAPABILITY_SUNSET_POLICY.md)
 
 ## Design Rules Used
 
@@ -15,7 +27,7 @@ without semantic duplication or unnecessary fragmentation.
 3. Avoid adding synonyms where current operations already express intent.
 4. Use new domains (`identity`, `integration`) to separate concerns cleanly.
 
-## Existing 45 (Current Baseline)
+## Historical Baseline 45
 
 ### Agent
 
@@ -107,7 +119,12 @@ without semantic duplication or unnecessary fragmentation.
 - web.search
 - web.source.verify
 
-## Proposed 55 (No Contracts Yet)
+## Historical Expansion Set 55
+
+These entries were initially tracked as proposed additions to reach the 100
+target. Most are now represented in the live registry. Contract maturity,
+implementation quality, and production readiness should be evaluated through
+the active governance and validation workflows rather than this snapshot.
 
 ### Task (15)
 
@@ -188,11 +205,13 @@ without semantic duplication or unnecessary fragmentation.
 
 - message.priority.classify
 
-## Count Check
+## Historical Count Check
 
-- Existing: 45
-- Proposed: 55
-- Total target: 100
+- Baseline: 45
+- Expansion set: 55
+- Planned total: 100
+
+Current live total may differ as the registry continues evolving.
 
 ## Internal Conflict Review Summary
 
@@ -204,5 +223,5 @@ The proposed set was filtered to reduce expected overlap:
 4. Existing generic text/security capabilities are reused as base language,
    avoiding duplicate new synonyms.
 
-Remaining overlap candidates should be reviewed during capability-by-capability
-creation using governance guardrails and admission policy.
+Remaining overlap candidates should continue to be reviewed capability-by-
+capability using governance guardrails and admission policy checks.
