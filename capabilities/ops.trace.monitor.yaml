@@ -1,6 +1,11 @@
 id: ops.trace.monitor
 version: 1.0.0
-description: Monitor a trace against thresholds and raise alerts.
+description: >
+  Monitor trace state against operational thresholds as a control/governance
+  cognitive unit. This capability does not infer new reasoning structure;
+  instead it evaluates existing trace artifacts and emits deterministic control
+  signals (status, risk flags, alerts, metrics) that can be used to continue,
+  re-plan, or stop an agent workflow.
 inputs:
   trace:
     type: object
@@ -15,11 +20,44 @@ outputs:
     type: string
     required: true
     description: Overall monitoring status.
+  risk_flags:
+    type: array
+    required: false
+    description: Thresholded risk flags derived from the trace.
   alerts:
     type: array
     required: false
     description: Raised alerts.
+  metrics:
+    type: object
+    required: false
+    description: Summary metrics used to evaluate thresholds.
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - trace
+    - monitoring
+    - governance
+    - cognitive-unit
+  use_cases:
+    - Gate agent progression when risk flags exceed accepted thresholds.
+    - Produce deterministic audit evidence for runtime control decisions.
+    - Feed control_status into orchestrator logic for dynamic re-planning.
+  examples:
+    - input:
+        trace:
+          assumptions:
+            - "Dataset is complete"
+          risk_candidates:
+            - "goal_drift"
+        thresholds:
+          max_risk_flags: 0
+      output:
+        status: "blocked"
+        risk_flags:
+          - "goal_drift"
