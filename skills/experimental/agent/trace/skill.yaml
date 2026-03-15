@@ -76,12 +76,17 @@ steps:
 - id: validate_events
   uses: data.schema.validate
   input:
-    data: inputs.events
+    data:
+      events: inputs.events
     schema:
-      type: array
-      items:
-        type: object
-        required: [type, timestamp]
+      type: object
+      required: [events]
+      properties:
+        events:
+          type: array
+          items:
+            type: object
+            required: [type, timestamp]
   output:
     valid: vars.events_valid
     errors: vars.events_errors
