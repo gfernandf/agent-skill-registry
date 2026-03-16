@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 9,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 100
+    "metadata_issues": 98
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -516,20 +516,6 @@
     },
     {
       "capability_id": "ops.event.monitor",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "ops.trace.analyze",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "ops.trace.monitor",
       "issues": [
         "missing_tags",
         "missing_examples"
