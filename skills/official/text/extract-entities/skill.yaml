@@ -17,3 +17,8 @@ steps:
     text: inputs.text
   output:
     entities: outputs.entities
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

@@ -218,6 +218,127 @@ It is not intended to change the meaning of the workflow itself.
 
 ---
 
+## classification
+
+The `classification` block is a required sub-key of `metadata` for all skills
+in the `official/` and `community/` channels.
+
+It declares how the skill is meant to be invoked and what kind of effect it
+produces. This information is used by the Skill Gateway for discovery ranking,
+`attach` eligibility validation, and agent-facing `list` filtering.
+
+### Schema
+
+```yaml
+metadata:
+  classification:
+    role: procedure | utility | sidecar
+    invocation: direct | attach | both
+    attach_targets:                        # required when invocation != direct
+      - task | run | output | transcript | artifact
+    effect_mode: read_only | enrich | control_signal
+```
+
+### Fields
+
+#### role
+
+| Value | Definition |
+|---|---|
+| `procedure` | Solves a business objective end-to-end. Recommended as primary match in discovery. |
+| `utility` | Technical building block intended for composition. Recommended as secondary match or when explicitly requested. |
+| `sidecar` | Auxiliary skill that requires a live execution target to observe, audit, or control. Excluded from direct-call recommendations. |
+
+#### invocation
+
+| Value | Meaning |
+|---|---|
+| `direct` | Skill is called with explicit inputs. No live target required. |
+| `attach` | Skill is attached to an existing execution target. Requires `attach_targets`. |
+| `both` | Skill supports both direct invocation and attachment. Requires `attach_targets`. |
+
+#### attach_targets
+
+Required when `invocation` is `attach` or `both`. Must not be present when
+`invocation` is `direct`.
+
+Valid target types:
+
+| Target | Description |
+|---|---|
+| `task` | A pending or queued task unit |
+| `run` | A live or completed agent run |
+| `output` | The output document or payload of a run or step |
+| `transcript` | A conversation or interaction transcript |
+| `artifact` | A stored binary or structured artifact |
+
+#### effect_mode
+
+| Value | Meaning |
+|---|---|
+| `read_only` | Skill reads inputs and produces a derived result. No data is modified or stored. |
+| `enrich` | Skill produces supplemental data (summary, embedding, annotation). May write to memory or storage. |
+| `control_signal` | Skill emits flags, alerts, or decisions intended to influence execution flow. |
+
+### Validation rules
+
+1. `role=sidecar` → `invocation` must not be `direct`.
+2. `invocation ∈ {attach, both}` → `attach_targets` must have at least one entry.
+3. `invocation=direct` → `attach_targets` must be absent.
+4. For `official/` and `community/` skills, the full `classification` block is required. Omitting it is a validation error.
+5. For `experimental/` skills, the block is optional but validated if present.
+
+### Examples
+
+Procedure — direct invocation, enriched output:
+
+```yaml
+metadata:
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich
+```
+
+Utility — read-only extraction:
+
+```yaml
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only
+```
+
+Sidecar — attaches to a live run or output:
+
+```yaml
+metadata:
+  classification:
+    role: sidecar
+    invocation: attach
+    attach_targets:
+      - run
+      - output
+      - transcript
+    effect_mode: control_signal
+```
+
+Hybrid — supports both direct and attach invocation:
+
+```yaml
+metadata:
+  classification:
+    role: utility
+    invocation: both
+    attach_targets:
+      - output
+      - transcript
+    effect_mode: enrich
+```
+
+---
+
 # Dataflow Model
 
 Skills use an **explicit dataflow model**.

@@ -1329,21 +1329,147 @@
   {
     "id": "ops.trace.analyze",
     "version": "1.0.0",
-    "description": "TODO define capability contract for ops.trace.analyze.",
+    "description": "Analyze incremental execution traces as a cognitive interpretation unit. This capability reconstructs the agent's reasoning path from runtime events, infers assumptions, identifies plausible alternatives, estimates confidence, and returns structured views such as decision graphs. It is intended to be called repeatedly during execution (update mode) and once at run closure (finalize mode), without coupling to any specific model provider.\n",
     "file": "capabilities/ops.trace.analyze.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "Declared goal of the agent run being traced."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Optional contextual constraints or environment metadata for analysis."
+      },
+      "events": {
+        "type": "array",
+        "required": true,
+        "description": "Ordered batch of runtime events for this analysis cycle."
+      },
+      "trace_state": {
+        "type": "object",
+        "required": false,
+        "description": "Inline accumulated trace state from previous cycles."
+      },
+      "trace_session_id": {
+        "type": "string",
+        "required": false,
+        "description": "Reference identifier for server-managed trace state."
+      },
+      "state_mode": {
+        "type": "string",
+        "required": false,
+        "description": "State continuity mode. Supported values are auto, inline, and reference."
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "Analysis mode. Supported values are update and finalize."
+      },
+      "output_views": {
+        "type": "array",
+        "required": false,
+        "description": "Optional list of requested views such as decision_graph, assumptions, and summary."
+      }
+    },
+    "outputs": {
+      "trace_session_id": {
+        "type": "string",
+        "required": true,
+        "description": "Stable trace session id to continue analysis across calls."
+      },
+      "updated_trace_state": {
+        "type": "object",
+        "required": true,
+        "description": "Updated accumulated trace state for subsequent cycles."
+      },
+      "state_checksum": {
+        "type": "string",
+        "required": false,
+        "description": "Hash/checksum of the updated state for auditability and drift checks."
+      },
+      "trace_version": {
+        "type": "string",
+        "required": false,
+        "description": "Version tag of the trace state schema used in this response."
+      },
+      "decision_graph": {
+        "type": "object",
+        "required": false,
+        "description": "Structured graph representation of detected decisions and dependencies."
+      },
+      "assumptions": {
+        "type": "array",
+        "required": false,
+        "description": "Detected assumptions inferred from the analyzed execution path."
+      },
+      "alternative_paths": {
+        "type": "array",
+        "required": false,
+        "description": "Alternative viable paths inferred from current evidence and goal."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Confidence score for this analysis cycle in the range 0 to 1."
+      },
+      "risk_candidates": {
+        "type": "array",
+        "required": false,
+        "description": "Candidate risk findings before thresholding/monitoring."
+      },
+      "summary": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable summary of the current trace analysis."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "trace",
+        "observability",
+        "reasoning",
+        "cognitive-unit"
+      ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "input": {
+            "goal": "Assess market expansion feasibility",
+            "state_mode": "inline",
+            "mode": "update",
+            "events": [
+              {
+                "type": "step_completed",
+                "timestamp": "2026-03-15T10:00:00Z",
+                "step_id": "search_market_data"
+              }
+            ]
+          },
+          "output": {
+            "confidence": 0.71,
+            "assumptions": [
+              "Primary source is representative for target market"
+            ],
+            "risk_candidates": [
+              "decision_without_evidence"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "ops.trace.monitor",
     "version": "1.0.0",
-    "description": "Monitor a trace against thresholds and raise alerts.",
+    "description": "Monitor trace state against operational thresholds as a control/governance cognitive unit. This capability does not infer new reasoning structure; instead it evaluates existing trace artifacts and emits deterministic control signals (status, risk flags, alerts, metrics) that can be used to continue, re-plan, or stop an agent workflow.\n",
     "file": "capabilities/ops.trace.monitor.yaml",
     "inputs": {
       "trace": {
@@ -1363,17 +1489,54 @@
         "required": true,
         "description": "Overall monitoring status."
       },
+      "risk_flags": {
+        "type": "array",
+        "required": false,
+        "description": "Thresholded risk flags derived from the trace."
+      },
       "alerts": {
         "type": "array",
         "required": false,
         "description": "Raised alerts."
+      },
+      "metrics": {
+        "type": "object",
+        "required": false,
+        "description": "Summary metrics used to evaluate thresholds."
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "trace",
+        "monitoring",
+        "governance",
+        "cognitive-unit"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "input": {
+            "trace": {
+              "assumptions": [
+                "Dataset is complete"
+              ],
+              "risk_candidates": [
+                "goal_drift"
+              ]
+            },
+            "thresholds": {
+              "max_risk_flags": 0
+            }
+          },
+          "output": {
+            "status": "blocked",
+            "risk_flags": [
+              "goal_drift"
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,

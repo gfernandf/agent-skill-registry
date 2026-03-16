@@ -25,3 +25,8 @@ steps:
   output:
     label: outputs.label
     confidence: outputs.confidence
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

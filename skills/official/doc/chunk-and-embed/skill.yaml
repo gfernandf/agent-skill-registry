@@ -34,3 +34,8 @@ steps:
     text: inputs.text
   output:
     embedding: outputs.embedding
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: enrich

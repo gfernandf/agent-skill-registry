@@ -105,6 +105,80 @@ def validate_capability_id_against_vocab(
 
 ALLOWED_STATUS = {"stable", "experimental", "deprecated", "unspecified"}
 
+ALLOWED_ROLES = {"procedure", "utility", "sidecar"}
+ALLOWED_INVOCATIONS = {"direct", "attach", "both"}
+ALLOWED_ATTACH_TARGETS = {"task", "run", "output", "transcript", "artifact"}
+ALLOWED_EFFECT_MODES = {"read_only", "enrich", "control_signal"}
+
+
+def validate_classification_block(
+    classification: Any,
+    path: Path,
+    errors: List[str],
+) -> None:
+    """Validate the metadata.classification sub-block of a skill YAML."""
+    if not isinstance(classification, dict):
+        errors.append(f"{path}: metadata.classification must be a mapping")
+        return
+
+    role = classification.get("role")
+    if role is None:
+        errors.append(f"{path}: metadata.classification.role is required")
+    elif role not in ALLOWED_ROLES:
+        errors.append(
+            f"{path}: metadata.classification.role must be one of "
+            f"{sorted(ALLOWED_ROLES)}, got '{role}'"
+        )
+
+    invocation = classification.get("invocation")
+    if invocation is None:
+        errors.append(f"{path}: metadata.classification.invocation is required")
+    elif invocation not in ALLOWED_INVOCATIONS:
+        errors.append(
+            f"{path}: metadata.classification.invocation must be one of "
+            f"{sorted(ALLOWED_INVOCATIONS)}, got '{invocation}'"
+        )
+
+    attach_targets = classification.get("attach_targets")
+    if invocation in {"attach", "both"}:
+        if not attach_targets:
+            errors.append(
+                f"{path}: metadata.classification.attach_targets is required "
+                f"when invocation is '{invocation}'"
+            )
+        elif not isinstance(attach_targets, list):
+            errors.append(
+                f"{path}: metadata.classification.attach_targets must be a list"
+            )
+        else:
+            for t in attach_targets:
+                if t not in ALLOWED_ATTACH_TARGETS:
+                    errors.append(
+                        f"{path}: metadata.classification.attach_targets entry "
+                        f"'{t}' must be one of {sorted(ALLOWED_ATTACH_TARGETS)}"
+                    )
+    elif invocation == "direct" and attach_targets is not None:
+        errors.append(
+            f"{path}: metadata.classification.attach_targets must not be set "
+            "when invocation is 'direct'"
+        )
+
+    effect_mode = classification.get("effect_mode")
+    if effect_mode is None:
+        errors.append(f"{path}: metadata.classification.effect_mode is required")
+    elif effect_mode not in ALLOWED_EFFECT_MODES:
+        errors.append(
+            f"{path}: metadata.classification.effect_mode must be one of "
+            f"{sorted(ALLOWED_EFFECT_MODES)}, got '{effect_mode}'"
+        )
+
+    # Cross-field rule: sidecar must not be invoked directly
+    if role == "sidecar" and invocation == "direct":
+        errors.append(
+            f"{path}: metadata.classification — a sidecar skill must not have "
+            "invocation='direct'; use 'attach' or 'both'"
+        )
+
 
 def validate_metadata_block(
     metadata: Any,
@@ -149,6 +223,21 @@ def validate_metadata_block(
                 for use_case in use_cases:
                     if not isinstance(use_case, str):
                         errors.append(f"{path}: metadata.use_cases entries must be strings")
+
+        classification = metadata.get("classification")
+        # official/ and community/ channels require a classification block.
+        # experimental/ and local/ validate the block if present but do not require it.
+        is_required_channel = any(
+            part in {"official", "community"} for part in path.parts
+        )
+        if classification is None:
+            if is_required_channel:
+                errors.append(
+                    f"{path}: metadata.classification is required for "
+                    "official and community skills"
+                )
+        else:
+            validate_classification_block(classification, path, errors)
 
 
 # ----------------------------------------------------------------------

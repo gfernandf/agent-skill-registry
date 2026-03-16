@@ -26,3 +26,8 @@ steps:
     input: outputs.plan
   output:
     route: outputs.route
+metadata:
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

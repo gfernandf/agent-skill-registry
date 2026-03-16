@@ -13,6 +13,14 @@
       ],
       "skills": []
     },
+    "agent.trace": {
+      "capabilities": [
+        "data.schema.validate",
+        "ops.trace.analyze",
+        "ops.trace.monitor"
+      ],
+      "skills": []
+    },
     "audio.transcribe-summary": {
       "capabilities": [
         "audio.transcribe",

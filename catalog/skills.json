@@ -56,7 +56,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -101,7 +106,214 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
+    "id": "agent.trace",
+    "version": "0.1.0",
+    "name": "Agent Trace",
+    "description": "Analyze agent execution incrementally to produce structured trace state, decision graph views, and risk control signals during a run.\n",
+    "channel": "experimental",
+    "domain": "agent",
+    "slug": "trace",
+    "file": "skills/experimental/agent/trace/skill.yaml",
+    "inputs": {
+      "goal": {
+        "type": "string",
+        "required": true
+      },
+      "context": {
+        "type": "object",
+        "required": false
+      },
+      "events": {
+        "type": "array",
+        "required": true
+      },
+      "trace_state": {
+        "type": "object",
+        "required": false
+      },
+      "trace_session_id": {
+        "type": "string",
+        "required": false
+      },
+      "state_mode": {
+        "type": "string",
+        "required": false
+      },
+      "mode": {
+        "type": "string",
+        "required": false
+      },
+      "output_views": {
+        "type": "array",
+        "required": false
+      },
+      "thresholds": {
+        "type": "object",
+        "required": false
+      }
+    },
+    "outputs": {
+      "trace_session_id": {
+        "type": "string",
+        "required": true
+      },
+      "updated_trace_state": {
+        "type": "object",
+        "required": true
+      },
+      "state_checksum": {
+        "type": "string",
+        "required": false
+      },
+      "trace_version": {
+        "type": "string",
+        "required": false
+      },
+      "decision_graph": {
+        "type": "object",
+        "required": false
+      },
+      "assumptions": {
+        "type": "array",
+        "required": false
+      },
+      "alternative_paths": {
+        "type": "array",
+        "required": false
+      },
+      "confidence": {
+        "type": "number",
+        "required": false
+      },
+      "risk_candidates": {
+        "type": "array",
+        "required": false
+      },
+      "risk_flags": {
+        "type": "array",
+        "required": false
+      },
+      "control_status": {
+        "type": "string",
+        "required": true
+      },
+      "alerts": {
+        "type": "array",
+        "required": false
+      },
+      "summary": {
+        "type": "string",
+        "required": false
+      }
+    },
+    "steps": [
+      {
+        "id": "validate_events",
+        "uses": "data.schema.validate",
+        "input": {
+          "data": {
+            "events": "inputs.events"
+          },
+          "schema": {
+            "type": "object",
+            "required": [
+              "events"
+            ],
+            "properties": {
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "timestamp"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "output": {
+          "valid": "vars.events_valid",
+          "errors": "vars.events_errors"
+        }
+      },
+      {
+        "id": "analyze_trace",
+        "uses": "ops.trace.analyze",
+        "input": {
+          "goal": "inputs.goal",
+          "context": "inputs.context",
+          "events": "inputs.events",
+          "trace_state": "inputs.trace_state",
+          "trace_session_id": "inputs.trace_session_id",
+          "state_mode": "inputs.state_mode",
+          "mode": "inputs.mode",
+          "output_views": "inputs.output_views"
+        },
+        "output": {
+          "trace_session_id": "outputs.trace_session_id",
+          "updated_trace_state": "outputs.updated_trace_state",
+          "state_checksum": "outputs.state_checksum",
+          "trace_version": "outputs.trace_version",
+          "decision_graph": "outputs.decision_graph",
+          "assumptions": "outputs.assumptions",
+          "alternative_paths": "outputs.alternative_paths",
+          "confidence": "outputs.confidence",
+          "risk_candidates": "outputs.risk_candidates",
+          "summary": "outputs.summary"
+        }
+      },
+      {
+        "id": "monitor_trace",
+        "uses": "ops.trace.monitor",
+        "input": {
+          "trace": "outputs.updated_trace_state",
+          "thresholds": "inputs.thresholds"
+        },
+        "output": {
+          "status": "outputs.control_status",
+          "risk_flags": "outputs.risk_flags",
+          "alerts": "outputs.alerts"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.schema.validate",
+      "ops.trace.analyze",
+      "ops.trace.monitor"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "agent",
+        "trace",
+        "observability",
+        "control"
+      ],
+      "category": null,
+      "status": "experimental",
+      "use_cases": [],
+      "examples": [],
+      "classification": {
+        "role": "sidecar",
+        "invocation": "attach",
+        "effect_mode": "control_signal",
+        "attach_targets": [
+          "run",
+          "output",
+          "transcript"
+        ]
+      }
     }
   },
   {
@@ -161,7 +373,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -226,7 +443,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -296,7 +518,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -366,7 +593,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -421,7 +653,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -481,7 +718,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -551,7 +793,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -616,7 +863,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -681,7 +933,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -746,7 +1003,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -831,7 +1093,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -906,7 +1173,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -966,7 +1238,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1031,7 +1308,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1086,7 +1368,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -1156,7 +1443,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -1216,7 +1508,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1261,7 +1558,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -1306,7 +1608,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
     }
   },
   {
@@ -1354,7 +1661,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1425,7 +1737,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1485,7 +1802,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1530,7 +1852,16 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "both",
+        "effect_mode": "enrich",
+        "attach_targets": [
+          "output",
+          "transcript"
+        ]
+      }
     }
   },
   {
@@ -1595,7 +1926,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1680,7 +2016,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1747,7 +2088,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1847,7 +2193,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1907,7 +2258,15 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "attach",
+        "effect_mode": "enrich",
+        "attach_targets": [
+          "output"
+        ]
+      }
     }
   },
   {
@@ -1972,7 +2331,12 @@
       "category": null,
       "status": "unspecified",
       "use_cases": [],
-      "examples": []
+      "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   }
 ]

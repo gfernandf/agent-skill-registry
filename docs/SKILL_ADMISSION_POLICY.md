@@ -79,7 +79,12 @@ all of the following:
 5. Governance readiness:
 - Does metadata include tags, use_cases, and examples?
 
-6. Sunset plan:
+6. Classification:
+- Does `metadata.classification` declare `role`, `invocation`, and `effect_mode`?
+- If `invocation` is `attach` or `both`, does `attach_targets` list at least one valid target type?
+- If `role` is `sidecar`, is `invocation` set to `attach` or `both` (never `direct`)?
+
+7. Sunset plan:
 - If this supersedes another skill, identify deprecation target and migration path.
 
 PRs missing the checklist should not be merged.

@@ -1,7 +1,7 @@
 {
   "summary": {
-    "skills_total": 31,
-    "skills_with_metadata_issues": 31,
+    "skills_total": 32,
+    "skills_with_metadata_issues": 32,
     "overlap_alerts": 0,
     "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
@@ -24,6 +24,14 @@
         "missing_use_cases",
         "missing_examples",
         "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "agent.trace",
+      "channel": "experimental",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples"
       ]
     },
     {

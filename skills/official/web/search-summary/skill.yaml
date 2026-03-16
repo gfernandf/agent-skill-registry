@@ -30,3 +30,8 @@ steps:
     text: outputs.results
   output:
     summary: outputs.summary
+metadata:
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

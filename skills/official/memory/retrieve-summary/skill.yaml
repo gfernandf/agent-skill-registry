@@ -30,3 +30,8 @@ steps:
     text: outputs.value
   output:
     summary: outputs.summary
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

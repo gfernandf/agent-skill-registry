@@ -43,3 +43,8 @@ steps:
   output:
     label: outputs.label
     confidence: outputs.confidence
+metadata:
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

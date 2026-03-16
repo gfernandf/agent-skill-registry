@@ -63,7 +63,7 @@ def _parse_channels(raw: str | None) -> set[str]:
 def _parse_issue_ids(raw: str | None) -> set[str]:
     if not raw:
         return set()
-    allowed = {"missing_metadata", "missing_use_cases", "missing_examples", "missing_tags"}
+    allowed = {"missing_metadata", "missing_use_cases", "missing_examples", "missing_tags", "missing_classification"}
     parsed = {
         item.strip().lower()
         for item in raw.split(",")
@@ -74,7 +74,7 @@ def _parse_issue_ids(raw: str | None) -> set[str]:
         raise ValueError(
             "invalid metadata issue id(s): "
             + ", ".join(invalid)
-            + ". Allowed: missing_metadata, missing_use_cases, missing_examples, missing_tags"
+            + ". Allowed: missing_metadata, missing_use_cases, missing_examples, missing_tags, missing_classification"
         )
     return parsed
 
@@ -96,6 +96,10 @@ def _get_skill_meta_issues(skill: dict[str, Any]) -> list[str]:
         issues.append("missing_examples")
     if not isinstance(tags, list) or len(tags) == 0:
         issues.append("missing_tags")
+
+    classification = metadata.get("classification")
+    if not isinstance(classification, dict) or not classification.get("role"):
+        issues.append("missing_classification")
 
     return issues
 

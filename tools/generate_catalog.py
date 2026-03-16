@@ -73,13 +73,29 @@ def normalize_capability_metadata(raw_metadata: Any) -> dict[str, Any]:
 def normalize_skill_metadata(raw_metadata: Any) -> dict[str, Any]:
     metadata = raw_metadata if isinstance(raw_metadata, dict) else {}
 
-    return {
+    result: dict[str, Any] = {
         "tags": metadata.get("tags", []) if isinstance(metadata.get("tags", []), list) else [],
         "category": metadata.get("category", None) if isinstance(metadata.get("category", None), str) or metadata.get("category", None) is None else None,
         "status": metadata.get("status", "unspecified") if isinstance(metadata.get("status", "unspecified"), str) else "unspecified",
         "use_cases": metadata.get("use_cases", []) if isinstance(metadata.get("use_cases", []), list) else [],
         "examples": metadata.get("examples", []) if isinstance(metadata.get("examples", []), list) else [],
     }
+
+    raw_classification = metadata.get("classification")
+    if isinstance(raw_classification, dict):
+        classification: dict[str, Any] = {
+            "role": raw_classification.get("role"),
+            "invocation": raw_classification.get("invocation"),
+            "effect_mode": raw_classification.get("effect_mode"),
+        }
+        attach_targets = raw_classification.get("attach_targets")
+        if isinstance(attach_targets, list):
+            classification["attach_targets"] = attach_targets
+        result["classification"] = classification
+    else:
+        result["classification"] = None
+
+    return result
 
 
 def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> dict[str, Any]:

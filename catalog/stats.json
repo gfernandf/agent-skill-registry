@@ -1,17 +1,17 @@
 {
   "summary": {
-    "capability_count": 100,
-    "skill_count": 31,
+    "capability_count": 101,
+    "skill_count": 32,
     "domain_count": 24,
-    "channel_count": 1
+    "channel_count": 2
   },
   "skills": {
     "by_domain": {
       "text": 10,
       "web": 5,
+      "agent": 3,
       "memory": 3,
       "pdf": 3,
-      "agent": 2,
       "doc": 2,
       "audio": 1,
       "code": 1,
@@ -21,9 +21,10 @@
       "table": 1
     },
     "by_channel": {
-      "official": 31
+      "official": 31,
+      "experimental": 1
     },
-    "average_steps": 2.0,
+    "average_steps": 2.03,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -35,10 +36,10 @@
       "model": 8,
       "ops": 5,
       "policy": 5,
+      "agent": 4,
       "memory": 4,
       "security": 4,
       "web": 4,
-      "agent": 3,
       "code": 3,
       "data": 3,
       "email": 2,
@@ -91,6 +92,10 @@
         "count": 2
       },
       {
+        "id": "data.schema.validate",
+        "count": 2
+      },
+      {
         "id": "memory.store",
         "count": 2
       },
@@ -123,10 +128,6 @@
         "count": 1
       },
       {
-        "id": "data.schema.validate",
-        "count": 1
-      },
-      {
         "id": "email.read",
         "count": 1
       },
@@ -140,6 +141,14 @@
       },
       {
         "id": "memory.retrieve",
+        "count": 1
+      },
+      {
+        "id": "ops.trace.analyze",
+        "count": 1
+      },
+      {
+        "id": "ops.trace.monitor",
         "count": 1
       },
       {
@@ -161,6 +170,7 @@
     ],
     "unused": [
       "agent.delegate",
+      "agent.plan.create",
       "code.execute",
       "code.format",
       "data.record.deduplicate",
@@ -204,8 +214,6 @@
       "ops.budget.estimate",
       "ops.event.acknowledge",
       "ops.event.monitor",
-      "ops.trace.analyze",
-      "ops.trace.monitor",
       "policy.constraint.gate",
       "policy.constraint.validate",
       "policy.decision.justify",
@@ -237,14 +245,68 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 62,
+    "skill_to_capability_edges": 65,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 4
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 0,
-    "capabilities_with_nondefault_metadata": 55,
-    "top_skill_tags": [],
-    "top_capability_tags": []
+    "skills_with_nondefault_metadata": 32,
+    "capabilities_with_nondefault_metadata": 57,
+    "top_skill_tags": [
+      {
+        "id": "agent",
+        "count": 1
+      },
+      {
+        "id": "control",
+        "count": 1
+      },
+      {
+        "id": "observability",
+        "count": 1
+      },
+      {
+        "id": "trace",
+        "count": 1
+      }
+    ],
+    "top_capability_tags": [
+      {
+        "id": "cognitive-unit",
+        "count": 2
+      },
+      {
+        "id": "trace",
+        "count": 2
+      },
+      {
+        "id": "developer-tools",
+        "count": 1
+      },
+      {
+        "id": "governance",
+        "count": 1
+      },
+      {
+        "id": "meta",
+        "count": 1
+      },
+      {
+        "id": "monitoring",
+        "count": 1
+      },
+      {
+        "id": "observability",
+        "count": 1
+      },
+      {
+        "id": "reasoning",
+        "count": 1
+      },
+      {
+        "id": "scaffolding",
+        "count": 1
+      }
+    ]
   }
 }

@@ -26,3 +26,10 @@ steps:
     text: outputs.text
   output:
     summary: outputs.summary
+metadata:
+  classification:
+    role: utility
+    invocation: attach
+    attach_targets:
+      - output
+    effect_mode: enrich

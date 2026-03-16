@@ -129,3 +129,11 @@ metadata:
     - trace
     - observability
     - control
+  classification:
+    role: sidecar
+    invocation: attach
+    attach_targets:
+      - run
+      - output
+      - transcript
+    effect_mode: control_signal

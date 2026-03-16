@@ -21,3 +21,11 @@ steps:
       text: inputs.text
     output:
       summary: outputs.summary
+metadata:
+  classification:
+    role: utility
+    invocation: both
+    attach_targets:
+      - output
+      - transcript
+    effect_mode: enrich

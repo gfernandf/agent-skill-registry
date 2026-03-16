@@ -17,3 +17,8 @@ steps:
     objective: inputs.objective
   output:
     plan: outputs.plan
+metadata:
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

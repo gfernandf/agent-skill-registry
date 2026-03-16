@@ -17,3 +17,8 @@ steps:
     text: inputs.text
   output:
     keywords: outputs.keywords
+metadata:
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only
