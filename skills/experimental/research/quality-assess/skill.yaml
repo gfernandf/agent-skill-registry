@@ -1,0 +1,220 @@
+id: research.quality-assess
+version: 0.1.0
+name: Quality Assess
+description: >
+  Assess the quality of a research synthesis artifact by measuring corpus
+  coverage, evidence strength, tension density, and uncertainty load. Produces
+  a synthesis_quality block with a composite confidence_score, per-dimension
+  scores, and human-readable quality_notes. Also validates the synthesis
+  structure and emits actionable quality_warnings when thresholds are not met.
+  Intended as a reusable quality gate for any analytical output that aggregates
+  multiple research items.
+
+inputs:
+  synthesis_object:
+    type: object
+    required: true
+    description: >
+      The structured synthesis artifact to assess. Expected to contain at minimum:
+      summary, key_points, uncertainties, source_coverage.
+
+  findings_by_item:
+    type: array
+    required: true
+    description: >
+      Per-item findings as produced by research.extract-findings. Used to compute
+      evidence_strength, tension_density, and uncertainty_load from the source data.
+
+  normalized_items:
+    type: array
+    required: true
+    description: >
+      The normalized item list as produced by research.normalize-corpus. Used for
+      coverage_ratio computation (items used vs items provided).
+
+  quality_profile:
+    type: string
+    required: false
+    description: >
+      Quality gate stringency: standard | strict. Defaults to standard.
+      strict raises thresholds for evidence_strength and coverage_ratio and
+      adds additional grounding validation.
+
+outputs:
+  synthesis_quality:
+    type: object
+    required: true
+    description: >
+      Quality assessment block containing: confidence_score (0-1),
+      coverage_ratio (0-1), evidence_strength (0-1), tension_density (0-1),
+      uncertainty_load (0-1), quality_notes (string), and dimensions (object
+      with per-dimension pass/fail and observed values).
+
+  quality_warnings:
+    type: array
+    required: false
+    description: >
+      List of actionable warnings when quality dimensions fall below thresholds.
+      Each warning includes dimension, observed_value, threshold, and message.
+
+  assessment_passed:
+    type: boolean
+    required: true
+    description: >
+      True if all required quality dimensions meet the threshold defined by
+      quality_profile. False triggers a retry or escalation recommendation.
+
+steps:
+
+  - id: validate_synthesis_structure
+    uses: data.schema.validate
+    input:
+      data: inputs.synthesis_object
+      schema:
+        type: object
+        properties:
+          summary:
+            type: string
+          key_points:
+            type: array
+          uncertainties:
+            type: array
+          source_coverage:
+            type: object
+        required:
+          - summary
+          - key_points
+          - uncertainties
+          - source_coverage
+    output:
+      valid: vars.structure_valid
+      errors: vars.structure_errors
+
+  - id: score_synthesis_quality
+    uses: eval.output.score
+    input:
+      output: inputs.synthesis_object
+      rubric:
+        dimensions:
+          coherence:
+            weight: 0.25
+            description: Does the summary and key_points read as a coherent integrated view?
+          coverage:
+            weight: 0.25
+            description: Are the key themes from source items represented in the synthesis?
+          grounding:
+            weight: 0.25
+            description: Are claims supported by the findings rather than fabricated?
+          caution:
+            weight: 0.25
+            description: Are uncertainties and tensions surfaced rather than hidden?
+    output:
+      score: vars.eval_score
+      dimensions: vars.eval_dimensions
+
+  - id: validate_grounding
+    uses: model.response.validate
+    input:
+      output: inputs.synthesis_object
+      validation_policy:
+        check_coherence: true
+        check_grounding: true
+        check_coverage: true
+        min_uncertainty_items: 1
+      evidence_context: inputs.findings_by_item
+    output:
+      valid: vars.grounding_valid
+      issues: vars.grounding_issues
+      confidence_adjustment: vars.confidence_adjustment
+      rationale: vars.grounding_rationale
+
+  - id: compute_quality_metrics
+    uses: model.output.generate
+    input:
+      instruction: >
+        Using the provided context bundle, compute the final synthesis_quality block.
+        The context includes synthesis_object, findings_by_item, normalized_items,
+        quality_profile, eval_score, eval_dimensions, grounding_valid,
+        grounding_issues, confidence_adjustment, and grounding_rationale.
+        Compute: coverage_ratio (items with at least one finding used in synthesis
+        divided by total normalized items), evidence_strength (average across all
+        findings_by_item claim evidence_strength mapped to 0=weak, 0.5=moderate,
+        1=strong), tension_density (number of items with conflicting claims on the
+        same theme divided by total items, capped at 1), uncertainty_load (items
+        with uncertainty_signals divided by total items).
+        confidence_score = 0.35 * coverage_ratio + 0.35 * evidence_strength
+          - 0.15 * tension_density - 0.15 * uncertainty_load, clamped to [0, 1].
+        Apply confidence_adjustment from grounding validation if provided.
+        Write quality_notes explaining the score in 1-3 sentences.
+        Apply quality_profile thresholds: standard requires confidence_score >= 0.4
+        and coverage_ratio >= 0.5; strict requires confidence_score >= 0.6 and
+        coverage_ratio >= 0.7.
+        Emit quality_warnings for any dimension below threshold.
+        Set assessment_passed accordingly.
+        Return exactly three top-level fields: synthesis_quality, quality_warnings,
+        and assessment_passed.
+      context_items:
+        - synthesis_object: inputs.synthesis_object
+          findings_by_item: inputs.findings_by_item
+          normalized_items: inputs.normalized_items
+          quality_profile: inputs.quality_profile
+          eval_score: vars.eval_score
+          eval_dimensions: vars.eval_dimensions
+          grounding_valid: vars.grounding_valid
+          grounding_issues: vars.grounding_issues
+          confidence_adjustment: vars.confidence_adjustment
+          grounding_rationale: vars.grounding_rationale
+      output_schema:
+        type: object
+        properties:
+          synthesis_quality:
+            type: object
+            properties:
+              coverage_ratio:
+                type: number
+              evidence_strength:
+                type: number
+              tension_density:
+                type: number
+              uncertainty_load:
+                type: number
+              confidence_score:
+                type: number
+              quality_notes:
+                type: string
+              assessment_passed:
+                type: boolean
+            required:
+              - assessment_passed
+          quality_warnings:
+            type: array
+          assessment_passed:
+            type: boolean
+        required:
+          - synthesis_quality
+          - assessment_passed
+      detail_level: standard
+      constraints: {}
+    output:
+      output.synthesis_quality: outputs.synthesis_quality
+      output.quality_warnings: outputs.quality_warnings
+      output.assessment_passed: outputs.assessment_passed
+      warnings: vars.compute_warnings
+
+metadata:
+  status: experimental
+  tags:
+    - research
+    - quality
+    - assessment
+    - confidence
+    - grounding
+  category: research
+  use_cases:
+    - Gate a research synthesis before it is used in a decision workflow
+    - Detect low-coverage or poorly grounded synthesis outputs
+    - Produce a reusable confidence score for any multi-source analytical artifact
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

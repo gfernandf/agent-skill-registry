@@ -1,0 +1,115 @@
+id: research.extract-findings
+version: 0.1.0
+name: Extract Findings
+description: >
+  Extract structured analytical findings from a normalized corpus of research
+  items. For each item, identifies claims, evidence signals, risks, opportunities,
+  and uncertainty markers. Also extracts keywords and classifies each item by
+  dominant theme. Output is a findings_by_item structure suitable for downstream
+  synthesis, conflict detection, and thematic grouping.
+
+inputs:
+  normalized_items:
+    type: array
+    required: true
+    description: >
+      Normalized items as produced by research.normalize-corpus. Each item must
+      include at minimum: id, content, type.
+
+  topic:
+    type: string
+    required: false
+    description: >
+      Optional topic or research question anchoring the extraction. When provided,
+      findings are prioritized relative to this topic.
+
+  goal:
+    type: string
+    required: false
+    description: >
+      Optional goal describing the intended use of the synthesis (e.g. "evaluate
+      expansion into market X", "assess regulatory risk"). Influences claim
+      relevance scoring.
+
+  focus:
+    type: string
+    required: false
+    description: >
+      Optional extraction focus hint. Examples: "prioritize risks", "prioritize
+      contradictions", "emphasize opportunities".
+
+  max_detail:
+    type: string
+    required: false
+    description: "Extraction depth: brief | standard | detailed. Defaults to standard."
+
+outputs:
+  findings_by_item:
+    type: array
+    required: true
+    description: >
+      Array of per-item findings objects. Each entry includes: item_id, item_type,
+      claims (array of extracted claims with evidence_strength weak|moderate|strong),
+      risks (array), opportunities (array), uncertainty_signals (array of phrases or
+      areas that are unclear or weakly supported), dominant_theme, and keywords.
+
+  extraction_stats:
+    type: object
+    required: true
+    description: >
+      Summary of the extraction pass: items_processed, total_claims, items_with_risks,
+      items_with_opportunities, items_with_uncertainty, dominant_themes (array).
+
+steps:
+
+  - id: extract_structured_findings
+    uses: model.output.generate
+    input:
+      instruction: >
+        For each normalized item, extract structured analytical findings anchored
+        to the provided topic and goal. For each item produce: item_id, item_type,
+        claims (each with text and evidence_strength: weak|moderate|strong),
+        risks (array of strings), opportunities (array of strings),
+        uncertainty_signals (areas unclear or weakly supported), dominant_theme,
+        and keywords. Apply focus hint if provided. Respect max_detail level.
+        Do not fabricate claims not supported by the item content.
+        Also produce extraction_stats: items_processed, total_claims,
+        items_with_risks, items_with_opportunities, items_with_uncertainty,
+        dominant_themes.
+      context_items: inputs.normalized_items
+      output_schema:
+        type: object
+        properties:
+          findings_by_item:
+            type: array
+          extraction_stats:
+            type: object
+        required:
+          - findings_by_item
+          - extraction_stats
+      detail_level: inputs.max_detail
+      constraints:
+        no_fabrication: true
+        evidence_required: true
+    output:
+      output.findings_by_item: outputs.findings_by_item
+      output.extraction_stats: outputs.extraction_stats
+      warnings: vars.extraction_warnings
+
+metadata:
+  status: experimental
+  tags:
+    - research
+    - extraction
+    - findings
+    - claims
+    - analysis
+  category: research
+  use_cases:
+    - Extract structured claims and risks from research documents
+    - Prepare per-item findings for downstream synthesis or comparison
+    - Identify uncertainty signals in a research corpus before making decisions
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

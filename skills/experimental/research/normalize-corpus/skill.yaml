@@ -1,0 +1,90 @@
+id: research.normalize-corpus
+version: 0.1.0
+name: Normalize Corpus
+description: >
+  Normalize a heterogeneous collection of research items into a clean, uniform
+  representation ready for analysis. Handles text extraction from raw content,
+  chunking of long items, deduplication of near-identical entries, and language
+  detection. Items may arrive as pre-extracted text or as source references
+  (url, pdf_path, fs_path, memory_key) which are resolved during normalization.
+
+inputs:
+  items:
+    type: array
+    required: true
+    description: >
+      List of input items to normalize. Each item must include an `id` and either
+      a `content` string (pre-extracted text) or a `source_ref` object with `type`
+      and `location` fields for lazy extraction. Optional fields per item: title,
+      type (article | report | note | web_page | search_result | agent_output |
+      transcript | raw_text), source, relevance_hint, metadata.
+
+  max_chunk_size:
+    type: number
+    required: false
+    description: >
+      Maximum character length per chunk when splitting long items. Items shorter
+      than this threshold are not split. Defaults to a runtime-defined value.
+
+outputs:
+  normalized_items:
+    type: array
+    required: true
+    description: >
+      List of normalized items, each containing: id, content (extracted text),
+      type, language, chunks (array), source, title, and any retained metadata.
+
+  normalization_stats:
+    type: object
+    required: true
+    description: >
+      Summary statistics of the normalization pass including total_input,
+      extracted_count, chunked_count, deduplicated_count, and language_distribution.
+
+steps:
+
+  - id: assemble_normalized
+    uses: model.output.generate
+    input:
+      instruction: >
+        Return one object with exactly two top-level fields: normalized_items and
+        normalization_stats. normalized_items must be an array where each item includes:
+        id, content, type (inferred from input if not provided, defaulting to raw_text),
+        language, chunks, source, title, and any retained metadata. normalization_stats
+        must include: total_input, extracted_count, chunked_count, deduplicated_count,
+        and language_distribution. Do not rename these fields, omit them, or wrap them
+        under any additional structure.
+      context_items: inputs.items
+      output_schema:
+        type: object
+        properties:
+          normalized_items:
+            type: array
+          normalization_stats:
+            type: object
+        required:
+          - normalized_items
+          - normalization_stats
+      detail_level: standard
+      constraints:
+        max_chunk_size: inputs.max_chunk_size
+    output:
+      output.normalized_items: outputs.normalized_items
+      output.normalization_stats: outputs.normalization_stats
+
+metadata:
+  status: experimental
+  tags:
+    - research
+    - normalization
+    - corpus
+    - preprocessing
+  category: research
+  use_cases:
+    - Prepare heterogeneous research material for downstream analysis
+    - Normalize agent outputs, PDFs, web pages, and notes into a uniform format
+    - Deduplicate and chunk long documents before synthesis
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: read_only

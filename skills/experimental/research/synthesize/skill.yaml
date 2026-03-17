@@ -1,0 +1,298 @@
+id: research.synthesize
+version: 0.1.0
+name: Research Synthesize
+description: >
+  Transform a heterogeneous collection of research materials into a structured,
+  actionable synthesis artifact. Accepts items as pre-extracted text or as source
+  references (url, pdf_path, fs_path, memory_key). Normalizes the corpus, extracts
+  per-item findings, consolidates thematic clusters, detects tensions and
+  uncertainties, assembles the synthesis object, gates quality, and produces both
+  a machine-readable output and a human-readable narrative.
+
+  Suitable as an intermediate block in longer agent workflows: feeds naturally into
+  decision.compare_options, task.frame, or direct human review.
+
+inputs:
+  items:
+    type: array
+    required: true
+    description: >
+      List of research items to synthesize. Each item must include `id` and either
+      `content` (pre-extracted text) or `source_ref` (object with `type` and
+      `location`). Optional per-item fields: title, type (article | report | note |
+      web_page | search_result | agent_output | transcript | raw_text), source,
+      relevance_hint, metadata.
+
+  topic:
+    type: string
+    required: false
+    description: >
+      Topic or subject of the research. Anchors the synthesis. If omitted, the
+      skill infers the dominant topic from the corpus.
+
+  goal:
+    type: string
+    required: false
+    description: >
+      Intended use of the synthesis (e.g. "evaluate expansion into market X",
+      "assess regulatory risk for hydrogen in Europe"). Influences relevance
+      prioritization and next_steps suggestions.
+
+  focus:
+    type: string
+    required: false
+    description: >
+      Optional extraction and synthesis focus hint. Examples: "prioritize risks",
+      "prioritize contradictions", "executive summary", "emphasize opportunities".
+
+  max_detail:
+    type: string
+    required: false
+    description: "Output depth: brief | standard | detailed. Defaults to standard."
+
+  quality_profile:
+    type: string
+    required: false
+    description: >
+      Quality gate stringency applied in the assessment step: standard | strict.
+      Defaults to standard. strict raises evidence and coverage thresholds.
+
+  max_chunk_size:
+    type: number
+    required: false
+    description: >
+      Maximum character length per chunk during corpus normalization. Passed
+      through to research.normalize-corpus.
+
+outputs:
+  summary:
+    type: string
+    required: true
+    description: >
+      Executive summary of the corpus. Answers: what the material is about,
+      what the key conclusions are, and what seems most important.
+
+  key_points:
+    type: array
+    required: true
+    description: >
+      Consolidated list of stable findings or claims that appear central or
+      recurrent across sources. Each entry is a concise statement.
+
+  insights:
+    type: array
+    required: true
+    description: >
+      Interpretive or non-trivial observations not captured by key_points.
+      Patterns, implications, and differential signals worth noting.
+
+  tensions:
+    type: array
+    required: true
+    description: >
+      Points where two or more items conflict, diverge in emphasis, or carry
+      incompatible signals on the same topic. Each entry names the tension and
+      the diverging positions.
+
+  uncertainties:
+    type: array
+    required: true
+    description: >
+      Areas that are unclear, weakly supported, or missing from the corpus.
+      Each entry is a statement of what is not known or not well established.
+
+  source_coverage:
+    type: object
+    required: true
+    description: >
+      Coverage metadata: total_items, processed_items, coverage_ratio,
+      dominant_subset_warning (true if a small subset dominates the synthesis),
+      item_type_distribution.
+
+  next_steps:
+    type: array
+    required: true
+    description: >
+      Suggested continuation actions. Examples: investigate an unresolved area,
+      contrast a tension, compare options, pass to decision.compare_options.
+
+  synthesis_quality:
+    type: object
+    required: true
+    description: >
+      Quality and confidence block: confidence_score (0-1), coverage_ratio,
+      evidence_strength, tension_density, uncertainty_load, quality_notes,
+      assessment_passed, quality_warnings.
+
+  human_readable:
+    type: string
+    required: true
+    description: >
+      Narrative prose version of the synthesis suitable for direct human
+      consumption without further post-processing.
+
+steps:
+
+  - id: normalize_corpus
+    uses: skill:research.normalize-corpus
+    input:
+      items: inputs.items
+      max_chunk_size: inputs.max_chunk_size
+    output:
+      normalized_items: vars.normalized_items
+      normalization_stats: vars.normalization_stats
+
+  - id: extract_findings
+    uses: skill:research.extract-findings
+    input:
+      normalized_items: vars.normalized_items
+      topic: inputs.topic
+      goal: inputs.goal
+      focus: inputs.focus
+      max_detail: inputs.max_detail
+    output:
+      findings_by_item: vars.findings_by_item
+      extraction_stats: vars.extraction_stats
+
+  - id: assemble_synthesis
+    uses: model.output.generate
+    input:
+      instruction: >
+        Given the findings_by_item and normalization_stats, assemble the full
+        synthesis object. Use topic, goal, and focus as anchors (infer from corpus
+        if not provided). Apply the following heuristics:
+        - Elevate a claim to key_point if it appears across multiple items or is
+          clearly central.
+        - Elevate a singular but important differential signal to insight.
+        - Mark a tension when two items push in opposite directions on the same theme.
+        - Mark an uncertainty when a claim is weakly supported or a relevant area
+          is absent from the corpus.
+        - Suggest next_steps aligned to goal if provided, otherwise suggest generally.
+        Produce: summary (executive, 3-5 sentences), key_points (array of strings),
+        insights (array of strings), tensions (array of objects with topic,
+        position_a, position_b, source_ids), uncertainties (array of strings),
+        source_coverage (total_items, processed_items, coverage_ratio,
+        dominant_subset_warning, item_type_distribution), next_steps (array of
+        strings). Respect max_detail level for depth of each field.
+        Do not fabricate claims not traceable to the findings.
+      context_items: vars.findings_by_item
+      output_schema:
+        type: object
+        properties:
+          summary:
+            type: string
+          key_points:
+            type: array
+          insights:
+            type: array
+          tensions:
+            type: array
+          uncertainties:
+            type: array
+          source_coverage:
+            type: object
+          next_steps:
+            type: array
+        required:
+          - summary
+          - key_points
+          - insights
+          - tensions
+          - uncertainties
+          - source_coverage
+          - next_steps
+      detail_level: inputs.max_detail
+      constraints:
+        no_fabrication: true
+        evidence_required: true
+    output:
+      output: vars.synthesis_raw
+      output.summary: outputs.summary
+      output.key_points: outputs.key_points
+      output.insights: outputs.insights
+      output.tensions: outputs.tensions
+      output.uncertainties: outputs.uncertainties
+      output.source_coverage: outputs.source_coverage
+      output.next_steps: outputs.next_steps
+      warnings: vars.synthesis_warnings
+      coverage: vars.synthesis_coverage
+
+  - id: assess_quality
+    uses: skill:research.quality-assess
+    input:
+      synthesis_object: vars.synthesis_raw
+      findings_by_item: vars.findings_by_item
+      normalized_items: vars.normalized_items
+      quality_profile: inputs.quality_profile
+    output:
+      synthesis_quality: outputs.synthesis_quality
+      quality_warnings: vars.quality_warnings
+      assessment_passed: vars.assessment_passed
+
+  - id: generate_human_readable
+    uses: text.summarize
+    input:
+      text: outputs.summary
+    output:
+      summary: outputs.human_readable
+
+metadata:
+  status: experimental
+  tags:
+    - research
+    - synthesis
+    - analysis
+    - multi-source
+    - decision-support
+  category: research
+  use_cases:
+    - Consolidate multiple research documents into a structured synthesis
+    - Integrate agent findings before passing to a decision workflow
+    - Compress research context without losing key signals
+    - Prepare a human-readable briefing from heterogeneous source material
+    - Feed structured synthesis output into decision.compare_options
+  examples:
+    - description: Synthesize market expansion research
+      input:
+        topic: "Market expansion opportunity in sector X"
+        goal: "Evaluate whether to expand into market X"
+        focus: "prioritize risks"
+        items:
+          - id: "doc-1"
+            content: "Demand is growing at 15% YoY..."
+            type: article
+          - id: "doc-2"
+            source_ref:
+              type: pdf_path
+              location: "/research/regulatory-analysis.pdf"
+            type: report
+      output:
+        summary: "The expansion appears viable given demand signals but faces regulatory uncertainty and high entry cost."
+        key_points:
+          - "Demand growing at 15% YoY"
+          - "Regulatory timeline unclear"
+          - "Entry cost significantly above initial estimates"
+        insights:
+          - "Execution risk, not market fit, is the primary constraint"
+        tensions:
+          - topic: "competitive pressure"
+            position_a: "Low competition observed in current data"
+            position_b: "Emerging entrants signal rising competitive intensity"
+        uncertainties:
+          - "No consolidated data on total cost of entry"
+          - "Regulatory approval timeline unconfirmed"
+        next_steps:
+          - "Validate regulatory timeline with legal team"
+          - "Pass to decision.compare_options with entry vs defer scenarios"
+        synthesis_quality:
+          confidence_score: 0.72
+          coverage_ratio: 0.9
+          evidence_strength: 0.75
+          tension_density: 0.2
+          uncertainty_load: 0.3
+          quality_notes: "Synthesis is well-grounded but regulatory uncertainty reduces confidence."
+          assessment_passed: true
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich
