@@ -69,6 +69,12 @@ outputs:
   alerts:
     type: array
     required: false
+  metrics:
+    type: object
+    required: false
+  events_errors:
+    type: array
+    required: false
   summary:
     type: string
     required: false
@@ -89,7 +95,7 @@ steps:
             required: [type, timestamp]
   output:
     valid: vars.events_valid
-    errors: vars.events_errors
+    errors: outputs.events_errors
 - id: analyze_trace
   uses: ops.trace.analyze
   input:
@@ -121,6 +127,7 @@ steps:
     status: outputs.control_status
     risk_flags: outputs.risk_flags
     alerts: outputs.alerts
+    metrics: outputs.metrics
 metadata:
   status: experimental
   channel: experimental

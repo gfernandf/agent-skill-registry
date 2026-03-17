@@ -1,10 +1,48 @@
 ﻿id: model.response.validate
 version: 1.0.0
-description: TODO define capability contract for model.response.validate.
+description: Validate a model-generated output for semantic coherence, evidence grounding, and structural completeness.
 
-inputs: {}
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated structured output to validate.
 
-outputs: {}
+  validation_policy:
+    type: object
+    required: true
+    description: Policy object defining validation dimensions such as coherence, coverage, grounding, and confidence thresholds.
+
+  evidence_context:
+    type: array
+    required: false
+    description: Optional source items used to verify grounding of claims in the output.
+
+outputs:
+  valid:
+    type: boolean
+    required: true
+    description: Whether the output passes all validation dimensions.
+
+  issues:
+    type: array
+    required: false
+    description: List of validation issues found, each with dimension, severity, and description.
+
+  confidence_adjustment:
+    type: number
+    required: false
+    description: Suggested adjustment to the overall confidence score based on validation findings.
+
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the validation result.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: experimental

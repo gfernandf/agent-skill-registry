@@ -1171,15 +1171,62 @@
   {
     "id": "model.output.generate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.output.generate.",
+    "description": "Generate structured output from a model given an instruction, context items, and an output schema.",
     "file": "capabilities/model.output.generate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "instruction": {
+        "type": "string",
+        "required": true,
+        "description": "Natural language instruction describing what to generate."
+      },
+      "context_items": {
+        "type": "array",
+        "required": true,
+        "description": "List of input items providing evidence or context. Each item may include id, content, type, and optional metadata."
+      },
+      "output_schema": {
+        "type": "object",
+        "required": true,
+        "description": "JSON Schema describing the expected output structure."
+      },
+      "detail_level": {
+        "type": "string",
+        "required": false,
+        "description": "Output depth hint: brief | standard | detailed. Defaults to standard."
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Optional execution constraints such as no_fabrication, evidence_required, or max_tokens."
+      }
+    },
+    "outputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "Generated structured output conforming to output_schema."
+      },
+      "warnings": {
+        "type": "array",
+        "required": false,
+        "description": "Optional list of warnings about low-evidence claims or inferences."
+      },
+      "coverage": {
+        "type": "object",
+        "required": false,
+        "description": "Coverage metadata including processed_items count and ignored_items count."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "experimental",
       "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -1227,15 +1274,57 @@
   {
     "id": "model.response.validate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.response.validate.",
+    "description": "Validate a model-generated output for semantic coherence, evidence grounding, and structural completeness.",
     "file": "capabilities/model.response.validate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "The model-generated structured output to validate."
+      },
+      "validation_policy": {
+        "type": "object",
+        "required": true,
+        "description": "Policy object defining validation dimensions such as coherence, coverage, grounding, and confidence thresholds."
+      },
+      "evidence_context": {
+        "type": "array",
+        "required": false,
+        "description": "Optional source items used to verify grounding of claims in the output."
+      }
+    },
+    "outputs": {
+      "valid": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the output passes all validation dimensions."
+      },
+      "issues": {
+        "type": "array",
+        "required": false,
+        "description": "List of validation issues found, each with dimension, severity, and description."
+      },
+      "confidence_adjustment": {
+        "type": "number",
+        "required": false,
+        "description": "Suggested adjustment to the overall confidence score based on validation findings."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the validation result."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "experimental",
       "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -1371,6 +1460,11 @@
         "type": "array",
         "required": false,
         "description": "Optional list of requested views such as decision_graph, assumptions, and summary."
+      },
+      "thresholds": {
+        "type": "object",
+        "required": false,
+        "description": "Optional thresholds for risk and alert evaluation during trace analysis. Supported keys include max_duration_ms and max_errors."
       }
     },
     "outputs": {

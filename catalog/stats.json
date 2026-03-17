@@ -1,14 +1,15 @@
 {
   "summary": {
     "capability_count": 101,
-    "skill_count": 32,
-    "domain_count": 24,
+    "skill_count": 36,
+    "domain_count": 25,
     "channel_count": 2
   },
   "skills": {
     "by_domain": {
       "text": 10,
       "web": 5,
+      "research": 4,
       "agent": 3,
       "memory": 3,
       "pdf": 3,
@@ -22,10 +23,10 @@
     },
     "by_channel": {
       "official": 31,
-      "experimental": 1
+      "experimental": 5
     },
-    "average_steps": 2.03,
-    "with_skill_dependencies": 0
+    "average_steps": 2.11,
+    "with_skill_dependencies": 1
   },
   "capabilities": {
     "by_domain": {
@@ -57,15 +58,23 @@
     "most_used": [
       {
         "id": "text.summarize",
-        "count": 16
+        "count": 17
       },
       {
         "id": "doc.chunk",
         "count": 4
       },
       {
+        "id": "model.output.generate",
+        "count": 4
+      },
+      {
         "id": "text.embed",
         "count": 4
+      },
+      {
+        "id": "data.schema.validate",
+        "count": 3
       },
       {
         "id": "pdf.read",
@@ -89,10 +98,6 @@
       },
       {
         "id": "agent.plan.generate",
-        "count": 2
-      },
-      {
-        "id": "data.schema.validate",
         "count": 2
       },
       {
@@ -132,6 +137,10 @@
         "count": 1
       },
       {
+        "id": "eval.output.score",
+        "count": 1
+      },
+      {
         "id": "image.caption.generate",
         "count": 1
       },
@@ -141,6 +150,10 @@
       },
       {
         "id": "memory.retrieve",
+        "count": 1
+      },
+      {
+        "id": "model.response.validate",
         "count": 1
       },
       {
@@ -175,7 +188,6 @@
       "code.format",
       "data.record.deduplicate",
       "email.send",
-      "eval.output.score",
       "fs.read",
       "identity.assignee.identify",
       "identity.decision.justify",
@@ -205,11 +217,9 @@
       "message.send",
       "model.embedding.generate",
       "model.output.classify",
-      "model.output.generate",
       "model.output.sanitize",
       "model.output.score",
       "model.prompt.template",
-      "model.response.validate",
       "model.risk.score",
       "ops.budget.estimate",
       "ops.event.acknowledge",
@@ -245,16 +255,36 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 65,
-    "skill_to_skill_edges": 0,
+    "skill_to_capability_edges": 73,
+    "skill_to_skill_edges": 3,
     "max_capabilities_per_skill": 4
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 32,
+    "skills_with_nondefault_metadata": 36,
     "capabilities_with_nondefault_metadata": 57,
     "top_skill_tags": [
       {
+        "id": "research",
+        "count": 4
+      },
+      {
+        "id": "analysis",
+        "count": 2
+      },
+      {
         "id": "agent",
+        "count": 1
+      },
+      {
+        "id": "assessment",
+        "count": 1
+      },
+      {
+        "id": "claims",
+        "count": 1
+      },
+      {
+        "id": "confidence",
         "count": 1
       },
       {
@@ -262,7 +292,47 @@
         "count": 1
       },
       {
+        "id": "corpus",
+        "count": 1
+      },
+      {
+        "id": "decision-support",
+        "count": 1
+      },
+      {
+        "id": "extraction",
+        "count": 1
+      },
+      {
+        "id": "findings",
+        "count": 1
+      },
+      {
+        "id": "grounding",
+        "count": 1
+      },
+      {
+        "id": "multi-source",
+        "count": 1
+      },
+      {
+        "id": "normalization",
+        "count": 1
+      },
+      {
         "id": "observability",
+        "count": 1
+      },
+      {
+        "id": "preprocessing",
+        "count": 1
+      },
+      {
+        "id": "quality",
+        "count": 1
+      },
+      {
+        "id": "synthesis",
         "count": 1
       },
       {

@@ -31,7 +31,8 @@
     "integration": "Cross-system integration and synchronization operations",
     "eval": "Evaluation and quality scoring",
     "provenance": "Source provenance and evidence tracking",
-    "ops": "Operational monitoring and cost controls"
+    "ops": "Operational monitoring and cost controls",
+    "research": "Research synthesis and analytical findings processing"
   },
 
   "nouns": {

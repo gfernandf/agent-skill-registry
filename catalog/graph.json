@@ -113,6 +113,38 @@
       ],
       "skills": []
     },
+    "research.extract-findings": {
+      "capabilities": [
+        "model.output.generate"
+      ],
+      "skills": []
+    },
+    "research.normalize-corpus": {
+      "capabilities": [
+        "model.output.generate"
+      ],
+      "skills": []
+    },
+    "research.quality-assess": {
+      "capabilities": [
+        "data.schema.validate",
+        "eval.output.score",
+        "model.output.generate",
+        "model.response.validate"
+      ],
+      "skills": []
+    },
+    "research.synthesize": {
+      "capabilities": [
+        "model.output.generate",
+        "text.summarize"
+      ],
+      "skills": [
+        "research.extract-findings",
+        "research.normalize-corpus",
+        "research.quality-assess"
+      ]
+    },
     "table.filter-summary": {
       "capabilities": [
         "table.filter",

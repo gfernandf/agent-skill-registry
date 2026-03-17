@@ -210,6 +210,14 @@
         "type": "array",
         "required": false
       },
+      "metrics": {
+        "type": "object",
+        "required": false
+      },
+      "events_errors": {
+        "type": "array",
+        "required": false
+      },
       "summary": {
         "type": "string",
         "required": false
@@ -244,7 +252,7 @@
         },
         "output": {
           "valid": "vars.events_valid",
-          "errors": "vars.events_errors"
+          "errors": "outputs.events_errors"
         }
       },
       {
@@ -283,7 +291,8 @@
         "output": {
           "status": "outputs.control_status",
           "risk_flags": "outputs.risk_flags",
-          "alerts": "outputs.alerts"
+          "alerts": "outputs.alerts",
+          "metrics": "outputs.metrics"
         }
       }
     ],
@@ -1239,6 +1248,746 @@
       "status": "unspecified",
       "use_cases": [],
       "examples": [],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
+    "id": "research.extract-findings",
+    "version": "0.1.0",
+    "name": "Extract Findings",
+    "description": "Extract structured analytical findings from a normalized corpus of research items. For each item, identifies claims, evidence signals, risks, opportunities, and uncertainty markers. Also extracts keywords and classifies each item by dominant theme. Output is a findings_by_item structure suitable for downstream synthesis, conflict detection, and thematic grouping.\n",
+    "channel": "experimental",
+    "domain": "research",
+    "slug": "extract-findings",
+    "file": "skills/experimental/research/extract-findings/skill.yaml",
+    "inputs": {
+      "normalized_items": {
+        "type": "array",
+        "required": true,
+        "description": "Normalized items as produced by research.normalize-corpus. Each item must include at minimum: id, content, type.\n"
+      },
+      "topic": {
+        "type": "string",
+        "required": false,
+        "description": "Optional topic or research question anchoring the extraction. When provided, findings are prioritized relative to this topic.\n"
+      },
+      "goal": {
+        "type": "string",
+        "required": false,
+        "description": "Optional goal describing the intended use of the synthesis (e.g. \"evaluate expansion into market X\", \"assess regulatory risk\"). Influences claim relevance scoring.\n"
+      },
+      "focus": {
+        "type": "string",
+        "required": false,
+        "description": "Optional extraction focus hint. Examples: \"prioritize risks\", \"prioritize contradictions\", \"emphasize opportunities\".\n"
+      },
+      "max_detail": {
+        "type": "string",
+        "required": false,
+        "description": "Extraction depth: brief | standard | detailed. Defaults to standard."
+      }
+    },
+    "outputs": {
+      "findings_by_item": {
+        "type": "array",
+        "required": true,
+        "description": "Array of per-item findings objects. Each entry includes: item_id, item_type, claims (array of extracted claims with evidence_strength weak|moderate|strong), risks (array), opportunities (array), uncertainty_signals (array of phrases or areas that are unclear or weakly supported), dominant_theme, and keywords.\n"
+      },
+      "extraction_stats": {
+        "type": "object",
+        "required": true,
+        "description": "Summary of the extraction pass: items_processed, total_claims, items_with_risks, items_with_opportunities, items_with_uncertainty, dominant_themes (array).\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_structured_findings",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "For each normalized item, extract structured analytical findings anchored to the provided topic and goal. For each item produce: item_id, item_type, claims (each with text and evidence_strength: weak|moderate|strong), risks (array of strings), opportunities (array of strings), uncertainty_signals (areas unclear or weakly supported), dominant_theme, and keywords. Apply focus hint if provided. Respect max_detail level. Do not fabricate claims not supported by the item content. Also produce extraction_stats: items_processed, total_claims, items_with_risks, items_with_opportunities, items_with_uncertainty, dominant_themes.\n",
+          "context_items": "inputs.normalized_items",
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "findings_by_item": {
+                "type": "array"
+              },
+              "extraction_stats": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "findings_by_item",
+              "extraction_stats"
+            ]
+          },
+          "detail_level": "inputs.max_detail",
+          "constraints": {
+            "no_fabrication": true,
+            "evidence_required": true
+          }
+        },
+        "output": {
+          "output.findings_by_item": "outputs.findings_by_item",
+          "output.extraction_stats": "outputs.extraction_stats",
+          "warnings": "vars.extraction_warnings"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "model.output.generate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "research",
+        "extraction",
+        "findings",
+        "claims",
+        "analysis"
+      ],
+      "category": "research",
+      "status": "experimental",
+      "use_cases": [
+        "Extract structured claims and risks from research documents",
+        "Prepare per-item findings for downstream synthesis or comparison",
+        "Identify uncertainty signals in a research corpus before making decisions"
+      ],
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
+    }
+  },
+  {
+    "id": "research.normalize-corpus",
+    "version": "0.1.0",
+    "name": "Normalize Corpus",
+    "description": "Normalize a heterogeneous collection of research items into a clean, uniform representation ready for analysis. Handles text extraction from raw content, chunking of long items, deduplication of near-identical entries, and language detection. Items may arrive as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key) which are resolved during normalization.\n",
+    "channel": "experimental",
+    "domain": "research",
+    "slug": "normalize-corpus",
+    "file": "skills/experimental/research/normalize-corpus/skill.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "List of input items to normalize. Each item must include an `id` and either a `content` string (pre-extracted text) or a `source_ref` object with `type` and `location` fields for lazy extraction. Optional fields per item: title, type (article | report | note | web_page | search_result | agent_output | transcript | raw_text), source, relevance_hint, metadata.\n"
+      },
+      "max_chunk_size": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum character length per chunk when splitting long items. Items shorter than this threshold are not split. Defaults to a runtime-defined value.\n"
+      }
+    },
+    "outputs": {
+      "normalized_items": {
+        "type": "array",
+        "required": true,
+        "description": "List of normalized items, each containing: id, content (extracted text), type, language, chunks (array), source, title, and any retained metadata.\n"
+      },
+      "normalization_stats": {
+        "type": "object",
+        "required": true,
+        "description": "Summary statistics of the normalization pass including total_input, extracted_count, chunked_count, deduplicated_count, and language_distribution.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "assemble_normalized",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "Return one object with exactly two top-level fields: normalized_items and normalization_stats. normalized_items must be an array where each item includes: id, content, type (inferred from input if not provided, defaulting to raw_text), language, chunks, source, title, and any retained metadata. normalization_stats must include: total_input, extracted_count, chunked_count, deduplicated_count, and language_distribution. Do not rename these fields, omit them, or wrap them under any additional structure.\n",
+          "context_items": "inputs.items",
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "normalized_items": {
+                "type": "array"
+              },
+              "normalization_stats": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "normalized_items",
+              "normalization_stats"
+            ]
+          },
+          "detail_level": "standard",
+          "constraints": {
+            "max_chunk_size": "inputs.max_chunk_size"
+          }
+        },
+        "output": {
+          "output.normalized_items": "outputs.normalized_items",
+          "output.normalization_stats": "outputs.normalization_stats"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "model.output.generate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "research",
+        "normalization",
+        "corpus",
+        "preprocessing"
+      ],
+      "category": "research",
+      "status": "experimental",
+      "use_cases": [
+        "Prepare heterogeneous research material for downstream analysis",
+        "Normalize agent outputs, PDFs, web pages, and notes into a uniform format",
+        "Deduplicate and chunk long documents before synthesis"
+      ],
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
+    }
+  },
+  {
+    "id": "research.quality-assess",
+    "version": "0.1.0",
+    "name": "Quality Assess",
+    "description": "Assess the quality of a research synthesis artifact by measuring corpus coverage, evidence strength, tension density, and uncertainty load. Produces a synthesis_quality block with a composite confidence_score, per-dimension scores, and human-readable quality_notes. Also validates the synthesis structure and emits actionable quality_warnings when thresholds are not met. Intended as a reusable quality gate for any analytical output that aggregates multiple research items.\n",
+    "channel": "experimental",
+    "domain": "research",
+    "slug": "quality-assess",
+    "file": "skills/experimental/research/quality-assess/skill.yaml",
+    "inputs": {
+      "synthesis_object": {
+        "type": "object",
+        "required": true,
+        "description": "The structured synthesis artifact to assess. Expected to contain at minimum: summary, key_points, uncertainties, source_coverage.\n"
+      },
+      "findings_by_item": {
+        "type": "array",
+        "required": true,
+        "description": "Per-item findings as produced by research.extract-findings. Used to compute evidence_strength, tension_density, and uncertainty_load from the source data.\n"
+      },
+      "normalized_items": {
+        "type": "array",
+        "required": true,
+        "description": "The normalized item list as produced by research.normalize-corpus. Used for coverage_ratio computation (items used vs items provided).\n"
+      },
+      "quality_profile": {
+        "type": "string",
+        "required": false,
+        "description": "Quality gate stringency: standard | strict. Defaults to standard. strict raises thresholds for evidence_strength and coverage_ratio and adds additional grounding validation.\n"
+      }
+    },
+    "outputs": {
+      "synthesis_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality assessment block containing: confidence_score (0-1), coverage_ratio (0-1), evidence_strength (0-1), tension_density (0-1), uncertainty_load (0-1), quality_notes (string), and dimensions (object with per-dimension pass/fail and observed values).\n"
+      },
+      "quality_warnings": {
+        "type": "array",
+        "required": false,
+        "description": "List of actionable warnings when quality dimensions fall below thresholds. Each warning includes dimension, observed_value, threshold, and message.\n"
+      },
+      "assessment_passed": {
+        "type": "boolean",
+        "required": true,
+        "description": "True if all required quality dimensions meet the threshold defined by quality_profile. False triggers a retry or escalation recommendation.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "validate_synthesis_structure",
+        "uses": "data.schema.validate",
+        "input": {
+          "data": "inputs.synthesis_object",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string"
+              },
+              "key_points": {
+                "type": "array"
+              },
+              "uncertainties": {
+                "type": "array"
+              },
+              "source_coverage": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "uncertainties",
+              "source_coverage"
+            ]
+          }
+        },
+        "output": {
+          "valid": "vars.structure_valid",
+          "errors": "vars.structure_errors"
+        }
+      },
+      {
+        "id": "score_synthesis_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": "inputs.synthesis_object",
+          "rubric": {
+            "dimensions": {
+              "coherence": {
+                "weight": 0.25,
+                "description": "Does the summary and key_points read as a coherent integrated view?"
+              },
+              "coverage": {
+                "weight": 0.25,
+                "description": "Are the key themes from source items represented in the synthesis?"
+              },
+              "grounding": {
+                "weight": 0.25,
+                "description": "Are claims supported by the findings rather than fabricated?"
+              },
+              "caution": {
+                "weight": 0.25,
+                "description": "Are uncertainties and tensions surfaced rather than hidden?"
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "vars.eval_score",
+          "dimensions": "vars.eval_dimensions"
+        }
+      },
+      {
+        "id": "validate_grounding",
+        "uses": "model.response.validate",
+        "input": {
+          "output": "inputs.synthesis_object",
+          "validation_policy": {
+            "check_coherence": true,
+            "check_grounding": true,
+            "check_coverage": true,
+            "min_uncertainty_items": 1
+          },
+          "evidence_context": "inputs.findings_by_item"
+        },
+        "output": {
+          "valid": "vars.grounding_valid",
+          "issues": "vars.grounding_issues",
+          "confidence_adjustment": "vars.confidence_adjustment",
+          "rationale": "vars.grounding_rationale"
+        }
+      },
+      {
+        "id": "compute_quality_metrics",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "Using the provided context bundle, compute the final synthesis_quality block. The context includes synthesis_object, findings_by_item, normalized_items, quality_profile, eval_score, eval_dimensions, grounding_valid, grounding_issues, confidence_adjustment, and grounding_rationale. Compute: coverage_ratio (items with at least one finding used in synthesis divided by total normalized items), evidence_strength (average across all findings_by_item claim evidence_strength mapped to 0=weak, 0.5=moderate, 1=strong), tension_density (number of items with conflicting claims on the same theme divided by total items, capped at 1), uncertainty_load (items with uncertainty_signals divided by total items). confidence_score = 0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped to [0, 1].\nApply confidence_adjustment from grounding validation if provided. Write quality_notes explaining the score in 1-3 sentences. Apply quality_profile thresholds: standard requires confidence_score >= 0.4 and coverage_ratio >= 0.5; strict requires confidence_score >= 0.6 and coverage_ratio >= 0.7. Emit quality_warnings for any dimension below threshold. Set assessment_passed accordingly. Return exactly three top-level fields: synthesis_quality, quality_warnings, and assessment_passed.\n",
+          "context_items": [
+            {
+              "synthesis_object": "inputs.synthesis_object",
+              "findings_by_item": "inputs.findings_by_item",
+              "normalized_items": "inputs.normalized_items",
+              "quality_profile": "inputs.quality_profile",
+              "eval_score": "vars.eval_score",
+              "eval_dimensions": "vars.eval_dimensions",
+              "grounding_valid": "vars.grounding_valid",
+              "grounding_issues": "vars.grounding_issues",
+              "confidence_adjustment": "vars.confidence_adjustment",
+              "grounding_rationale": "vars.grounding_rationale"
+            }
+          ],
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "synthesis_quality": {
+                "type": "object",
+                "properties": {
+                  "coverage_ratio": {
+                    "type": "number"
+                  },
+                  "evidence_strength": {
+                    "type": "number"
+                  },
+                  "tension_density": {
+                    "type": "number"
+                  },
+                  "uncertainty_load": {
+                    "type": "number"
+                  },
+                  "confidence_score": {
+                    "type": "number"
+                  },
+                  "quality_notes": {
+                    "type": "string"
+                  },
+                  "assessment_passed": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "assessment_passed"
+                ]
+              },
+              "quality_warnings": {
+                "type": "array"
+              },
+              "assessment_passed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "synthesis_quality",
+              "assessment_passed"
+            ]
+          },
+          "detail_level": "standard",
+          "constraints": {}
+        },
+        "output": {
+          "output.synthesis_quality": "outputs.synthesis_quality",
+          "output.quality_warnings": "outputs.quality_warnings",
+          "output.assessment_passed": "outputs.assessment_passed",
+          "warnings": "vars.compute_warnings"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.schema.validate",
+      "eval.output.score",
+      "model.output.generate",
+      "model.response.validate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "research",
+        "quality",
+        "assessment",
+        "confidence",
+        "grounding"
+      ],
+      "category": "research",
+      "status": "experimental",
+      "use_cases": [
+        "Gate a research synthesis before it is used in a decision workflow",
+        "Detect low-coverage or poorly grounded synthesis outputs",
+        "Produce a reusable confidence score for any multi-source analytical artifact"
+      ],
+      "examples": [],
+      "classification": {
+        "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "read_only"
+      }
+    }
+  },
+  {
+    "id": "research.synthesize",
+    "version": "0.1.0",
+    "name": "Research Synthesize",
+    "description": "Transform a heterogeneous collection of research materials into a structured, actionable synthesis artifact. Accepts items as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key). Normalizes the corpus, extracts per-item findings, consolidates thematic clusters, detects tensions and uncertainties, assembles the synthesis object, gates quality, and produces both a machine-readable output and a human-readable narrative.\nSuitable as an intermediate block in longer agent workflows: feeds naturally into decision.compare_options, task.frame, or direct human review.\n",
+    "channel": "experimental",
+    "domain": "research",
+    "slug": "synthesize",
+    "file": "skills/experimental/research/synthesize/skill.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "List of research items to synthesize. Each item must include `id` and either `content` (pre-extracted text) or `source_ref` (object with `type` and `location`). Optional per-item fields: title, type (article | report | note | web_page | search_result | agent_output | transcript | raw_text), source, relevance_hint, metadata.\n"
+      },
+      "topic": {
+        "type": "string",
+        "required": false,
+        "description": "Topic or subject of the research. Anchors the synthesis. If omitted, the skill infers the dominant topic from the corpus.\n"
+      },
+      "goal": {
+        "type": "string",
+        "required": false,
+        "description": "Intended use of the synthesis (e.g. \"evaluate expansion into market X\", \"assess regulatory risk for hydrogen in Europe\"). Influences relevance prioritization and next_steps suggestions.\n"
+      },
+      "focus": {
+        "type": "string",
+        "required": false,
+        "description": "Optional extraction and synthesis focus hint. Examples: \"prioritize risks\", \"prioritize contradictions\", \"executive summary\", \"emphasize opportunities\".\n"
+      },
+      "max_detail": {
+        "type": "string",
+        "required": false,
+        "description": "Output depth: brief | standard | detailed. Defaults to standard."
+      },
+      "quality_profile": {
+        "type": "string",
+        "required": false,
+        "description": "Quality gate stringency applied in the assessment step: standard | strict. Defaults to standard. strict raises evidence and coverage thresholds.\n"
+      },
+      "max_chunk_size": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum character length per chunk during corpus normalization. Passed through to research.normalize-corpus.\n"
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true,
+        "description": "Executive summary of the corpus. Answers: what the material is about, what the key conclusions are, and what seems most important.\n"
+      },
+      "key_points": {
+        "type": "array",
+        "required": true,
+        "description": "Consolidated list of stable findings or claims that appear central or recurrent across sources. Each entry is a concise statement.\n"
+      },
+      "insights": {
+        "type": "array",
+        "required": true,
+        "description": "Interpretive or non-trivial observations not captured by key_points. Patterns, implications, and differential signals worth noting.\n"
+      },
+      "tensions": {
+        "type": "array",
+        "required": true,
+        "description": "Points where two or more items conflict, diverge in emphasis, or carry incompatible signals on the same topic. Each entry names the tension and the diverging positions.\n"
+      },
+      "uncertainties": {
+        "type": "array",
+        "required": true,
+        "description": "Areas that are unclear, weakly supported, or missing from the corpus. Each entry is a statement of what is not known or not well established.\n"
+      },
+      "source_coverage": {
+        "type": "object",
+        "required": true,
+        "description": "Coverage metadata: total_items, processed_items, coverage_ratio, dominant_subset_warning (true if a small subset dominates the synthesis), item_type_distribution.\n"
+      },
+      "next_steps": {
+        "type": "array",
+        "required": true,
+        "description": "Suggested continuation actions. Examples: investigate an unresolved area, contrast a tension, compare options, pass to decision.compare_options.\n"
+      },
+      "synthesis_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality and confidence block: confidence_score (0-1), coverage_ratio, evidence_strength, tension_density, uncertainty_load, quality_notes, assessment_passed, quality_warnings.\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative prose version of the synthesis suitable for direct human consumption without further post-processing.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "normalize_corpus",
+        "uses": "skill:research.normalize-corpus",
+        "input": {
+          "items": "inputs.items",
+          "max_chunk_size": "inputs.max_chunk_size"
+        },
+        "output": {
+          "normalized_items": "vars.normalized_items",
+          "normalization_stats": "vars.normalization_stats"
+        }
+      },
+      {
+        "id": "extract_findings",
+        "uses": "skill:research.extract-findings",
+        "input": {
+          "normalized_items": "vars.normalized_items",
+          "topic": "inputs.topic",
+          "goal": "inputs.goal",
+          "focus": "inputs.focus",
+          "max_detail": "inputs.max_detail"
+        },
+        "output": {
+          "findings_by_item": "vars.findings_by_item",
+          "extraction_stats": "vars.extraction_stats"
+        }
+      },
+      {
+        "id": "assemble_synthesis",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "Given the findings_by_item and normalization_stats, assemble the full synthesis object. Use topic, goal, and focus as anchors (infer from corpus if not provided). Apply the following heuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same theme. - Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest generally. Produce: summary (executive, 3-5 sentences), key_points (array of strings), insights (array of strings), tensions (array of objects with topic, position_a, position_b, source_ids), uncertainties (array of strings), source_coverage (total_items, processed_items, coverage_ratio, dominant_subset_warning, item_type_distribution), next_steps (array of strings). Respect max_detail level for depth of each field. Do not fabricate claims not traceable to the findings.\n",
+          "context_items": "vars.findings_by_item",
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string"
+              },
+              "key_points": {
+                "type": "array"
+              },
+              "insights": {
+                "type": "array"
+              },
+              "tensions": {
+                "type": "array"
+              },
+              "uncertainties": {
+                "type": "array"
+              },
+              "source_coverage": {
+                "type": "object"
+              },
+              "next_steps": {
+                "type": "array"
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "insights",
+              "tensions",
+              "uncertainties",
+              "source_coverage",
+              "next_steps"
+            ]
+          },
+          "detail_level": "inputs.max_detail",
+          "constraints": {
+            "no_fabrication": true,
+            "evidence_required": true
+          }
+        },
+        "output": {
+          "output": "vars.synthesis_raw",
+          "output.summary": "outputs.summary",
+          "output.key_points": "outputs.key_points",
+          "output.insights": "outputs.insights",
+          "output.tensions": "outputs.tensions",
+          "output.uncertainties": "outputs.uncertainties",
+          "output.source_coverage": "outputs.source_coverage",
+          "output.next_steps": "outputs.next_steps",
+          "warnings": "vars.synthesis_warnings",
+          "coverage": "vars.synthesis_coverage"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "skill:research.quality-assess",
+        "input": {
+          "synthesis_object": "vars.synthesis_raw",
+          "findings_by_item": "vars.findings_by_item",
+          "normalized_items": "vars.normalized_items",
+          "quality_profile": "inputs.quality_profile"
+        },
+        "output": {
+          "synthesis_quality": "outputs.synthesis_quality",
+          "quality_warnings": "vars.quality_warnings",
+          "assessment_passed": "vars.assessment_passed"
+        }
+      },
+      {
+        "id": "generate_human_readable",
+        "uses": "text.summarize",
+        "input": {
+          "text": "outputs.summary"
+        },
+        "output": {
+          "summary": "outputs.human_readable"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "model.output.generate",
+      "text.summarize"
+    ],
+    "uses_skills": [
+      "research.extract-findings",
+      "research.normalize-corpus",
+      "research.quality-assess"
+    ],
+    "metadata": {
+      "tags": [
+        "research",
+        "synthesis",
+        "analysis",
+        "multi-source",
+        "decision-support"
+      ],
+      "category": "research",
+      "status": "experimental",
+      "use_cases": [
+        "Consolidate multiple research documents into a structured synthesis",
+        "Integrate agent findings before passing to a decision workflow",
+        "Compress research context without losing key signals",
+        "Prepare a human-readable briefing from heterogeneous source material",
+        "Feed structured synthesis output into decision.compare_options"
+      ],
+      "examples": [
+        {
+          "description": "Synthesize market expansion research",
+          "input": {
+            "topic": "Market expansion opportunity in sector X",
+            "goal": "Evaluate whether to expand into market X",
+            "focus": "prioritize risks",
+            "items": [
+              {
+                "id": "doc-1",
+                "content": "Demand is growing at 15% YoY...",
+                "type": "article"
+              },
+              {
+                "id": "doc-2",
+                "source_ref": {
+                  "type": "pdf_path",
+                  "location": "/research/regulatory-analysis.pdf"
+                },
+                "type": "report"
+              }
+            ]
+          },
+          "output": {
+            "summary": "The expansion appears viable given demand signals but faces regulatory uncertainty and high entry cost.",
+            "key_points": [
+              "Demand growing at 15% YoY",
+              "Regulatory timeline unclear",
+              "Entry cost significantly above initial estimates"
+            ],
+            "insights": [
+              "Execution risk, not market fit, is the primary constraint"
+            ],
+            "tensions": [
+              {
+                "topic": "competitive pressure",
+                "position_a": "Low competition observed in current data",
+                "position_b": "Emerging entrants signal rising competitive intensity"
+              }
+            ],
+            "uncertainties": [
+              "No consolidated data on total cost of entry",
+              "Regulatory approval timeline unconfirmed"
+            ],
+            "next_steps": [
+              "Validate regulatory timeline with legal team",
+              "Pass to decision.compare_options with entry vs defer scenarios"
+            ],
+            "synthesis_quality": {
+              "confidence_score": 0.72,
+              "coverage_ratio": 0.9,
+              "evidence_strength": 0.75,
+              "tension_density": 0.2,
+              "uncertainty_load": 0.3,
+              "quality_notes": "Synthesis is well-grounded but regulatory uncertainty reduces confidence.",
+              "assessment_passed": true
+            }
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",

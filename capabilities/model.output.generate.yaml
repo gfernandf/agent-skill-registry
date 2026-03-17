@@ -1,10 +1,53 @@
 ﻿id: model.output.generate
 version: 1.0.0
-description: TODO define capability contract for model.output.generate.
+description: Generate structured output from a model given an instruction, context items, and an output schema.
 
-inputs: {}
+inputs:
+  instruction:
+    type: string
+    required: true
+    description: Natural language instruction describing what to generate.
 
-outputs: {}
+  context_items:
+    type: array
+    required: true
+    description: List of input items providing evidence or context. Each item may include id, content, type, and optional metadata.
+
+  output_schema:
+    type: object
+    required: true
+    description: JSON Schema describing the expected output structure.
+
+  detail_level:
+    type: string
+    required: false
+    description: "Output depth hint: brief | standard | detailed. Defaults to standard."
+
+  constraints:
+    type: object
+    required: false
+    description: Optional execution constraints such as no_fabrication, evidence_required, or max_tokens.
+
+outputs:
+  output:
+    type: object
+    required: true
+    description: Generated structured output conforming to output_schema.
+
+  warnings:
+    type: array
+    required: false
+    description: Optional list of warnings about low-evidence claims or inferences.
+
+  coverage:
+    type: object
+    required: false
+    description: Coverage metadata including processed_items count and ignored_items count.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: experimental

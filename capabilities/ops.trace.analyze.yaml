@@ -42,6 +42,11 @@ inputs:
     required: false
     description: Optional list of requested views such as decision_graph, assumptions, and summary.
 
+  thresholds:
+    type: object
+    required: false
+    description: Optional thresholds for risk and alert evaluation during trace analysis. Supported keys include max_duration_ms and max_errors.
+
 outputs:
   trace_session_id:
     type: string
