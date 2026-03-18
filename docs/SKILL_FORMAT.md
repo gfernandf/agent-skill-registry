@@ -443,6 +443,45 @@ Rules:
 
 ---
 
+## config (Optional)
+
+Optional step-level configuration block.
+
+### config.depends_on
+
+Declares explicit step dependencies for the DAG scheduler.
+
+Behavior:
+
+- `depends_on: [step_a, step_b]` — step runs only after all listed steps complete.
+- `depends_on: []` — step has no dependencies and may run in parallel with other independent steps.
+- Omitted `depends_on` — step implicitly depends on the immediately preceding step in declared order (sequential semantics, backward-compatible).
+
+All referenced step IDs must exist within the same skill. Invalid references
+are rejected at load time.
+
+Example:
+
+```yaml
+steps:
+  - id: fetch_a
+    uses: web.fetch
+    config:
+      depends_on: []          # no dependencies — runs immediately
+  - id: fetch_b
+    uses: web.fetch
+    config:
+      depends_on: []          # no dependencies — runs in parallel with fetch_a
+  - id: combine
+    uses: text.template
+    config:
+      depends_on: [fetch_a, fetch_b]  # waits for both
+```
+
+See also: `agent-skills/docs/SCHEDULER.md` for full scheduler documentation.
+
+---
+
 ## uses
 
 Reference to the capability or skill executed by the step.

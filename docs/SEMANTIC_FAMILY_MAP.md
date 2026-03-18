@@ -51,3 +51,14 @@ Changes should be coordinated with:
 
 - `docs/SKILL_ADMISSION_POLICY.md`
 - `catalog/governance_guardrails.json`
+
+## Research Synthesis
+
+- family_id: `research-synthesis`
+- canonical: `research.synthesize` (experimental, v0.2.0)
+- variants:
+  - `research.normalize-corpus` (standalone corpus normalization)
+- candidate-merge: none
+- notes:
+  - `research.synthesize` v0.2.0 uses fast path (2 steps, 1 LLM call)
+  - both skills depend on `research.source.retrieve` and `model.output.generate`
