@@ -17,3 +17,7 @@ capabilities:
   - id: pdf.read
     status: draft
     description: Read a PDF document and extract text and metadata.
+
+  - id: research.source.retrieve
+    status: experimental
+    description: Resolve source_ref fields in corpus items to actual text content.

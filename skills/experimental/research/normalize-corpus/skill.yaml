@@ -43,6 +43,13 @@ outputs:
 
 steps:
 
+  - id: resolve_sources
+    uses: research.source.retrieve
+    input:
+      items: inputs.items
+    output:
+      items: vars.resolved_items
+
   - id: assemble_normalized
     uses: model.output.generate
     input:
@@ -54,7 +61,7 @@ steps:
         must include: total_input, extracted_count, chunked_count, deduplicated_count,
         and language_distribution. Do not rename these fields, omit them, or wrap them
         under any additional structure.
-      context_items: inputs.items
+      context_items: vars.resolved_items
       output_schema:
         type: object
         properties:
