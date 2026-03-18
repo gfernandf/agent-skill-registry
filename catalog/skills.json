@@ -266,7 +266,8 @@
           "trace_session_id": "inputs.trace_session_id",
           "state_mode": "inputs.state_mode",
           "mode": "inputs.mode",
-          "output_views": "inputs.output_views"
+          "output_views": "inputs.output_views",
+          "thresholds": "inputs.thresholds"
         },
         "output": {
           "trace_session_id": "outputs.trace_session_id",
@@ -279,6 +280,11 @@
           "confidence": "outputs.confidence",
           "risk_candidates": "outputs.risk_candidates",
           "summary": "outputs.summary"
+        },
+        "config": {
+          "depends_on": [
+            "validate_events"
+          ]
         }
       },
       {
@@ -290,9 +296,12 @@
         },
         "output": {
           "status": "outputs.control_status",
-          "risk_flags": "outputs.risk_flags",
-          "alerts": "outputs.alerts",
-          "metrics": "outputs.metrics"
+          "alerts": "outputs.alerts"
+        },
+        "config": {
+          "depends_on": [
+            "analyze_trace"
+          ]
         }
       }
     ],
@@ -1400,11 +1409,21 @@
     },
     "steps": [
       {
+        "id": "resolve_sources",
+        "uses": "research.source.retrieve",
+        "input": {
+          "items": "inputs.items"
+        },
+        "output": {
+          "items": "vars.resolved_items"
+        }
+      },
+      {
         "id": "assemble_normalized",
         "uses": "model.output.generate",
         "input": {
           "instruction": "Return one object with exactly two top-level fields: normalized_items and normalization_stats. normalized_items must be an array where each item includes: id, content, type (inferred from input if not provided, defaulting to raw_text), language, chunks, source, title, and any retained metadata. normalization_stats must include: total_input, extracted_count, chunked_count, deduplicated_count, and language_distribution. Do not rename these fields, omit them, or wrap them under any additional structure.\n",
-          "context_items": "inputs.items",
+          "context_items": "vars.resolved_items",
           "output_schema": {
             "type": "object",
             "properties": {
@@ -1432,7 +1451,8 @@
       }
     ],
     "uses_capabilities": [
-      "model.output.generate"
+      "model.output.generate",
+      "research.source.retrieve"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1697,9 +1717,9 @@
   },
   {
     "id": "research.synthesize",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Research Synthesize",
-    "description": "Transform a heterogeneous collection of research materials into a structured, actionable synthesis artifact. Accepts items as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key). Normalizes the corpus, extracts per-item findings, consolidates thematic clusters, detects tensions and uncertainties, assembles the synthesis object, gates quality, and produces both a machine-readable output and a human-readable narrative.\nSuitable as an intermediate block in longer agent workflows: feeds naturally into decision.compare_options, task.frame, or direct human review.\n",
+    "description": "Transform a heterogeneous collection of research materials into a structured, actionable synthesis artifact. Accepts items as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key). Resolves sources, then produces the full synthesis in a single model call — summary, key points, insights, tensions, uncertainties, coverage, next steps, quality assessment, and a human-readable narrative.\nFast path (default): 2 steps, 1 LLM call. Comparable in latency to a direct chat interaction but with a stable output contract and full traceability.\nSuitable as an intermediate block in longer agent workflows: feeds naturally into decision.compare_options, task.frame, or direct human review.\n",
     "channel": "experimental",
     "domain": "research",
     "slug": "synthesize",
@@ -1733,12 +1753,7 @@
       "quality_profile": {
         "type": "string",
         "required": false,
-        "description": "Quality gate stringency applied in the assessment step: standard | strict. Defaults to standard. strict raises evidence and coverage thresholds.\n"
-      },
-      "max_chunk_size": {
-        "type": "number",
-        "required": false,
-        "description": "Maximum character length per chunk during corpus normalization. Passed through to research.normalize-corpus.\n"
+        "description": "Quality gate stringency: standard | strict. Defaults to standard. standard: self-assessed quality in the synthesis call. strict: reserved for future grounding validation step.\n"
       }
     },
     "outputs": {
@@ -1780,7 +1795,7 @@
       "synthesis_quality": {
         "type": "object",
         "required": true,
-        "description": "Quality and confidence block: confidence_score (0-1), coverage_ratio, evidence_strength, tension_density, uncertainty_load, quality_notes, assessment_passed, quality_warnings.\n"
+        "description": "Self-assessed quality block: confidence_score (0-1), coverage_ratio, evidence_strength, tension_density, uncertainty_load, quality_notes, assessment_passed.\n"
       },
       "human_readable": {
         "type": "string",
@@ -1790,38 +1805,21 @@
     },
     "steps": [
       {
-        "id": "normalize_corpus",
-        "uses": "skill:research.normalize-corpus",
+        "id": "resolve_sources",
+        "uses": "research.source.retrieve",
         "input": {
-          "items": "inputs.items",
-          "max_chunk_size": "inputs.max_chunk_size"
+          "items": "inputs.items"
         },
         "output": {
-          "normalized_items": "vars.normalized_items",
-          "normalization_stats": "vars.normalization_stats"
+          "items": "vars.resolved_items"
         }
       },
       {
-        "id": "extract_findings",
-        "uses": "skill:research.extract-findings",
-        "input": {
-          "normalized_items": "vars.normalized_items",
-          "topic": "inputs.topic",
-          "goal": "inputs.goal",
-          "focus": "inputs.focus",
-          "max_detail": "inputs.max_detail"
-        },
-        "output": {
-          "findings_by_item": "vars.findings_by_item",
-          "extraction_stats": "vars.extraction_stats"
-        }
-      },
-      {
-        "id": "assemble_synthesis",
+        "id": "synthesize",
         "uses": "model.output.generate",
         "input": {
-          "instruction": "Given the findings_by_item and normalization_stats, assemble the full synthesis object. Use topic, goal, and focus as anchors (infer from corpus if not provided). Apply the following heuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same theme. - Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest generally. Produce: summary (executive, 3-5 sentences), key_points (array of strings), insights (array of strings), tensions (array of objects with topic, position_a, position_b, source_ids), uncertainties (array of strings), source_coverage (total_items, processed_items, coverage_ratio, dominant_subset_warning, item_type_distribution), next_steps (array of strings). Respect max_detail level for depth of each field. Do not fabricate claims not traceable to the findings.\n",
-          "context_items": "vars.findings_by_item",
+          "instruction": "You are a research synthesis engine. You receive a collection of source items (already resolved to text) plus optional anchors in the constraints object: topic, goal, focus. Produce the complete synthesis in one pass.\nHeuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central to the topic.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same\n  theme. Include topic, position_a, position_b.\n- Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest\n  generally useful follow-ups.\n- source_coverage: count total_items and processed_items from the input,\n  compute coverage_ratio, flag dominant_subset_warning if a small subset\n  dominates, list item_type_distribution.\n- human_readable: a narrative prose version (3-8 paragraphs depending on\n  detail level) suitable for direct human consumption.\n- synthesis_quality: self-assess with confidence_score =\n  0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped [0, 1].\n  Set assessment_passed = true if confidence_score >= 0.4 and\n  coverage_ratio >= 0.5.\n\nRules: - Do not fabricate claims not traceable to the source items. - Do not repeat the full source text in the output. - Respect the detail level for depth of each field. - If topic is not provided, infer the dominant topic from the corpus.\n",
+          "context_items": "vars.resolved_items",
           "output_schema": {
             "type": "object",
             "properties": {
@@ -1829,22 +1827,93 @@
                 "type": "string"
               },
               "key_points": {
-                "type": "array"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "insights": {
-                "type": "array"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "tensions": {
                 "type": "array"
               },
               "uncertainties": {
-                "type": "array"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "source_coverage": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "total_items": {
+                    "type": "number"
+                  },
+                  "processed_items": {
+                    "type": "number"
+                  },
+                  "coverage_ratio": {
+                    "type": "number"
+                  },
+                  "dominant_subset_warning": {
+                    "type": "boolean"
+                  },
+                  "item_type_distribution": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "total_items",
+                  "processed_items",
+                  "coverage_ratio",
+                  "dominant_subset_warning",
+                  "item_type_distribution"
+                ]
               },
               "next_steps": {
-                "type": "array"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "synthesis_quality": {
+                "type": "object",
+                "properties": {
+                  "confidence_score": {
+                    "type": "number"
+                  },
+                  "coverage_ratio": {
+                    "type": "number"
+                  },
+                  "evidence_strength": {
+                    "type": "number"
+                  },
+                  "tension_density": {
+                    "type": "number"
+                  },
+                  "uncertainty_load": {
+                    "type": "number"
+                  },
+                  "quality_notes": {
+                    "type": "string"
+                  },
+                  "assessment_passed": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "confidence_score",
+                  "evidence_strength",
+                  "quality_notes",
+                  "assessment_passed"
+                ]
+              },
+              "human_readable": {
+                "type": "string"
               }
             },
             "required": [
@@ -1854,17 +1923,21 @@
               "tensions",
               "uncertainties",
               "source_coverage",
-              "next_steps"
+              "next_steps",
+              "synthesis_quality",
+              "human_readable"
             ]
           },
           "detail_level": "inputs.max_detail",
           "constraints": {
             "no_fabrication": true,
-            "evidence_required": true
+            "evidence_required": true,
+            "topic": "inputs.topic",
+            "goal": "inputs.goal",
+            "focus": "inputs.focus"
           }
         },
         "output": {
-          "output": "vars.synthesis_raw",
           "output.summary": "outputs.summary",
           "output.key_points": "outputs.key_points",
           "output.insights": "outputs.insights",
@@ -1872,45 +1945,16 @@
           "output.uncertainties": "outputs.uncertainties",
           "output.source_coverage": "outputs.source_coverage",
           "output.next_steps": "outputs.next_steps",
-          "warnings": "vars.synthesis_warnings",
-          "coverage": "vars.synthesis_coverage"
-        }
-      },
-      {
-        "id": "assess_quality",
-        "uses": "skill:research.quality-assess",
-        "input": {
-          "synthesis_object": "vars.synthesis_raw",
-          "findings_by_item": "vars.findings_by_item",
-          "normalized_items": "vars.normalized_items",
-          "quality_profile": "inputs.quality_profile"
-        },
-        "output": {
-          "synthesis_quality": "outputs.synthesis_quality",
-          "quality_warnings": "vars.quality_warnings",
-          "assessment_passed": "vars.assessment_passed"
-        }
-      },
-      {
-        "id": "generate_human_readable",
-        "uses": "text.summarize",
-        "input": {
-          "text": "outputs.summary"
-        },
-        "output": {
-          "summary": "outputs.human_readable"
+          "output.synthesis_quality": "outputs.synthesis_quality",
+          "output.human_readable": "outputs.human_readable"
         }
       }
     ],
     "uses_capabilities": [
       "model.output.generate",
-      "text.summarize"
+      "research.source.retrieve"
     ],
-    "uses_skills": [
-      "research.extract-findings",
-      "research.normalize-corpus",
-      "research.quality-assess"
-    ],
+    "uses_skills": [],
     "metadata": {
       "tags": [
         "research",

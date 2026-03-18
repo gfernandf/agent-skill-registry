@@ -121,7 +121,8 @@
     },
     "research.normalize-corpus": {
       "capabilities": [
-        "model.output.generate"
+        "model.output.generate",
+        "research.source.retrieve"
       ],
       "skills": []
     },
@@ -137,13 +138,9 @@
     "research.synthesize": {
       "capabilities": [
         "model.output.generate",
-        "text.summarize"
+        "research.source.retrieve"
       ],
-      "skills": [
-        "research.extract-findings",
-        "research.normalize-corpus",
-        "research.quality-assess"
-      ]
+      "skills": []
     },
     "table.filter-summary": {
       "capabilities": [

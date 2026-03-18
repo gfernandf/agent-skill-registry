@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 101,
+    "capability_count": 102,
     "skill_count": 36,
     "domain_count": 25,
     "channel_count": 2
@@ -25,8 +25,8 @@
       "official": 31,
       "experimental": 5
     },
-    "average_steps": 2.11,
-    "with_skill_dependencies": 1
+    "average_steps": 2.06,
+    "with_skill_dependencies": 0
   },
   "capabilities": {
     "by_domain": {
@@ -52,13 +52,14 @@
       "eval": 1,
       "fs": 1,
       "pdf": 1,
+      "research": 1,
       "table": 1,
       "video": 1
     },
     "most_used": [
       {
         "id": "text.summarize",
-        "count": 17
+        "count": 16
       },
       {
         "id": "doc.chunk",
@@ -102,6 +103,10 @@
       },
       {
         "id": "memory.store",
+        "count": 2
+      },
+      {
+        "id": "research.source.retrieve",
         "count": 2
       },
       {
@@ -255,8 +260,8 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 73,
-    "skill_to_skill_edges": 3,
+    "skill_to_capability_edges": 74,
+    "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 4
   },
   "metadata": {

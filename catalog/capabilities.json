@@ -1852,6 +1852,37 @@
     }
   },
   {
+    "id": "research.source.retrieve",
+    "version": "1.0.0",
+    "description": "Resolve source_ref fields in a list of corpus items to actual text content. Handles pdf_path, fs_path, url, and raw_text source types. Items that already have content are passed through unchanged. The resolved items are suitable for passing to model.output.generate or further analysis steps.\n",
+    "file": "capabilities/research.source.retrieve.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "List of corpus items. Each item may have a source_ref object with type and location fields, or may already have a content string. Supported source_ref types: pdf_path, fs_path, url, raw_text, memory_key (pass-through).\n"
+      }
+    },
+    "outputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "Same items with content populated from source_ref where applicable. Items that already had content are unchanged. Items whose source cannot be resolved receive an empty content string and a resolution_error field.\n"
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "security.output.gate",
     "version": "1.0.0",
     "description": "Apply policy gates to decide whether an output can be released.",
