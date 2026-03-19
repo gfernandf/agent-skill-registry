@@ -1,6 +1,6 @@
-id: research.synthesize
+id: analysis.synthesize
 version: 0.2.0
-name: Research Synthesize
+name: Synthesize
 description: >
   Transform a heterogeneous collection of research materials into a structured,
   actionable synthesis artifact. Accepts items as pre-extracted text or as source
@@ -274,7 +274,7 @@ metadata:
     - analysis
     - multi-source
     - decision-support
-  category: research
+  category: analysis
   use_cases:
     - Consolidate multiple research documents into a structured synthesis
     - Integrate agent findings before passing to a decision workflow

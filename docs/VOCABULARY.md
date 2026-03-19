@@ -250,6 +250,73 @@ The goal is to create a language that remains:
 
 ---
 
+# Domain Design Criteria
+
+Domains are shared between capabilities and skills, but serve different roles
+in each context.
+
+## For capabilities
+
+A capability domain describes a **functional area of the system** — the
+technical surface where the operation runs.
+
+Examples: `text`, `model`, `data`, `ops`, `security`.
+
+A capability domain should be chosen based on **what type of operation** the
+capability performs, not what business problem it serves.
+
+## For skills
+
+A skill domain describes the **problem space** the workflow addresses — the
+kind of transformation or cognitive process it represents.
+
+Examples: `analysis`, `decision`, `agent`, `research`.
+
+A skill domain should be chosen based on **what kind of problem** the skill
+solves for the user, not what capabilities it uses internally.
+
+## Domain classification
+
+Some domains are naturally technical (used primarily by capabilities):
+
+```
+text, web, data, pdf, fs, image, audio, video, table, model, code, doc,
+memory, email, message, security, policy, identity, integration
+```
+
+Some domains are naturally cognitive or process-oriented (used primarily by
+skills):
+
+```
+analysis, decision
+```
+
+Some domains serve both levels naturally:
+
+```
+agent, research, ops, task, eval, provenance
+```
+
+There is no formal prohibition — a skill may use a technical domain if the
+problem space genuinely matches (e.g. `pdf.batch-summarize` is a valid skill).
+The guidance is about **default intent**, not hard rules.
+
+## When to create a new domain
+
+A new domain is justified when:
+
+1. Existing domains cannot cleanly express the problem space or functional area.
+2. Multiple capabilities or skills would naturally live under it.
+3. It does not substantially overlap with an existing domain.
+
+A new domain is **not** justified when:
+
+- It would contain only one capability or skill with no foreseeable growth.
+- It can be expressed as a noun within an existing domain.
+- It is a synonym or subset of an existing domain.
+
+---
+
 # Governance of Vocabulary Changes
 
 Changes to the controlled vocabulary must update:
@@ -296,3 +363,133 @@ vocabulary/vocabulary.json
 This document is explanatory only.
 
 If this document and the JSON file ever differ, the JSON file takes precedence.
+
+---
+
+# Skill Naming
+
+Skills and capabilities serve different purposes and follow **different naming
+conventions**.
+
+Capabilities define the **functional vocabulary** of the system — reusable,
+atomic operations with controlled identifiers.
+
+Skills define **workflows visible to humans and agents** — compositions of
+capabilities that solve a recognizable problem.
+
+Their naming rules reflect this distinction.
+
+---
+
+## Skill Identifier Form
+
+```
+domain.slug
+```
+
+- **domain**: must be a valid domain from `vocabulary.json`.
+- **slug**: a free-form kebab-case string describing the skill's intent.
+
+The slug is **not** governed by the controlled vocabulary of nouns and verbs.
+It should be chosen for clarity and discoverability, not to match capability
+terms.
+
+---
+
+## Skill Naming Principles
+
+### 1. Name the problem, not the technique
+
+A skill name should describe what problem it solves for the user, not what
+capabilities it uses internally.
+
+Good:
+
+```
+analysis.synthesize          — synthesize research materials
+decision.make                — produce a decision under uncertainty
+ops.trace-execution          — observe and trace an agent execution
+```
+
+Avoid:
+
+```
+model.generate-structured    — names the internal mechanism
+text.run-pipeline            — too generic
+agent.call-llm-and-score     — exposes implementation
+```
+
+### 2. The domain should reflect the problem space
+
+Choose the domain that best represents **the kind of problem** the skill
+addresses, not the primary capability it happens to use.
+
+Guidelines for domain selection:
+
+| If the skill... | Prefer domain |
+|---|---|
+| synthesizes, analyzes, or investigates information | `research` |
+| makes a choice, evaluates options, produces recommendations | `agent` |
+| traces, monitors, or audits execution | `ops` |
+| manages tasks, decomposes objectives, tracks progress | `task` |
+| transforms or produces text, documents, media | the content domain (`text`, `pdf`, `doc`, etc.) |
+| handles communication (email, messages) | the channel domain (`email`, `message`) |
+
+When in doubt, ask: "If a user searched for this skill by domain, where would
+they look first?"
+
+### 3. The slug should be specific and outcome-oriented
+
+Good slugs:
+
+```
+synthesize              — clear cognitive outcome
+decide                  — clear action
+trace-execution         — specific observable behavior
+batch-summarize         — concrete operation
+classify-and-reply      — describes the workflow
+```
+
+Bad slugs:
+
+```
+run                     — too generic
+process                 — meaningless
+handle                  — vague
+do-stuff                — obviously bad
+v2                      — version in name
+```
+
+### 4. Avoid overloading `agent` as a catch-all domain
+
+`agent` is appropriate when the skill is about **agent-level cognitive
+behavior**: deciding, planning, delegating, routing.
+
+It is **not** appropriate as a default for "anything an agent does". Every
+skill is ultimately used by an agent — that does not make every skill an
+`agent.*` skill.
+
+---
+
+## Skill Naming Anti-Patterns
+
+| Anti-pattern | Why it's wrong | Better alternative |
+|---|---|---|
+| `model.generate-report` | Exposes the engine, not the problem | `research.generate-report` or `doc.generate-report` |
+| `agent.do-everything` | Catch-all domain + generic slug | Pick a specific domain and outcome |
+| `text.step1-step2-step3` | Lists implementation steps | Name the outcome instead |
+| `data.run-pipeline` | Generic verb, says nothing | Name what the pipeline produces |
+
+---
+
+## Comparison: Capability vs Skill Naming
+
+| Aspect | Capabilities | Skills |
+|---|---|---|
+| Purpose | Functional vocabulary | Workflow descriptions |
+| Form | `domain.verb` or `domain.noun.verb` | `domain.slug` |
+| Domain source | `vocabulary.json` (required) | `vocabulary.json` (required) |
+| Verb/noun source | `vocabulary.json` (required) | Free-form (guided, not controlled) |
+| Max segments | 3 | 2 |
+| Validation | Strict — rejected if terms not in vocabulary | Domain validated; slug is free |
+| Naming goal | Predictable, searchable, composable | Clear, discoverable, outcome-oriented |

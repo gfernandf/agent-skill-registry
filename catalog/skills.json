@@ -1,329 +1,5 @@
 [
   {
-    "id": "agent.decide",
-    "version": "0.1.0",
-    "name": "Decide",
-    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) evaluate options against criteria with comparative scoring, (3) select a recommendation with justification, failure modes, and next steps, (4) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call.\nTypical upstream: research.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
-    "channel": "experimental",
-    "domain": "agent",
-    "slug": "decide",
-    "file": "skills/experimental/agent/decide/skill.yaml",
-    "inputs": {
-      "goal": {
-        "type": "string",
-        "required": true,
-        "description": "Clear description of the problem or decision to resolve. Examples: \"Should we expand to market X?\", \"Which architecture should we adopt for the new platform?\"\n"
-      },
-      "context_items": {
-        "type": "array",
-        "required": false,
-        "description": "Relevant information: outputs from research.synthesize, notes, data, analyses. Each item should have at least a content field (string). If omitted, the skill works from the goal alone (lower confidence expected).\n"
-      },
-      "options": {
-        "type": "array",
-        "required": false,
-        "description": "Explicit options to evaluate. Each option should have at minimum: id, label, description. If omitted, step 1 generates 2-4 plausible options from goal and context.\n"
-      },
-      "constraints": {
-        "type": "object",
-        "required": false,
-        "description": "Hard constraints the decision must respect: budget, time, regulation, resources, organizational limits.\n"
-      },
-      "risk_tolerance": {
-        "type": "string",
-        "required": false,
-        "description": "Risk appetite: low | medium | high. Defaults to medium. Affects how uncertainty and downside scenarios are weighted throughout the pipeline.\n"
-      }
-    },
-    "outputs": {
-      "recommendation": {
-        "type": "string",
-        "required": true,
-        "description": "The final recommendation. Must be clear, concrete, and unambiguous. Never \"it depends\" or \"consider your options\".\n"
-      },
-      "alternatives_considered": {
-        "type": "array",
-        "required": true,
-        "description": "List of all options evaluated, including generated ones if applicable.\n"
-      },
-      "criteria_used": {
-        "type": "array",
-        "required": true,
-        "description": "Criteria used for evaluation, with weights.\n"
-      },
-      "evaluation_summary": {
-        "type": "string",
-        "required": true,
-        "description": "Comparative summary of how options scored against criteria.\n"
-      },
-      "tradeoffs": {
-        "type": "array",
-        "required": true,
-        "description": "Explicit trade-offs of the chosen recommendation. What is gained, what is sacrificed.\n"
-      },
-      "confidence_score": {
-        "type": "number",
-        "required": true,
-        "description": "Numeric confidence in the recommendation (0.0 to 1.0).\n"
-      },
-      "confidence_level": {
-        "type": "string",
-        "required": true,
-        "description": "Human-readable confidence: low | medium | high.\n"
-      },
-      "uncertainties": {
-        "type": "array",
-        "required": true,
-        "description": "What is unclear, missing, or weakly supported. Honest enumeration of unknowns that could affect the decision.\n"
-      },
-      "failure_modes": {
-        "type": "array",
-        "required": true,
-        "description": "Conditions under which the recommendation could fail. Examples: regulatory change, cost escalation, incorrect assumptions.\n"
-      },
-      "next_steps": {
-        "type": "array",
-        "required": true,
-        "description": "Recommended follow-up actions: validations, pilots, additional analysis, execution steps.\n"
-      },
-      "decision_quality": {
-        "type": "object",
-        "required": true,
-        "description": "Self-assessment of the decision process: input_quality (0-1), criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1), quality_notes (string), assessment_passed (boolean).\n"
-      },
-      "human_readable": {
-        "type": "string",
-        "required": true,
-        "description": "Narrative prose version of the decision suitable for direct human consumption without further post-processing.\n"
-      }
-    },
-    "steps": [
-      {
-        "id": "generate_options",
-        "uses": "agent.option.generate",
-        "input": {
-          "goal": "inputs.goal",
-          "context": "inputs.context_items",
-          "constraints": "inputs.constraints",
-          "max_options": 4
-        },
-        "output": {
-          "options": "vars.generated_options"
-        }
-      },
-      {
-        "id": "evaluate_options",
-        "uses": "eval.option.score",
-        "input": {
-          "options": "vars.generated_options",
-          "goal": "inputs.goal",
-          "risk_tolerance": "inputs.risk_tolerance"
-        },
-        "output": {
-          "scored_options": "vars.scored_options",
-          "criteria_used": "outputs.criteria_used",
-          "comparative_summary": "outputs.evaluation_summary",
-          "tradeoffs": "outputs.tradeoffs"
-        }
-      },
-      {
-        "id": "select_decision",
-        "uses": "model.output.generate",
-        "input": {
-          "instruction": "You are a decision engine. You receive scored options with comparative analysis and must produce a FINAL DECISION — not a summary, not a re-ranking, but a clear, committed recommendation.\nRules: - Select exactly ONE option (or a qualified variant) as the recommendation. - The recommendation field must be a concrete, actionable statement.\n  NEVER output \"it depends\", \"consider both\", or similar hedges.\n- If confidence is low, still decide — but flag it clearly. - failure_modes: list 2-5 concrete conditions under which this decision\n  could fail. Be specific, not generic.\n- uncertainties: list what is unknown or weakly supported that could\n  change the outcome. Be honest.\n- next_steps: list 2-5 concrete follow-up actions. Prefer validations\n  and pilots over \"more analysis\".\n- confidence_score: calibrate honestly.\n  0.0-0.3 = low (major unknowns, weak input)\n  0.3-0.6 = medium (reasonable input, some gaps)\n  0.6-0.9 = high (strong input, clear winner)\n  0.9-1.0 = very high (overwhelming evidence)\n- confidence_level: low if score < 0.35, medium if 0.35-0.65, high if > 0.65. - human_readable: 3-6 paragraph narrative of the decision, readable as\n  a standalone memo. Include: what was decided, why, key trade-offs,\n  risks, and next steps.\n- Modulate aggressiveness by risk_tolerance: low = prefer safer options\n  even if suboptimal; high = prefer high-reward options accepting downside.\n",
-          "context_items": [
-            {
-              "id": "scored_options",
-              "content": "vars.scored_options",
-              "type": "evaluation_result"
-            },
-            {
-              "id": "evaluation_summary",
-              "content": "outputs.evaluation_summary",
-              "type": "comparative_analysis"
-            },
-            {
-              "id": "tradeoffs",
-              "content": "outputs.tradeoffs",
-              "type": "tradeoff_analysis"
-            },
-            {
-              "id": "original_context",
-              "content": "inputs.context_items",
-              "type": "background"
-            }
-          ],
-          "output_schema": {
-            "type": "object",
-            "properties": {
-              "recommendation": {
-                "type": "string"
-              },
-              "alternatives_considered": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "label": {
-                      "type": "string"
-                    },
-                    "selected": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              },
-              "confidence_score": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 1
-              },
-              "confidence_level": {
-                "type": "string",
-                "enum": [
-                  "low",
-                  "medium",
-                  "high"
-                ]
-              },
-              "uncertainties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "failure_modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "next_steps": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "human_readable": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "recommendation",
-              "alternatives_considered",
-              "confidence_score",
-              "confidence_level",
-              "uncertainties",
-              "failure_modes",
-              "next_steps",
-              "human_readable"
-            ]
-          },
-          "constraints": {
-            "goal": "inputs.goal",
-            "risk_tolerance": "inputs.risk_tolerance",
-            "no_fabrication": true
-          }
-        },
-        "output": {
-          "output.recommendation": "outputs.recommendation",
-          "output.alternatives_considered": "outputs.alternatives_considered",
-          "output.confidence_score": "outputs.confidence_score",
-          "output.confidence_level": "outputs.confidence_level",
-          "output.uncertainties": "outputs.uncertainties",
-          "output.failure_modes": "outputs.failure_modes",
-          "output.next_steps": "outputs.next_steps",
-          "output.human_readable": "outputs.human_readable"
-        }
-      },
-      {
-        "id": "assess_quality",
-        "uses": "eval.output.score",
-        "input": {
-          "output": {
-            "recommendation": "outputs.recommendation",
-            "confidence_score": "outputs.confidence_score",
-            "uncertainties": "outputs.uncertainties",
-            "failure_modes": "outputs.failure_modes",
-            "evaluation_summary": "outputs.evaluation_summary"
-          },
-          "rubric": {
-            "dimensions": {
-              "input_quality": {
-                "description": "Was the decision based on sufficient, relevant input? Score low if context_items were absent or sparse.\n",
-                "weight": 0.25
-              },
-              "criteria_coverage": {
-                "description": "Were the evaluation criteria comprehensive and relevant to the goal? Score low if obvious criteria were missed.\n",
-                "weight": 0.25
-              },
-              "analysis_consistency": {
-                "description": "Is the recommendation consistent with the evaluation scores and trade-off analysis? Flag contradictions.\n",
-                "weight": 0.3
-              },
-              "justification_depth": {
-                "description": "Are the uncertainties, failure modes, and next steps specific and actionable, not generic boilerplate?\n",
-                "weight": 0.2
-              }
-            }
-          }
-        },
-        "output": {
-          "score": "outputs.decision_quality",
-          "dimensions": "vars.quality_dimensions"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "agent.option.generate",
-      "eval.option.score",
-      "eval.output.score",
-      "model.output.generate"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [
-        "decision-support",
-        "agent",
-        "reasoning",
-        "multi-criteria",
-        "structured-output"
-      ],
-      "category": "agent",
-      "status": "experimental",
-      "use_cases": [
-        "Strategic decisions (market entry, technology selection, initiative prioritization)",
-        "Operational decisions (implementation approach, vendor selection, architecture choice)",
-        "Decisions under uncertainty (incomplete scenarios, contradictory information, complex trade-offs)",
-        "Agent pipeline closure (final step after research.synthesize, replacing vague responses)"
-      ],
-      "examples": [
-        {
-          "goal": "Should we expand to market X?",
-          "context_items": [
-            {
-              "id": "synthesis",
-              "content": "Market research synthesis indicating strong demand but high regulatory uncertainty...",
-              "type": "research_synthesis"
-            }
-          ],
-          "expected_outputs": {
-            "recommendation": "Proceed with a controlled pilot entry in market X, limited to segment Y",
-            "confidence_level": "medium"
-          }
-        }
-      ],
-      "classification": {
-        "role": "procedure",
-        "invocation": "direct",
-        "effect_mode": "enrich"
-      }
-    }
-  },
-  {
     "id": "agent.plan-and-route",
     "version": "0.1.0",
     "name": "Plan and Route",
@@ -659,6 +335,330 @@
     }
   },
   {
+    "id": "analysis.synthesize",
+    "version": "0.2.0",
+    "name": "Synthesize",
+    "description": "Transform a heterogeneous collection of research materials into a structured, actionable synthesis artifact. Accepts items as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key). Resolves sources, then produces the full synthesis in a single model call — summary, key points, insights, tensions, uncertainties, coverage, next steps, quality assessment, and a human-readable narrative.\nFast path (default): 2 steps, 1 LLM call. Comparable in latency to a direct chat interaction but with a stable output contract and full traceability.\nSuitable as an intermediate block in longer agent workflows: feeds naturally into decision.compare_options, task.frame, or direct human review.\n",
+    "channel": "experimental",
+    "domain": "analysis",
+    "slug": "synthesize",
+    "file": "skills/experimental/analysis/synthesize/skill.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "List of research items to synthesize. Each item must include `id` and either `content` (pre-extracted text) or `source_ref` (object with `type` and `location`). Optional per-item fields: title, type (article | report | note | web_page | search_result | agent_output | transcript | raw_text), source, relevance_hint, metadata.\n"
+      },
+      "topic": {
+        "type": "string",
+        "required": false,
+        "description": "Topic or subject of the research. Anchors the synthesis. If omitted, the skill infers the dominant topic from the corpus.\n"
+      },
+      "goal": {
+        "type": "string",
+        "required": false,
+        "description": "Intended use of the synthesis (e.g. \"evaluate expansion into market X\", \"assess regulatory risk for hydrogen in Europe\"). Influences relevance prioritization and next_steps suggestions.\n"
+      },
+      "focus": {
+        "type": "string",
+        "required": false,
+        "description": "Optional extraction and synthesis focus hint. Examples: \"prioritize risks\", \"prioritize contradictions\", \"executive summary\", \"emphasize opportunities\".\n"
+      },
+      "max_detail": {
+        "type": "string",
+        "required": false,
+        "description": "Output depth: brief | standard | detailed. Defaults to standard."
+      },
+      "quality_profile": {
+        "type": "string",
+        "required": false,
+        "description": "Quality gate stringency: standard | strict. Defaults to standard. standard: self-assessed quality in the synthesis call. strict: reserved for future grounding validation step.\n"
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true,
+        "description": "Executive summary of the corpus. Answers: what the material is about, what the key conclusions are, and what seems most important.\n"
+      },
+      "key_points": {
+        "type": "array",
+        "required": true,
+        "description": "Consolidated list of stable findings or claims that appear central or recurrent across sources. Each entry is a concise statement.\n"
+      },
+      "insights": {
+        "type": "array",
+        "required": true,
+        "description": "Interpretive or non-trivial observations not captured by key_points. Patterns, implications, and differential signals worth noting.\n"
+      },
+      "tensions": {
+        "type": "array",
+        "required": true,
+        "description": "Points where two or more items conflict, diverge in emphasis, or carry incompatible signals on the same topic. Each entry names the tension and the diverging positions.\n"
+      },
+      "uncertainties": {
+        "type": "array",
+        "required": true,
+        "description": "Areas that are unclear, weakly supported, or missing from the corpus. Each entry is a statement of what is not known or not well established.\n"
+      },
+      "source_coverage": {
+        "type": "object",
+        "required": true,
+        "description": "Coverage metadata: total_items, processed_items, coverage_ratio, dominant_subset_warning (true if a small subset dominates the synthesis), item_type_distribution.\n"
+      },
+      "next_steps": {
+        "type": "array",
+        "required": true,
+        "description": "Suggested continuation actions. Examples: investigate an unresolved area, contrast a tension, compare options, pass to decision.compare_options.\n"
+      },
+      "synthesis_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Self-assessed quality block: confidence_score (0-1), coverage_ratio, evidence_strength, tension_density, uncertainty_load, quality_notes, assessment_passed.\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative prose version of the synthesis suitable for direct human consumption without further post-processing.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "resolve_sources",
+        "uses": "research.source.retrieve",
+        "input": {
+          "items": "inputs.items"
+        },
+        "output": {
+          "items": "vars.resolved_items"
+        }
+      },
+      {
+        "id": "synthesize",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "You are a research synthesis engine. You receive a collection of source items (already resolved to text) plus optional anchors in the constraints object: topic, goal, focus. Produce the complete synthesis in one pass.\nHeuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central to the topic.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same\n  theme. Include topic, position_a, position_b.\n- Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest\n  generally useful follow-ups.\n- source_coverage: count total_items and processed_items from the input,\n  compute coverage_ratio, flag dominant_subset_warning if a small subset\n  dominates, list item_type_distribution.\n- human_readable: a narrative prose version (3-8 paragraphs depending on\n  detail level) suitable for direct human consumption.\n- synthesis_quality: self-assess with confidence_score =\n  0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped [0, 1].\n  Set assessment_passed = true if confidence_score >= 0.4 and\n  coverage_ratio >= 0.5.\n\nRules: - Do not fabricate claims not traceable to the source items. - Do not repeat the full source text in the output. - Respect the detail level for depth of each field. - If topic is not provided, infer the dominant topic from the corpus.\n",
+          "context_items": "vars.resolved_items",
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string"
+              },
+              "key_points": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "insights": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tensions": {
+                "type": "array"
+              },
+              "uncertainties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source_coverage": {
+                "type": "object",
+                "properties": {
+                  "total_items": {
+                    "type": "number"
+                  },
+                  "processed_items": {
+                    "type": "number"
+                  },
+                  "coverage_ratio": {
+                    "type": "number"
+                  },
+                  "dominant_subset_warning": {
+                    "type": "boolean"
+                  },
+                  "item_type_distribution": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "total_items",
+                  "processed_items",
+                  "coverage_ratio",
+                  "dominant_subset_warning",
+                  "item_type_distribution"
+                ]
+              },
+              "next_steps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "synthesis_quality": {
+                "type": "object",
+                "properties": {
+                  "confidence_score": {
+                    "type": "number"
+                  },
+                  "coverage_ratio": {
+                    "type": "number"
+                  },
+                  "evidence_strength": {
+                    "type": "number"
+                  },
+                  "tension_density": {
+                    "type": "number"
+                  },
+                  "uncertainty_load": {
+                    "type": "number"
+                  },
+                  "quality_notes": {
+                    "type": "string"
+                  },
+                  "assessment_passed": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "confidence_score",
+                  "evidence_strength",
+                  "quality_notes",
+                  "assessment_passed"
+                ]
+              },
+              "human_readable": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "insights",
+              "tensions",
+              "uncertainties",
+              "source_coverage",
+              "next_steps",
+              "synthesis_quality",
+              "human_readable"
+            ]
+          },
+          "detail_level": "inputs.max_detail",
+          "constraints": {
+            "no_fabrication": true,
+            "evidence_required": true,
+            "topic": "inputs.topic",
+            "goal": "inputs.goal",
+            "focus": "inputs.focus"
+          }
+        },
+        "output": {
+          "output.summary": "outputs.summary",
+          "output.key_points": "outputs.key_points",
+          "output.insights": "outputs.insights",
+          "output.tensions": "outputs.tensions",
+          "output.uncertainties": "outputs.uncertainties",
+          "output.source_coverage": "outputs.source_coverage",
+          "output.next_steps": "outputs.next_steps",
+          "output.synthesis_quality": "outputs.synthesis_quality",
+          "output.human_readable": "outputs.human_readable"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "model.output.generate",
+      "research.source.retrieve"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "research",
+        "synthesis",
+        "analysis",
+        "multi-source",
+        "decision-support"
+      ],
+      "category": "analysis",
+      "status": "experimental",
+      "use_cases": [
+        "Consolidate multiple research documents into a structured synthesis",
+        "Integrate agent findings before passing to a decision workflow",
+        "Compress research context without losing key signals",
+        "Prepare a human-readable briefing from heterogeneous source material",
+        "Feed structured synthesis output into decision.compare_options"
+      ],
+      "examples": [
+        {
+          "description": "Synthesize market expansion research",
+          "input": {
+            "topic": "Market expansion opportunity in sector X",
+            "goal": "Evaluate whether to expand into market X",
+            "focus": "prioritize risks",
+            "items": [
+              {
+                "id": "doc-1",
+                "content": "Demand is growing at 15% YoY...",
+                "type": "article"
+              },
+              {
+                "id": "doc-2",
+                "source_ref": {
+                  "type": "pdf_path",
+                  "location": "/research/regulatory-analysis.pdf"
+                },
+                "type": "report"
+              }
+            ]
+          },
+          "output": {
+            "summary": "The expansion appears viable given demand signals but faces regulatory uncertainty and high entry cost.",
+            "key_points": [
+              "Demand growing at 15% YoY",
+              "Regulatory timeline unclear",
+              "Entry cost significantly above initial estimates"
+            ],
+            "insights": [
+              "Execution risk, not market fit, is the primary constraint"
+            ],
+            "tensions": [
+              {
+                "topic": "competitive pressure",
+                "position_a": "Low competition observed in current data",
+                "position_b": "Emerging entrants signal rising competitive intensity"
+              }
+            ],
+            "uncertainties": [
+              "No consolidated data on total cost of entry",
+              "Regulatory approval timeline unconfirmed"
+            ],
+            "next_steps": [
+              "Validate regulatory timeline with legal team",
+              "Pass to decision.compare_options with entry vs defer scenarios"
+            ],
+            "synthesis_quality": {
+              "confidence_score": 0.72,
+              "coverage_ratio": 0.9,
+              "evidence_strength": 0.75,
+              "tension_density": 0.2,
+              "uncertainty_load": 0.3,
+              "quality_notes": "Synthesis is well-grounded but regulatory uncertainty reduces confidence.",
+              "assessment_passed": true
+            }
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
     "id": "audio.transcribe-summary",
     "version": "0.1.0",
     "name": "Transcribe Summary",
@@ -863,6 +863,330 @@
       "examples": [],
       "classification": {
         "role": "utility",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
+    "id": "decision.make",
+    "version": "0.1.0",
+    "name": "Make Decision",
+    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) evaluate options against criteria with comparative scoring, (3) select a recommendation with justification, failure modes, and next steps, (4) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
+    "channel": "experimental",
+    "domain": "decision",
+    "slug": "make",
+    "file": "skills/experimental/decision/make/skill.yaml",
+    "inputs": {
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "Clear description of the problem or decision to resolve. Examples: \"Should we expand to market X?\", \"Which architecture should we adopt for the new platform?\"\n"
+      },
+      "context_items": {
+        "type": "array",
+        "required": false,
+        "description": "Relevant information: outputs from analysis.synthesize, notes, data, analyses. Each item should have at least a content field (string). If omitted, the skill works from the goal alone (lower confidence expected).\n"
+      },
+      "options": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit options to evaluate. Each option should have at minimum: id, label, description. If omitted, step 1 generates 2-4 plausible options from goal and context.\n"
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Hard constraints the decision must respect: budget, time, regulation, resources, organizational limits.\n"
+      },
+      "risk_tolerance": {
+        "type": "string",
+        "required": false,
+        "description": "Risk appetite: low | medium | high. Defaults to medium. Affects how uncertainty and downside scenarios are weighted throughout the pipeline.\n"
+      }
+    },
+    "outputs": {
+      "recommendation": {
+        "type": "string",
+        "required": true,
+        "description": "The final recommendation. Must be clear, concrete, and unambiguous. Never \"it depends\" or \"consider your options\".\n"
+      },
+      "alternatives_considered": {
+        "type": "array",
+        "required": true,
+        "description": "List of all options evaluated, including generated ones if applicable.\n"
+      },
+      "criteria_used": {
+        "type": "array",
+        "required": true,
+        "description": "Criteria used for evaluation, with weights.\n"
+      },
+      "evaluation_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Comparative summary of how options scored against criteria.\n"
+      },
+      "tradeoffs": {
+        "type": "array",
+        "required": true,
+        "description": "Explicit trade-offs of the chosen recommendation. What is gained, what is sacrificed.\n"
+      },
+      "confidence_score": {
+        "type": "number",
+        "required": true,
+        "description": "Numeric confidence in the recommendation (0.0 to 1.0).\n"
+      },
+      "confidence_level": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable confidence: low | medium | high.\n"
+      },
+      "uncertainties": {
+        "type": "array",
+        "required": true,
+        "description": "What is unclear, missing, or weakly supported. Honest enumeration of unknowns that could affect the decision.\n"
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Conditions under which the recommendation could fail. Examples: regulatory change, cost escalation, incorrect assumptions.\n"
+      },
+      "next_steps": {
+        "type": "array",
+        "required": true,
+        "description": "Recommended follow-up actions: validations, pilots, additional analysis, execution steps.\n"
+      },
+      "decision_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Self-assessment of the decision process: input_quality (0-1), criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1), quality_notes (string), assessment_passed (boolean).\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative prose version of the decision suitable for direct human consumption without further post-processing.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "generate_options",
+        "uses": "agent.option.generate",
+        "input": {
+          "goal": "inputs.goal",
+          "context": "inputs.context_items",
+          "constraints": "inputs.constraints",
+          "max_options": 4
+        },
+        "output": {
+          "options": "vars.generated_options"
+        }
+      },
+      {
+        "id": "evaluate_options",
+        "uses": "eval.option.score",
+        "input": {
+          "options": "vars.generated_options",
+          "goal": "inputs.goal",
+          "risk_tolerance": "inputs.risk_tolerance"
+        },
+        "output": {
+          "scored_options": "vars.scored_options",
+          "criteria_used": "outputs.criteria_used",
+          "comparative_summary": "outputs.evaluation_summary",
+          "tradeoffs": "outputs.tradeoffs"
+        }
+      },
+      {
+        "id": "select_decision",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "You are a decision engine. You receive scored options with comparative analysis and must produce a FINAL DECISION — not a summary, not a re-ranking, but a clear, committed recommendation.\nRules: - Select exactly ONE option (or a qualified variant) as the recommendation. - The recommendation field must be a concrete, actionable statement.\n  NEVER output \"it depends\", \"consider both\", or similar hedges.\n- If confidence is low, still decide — but flag it clearly. - failure_modes: list 2-5 concrete conditions under which this decision\n  could fail. Be specific, not generic.\n- uncertainties: list what is unknown or weakly supported that could\n  change the outcome. Be honest.\n- next_steps: list 2-5 concrete follow-up actions. Prefer validations\n  and pilots over \"more analysis\".\n- confidence_score: calibrate honestly.\n  0.0-0.3 = low (major unknowns, weak input)\n  0.3-0.6 = medium (reasonable input, some gaps)\n  0.6-0.9 = high (strong input, clear winner)\n  0.9-1.0 = very high (overwhelming evidence)\n- confidence_level: low if score < 0.35, medium if 0.35-0.65, high if > 0.65. - human_readable: 3-6 paragraph narrative of the decision, readable as\n  a standalone memo. Include: what was decided, why, key trade-offs,\n  risks, and next steps.\n- Modulate aggressiveness by risk_tolerance: low = prefer safer options\n  even if suboptimal; high = prefer high-reward options accepting downside.\n",
+          "context_items": [
+            {
+              "id": "scored_options",
+              "content": "vars.scored_options",
+              "type": "evaluation_result"
+            },
+            {
+              "id": "evaluation_summary",
+              "content": "outputs.evaluation_summary",
+              "type": "comparative_analysis"
+            },
+            {
+              "id": "tradeoffs",
+              "content": "outputs.tradeoffs",
+              "type": "tradeoff_analysis"
+            },
+            {
+              "id": "original_context",
+              "content": "inputs.context_items",
+              "type": "background"
+            }
+          ],
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "recommendation": {
+                "type": "string"
+              },
+              "alternatives_considered": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "selected": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "confidence_score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "confidence_level": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "uncertainties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "failure_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "next_steps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "human_readable": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "recommendation",
+              "alternatives_considered",
+              "confidence_score",
+              "confidence_level",
+              "uncertainties",
+              "failure_modes",
+              "next_steps",
+              "human_readable"
+            ]
+          },
+          "constraints": {
+            "goal": "inputs.goal",
+            "risk_tolerance": "inputs.risk_tolerance",
+            "no_fabrication": true
+          }
+        },
+        "output": {
+          "output.recommendation": "outputs.recommendation",
+          "output.alternatives_considered": "outputs.alternatives_considered",
+          "output.confidence_score": "outputs.confidence_score",
+          "output.confidence_level": "outputs.confidence_level",
+          "output.uncertainties": "outputs.uncertainties",
+          "output.failure_modes": "outputs.failure_modes",
+          "output.next_steps": "outputs.next_steps",
+          "output.human_readable": "outputs.human_readable"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "recommendation": "outputs.recommendation",
+            "confidence_score": "outputs.confidence_score",
+            "uncertainties": "outputs.uncertainties",
+            "failure_modes": "outputs.failure_modes",
+            "evaluation_summary": "outputs.evaluation_summary"
+          },
+          "rubric": {
+            "dimensions": {
+              "input_quality": {
+                "description": "Was the decision based on sufficient, relevant input? Score low if context_items were absent or sparse.\n",
+                "weight": 0.25
+              },
+              "criteria_coverage": {
+                "description": "Were the evaluation criteria comprehensive and relevant to the goal? Score low if obvious criteria were missed.\n",
+                "weight": 0.25
+              },
+              "analysis_consistency": {
+                "description": "Is the recommendation consistent with the evaluation scores and trade-off analysis? Flag contradictions.\n",
+                "weight": 0.3
+              },
+              "justification_depth": {
+                "description": "Are the uncertainties, failure modes, and next steps specific and actionable, not generic boilerplate?\n",
+                "weight": 0.2
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.decision_quality",
+          "dimensions": "vars.quality_dimensions"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.option.generate",
+      "eval.option.score",
+      "eval.output.score",
+      "model.output.generate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "decision-support",
+        "agent",
+        "reasoning",
+        "multi-criteria",
+        "structured-output"
+      ],
+      "category": "decision",
+      "status": "experimental",
+      "use_cases": [
+        "Strategic decisions (market entry, technology selection, initiative prioritization)",
+        "Operational decisions (implementation approach, vendor selection, architecture choice)",
+        "Decisions under uncertainty (incomplete scenarios, contradictory information, complex trade-offs)",
+        "Agent pipeline closure (final step after analysis.synthesize, replacing vague responses)"
+      ],
+      "examples": [
+        {
+          "goal": "Should we expand to market X?",
+          "context_items": [
+            {
+              "id": "synthesis",
+              "content": "Market research synthesis indicating strong demand but high regulatory uncertainty...",
+              "type": "research_synthesis"
+            }
+          ],
+          "expected_outputs": {
+            "recommendation": "Proceed with a controlled pilot entry in market X, limited to segment Y",
+            "confidence_level": "medium"
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
         "invocation": "direct",
         "effect_mode": "enrich"
       }
@@ -2036,330 +2360,6 @@
         "role": "utility",
         "invocation": "direct",
         "effect_mode": "read_only"
-      }
-    }
-  },
-  {
-    "id": "research.synthesize",
-    "version": "0.2.0",
-    "name": "Research Synthesize",
-    "description": "Transform a heterogeneous collection of research materials into a structured, actionable synthesis artifact. Accepts items as pre-extracted text or as source references (url, pdf_path, fs_path, memory_key). Resolves sources, then produces the full synthesis in a single model call — summary, key points, insights, tensions, uncertainties, coverage, next steps, quality assessment, and a human-readable narrative.\nFast path (default): 2 steps, 1 LLM call. Comparable in latency to a direct chat interaction but with a stable output contract and full traceability.\nSuitable as an intermediate block in longer agent workflows: feeds naturally into decision.compare_options, task.frame, or direct human review.\n",
-    "channel": "experimental",
-    "domain": "research",
-    "slug": "synthesize",
-    "file": "skills/experimental/research/synthesize/skill.yaml",
-    "inputs": {
-      "items": {
-        "type": "array",
-        "required": true,
-        "description": "List of research items to synthesize. Each item must include `id` and either `content` (pre-extracted text) or `source_ref` (object with `type` and `location`). Optional per-item fields: title, type (article | report | note | web_page | search_result | agent_output | transcript | raw_text), source, relevance_hint, metadata.\n"
-      },
-      "topic": {
-        "type": "string",
-        "required": false,
-        "description": "Topic or subject of the research. Anchors the synthesis. If omitted, the skill infers the dominant topic from the corpus.\n"
-      },
-      "goal": {
-        "type": "string",
-        "required": false,
-        "description": "Intended use of the synthesis (e.g. \"evaluate expansion into market X\", \"assess regulatory risk for hydrogen in Europe\"). Influences relevance prioritization and next_steps suggestions.\n"
-      },
-      "focus": {
-        "type": "string",
-        "required": false,
-        "description": "Optional extraction and synthesis focus hint. Examples: \"prioritize risks\", \"prioritize contradictions\", \"executive summary\", \"emphasize opportunities\".\n"
-      },
-      "max_detail": {
-        "type": "string",
-        "required": false,
-        "description": "Output depth: brief | standard | detailed. Defaults to standard."
-      },
-      "quality_profile": {
-        "type": "string",
-        "required": false,
-        "description": "Quality gate stringency: standard | strict. Defaults to standard. standard: self-assessed quality in the synthesis call. strict: reserved for future grounding validation step.\n"
-      }
-    },
-    "outputs": {
-      "summary": {
-        "type": "string",
-        "required": true,
-        "description": "Executive summary of the corpus. Answers: what the material is about, what the key conclusions are, and what seems most important.\n"
-      },
-      "key_points": {
-        "type": "array",
-        "required": true,
-        "description": "Consolidated list of stable findings or claims that appear central or recurrent across sources. Each entry is a concise statement.\n"
-      },
-      "insights": {
-        "type": "array",
-        "required": true,
-        "description": "Interpretive or non-trivial observations not captured by key_points. Patterns, implications, and differential signals worth noting.\n"
-      },
-      "tensions": {
-        "type": "array",
-        "required": true,
-        "description": "Points where two or more items conflict, diverge in emphasis, or carry incompatible signals on the same topic. Each entry names the tension and the diverging positions.\n"
-      },
-      "uncertainties": {
-        "type": "array",
-        "required": true,
-        "description": "Areas that are unclear, weakly supported, or missing from the corpus. Each entry is a statement of what is not known or not well established.\n"
-      },
-      "source_coverage": {
-        "type": "object",
-        "required": true,
-        "description": "Coverage metadata: total_items, processed_items, coverage_ratio, dominant_subset_warning (true if a small subset dominates the synthesis), item_type_distribution.\n"
-      },
-      "next_steps": {
-        "type": "array",
-        "required": true,
-        "description": "Suggested continuation actions. Examples: investigate an unresolved area, contrast a tension, compare options, pass to decision.compare_options.\n"
-      },
-      "synthesis_quality": {
-        "type": "object",
-        "required": true,
-        "description": "Self-assessed quality block: confidence_score (0-1), coverage_ratio, evidence_strength, tension_density, uncertainty_load, quality_notes, assessment_passed.\n"
-      },
-      "human_readable": {
-        "type": "string",
-        "required": true,
-        "description": "Narrative prose version of the synthesis suitable for direct human consumption without further post-processing.\n"
-      }
-    },
-    "steps": [
-      {
-        "id": "resolve_sources",
-        "uses": "research.source.retrieve",
-        "input": {
-          "items": "inputs.items"
-        },
-        "output": {
-          "items": "vars.resolved_items"
-        }
-      },
-      {
-        "id": "synthesize",
-        "uses": "model.output.generate",
-        "input": {
-          "instruction": "You are a research synthesis engine. You receive a collection of source items (already resolved to text) plus optional anchors in the constraints object: topic, goal, focus. Produce the complete synthesis in one pass.\nHeuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central to the topic.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same\n  theme. Include topic, position_a, position_b.\n- Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest\n  generally useful follow-ups.\n- source_coverage: count total_items and processed_items from the input,\n  compute coverage_ratio, flag dominant_subset_warning if a small subset\n  dominates, list item_type_distribution.\n- human_readable: a narrative prose version (3-8 paragraphs depending on\n  detail level) suitable for direct human consumption.\n- synthesis_quality: self-assess with confidence_score =\n  0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped [0, 1].\n  Set assessment_passed = true if confidence_score >= 0.4 and\n  coverage_ratio >= 0.5.\n\nRules: - Do not fabricate claims not traceable to the source items. - Do not repeat the full source text in the output. - Respect the detail level for depth of each field. - If topic is not provided, infer the dominant topic from the corpus.\n",
-          "context_items": "vars.resolved_items",
-          "output_schema": {
-            "type": "object",
-            "properties": {
-              "summary": {
-                "type": "string"
-              },
-              "key_points": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "insights": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "tensions": {
-                "type": "array"
-              },
-              "uncertainties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "source_coverage": {
-                "type": "object",
-                "properties": {
-                  "total_items": {
-                    "type": "number"
-                  },
-                  "processed_items": {
-                    "type": "number"
-                  },
-                  "coverage_ratio": {
-                    "type": "number"
-                  },
-                  "dominant_subset_warning": {
-                    "type": "boolean"
-                  },
-                  "item_type_distribution": {
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "total_items",
-                  "processed_items",
-                  "coverage_ratio",
-                  "dominant_subset_warning",
-                  "item_type_distribution"
-                ]
-              },
-              "next_steps": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "synthesis_quality": {
-                "type": "object",
-                "properties": {
-                  "confidence_score": {
-                    "type": "number"
-                  },
-                  "coverage_ratio": {
-                    "type": "number"
-                  },
-                  "evidence_strength": {
-                    "type": "number"
-                  },
-                  "tension_density": {
-                    "type": "number"
-                  },
-                  "uncertainty_load": {
-                    "type": "number"
-                  },
-                  "quality_notes": {
-                    "type": "string"
-                  },
-                  "assessment_passed": {
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "confidence_score",
-                  "evidence_strength",
-                  "quality_notes",
-                  "assessment_passed"
-                ]
-              },
-              "human_readable": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "summary",
-              "key_points",
-              "insights",
-              "tensions",
-              "uncertainties",
-              "source_coverage",
-              "next_steps",
-              "synthesis_quality",
-              "human_readable"
-            ]
-          },
-          "detail_level": "inputs.max_detail",
-          "constraints": {
-            "no_fabrication": true,
-            "evidence_required": true,
-            "topic": "inputs.topic",
-            "goal": "inputs.goal",
-            "focus": "inputs.focus"
-          }
-        },
-        "output": {
-          "output.summary": "outputs.summary",
-          "output.key_points": "outputs.key_points",
-          "output.insights": "outputs.insights",
-          "output.tensions": "outputs.tensions",
-          "output.uncertainties": "outputs.uncertainties",
-          "output.source_coverage": "outputs.source_coverage",
-          "output.next_steps": "outputs.next_steps",
-          "output.synthesis_quality": "outputs.synthesis_quality",
-          "output.human_readable": "outputs.human_readable"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "model.output.generate",
-      "research.source.retrieve"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [
-        "research",
-        "synthesis",
-        "analysis",
-        "multi-source",
-        "decision-support"
-      ],
-      "category": "research",
-      "status": "experimental",
-      "use_cases": [
-        "Consolidate multiple research documents into a structured synthesis",
-        "Integrate agent findings before passing to a decision workflow",
-        "Compress research context without losing key signals",
-        "Prepare a human-readable briefing from heterogeneous source material",
-        "Feed structured synthesis output into decision.compare_options"
-      ],
-      "examples": [
-        {
-          "description": "Synthesize market expansion research",
-          "input": {
-            "topic": "Market expansion opportunity in sector X",
-            "goal": "Evaluate whether to expand into market X",
-            "focus": "prioritize risks",
-            "items": [
-              {
-                "id": "doc-1",
-                "content": "Demand is growing at 15% YoY...",
-                "type": "article"
-              },
-              {
-                "id": "doc-2",
-                "source_ref": {
-                  "type": "pdf_path",
-                  "location": "/research/regulatory-analysis.pdf"
-                },
-                "type": "report"
-              }
-            ]
-          },
-          "output": {
-            "summary": "The expansion appears viable given demand signals but faces regulatory uncertainty and high entry cost.",
-            "key_points": [
-              "Demand growing at 15% YoY",
-              "Regulatory timeline unclear",
-              "Entry cost significantly above initial estimates"
-            ],
-            "insights": [
-              "Execution risk, not market fit, is the primary constraint"
-            ],
-            "tensions": [
-              {
-                "topic": "competitive pressure",
-                "position_a": "Low competition observed in current data",
-                "position_b": "Emerging entrants signal rising competitive intensity"
-              }
-            ],
-            "uncertainties": [
-              "No consolidated data on total cost of entry",
-              "Regulatory approval timeline unconfirmed"
-            ],
-            "next_steps": [
-              "Validate regulatory timeline with legal team",
-              "Pass to decision.compare_options with entry vs defer scenarios"
-            ],
-            "synthesis_quality": {
-              "confidence_score": 0.72,
-              "coverage_ratio": 0.9,
-              "evidence_strength": 0.75,
-              "tension_density": 0.2,
-              "uncertainty_load": 0.3,
-              "quality_notes": "Synthesis is well-grounded but regulatory uncertainty reduces confidence.",
-              "assessment_passed": true
-            }
-          }
-        }
-      ],
-      "classification": {
-        "role": "procedure",
-        "invocation": "direct",
-        "effect_mode": "enrich"
       }
     }
   },

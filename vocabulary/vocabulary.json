@@ -32,7 +32,9 @@
     "eval": "Evaluation and quality scoring",
     "provenance": "Source provenance and evidence tracking",
     "ops": "Operational monitoring and cost controls",
-    "research": "Research synthesis and analytical findings processing"
+    "research": "Research synthesis and analytical findings processing",
+    "analysis": "Structured analysis, synthesis, and interpretation of information from multiple sources",
+    "decision": "Structured decision-making under criteria and uncertainty"
   },
 
   "nouns": {

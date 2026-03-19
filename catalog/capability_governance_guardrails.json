@@ -2,12 +2,15 @@
   "summary": {
     "capabilities_total": 104,
     "covered_domains": 25,
-    "uncovered_domains": 0,
+    "uncovered_domains": 2,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
     "metadata_issues": 101
   },
-  "uncovered_domains": [],
+  "uncovered_domains": [
+    "analysis",
+    "decision"
+  ],
   "semantic_family_alerts": [
     {
       "domain": "agent",

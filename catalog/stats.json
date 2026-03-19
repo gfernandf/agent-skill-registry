@@ -2,21 +2,23 @@
   "summary": {
     "capability_count": 104,
     "skill_count": 37,
-    "domain_count": 25,
+    "domain_count": 27,
     "channel_count": 2
   },
   "skills": {
     "by_domain": {
       "text": 10,
       "web": 5,
-      "agent": 4,
-      "research": 4,
+      "agent": 3,
       "memory": 3,
       "pdf": 3,
+      "research": 3,
       "doc": 2,
+      "analysis": 1,
       "audio": 1,
       "code": 1,
       "data": 1,
+      "decision": 1,
       "email": 1,
       "image": 1,
       "table": 1

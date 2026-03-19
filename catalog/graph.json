@@ -1,14 +1,5 @@
 {
   "skills": {
-    "agent.decide": {
-      "capabilities": [
-        "agent.option.generate",
-        "eval.option.score",
-        "eval.output.score",
-        "model.output.generate"
-      ],
-      "skills": []
-    },
     "agent.plan-and-route": {
       "capabilities": [
         "agent.plan.generate",
@@ -30,6 +21,13 @@
       ],
       "skills": []
     },
+    "analysis.synthesize": {
+      "capabilities": [
+        "model.output.generate",
+        "research.source.retrieve"
+      ],
+      "skills": []
+    },
     "audio.transcribe-summary": {
       "capabilities": [
         "audio.transcribe",
@@ -48,6 +46,15 @@
       "capabilities": [
         "data.json.parse",
         "data.schema.validate"
+      ],
+      "skills": []
+    },
+    "decision.make": {
+      "capabilities": [
+        "agent.option.generate",
+        "eval.option.score",
+        "eval.output.score",
+        "model.output.generate"
       ],
       "skills": []
     },
@@ -141,13 +148,6 @@
         "eval.output.score",
         "model.output.generate",
         "model.response.validate"
-      ],
-      "skills": []
-    },
-    "research.synthesize": {
-      "capabilities": [
-        "model.output.generate",
-        "research.source.retrieve"
       ],
       "skills": []
     },

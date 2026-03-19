@@ -1,6 +1,6 @@
-id: agent.decide
+id: decision.make
 version: 0.1.0
-name: Decide
+name: Make Decision
 description: >
   Take a problem, context, and available information and produce an explicit,
   structured, justified decision under uncertainty. Closes the gap between
@@ -14,7 +14,7 @@ description: >
   via agent.trace. Favors a slower, transparent pipeline over a single opaque
   LLM call.
 
-  Typical upstream: research.synthesize output as context_items.
+  Typical upstream: analysis.synthesize output as context_items.
   Typical downstream: task planning, human review, or execution.
 
 inputs:
@@ -30,7 +30,7 @@ inputs:
     type: array
     required: false
     description: >
-      Relevant information: outputs from research.synthesize, notes, data,
+      Relevant information: outputs from analysis.synthesize, notes, data,
       analyses. Each item should have at least a content field (string).
       If omitted, the skill works from the goal alone (lower confidence expected).
 
@@ -324,12 +324,12 @@ metadata:
     - reasoning
     - multi-criteria
     - structured-output
-  category: agent
+  category: decision
   use_cases:
     - Strategic decisions (market entry, technology selection, initiative prioritization)
     - Operational decisions (implementation approach, vendor selection, architecture choice)
     - Decisions under uncertainty (incomplete scenarios, contradictory information, complex trade-offs)
-    - Agent pipeline closure (final step after research.synthesize, replacing vague responses)
+    - Agent pipeline closure (final step after analysis.synthesize, replacing vague responses)
   examples:
     - goal: "Should we expand to market X?"
       context_items:
