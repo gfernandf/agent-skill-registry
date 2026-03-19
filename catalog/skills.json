@@ -1,5 +1,329 @@
 [
   {
+    "id": "agent.decide",
+    "version": "0.1.0",
+    "name": "Decide",
+    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) evaluate options against criteria with comparative scoring, (3) select a recommendation with justification, failure modes, and next steps, (4) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call.\nTypical upstream: research.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
+    "channel": "experimental",
+    "domain": "agent",
+    "slug": "decide",
+    "file": "skills/experimental/agent/decide/skill.yaml",
+    "inputs": {
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "Clear description of the problem or decision to resolve. Examples: \"Should we expand to market X?\", \"Which architecture should we adopt for the new platform?\"\n"
+      },
+      "context_items": {
+        "type": "array",
+        "required": false,
+        "description": "Relevant information: outputs from research.synthesize, notes, data, analyses. Each item should have at least a content field (string). If omitted, the skill works from the goal alone (lower confidence expected).\n"
+      },
+      "options": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit options to evaluate. Each option should have at minimum: id, label, description. If omitted, step 1 generates 2-4 plausible options from goal and context.\n"
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Hard constraints the decision must respect: budget, time, regulation, resources, organizational limits.\n"
+      },
+      "risk_tolerance": {
+        "type": "string",
+        "required": false,
+        "description": "Risk appetite: low | medium | high. Defaults to medium. Affects how uncertainty and downside scenarios are weighted throughout the pipeline.\n"
+      }
+    },
+    "outputs": {
+      "recommendation": {
+        "type": "string",
+        "required": true,
+        "description": "The final recommendation. Must be clear, concrete, and unambiguous. Never \"it depends\" or \"consider your options\".\n"
+      },
+      "alternatives_considered": {
+        "type": "array",
+        "required": true,
+        "description": "List of all options evaluated, including generated ones if applicable.\n"
+      },
+      "criteria_used": {
+        "type": "array",
+        "required": true,
+        "description": "Criteria used for evaluation, with weights.\n"
+      },
+      "evaluation_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Comparative summary of how options scored against criteria.\n"
+      },
+      "tradeoffs": {
+        "type": "array",
+        "required": true,
+        "description": "Explicit trade-offs of the chosen recommendation. What is gained, what is sacrificed.\n"
+      },
+      "confidence_score": {
+        "type": "number",
+        "required": true,
+        "description": "Numeric confidence in the recommendation (0.0 to 1.0).\n"
+      },
+      "confidence_level": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable confidence: low | medium | high.\n"
+      },
+      "uncertainties": {
+        "type": "array",
+        "required": true,
+        "description": "What is unclear, missing, or weakly supported. Honest enumeration of unknowns that could affect the decision.\n"
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Conditions under which the recommendation could fail. Examples: regulatory change, cost escalation, incorrect assumptions.\n"
+      },
+      "next_steps": {
+        "type": "array",
+        "required": true,
+        "description": "Recommended follow-up actions: validations, pilots, additional analysis, execution steps.\n"
+      },
+      "decision_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Self-assessment of the decision process: input_quality (0-1), criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1), quality_notes (string), assessment_passed (boolean).\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative prose version of the decision suitable for direct human consumption without further post-processing.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "generate_options",
+        "uses": "agent.option.generate",
+        "input": {
+          "goal": "inputs.goal",
+          "context": "inputs.context_items",
+          "constraints": "inputs.constraints",
+          "max_options": 4
+        },
+        "output": {
+          "options": "vars.generated_options"
+        }
+      },
+      {
+        "id": "evaluate_options",
+        "uses": "eval.option.score",
+        "input": {
+          "options": "vars.generated_options",
+          "goal": "inputs.goal",
+          "risk_tolerance": "inputs.risk_tolerance"
+        },
+        "output": {
+          "scored_options": "vars.scored_options",
+          "criteria_used": "outputs.criteria_used",
+          "comparative_summary": "outputs.evaluation_summary",
+          "tradeoffs": "outputs.tradeoffs"
+        }
+      },
+      {
+        "id": "select_decision",
+        "uses": "model.output.generate",
+        "input": {
+          "instruction": "You are a decision engine. You receive scored options with comparative analysis and must produce a FINAL DECISION — not a summary, not a re-ranking, but a clear, committed recommendation.\nRules: - Select exactly ONE option (or a qualified variant) as the recommendation. - The recommendation field must be a concrete, actionable statement.\n  NEVER output \"it depends\", \"consider both\", or similar hedges.\n- If confidence is low, still decide — but flag it clearly. - failure_modes: list 2-5 concrete conditions under which this decision\n  could fail. Be specific, not generic.\n- uncertainties: list what is unknown or weakly supported that could\n  change the outcome. Be honest.\n- next_steps: list 2-5 concrete follow-up actions. Prefer validations\n  and pilots over \"more analysis\".\n- confidence_score: calibrate honestly.\n  0.0-0.3 = low (major unknowns, weak input)\n  0.3-0.6 = medium (reasonable input, some gaps)\n  0.6-0.9 = high (strong input, clear winner)\n  0.9-1.0 = very high (overwhelming evidence)\n- confidence_level: low if score < 0.35, medium if 0.35-0.65, high if > 0.65. - human_readable: 3-6 paragraph narrative of the decision, readable as\n  a standalone memo. Include: what was decided, why, key trade-offs,\n  risks, and next steps.\n- Modulate aggressiveness by risk_tolerance: low = prefer safer options\n  even if suboptimal; high = prefer high-reward options accepting downside.\n",
+          "context_items": [
+            {
+              "id": "scored_options",
+              "content": "vars.scored_options",
+              "type": "evaluation_result"
+            },
+            {
+              "id": "evaluation_summary",
+              "content": "outputs.evaluation_summary",
+              "type": "comparative_analysis"
+            },
+            {
+              "id": "tradeoffs",
+              "content": "outputs.tradeoffs",
+              "type": "tradeoff_analysis"
+            },
+            {
+              "id": "original_context",
+              "content": "inputs.context_items",
+              "type": "background"
+            }
+          ],
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "recommendation": {
+                "type": "string"
+              },
+              "alternatives_considered": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "selected": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "confidence_score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "confidence_level": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "uncertainties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "failure_modes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "next_steps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "human_readable": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "recommendation",
+              "alternatives_considered",
+              "confidence_score",
+              "confidence_level",
+              "uncertainties",
+              "failure_modes",
+              "next_steps",
+              "human_readable"
+            ]
+          },
+          "constraints": {
+            "goal": "inputs.goal",
+            "risk_tolerance": "inputs.risk_tolerance",
+            "no_fabrication": true
+          }
+        },
+        "output": {
+          "output.recommendation": "outputs.recommendation",
+          "output.alternatives_considered": "outputs.alternatives_considered",
+          "output.confidence_score": "outputs.confidence_score",
+          "output.confidence_level": "outputs.confidence_level",
+          "output.uncertainties": "outputs.uncertainties",
+          "output.failure_modes": "outputs.failure_modes",
+          "output.next_steps": "outputs.next_steps",
+          "output.human_readable": "outputs.human_readable"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "recommendation": "outputs.recommendation",
+            "confidence_score": "outputs.confidence_score",
+            "uncertainties": "outputs.uncertainties",
+            "failure_modes": "outputs.failure_modes",
+            "evaluation_summary": "outputs.evaluation_summary"
+          },
+          "rubric": {
+            "dimensions": {
+              "input_quality": {
+                "description": "Was the decision based on sufficient, relevant input? Score low if context_items were absent or sparse.\n",
+                "weight": 0.25
+              },
+              "criteria_coverage": {
+                "description": "Were the evaluation criteria comprehensive and relevant to the goal? Score low if obvious criteria were missed.\n",
+                "weight": 0.25
+              },
+              "analysis_consistency": {
+                "description": "Is the recommendation consistent with the evaluation scores and trade-off analysis? Flag contradictions.\n",
+                "weight": 0.3
+              },
+              "justification_depth": {
+                "description": "Are the uncertainties, failure modes, and next steps specific and actionable, not generic boilerplate?\n",
+                "weight": 0.2
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.decision_quality",
+          "dimensions": "vars.quality_dimensions"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.option.generate",
+      "eval.option.score",
+      "eval.output.score",
+      "model.output.generate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "decision-support",
+        "agent",
+        "reasoning",
+        "multi-criteria",
+        "structured-output"
+      ],
+      "category": "agent",
+      "status": "experimental",
+      "use_cases": [
+        "Strategic decisions (market entry, technology selection, initiative prioritization)",
+        "Operational decisions (implementation approach, vendor selection, architecture choice)",
+        "Decisions under uncertainty (incomplete scenarios, contradictory information, complex trade-offs)",
+        "Agent pipeline closure (final step after research.synthesize, replacing vague responses)"
+      ],
+      "examples": [
+        {
+          "goal": "Should we expand to market X?",
+          "context_items": [
+            {
+              "id": "synthesis",
+              "content": "Market research synthesis indicating strong demand but high regulatory uncertainty...",
+              "type": "research_synthesis"
+            }
+          ],
+          "expected_outputs": {
+            "recommendation": "Proceed with a controlled pilot entry in market X, limited to segment Y",
+            "confidence_level": "medium"
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
     "id": "agent.plan-and-route",
     "version": "0.1.0",
     "name": "Plan and Route",

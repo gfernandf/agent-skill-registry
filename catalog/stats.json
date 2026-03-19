@@ -1,7 +1,7 @@
 {
   "summary": {
-    "capability_count": 102,
-    "skill_count": 36,
+    "capability_count": 104,
+    "skill_count": 37,
     "domain_count": 25,
     "channel_count": 2
   },
@@ -9,8 +9,8 @@
     "by_domain": {
       "text": 10,
       "web": 5,
+      "agent": 4,
       "research": 4,
-      "agent": 3,
       "memory": 3,
       "pdf": 3,
       "doc": 2,
@@ -23,9 +23,9 @@
     },
     "by_channel": {
       "official": 31,
-      "experimental": 5
+      "experimental": 6
     },
-    "average_steps": 2.06,
+    "average_steps": 2.11,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -35,21 +35,21 @@
       "identity": 10,
       "text": 9,
       "model": 8,
+      "agent": 5,
       "ops": 5,
       "policy": 5,
-      "agent": 4,
       "memory": 4,
       "security": 4,
       "web": 4,
       "code": 3,
       "data": 3,
       "email": 2,
+      "eval": 2,
       "image": 2,
       "message": 2,
       "provenance": 2,
       "audio": 1,
       "doc": 1,
-      "eval": 1,
       "fs": 1,
       "pdf": 1,
       "research": 1,
@@ -62,11 +62,11 @@
         "count": 16
       },
       {
-        "id": "doc.chunk",
-        "count": 4
+        "id": "model.output.generate",
+        "count": 5
       },
       {
-        "id": "model.output.generate",
+        "id": "doc.chunk",
         "count": 4
       },
       {
@@ -102,6 +102,10 @@
         "count": 2
       },
       {
+        "id": "eval.output.score",
+        "count": 2
+      },
+      {
         "id": "memory.store",
         "count": 2
       },
@@ -120,6 +124,10 @@
       {
         "id": "text.language.detect",
         "count": 2
+      },
+      {
+        "id": "agent.option.generate",
+        "count": 1
       },
       {
         "id": "agent.route",
@@ -142,7 +150,7 @@
         "count": 1
       },
       {
-        "id": "eval.output.score",
+        "id": "eval.option.score",
         "count": 1
       },
       {
@@ -260,25 +268,29 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 74,
+    "skill_to_capability_edges": 78,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 4
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 36,
-    "capabilities_with_nondefault_metadata": 57,
+    "skills_with_nondefault_metadata": 37,
+    "capabilities_with_nondefault_metadata": 59,
     "top_skill_tags": [
       {
         "id": "research",
         "count": 4
       },
       {
+        "id": "agent",
+        "count": 2
+      },
+      {
         "id": "analysis",
         "count": 2
       },
       {
-        "id": "agent",
-        "count": 1
+        "id": "decision-support",
+        "count": 2
       },
       {
         "id": "assessment",
@@ -301,10 +313,6 @@
         "count": 1
       },
       {
-        "id": "decision-support",
-        "count": 1
-      },
-      {
         "id": "extraction",
         "count": 1
       },
@@ -314,6 +322,10 @@
       },
       {
         "id": "grounding",
+        "count": 1
+      },
+      {
+        "id": "multi-criteria",
         "count": 1
       },
       {
@@ -337,6 +349,14 @@
         "count": 1
       },
       {
+        "id": "reasoning",
+        "count": 1
+      },
+      {
+        "id": "structured-output",
+        "count": 1
+      },
+      {
         "id": "synthesis",
         "count": 1
       },
@@ -351,11 +371,19 @@
         "count": 2
       },
       {
+        "id": "decision-support",
+        "count": 2
+      },
+      {
         "id": "trace",
         "count": 2
       },
       {
         "id": "developer-tools",
+        "count": 1
+      },
+      {
+        "id": "evaluation",
         "count": 1
       },
       {
@@ -371,7 +399,19 @@
         "count": 1
       },
       {
+        "id": "multi-criteria",
+        "count": 1
+      },
+      {
         "id": "observability",
+        "count": 1
+      },
+      {
+        "id": "option-generation",
+        "count": 1
+      },
+      {
+        "id": "planning",
         "count": 1
       },
       {
@@ -380,6 +420,10 @@
       },
       {
         "id": "scaffolding",
+        "count": 1
+      },
+      {
+        "id": "scoring",
         "count": 1
       }
     ]

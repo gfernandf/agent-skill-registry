@@ -1,7 +1,7 @@
 {
   "summary": {
-    "skills_total": 32,
-    "skills_with_metadata_issues": 32,
+    "skills_total": 37,
+    "skills_with_metadata_issues": 35,
     "overlap_alerts": 0,
     "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
@@ -149,6 +149,27 @@
         "missing_use_cases",
         "missing_examples",
         "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "research.extract-findings",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "skill_id": "research.normalize-corpus",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "skill_id": "research.quality-assess",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples"
       ]
     },
     {

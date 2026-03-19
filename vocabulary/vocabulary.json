@@ -83,6 +83,7 @@
     "budget": "Execution cost or token budget",
     "constraint": "Execution constraint",
     "decision": "Structured decision",
+    "option": "Decision or design alternative",
     "output": "Generated output artifact",
     "record": "Structured data record",
     "obligation": "Business or legal obligation",

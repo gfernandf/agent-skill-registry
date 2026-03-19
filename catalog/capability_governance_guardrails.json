@@ -1,14 +1,40 @@
 {
   "summary": {
-    "capabilities_total": 101,
-    "covered_domains": 24,
+    "capabilities_total": 104,
+    "covered_domains": 25,
     "uncovered_domains": 0,
-    "semantic_family_alerts": 9,
+    "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 98
+    "metadata_issues": 101
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
+    {
+      "domain": "agent",
+      "verb": "generate",
+      "capability_ids": [
+        "agent.option.generate",
+        "agent.plan.generate"
+      ],
+      "noun_variants": [
+        "option",
+        "plan"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "eval",
+      "verb": "score",
+      "capability_ids": [
+        "eval.option.score",
+        "eval.output.score"
+      ],
+      "noun_variants": [
+        "option",
+        "output"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
     {
       "domain": "identity",
       "verb": "get",
@@ -137,6 +163,12 @@
       ]
     },
     {
+      "capability_id": "agent.option.generate",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "agent.plan.generate",
       "issues": [
         "missing_tags",
@@ -217,6 +249,12 @@
       "capability_id": "email.send",
       "issues": [
         "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "eval.option.score",
+      "issues": [
         "missing_examples"
       ]
     },
@@ -572,6 +610,13 @@
     },
     {
       "capability_id": "provenance.claim.verify",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "research.source.retrieve",
       "issues": [
         "missing_tags",
         "missing_examples"

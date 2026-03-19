@@ -1,0 +1,80 @@
+id: eval.option.score
+version: 1.0.0
+description: >
+  Evaluate a set of options against weighted criteria and produce a comparative
+  scoring. Each option is scored per-criterion and overall. Returns the ranked
+  list, a comparative summary, and explicit trade-offs between top candidates.
+  Designed for multi-criteria decision analysis where transparency of evaluation
+  matters more than speed.
+
+inputs:
+  options:
+    type: array
+    required: true
+    description: >
+      List of options to evaluate. Each option should have at minimum: id, label,
+      description. May include key_attributes from agent.option.generate.
+
+  criteria:
+    type: array
+    required: false
+    description: >
+      List of evaluation criteria. Each criterion is an object with: name,
+      description, and optional weight (number, default 1.0). If omitted, criteria
+      are inferred from the goal and option attributes.
+
+  goal:
+    type: string
+    required: true
+    description: >
+      The decision goal that gives context for how criteria should be weighted
+      and options evaluated.
+
+  risk_tolerance:
+    type: string
+    required: false
+    description: >
+      Risk appetite: low | medium | high. Influences how uncertainty and
+      downside scenarios are weighted in scoring.
+
+outputs:
+  scored_options:
+    type: array
+    required: true
+    description: >
+      Options with scores. Each entry includes: option_id, overall_score (0-1),
+      per_criterion_scores (object mapping criterion name to score), strengths
+      (array of strings), weaknesses (array of strings).
+
+  criteria_used:
+    type: array
+    required: true
+    description: >
+      Final criteria applied, including any inferred ones. Each with name,
+      description, and weight.
+
+  comparative_summary:
+    type: string
+    required: true
+    description: >
+      Narrative comparison of the top options explaining key differentiators.
+
+  tradeoffs:
+    type: array
+    required: true
+    description: >
+      Explicit trade-offs between top candidates. Each entry names the tension
+      and what is gained/lost.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - decision-support
+    - evaluation
+    - multi-criteria
+    - scoring

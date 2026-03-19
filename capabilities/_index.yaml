@@ -21,3 +21,11 @@ capabilities:
   - id: research.source.retrieve
     status: experimental
     description: Resolve source_ref fields in corpus items to actual text content.
+
+  - id: agent.option.generate
+    status: experimental
+    description: Generate a set of plausible, distinct options for a decision problem.
+
+  - id: eval.option.score
+    status: experimental
+    description: Evaluate options against weighted criteria with comparative scoring and trade-offs.

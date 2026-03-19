@@ -1,5 +1,14 @@
 {
   "skills": {
+    "agent.decide": {
+      "capabilities": [
+        "agent.option.generate",
+        "eval.option.score",
+        "eval.output.score",
+        "model.output.generate"
+      ],
+      "skills": []
+    },
     "agent.plan-and-route": {
       "capabilities": [
         "agent.plan.generate",

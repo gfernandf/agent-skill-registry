@@ -1,0 +1,62 @@
+id: agent.option.generate
+version: 1.0.0
+description: >
+  Generate a set of plausible, distinct options for a given situation or decision
+  problem. Accepts a goal description and optional contextual constraints.
+  Returns 2-5 structured options, each with a label, description, and key
+  attributes. Designed to avoid combinatorial explosion and hallucinated options
+  by grounding generation in the provided context.
+
+inputs:
+  goal:
+    type: string
+    required: true
+    description: >
+      Description of the situation or decision problem for which options are needed.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, constraints, or prior analysis relevant to option
+      generation. May be the output of a synthesis or research phase.
+
+  constraints:
+    type: object
+    required: false
+    description: >
+      Hard constraints that options must respect (budget, time, regulation, etc.).
+
+  max_options:
+    type: number
+    required: false
+    description: >
+      Maximum number of options to generate. Defaults to 4. Hard cap at 6 to
+      prevent combinatorial explosion.
+
+outputs:
+  options:
+    type: array
+    required: true
+    description: >
+      List of generated options. Each option is an object with at minimum: id
+      (short slug), label (human-readable name), description (1-3 sentences),
+      and key_attributes (object with salient properties like cost, risk, speed).
+
+  generation_notes:
+    type: string
+    required: false
+    description: >
+      Brief note on how options were derived and any assumptions made.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - decision-support
+    - planning
+    - option-generation
