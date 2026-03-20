@@ -1,7 +1,7 @@
 {
   "summary": {
-    "skills_total": 37,
-    "skills_with_metadata_issues": 35,
+    "skills_total": 42,
+    "skills_with_metadata_issues": 40,
     "overlap_alerts": 0,
     "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
@@ -32,6 +32,30 @@
       "issues": [
         "missing_use_cases",
         "missing_examples"
+      ]
+    },
+    {
+      "skill_id": "analysis.compare",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples",
+        "missing_classification"
+      ]
+    },
+    {
+      "skill_id": "analysis.decompose",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples",
+        "missing_classification"
+      ]
+    },
+    {
+      "skill_id": "analysis.risk-assess",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples",
+        "missing_classification"
       ]
     },
     {
@@ -86,6 +110,14 @@
         "missing_use_cases",
         "missing_examples",
         "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "eval.validate",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples",
+        "missing_classification"
       ]
     },
     {
@@ -179,6 +211,14 @@
         "missing_use_cases",
         "missing_examples",
         "missing_tags"
+      ]
+    },
+    {
+      "skill_id": "task.frame",
+      "channel": "experimental",
+      "issues": [
+        "missing_examples",
+        "missing_classification"
       ]
     },
     {

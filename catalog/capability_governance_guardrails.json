@@ -1,15 +1,13 @@
 {
   "summary": {
-    "capabilities_total": 106,
-    "covered_domains": 26,
-    "uncovered_domains": 1,
+    "capabilities_total": 108,
+    "covered_domains": 27,
+    "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 103
+    "metadata_issues": 105
   },
-  "uncovered_domains": [
-    "analysis"
-  ],
+  "uncovered_domains": [],
   "semantic_family_alerts": [
     {
       "domain": "agent",
@@ -181,6 +179,18 @@
       "capability_id": "agent.route",
       "issues": [
         "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "analysis.risk.extract",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "analysis.split",
+      "issues": [
         "missing_examples"
       ]
     },
