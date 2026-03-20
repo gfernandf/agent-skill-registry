@@ -1,24 +1,24 @@
 {
   "summary": {
     "capability_count": 108,
-    "skill_count": 42,
+    "skill_count": 34,
     "domain_count": 27,
     "channel_count": 2
   },
   "skills": {
     "by_domain": {
-      "text": 10,
+      "text": 5,
       "web": 5,
       "analysis": 4,
-      "agent": 3,
       "memory": 3,
       "pdf": 3,
-      "research": 3,
-      "doc": 2,
+      "agent": 2,
+      "research": 2,
       "audio": 1,
       "code": 1,
       "data": 1,
       "decision": 1,
+      "doc": 1,
       "email": 1,
       "eval": 1,
       "image": 1,
@@ -26,10 +26,10 @@
       "task": 1
     },
     "by_channel": {
-      "official": 31,
-      "experimental": 11
+      "official": 24,
+      "experimental": 10
     },
-    "average_steps": 2.26,
+    "average_steps": 2.56,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -65,7 +65,7 @@
     "most_used": [
       {
         "id": "text.summarize",
-        "count": 16
+        "count": 15
       },
       {
         "id": "eval.output.score",
@@ -73,18 +73,10 @@
       },
       {
         "id": "text.classify",
-        "count": 6
+        "count": 5
       },
       {
         "id": "data.schema.validate",
-        "count": 4
-      },
-      {
-        "id": "doc.chunk",
-        "count": 4
-      },
-      {
-        "id": "model.output.generate",
         "count": 4
       },
       {
@@ -92,7 +84,11 @@
         "count": 4
       },
       {
-        "id": "agent.plan.generate",
+        "id": "doc.chunk",
+        "count": 3
+      },
+      {
+        "id": "model.output.generate",
         "count": 3
       },
       {
@@ -104,16 +100,16 @@
         "count": 3
       },
       {
-        "id": "text.keyword.extract",
-        "count": 3
-      },
-      {
         "id": "web.fetch",
         "count": 3
       },
       {
         "id": "web.page.extract",
         "count": 3
+      },
+      {
+        "id": "agent.plan.generate",
+        "count": 2
       },
       {
         "id": "agent.route",
@@ -140,7 +136,7 @@
         "count": 2
       },
       {
-        "id": "text.entity.extract",
+        "id": "text.keyword.extract",
         "count": 2
       },
       {
@@ -204,7 +200,7 @@
         "count": 1
       },
       {
-        "id": "text.template",
+        "id": "text.entity.extract",
         "count": 1
       },
       {
@@ -285,26 +281,27 @@
       "task.priority.classify",
       "task.sla.monitor",
       "task.state.transition",
+      "text.template",
       "video.frame.extract",
       "web.source.verify"
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 95,
+    "skill_to_capability_edges": 87,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 5
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 42,
+    "skills_with_nondefault_metadata": 34,
     "capabilities_with_nondefault_metadata": 63,
     "top_skill_tags": [
       {
         "id": "analysis",
-        "count": 4
+        "count": 3
       },
       {
         "id": "research",
-        "count": 4
+        "count": 3
       },
       {
         "id": "agent",
@@ -328,10 +325,6 @@
       },
       {
         "id": "assumptions",
-        "count": 1
-      },
-      {
-        "id": "claims",
         "count": 1
       },
       {
@@ -367,15 +360,7 @@
         "count": 1
       },
       {
-        "id": "extraction",
-        "count": 1
-      },
-      {
         "id": "failure-modes",
-        "count": 1
-      },
-      {
-        "id": "findings",
         "count": 1
       },
       {

@@ -65,21 +65,21 @@ outputs:
 
   objectives:
     type: array
-    required: true
+    required: false
     description: >
       Explicit objectives extracted or inferred from the task. Each objective
       is a string stating what must be achieved.
 
   constraints_extracted:
     type: object
-    required: true
+    required: false
     description: >
       Structured constraints: explicit ones from input plus inferred ones.
       Fields may include budget, time, regulation, resources, scope.
 
   information_needed:
     type: array
-    required: true
+    required: false
     description: >
       What information appears necessary to solve the task well. Each item
       describes a gap and optionally suggests how to fill it.
@@ -144,10 +144,7 @@ steps:
       context: inputs.context
       hints: inputs.goal_hint
     output:
-      problem_statement: outputs.problem_statement
-      objectives: outputs.objectives
-      constraints: outputs.constraints_extracted
-      information_needed: outputs.information_needed
+      text: outputs.problem_statement
 
   # ── Step 3: Propose approach ──────────────────────────────────────────────
   # Given task type, objectives, and constraints, suggest a general approach.
@@ -157,9 +154,6 @@ steps:
       objective: outputs.problem_statement
       context:
         task_type: outputs.task_type
-        objectives: outputs.objectives
-        constraints: outputs.constraints_extracted
-        information_needed: outputs.information_needed
     output:
       plan: outputs.recommended_approach
 
@@ -168,9 +162,9 @@ steps:
   - id: suggest_skills
     uses: agent.route
     input:
-      task_type: outputs.task_type
-      objectives: outputs.objectives
-      approach: outputs.recommended_approach
+      input:
+        task_type: outputs.task_type
+        approach: outputs.recommended_approach
     output:
       route: outputs.suggested_next_skills
 

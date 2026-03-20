@@ -7,12 +7,6 @@
       ],
       "skills": []
     },
-    "agent.plan-from-objective": {
-      "capabilities": [
-        "agent.plan.generate"
-      ],
-      "skills": []
-    },
     "agent.trace": {
       "capabilities": [
         "data.schema.validate",
@@ -90,12 +84,6 @@
       ],
       "skills": []
     },
-    "doc.chunk-text": {
-      "capabilities": [
-        "doc.chunk"
-      ],
-      "skills": []
-    },
     "email.read-summary": {
       "capabilities": [
         "email.read",
@@ -162,12 +150,6 @@
       ],
       "skills": []
     },
-    "research.extract-findings": {
-      "capabilities": [
-        "model.output.generate"
-      ],
-      "skills": []
-    },
     "research.normalize-corpus": {
       "capabilities": [
         "model.output.generate",
@@ -200,12 +182,6 @@
       ],
       "skills": []
     },
-    "text.classify-input": {
-      "capabilities": [
-        "text.classify"
-      ],
-      "skills": []
-    },
     "text.detect-language-and-classify": {
       "capabilities": [
         "text.classify",
@@ -220,24 +196,6 @@
       ],
       "skills": []
     },
-    "text.extract-entities": {
-      "capabilities": [
-        "text.entity.extract"
-      ],
-      "skills": []
-    },
-    "text.extract-keywords": {
-      "capabilities": [
-        "text.keyword.extract"
-      ],
-      "skills": []
-    },
-    "text.hello-world": {
-      "capabilities": [
-        "text.template"
-      ],
-      "skills": []
-    },
     "text.keyword-summary": {
       "capabilities": [
         "text.extract",
@@ -249,12 +207,6 @@
     "text.language-summary": {
       "capabilities": [
         "text.language.detect",
-        "text.summarize"
-      ],
-      "skills": []
-    },
-    "text.simple-summarize": {
-      "capabilities": [
         "text.summarize"
       ],
       "skills": []

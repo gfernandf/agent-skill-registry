@@ -65,56 +65,6 @@
     }
   },
   {
-    "id": "agent.plan-from-objective",
-    "version": "0.1.0",
-    "name": "Plan From Objective",
-    "description": "Generate a plan from an objective.",
-    "channel": "official",
-    "domain": "agent",
-    "slug": "plan-from-objective",
-    "file": "skills/official/agent/plan-from-objective/skill.yaml",
-    "inputs": {
-      "objective": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "outputs": {
-      "plan": {
-        "type": "object",
-        "required": true
-      }
-    },
-    "steps": [
-      {
-        "id": "generate_plan",
-        "uses": "agent.plan.generate",
-        "input": {
-          "objective": "inputs.objective"
-        },
-        "output": {
-          "plan": "outputs.plan"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "agent.plan.generate"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "procedure",
-        "invocation": "direct",
-        "effect_mode": "enrich"
-      }
-    }
-  },
-  {
     "id": "agent.trace",
     "version": "0.1.0",
     "name": "Agent Trace",
@@ -1471,7 +1421,7 @@
           "scored_options": "vars.scored_options",
           "criteria_used": "outputs.criteria_used",
           "comparative_summary": "outputs.evaluation_summary",
-          "tradeoffs": "vars.tradeoffs"
+          "tradeoffs": "outputs.tradeoffs"
         }
       },
       {
@@ -1480,7 +1430,7 @@
         "input": {
           "scored_options": "vars.scored_options",
           "analyzed_options": "vars.analyzed_options",
-          "tradeoffs": "vars.tradeoffs",
+          "tradeoffs": "outputs.tradeoffs",
           "goal": "inputs.goal",
           "constraints": "inputs.constraints",
           "risk_tolerance": "inputs.risk_tolerance"
@@ -1657,66 +1607,6 @@
     }
   },
   {
-    "id": "doc.chunk-text",
-    "version": "0.1.0",
-    "name": "Chunk Text",
-    "description": "Split text into chunks.",
-    "channel": "official",
-    "domain": "doc",
-    "slug": "chunk-text",
-    "file": "skills/official/doc/chunk-text/skill.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      },
-      "chunk_size": {
-        "type": "number",
-        "required": false
-      },
-      "overlap": {
-        "type": "number",
-        "required": false
-      }
-    },
-    "outputs": {
-      "chunks": {
-        "type": "array",
-        "required": true
-      }
-    },
-    "steps": [
-      {
-        "id": "chunk",
-        "uses": "doc.chunk",
-        "input": {
-          "text": "inputs.text",
-          "chunk_size": "inputs.chunk_size",
-          "overlap": "inputs.overlap"
-        },
-        "output": {
-          "chunks": "outputs.chunks"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "doc.chunk"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "read_only"
-      }
-    }
-  },
-  {
     "id": "email.read-summary",
     "version": "0.1.0",
     "name": "Read Email Summary",
@@ -1820,27 +1710,27 @@
     "outputs": {
       "checks_performed": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "All checks that were run, each with: name, description, result (pass | fail | warning), and detail.\n"
       },
       "passed_checks": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Checks that passed.\n"
       },
       "failed_checks": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Checks that failed, with detail on what was wrong.\n"
       },
       "warnings": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Non-blocking issues detected.\n"
       },
       "coverage_gaps": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Key areas or dimensions that are missing or underrepresented.\n"
       },
       "consistency_issues": {
@@ -1855,7 +1745,7 @@
       },
       "recommended_fixes": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Actionable fix suggestions for each failed check or warning.\n"
       },
       "validation_passed": {
@@ -1873,7 +1763,7 @@
           "schema": "inputs.checklist"
         },
         "output": {
-          "valid": "vars.structure_valid",
+          "valid": "outputs.validation_passed",
           "errors": "vars.structure_errors"
         }
       },
@@ -1891,8 +1781,8 @@
         },
         "output": {
           "valid": "vars.consistency_valid",
-          "issues": "vars.consistency_issues",
-          "rationale": "vars.consistency_rationale"
+          "issues": "outputs.consistency_issues",
+          "rationale": "outputs.validation_summary"
         }
       },
       {
@@ -2454,116 +2344,6 @@
     }
   },
   {
-    "id": "research.extract-findings",
-    "version": "0.1.0",
-    "name": "Extract Findings",
-    "description": "Extract structured analytical findings from a normalized corpus of research items. For each item, identifies claims, evidence signals, risks, opportunities, and uncertainty markers. Also extracts keywords and classifies each item by dominant theme. Output is a findings_by_item structure suitable for downstream synthesis, conflict detection, and thematic grouping.\n",
-    "channel": "experimental",
-    "domain": "research",
-    "slug": "extract-findings",
-    "file": "skills/experimental/research/extract-findings/skill.yaml",
-    "inputs": {
-      "normalized_items": {
-        "type": "array",
-        "required": true,
-        "description": "Normalized items as produced by research.normalize-corpus. Each item must include at minimum: id, content, type.\n"
-      },
-      "topic": {
-        "type": "string",
-        "required": false,
-        "description": "Optional topic or research question anchoring the extraction. When provided, findings are prioritized relative to this topic.\n"
-      },
-      "goal": {
-        "type": "string",
-        "required": false,
-        "description": "Optional goal describing the intended use of the synthesis (e.g. \"evaluate expansion into market X\", \"assess regulatory risk\"). Influences claim relevance scoring.\n"
-      },
-      "focus": {
-        "type": "string",
-        "required": false,
-        "description": "Optional extraction focus hint. Examples: \"prioritize risks\", \"prioritize contradictions\", \"emphasize opportunities\".\n"
-      },
-      "max_detail": {
-        "type": "string",
-        "required": false,
-        "description": "Extraction depth: brief | standard | detailed. Defaults to standard."
-      }
-    },
-    "outputs": {
-      "findings_by_item": {
-        "type": "array",
-        "required": true,
-        "description": "Array of per-item findings objects. Each entry includes: item_id, item_type, claims (array of extracted claims with evidence_strength weak|moderate|strong), risks (array), opportunities (array), uncertainty_signals (array of phrases or areas that are unclear or weakly supported), dominant_theme, and keywords.\n"
-      },
-      "extraction_stats": {
-        "type": "object",
-        "required": true,
-        "description": "Summary of the extraction pass: items_processed, total_claims, items_with_risks, items_with_opportunities, items_with_uncertainty, dominant_themes (array).\n"
-      }
-    },
-    "steps": [
-      {
-        "id": "extract_structured_findings",
-        "uses": "model.output.generate",
-        "input": {
-          "instruction": "For each normalized item, extract structured analytical findings anchored to the provided topic and goal. For each item produce: item_id, item_type, claims (each with text and evidence_strength: weak|moderate|strong), risks (array of strings), opportunities (array of strings), uncertainty_signals (areas unclear or weakly supported), dominant_theme, and keywords. Apply focus hint if provided. Respect max_detail level. Do not fabricate claims not supported by the item content. Also produce extraction_stats: items_processed, total_claims, items_with_risks, items_with_opportunities, items_with_uncertainty, dominant_themes.\n",
-          "context_items": "inputs.normalized_items",
-          "output_schema": {
-            "type": "object",
-            "properties": {
-              "findings_by_item": {
-                "type": "array"
-              },
-              "extraction_stats": {
-                "type": "object"
-              }
-            },
-            "required": [
-              "findings_by_item",
-              "extraction_stats"
-            ]
-          },
-          "detail_level": "inputs.max_detail",
-          "constraints": {
-            "no_fabrication": true,
-            "evidence_required": true
-          }
-        },
-        "output": {
-          "output.findings_by_item": "outputs.findings_by_item",
-          "output.extraction_stats": "outputs.extraction_stats",
-          "warnings": "vars.extraction_warnings"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "model.output.generate"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [
-        "research",
-        "extraction",
-        "findings",
-        "claims",
-        "analysis"
-      ],
-      "category": "research",
-      "status": "experimental",
-      "use_cases": [
-        "Extract structured claims and risks from research documents",
-        "Prepare per-item findings for downstream synthesis or comparison",
-        "Identify uncertainty signals in a research corpus before making decisions"
-      ],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "read_only"
-      }
-    }
-  },
-  {
     "id": "research.normalize-corpus",
     "version": "0.1.0",
     "name": "Normalize Corpus",
@@ -3018,17 +2798,17 @@
       },
       "objectives": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "Explicit objectives extracted or inferred from the task. Each objective is a string stating what must be achieved.\n"
       },
       "constraints_extracted": {
         "type": "object",
-        "required": true,
+        "required": false,
         "description": "Structured constraints: explicit ones from input plus inferred ones. Fields may include budget, time, regulation, resources, scope.\n"
       },
       "information_needed": {
         "type": "array",
-        "required": true,
+        "required": false,
         "description": "What information appears necessary to solve the task well. Each item describes a gap and optionally suggests how to fill it.\n"
       },
       "recommended_approach": {
@@ -3091,10 +2871,7 @@
           "hints": "inputs.goal_hint"
         },
         "output": {
-          "problem_statement": "outputs.problem_statement",
-          "objectives": "outputs.objectives",
-          "constraints": "outputs.constraints_extracted",
-          "information_needed": "outputs.information_needed"
+          "text": "outputs.problem_statement"
         }
       },
       {
@@ -3103,10 +2880,7 @@
         "input": {
           "objective": "outputs.problem_statement",
           "context": {
-            "task_type": "outputs.task_type",
-            "objectives": "outputs.objectives",
-            "constraints": "outputs.constraints_extracted",
-            "information_needed": "outputs.information_needed"
+            "task_type": "outputs.task_type"
           }
         },
         "output": {
@@ -3117,9 +2891,10 @@
         "id": "suggest_skills",
         "uses": "agent.route",
         "input": {
-          "task_type": "outputs.task_type",
-          "objectives": "outputs.objectives",
-          "approach": "outputs.recommended_approach"
+          "input": {
+            "task_type": "outputs.task_type",
+            "approach": "outputs.recommended_approach"
+          }
         },
         "output": {
           "route": "outputs.suggested_next_skills"
@@ -3150,66 +2925,6 @@
       ],
       "examples": [],
       "classification": null
-    }
-  },
-  {
-    "id": "text.classify-input",
-    "version": "0.1.0",
-    "name": "Classify Input",
-    "description": "Classify text input into a label.",
-    "channel": "official",
-    "domain": "text",
-    "slug": "classify-input",
-    "file": "skills/official/text/classify-input/skill.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      },
-      "labels": {
-        "type": "array",
-        "required": false
-      }
-    },
-    "outputs": {
-      "label": {
-        "type": "string",
-        "required": true
-      },
-      "confidence": {
-        "type": "number",
-        "required": false
-      }
-    },
-    "steps": [
-      {
-        "id": "classify",
-        "uses": "text.classify",
-        "input": {
-          "text": "inputs.text",
-          "labels": "inputs.labels"
-        },
-        "output": {
-          "label": "outputs.label",
-          "confidence": "outputs.confidence"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "text.classify"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "read_only"
-      }
     }
   },
   {
@@ -3353,159 +3068,6 @@
     }
   },
   {
-    "id": "text.extract-entities",
-    "version": "0.1.0",
-    "name": "Extract Entities",
-    "description": "Extract named entities from text.",
-    "channel": "official",
-    "domain": "text",
-    "slug": "extract-entities",
-    "file": "skills/official/text/extract-entities/skill.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "outputs": {
-      "entities": {
-        "type": "array",
-        "required": true
-      }
-    },
-    "steps": [
-      {
-        "id": "extract_entities",
-        "uses": "text.entity.extract",
-        "input": {
-          "text": "inputs.text"
-        },
-        "output": {
-          "entities": "outputs.entities"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "text.entity.extract"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "read_only"
-      }
-    }
-  },
-  {
-    "id": "text.extract-keywords",
-    "version": "0.1.0",
-    "name": "Extract Keywords",
-    "description": "Extract keywords from text.",
-    "channel": "official",
-    "domain": "text",
-    "slug": "extract-keywords",
-    "file": "skills/official/text/extract-keywords/skill.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "outputs": {
-      "keywords": {
-        "type": "array",
-        "required": true
-      }
-    },
-    "steps": [
-      {
-        "id": "extract_keywords",
-        "uses": "text.keyword.extract",
-        "input": {
-          "text": "inputs.text"
-        },
-        "output": {
-          "keywords": "outputs.keywords"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "text.keyword.extract"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "read_only"
-      }
-    }
-  },
-  {
-    "id": "text.hello-world",
-    "version": "0.1.0",
-    "name": "Hello World",
-    "description": "Minimal example skill demonstrating template rendering.",
-    "channel": "official",
-    "domain": "text",
-    "slug": "hello-world",
-    "file": "skills/official/text/hello-world/skill.yaml",
-    "inputs": {
-      "name": {
-        "type": "string",
-        "description": "Name to greet."
-      }
-    },
-    "outputs": {
-      "greeting": {
-        "type": "string",
-        "description": "Generated greeting message."
-      }
-    },
-    "steps": [
-      {
-        "id": "render_greeting",
-        "uses": "text.template",
-        "input": {
-          "template": "Hello {{name}}",
-          "variables": {
-            "name": "inputs.name"
-          }
-        },
-        "output": {
-          "text": "outputs.greeting"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "text.template"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "direct",
-        "effect_mode": "enrich"
-      }
-    }
-  },
-  {
     "id": "text.keyword-summary",
     "version": "0.1.0",
     "name": "Keyword and Summary Extraction",
@@ -3643,60 +3205,6 @@
         "role": "procedure",
         "invocation": "direct",
         "effect_mode": "enrich"
-      }
-    }
-  },
-  {
-    "id": "text.simple-summarize",
-    "version": "0.1.0",
-    "name": "Simple Summarize",
-    "description": "Simple summarization pipeline.",
-    "channel": "official",
-    "domain": "text",
-    "slug": "simple-summarize",
-    "file": "skills/official/text/simple-summarize/skill.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "outputs": {
-      "summary": {
-        "type": "string",
-        "required": true
-      }
-    },
-    "steps": [
-      {
-        "id": "summarize",
-        "uses": "text.summarize",
-        "input": {
-          "text": "inputs.text"
-        },
-        "output": {
-          "summary": "outputs.summary"
-        }
-      }
-    ],
-    "uses_capabilities": [
-      "text.summarize"
-    ],
-    "uses_skills": [],
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
-      "classification": {
-        "role": "utility",
-        "invocation": "both",
-        "effect_mode": "enrich",
-        "attach_targets": [
-          "output",
-          "transcript"
-        ]
       }
     }
   },

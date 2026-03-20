@@ -180,7 +180,7 @@ steps:
       scored_options: vars.scored_options
       criteria_used: outputs.criteria_used
       comparative_summary: outputs.evaluation_summary
-      tradeoffs: vars.tradeoffs
+      tradeoffs: outputs.tradeoffs
 
   # ── Step 4: Select + justify recommendation ───────────────────────────────
   # Core decision step. Takes qualitative analysis + quantitative scores and
@@ -191,7 +191,7 @@ steps:
     input:
       scored_options: vars.scored_options
       analyzed_options: vars.analyzed_options
-      tradeoffs: vars.tradeoffs
+      tradeoffs: outputs.tradeoffs
       goal: inputs.goal
       constraints: inputs.constraints
       risk_tolerance: inputs.risk_tolerance
