@@ -479,6 +479,101 @@
     }
   },
   {
+    "id": "decision.option.justify",
+    "version": "1.0.0",
+    "description": "Select a final recommendation from evaluated options and produce a structured justification. Consumes qualitative analysis (from eval.option.analyze) and quantitative scores (from eval.option.score) to make an explicit, committed choice. Outputs the recommendation, justification narrative, failure modes, uncertainties, confidence assessment, and concrete next steps.\nThis capability is the \"closing\" step — it resolves ambiguity into action. It must never hedge with \"it depends\" or \"consider both\".\n",
+    "file": "capabilities/decision.option.justify.yaml",
+    "inputs": {
+      "scored_options": {
+        "type": "array",
+        "required": true,
+        "description": "Options with quantitative scores from eval.option.score. Each entry includes option_id, overall_score, per_criterion_scores, strengths, weaknesses.\n"
+      },
+      "analyzed_options": {
+        "type": "array",
+        "required": true,
+        "description": "Options with qualitative analysis from eval.option.analyze. Each entry includes option_id, pros, cons, risks, assumptions.\n"
+      },
+      "tradeoffs": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit trade-offs between top candidates from eval.option.score.\n"
+      },
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "The original decision goal for contextual grounding.\n"
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Hard constraints the decision must respect (budget, time, regulation).\n"
+      },
+      "risk_tolerance": {
+        "type": "string",
+        "required": false,
+        "description": "Risk appetite: low | medium | high. Modulates how uncertainty and downside scenarios influence the final selection.\n"
+      }
+    },
+    "outputs": {
+      "recommendation": {
+        "type": "string",
+        "required": true,
+        "description": "The final recommendation. Clear, concrete, actionable. Never hedged.\n"
+      },
+      "alternatives_considered": {
+        "type": "array",
+        "required": true,
+        "description": "All options that were evaluated, with a brief note on why each was or was not selected.\n"
+      },
+      "confidence_score": {
+        "type": "number",
+        "required": true,
+        "description": "Numeric confidence in the recommendation (0.0-1.0). Calibrated: 0.0-0.3 low, 0.3-0.6 medium, 0.6-0.9 high, 0.9-1.0 very high.\n"
+      },
+      "confidence_level": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable confidence: low | medium | high.\n"
+      },
+      "uncertainties": {
+        "type": "array",
+        "required": true,
+        "description": "What is unknown or weakly supported that could change the outcome.\n"
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Concrete conditions under which the recommendation could fail. Specific, not generic.\n"
+      },
+      "next_steps": {
+        "type": "array",
+        "required": true,
+        "description": "Concrete follow-up actions: validations, pilots, execution steps. Prefers action over \"more analysis\".\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "3-6 paragraph narrative of the decision suitable for direct human consumption. Includes what was decided, why, key trade-offs, risks, and next steps.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "decision-support",
+        "justification",
+        "recommendation"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "doc.chunk",
     "version": "1.0.0",
     "description": "Split a document or text into chunks.",
@@ -588,6 +683,56 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "eval.option.analyze",
+    "version": "1.0.0",
+    "description": "Perform qualitative analysis of each option in a decision set. For every option, identify pros, cons, risks, and underlying assumptions. Does NOT assign numeric scores — that is the responsibility of eval.option.score. This capability produces the structured qualitative evidence that scoring and justification steps consume downstream.\n",
+    "file": "capabilities/eval.option.analyze.yaml",
+    "inputs": {
+      "options": {
+        "type": "array",
+        "required": true,
+        "description": "List of options to analyze. Each option should have at minimum: id, label, description. May include key_attributes from agent.option.generate.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, prior analysis, or domain knowledge relevant to the analysis. Grounds the pros/cons in evidence rather than speculation.\n"
+      },
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "The decision goal that frames which pros, cons, and risks matter.\n"
+      }
+    },
+    "outputs": {
+      "analyzed_options": {
+        "type": "array",
+        "required": true,
+        "description": "Options enriched with qualitative analysis. Each entry includes: option_id, pros (array of strings), cons (array of strings), risks (array of objects with description and severity), assumptions (array of strings — premises that must hold for this option to work as expected).\n"
+      },
+      "analysis_notes": {
+        "type": "string",
+        "required": false,
+        "description": "Brief note on methodology, gaps in available evidence, or caveats about the analysis.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "decision-support",
+        "evaluation",
+        "qualitative-analysis"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
       "idempotent": true
     }
   },

@@ -6,13 +6,15 @@ description: >
   structured, justified decision under uncertainty. Closes the gap between
   "analysis" and "actionable decision".
 
-  Pipeline: (1) generate options if not provided, (2) evaluate options against
-  criteria with comparative scoring, (3) select a recommendation with
-  justification, failure modes, and next steps, (4) self-assess decision quality.
+  Pipeline: (1) generate options if not provided, (2) qualitative analysis of
+  pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative
+  scoring, (4) select recommendation with structured justification, failure
+  modes, and next steps, (5) self-assess decision quality.
 
   Designed to be observable at each step. Each intermediate result is inspectable
   via agent.trace. Favors a slower, transparent pipeline over a single opaque
-  LLM call.
+  LLM call. Zero uses of model.output.generate — every step is a dedicated,
+  named capability.
 
   Typical upstream: analysis.synthesize output as context_items.
   Typical downstream: task planning, human review, or execution.
@@ -152,7 +154,20 @@ steps:
     output:
       options: vars.generated_options
 
-  # ── Step 2: Evaluate options against criteria ─────────────────────────────
+  # ── Step 2: Qualitative analysis ──────────────────────────────────────────
+  # For each option, identify pros, cons, risks, and assumptions. No scoring
+  # here — pure qualitative evidence gathering.
+  - id: analyze_options
+    uses: eval.option.analyze
+    input:
+      options: vars.generated_options
+      context: inputs.context_items
+      goal: inputs.goal
+    output:
+      analyzed_options: vars.analyzed_options
+      analysis_notes: vars.analysis_notes
+
+  # ── Step 3: Quantitative scoring ─────────────────────────────────────────
   # Multi-criteria scoring. Criteria are inferred from goal/context if not
   # explicit. Each option gets per-criterion scores, strengths, weaknesses.
   - id: evaluate_options
@@ -165,119 +180,32 @@ steps:
       scored_options: vars.scored_options
       criteria_used: outputs.criteria_used
       comparative_summary: outputs.evaluation_summary
-      tradeoffs: outputs.tradeoffs
+      tradeoffs: vars.tradeoffs
 
-  # ── Step 3: Select recommendation + justify ───────────────────────────────
-  # Core decision step. Takes scored options and produces the final
-  # recommendation with justification, failure modes, uncertainties, and
-  # next steps. This is the step where the skill "closes" — no hedging.
-  - id: select_decision
-    uses: model.output.generate
+  # ── Step 4: Select + justify recommendation ───────────────────────────────
+  # Core decision step. Takes qualitative analysis + quantitative scores and
+  # produces the final recommendation with justification, failure modes,
+  # uncertainties, and next steps. This is where the skill "closes" — no hedging.
+  - id: justify_decision
+    uses: decision.option.justify
     input:
-      instruction: >
-        You are a decision engine. You receive scored options with comparative
-        analysis and must produce a FINAL DECISION — not a summary, not a
-        re-ranking, but a clear, committed recommendation.
-
-        Rules:
-        - Select exactly ONE option (or a qualified variant) as the recommendation.
-        - The recommendation field must be a concrete, actionable statement.
-          NEVER output "it depends", "consider both", or similar hedges.
-        - If confidence is low, still decide — but flag it clearly.
-        - failure_modes: list 2-5 concrete conditions under which this decision
-          could fail. Be specific, not generic.
-        - uncertainties: list what is unknown or weakly supported that could
-          change the outcome. Be honest.
-        - next_steps: list 2-5 concrete follow-up actions. Prefer validations
-          and pilots over "more analysis".
-        - confidence_score: calibrate honestly.
-          0.0-0.3 = low (major unknowns, weak input)
-          0.3-0.6 = medium (reasonable input, some gaps)
-          0.6-0.9 = high (strong input, clear winner)
-          0.9-1.0 = very high (overwhelming evidence)
-        - confidence_level: low if score < 0.35, medium if 0.35-0.65, high if > 0.65.
-        - human_readable: 3-6 paragraph narrative of the decision, readable as
-          a standalone memo. Include: what was decided, why, key trade-offs,
-          risks, and next steps.
-        - Modulate aggressiveness by risk_tolerance: low = prefer safer options
-          even if suboptimal; high = prefer high-reward options accepting downside.
-      context_items:
-        - id: scored_options
-          content: vars.scored_options
-          type: evaluation_result
-        - id: evaluation_summary
-          content: outputs.evaluation_summary
-          type: comparative_analysis
-        - id: tradeoffs
-          content: outputs.tradeoffs
-          type: tradeoff_analysis
-        - id: original_context
-          content: inputs.context_items
-          type: background
-      output_schema:
-        type: object
-        properties:
-          recommendation:
-            type: string
-          alternatives_considered:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: string
-                label:
-                  type: string
-                selected:
-                  type: boolean
-          confidence_score:
-            type: number
-            minimum: 0
-            maximum: 1
-          confidence_level:
-            type: string
-            enum:
-              - low
-              - medium
-              - high
-          uncertainties:
-            type: array
-            items:
-              type: string
-          failure_modes:
-            type: array
-            items:
-              type: string
-          next_steps:
-            type: array
-            items:
-              type: string
-          human_readable:
-            type: string
-        required:
-          - recommendation
-          - alternatives_considered
-          - confidence_score
-          - confidence_level
-          - uncertainties
-          - failure_modes
-          - next_steps
-          - human_readable
-      constraints:
-        goal: inputs.goal
-        risk_tolerance: inputs.risk_tolerance
-        no_fabrication: true
+      scored_options: vars.scored_options
+      analyzed_options: vars.analyzed_options
+      tradeoffs: vars.tradeoffs
+      goal: inputs.goal
+      constraints: inputs.constraints
+      risk_tolerance: inputs.risk_tolerance
     output:
-      output.recommendation: outputs.recommendation
-      output.alternatives_considered: outputs.alternatives_considered
-      output.confidence_score: outputs.confidence_score
-      output.confidence_level: outputs.confidence_level
-      output.uncertainties: outputs.uncertainties
-      output.failure_modes: outputs.failure_modes
-      output.next_steps: outputs.next_steps
-      output.human_readable: outputs.human_readable
+      recommendation: outputs.recommendation
+      alternatives_considered: outputs.alternatives_considered
+      confidence_score: outputs.confidence_score
+      confidence_level: outputs.confidence_level
+      uncertainties: outputs.uncertainties
+      failure_modes: outputs.failure_modes
+      next_steps: outputs.next_steps
+      human_readable: outputs.human_readable
 
-  # ── Step 4: Self-assess decision quality ──────────────────────────────────
+  # ── Step 5: Self-assess decision quality ──────────────────────────────────
   # Independent quality gate. Evaluates the decision process itself, not
   # the decision content. Catches low-input, inconsistent, or poorly
   # justified decisions.

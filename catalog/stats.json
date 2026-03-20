@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 104,
+    "capability_count": 106,
     "skill_count": 37,
     "domain_count": 27,
     "channel_count": 2
@@ -27,7 +27,7 @@
       "official": 31,
       "experimental": 6
     },
-    "average_steps": 2.11,
+    "average_steps": 2.14,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -45,12 +45,13 @@
       "web": 4,
       "code": 3,
       "data": 3,
+      "eval": 3,
       "email": 2,
-      "eval": 2,
       "image": 2,
       "message": 2,
       "provenance": 2,
       "audio": 1,
+      "decision": 1,
       "doc": 1,
       "fs": 1,
       "pdf": 1,
@@ -64,11 +65,11 @@
         "count": 16
       },
       {
-        "id": "model.output.generate",
-        "count": 5
+        "id": "doc.chunk",
+        "count": 4
       },
       {
-        "id": "doc.chunk",
+        "id": "model.output.generate",
         "count": 4
       },
       {
@@ -148,7 +149,15 @@
         "count": 1
       },
       {
+        "id": "decision.option.justify",
+        "count": 1
+      },
+      {
         "id": "email.read",
+        "count": 1
+      },
+      {
+        "id": "eval.option.analyze",
         "count": 1
       },
       {
@@ -270,13 +279,13 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 78,
+    "skill_to_capability_edges": 79,
     "skill_to_skill_edges": 0,
-    "max_capabilities_per_skill": 4
+    "max_capabilities_per_skill": 5
   },
   "metadata": {
     "skills_with_nondefault_metadata": 37,
-    "capabilities_with_nondefault_metadata": 59,
+    "capabilities_with_nondefault_metadata": 61,
     "top_skill_tags": [
       {
         "id": "research",
@@ -369,11 +378,15 @@
     ],
     "top_capability_tags": [
       {
+        "id": "decision-support",
+        "count": 4
+      },
+      {
         "id": "cognitive-unit",
         "count": 2
       },
       {
-        "id": "decision-support",
+        "id": "evaluation",
         "count": 2
       },
       {
@@ -385,11 +398,11 @@
         "count": 1
       },
       {
-        "id": "evaluation",
+        "id": "governance",
         "count": 1
       },
       {
-        "id": "governance",
+        "id": "justification",
         "count": 1
       },
       {
@@ -417,7 +430,15 @@
         "count": 1
       },
       {
+        "id": "qualitative-analysis",
+        "count": 1
+      },
+      {
         "id": "reasoning",
+        "count": 1
+      },
+      {
+        "id": "recommendation",
         "count": 1
       },
       {

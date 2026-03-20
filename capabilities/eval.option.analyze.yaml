@@ -1,0 +1,58 @@
+id: eval.option.analyze
+version: 1.0.0
+description: >
+  Perform qualitative analysis of each option in a decision set. For every
+  option, identify pros, cons, risks, and underlying assumptions. Does NOT
+  assign numeric scores — that is the responsibility of eval.option.score.
+  This capability produces the structured qualitative evidence that scoring
+  and justification steps consume downstream.
+
+inputs:
+  options:
+    type: array
+    required: true
+    description: >
+      List of options to analyze. Each option should have at minimum: id, label,
+      description. May include key_attributes from agent.option.generate.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, prior analysis, or domain knowledge relevant to
+      the analysis. Grounds the pros/cons in evidence rather than speculation.
+
+  goal:
+    type: string
+    required: true
+    description: >
+      The decision goal that frames which pros, cons, and risks matter.
+
+outputs:
+  analyzed_options:
+    type: array
+    required: true
+    description: >
+      Options enriched with qualitative analysis. Each entry includes: option_id,
+      pros (array of strings), cons (array of strings), risks (array of objects
+      with description and severity), assumptions (array of strings — premises
+      that must hold for this option to work as expected).
+
+  analysis_notes:
+    type: string
+    required: false
+    description: >
+      Brief note on methodology, gaps in available evidence, or caveats
+      about the analysis.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - decision-support
+    - evaluation
+    - qualitative-analysis

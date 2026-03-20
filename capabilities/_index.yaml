@@ -29,3 +29,11 @@ capabilities:
   - id: eval.option.score
     status: experimental
     description: Evaluate options against weighted criteria with comparative scoring and trade-offs.
+
+  - id: eval.option.analyze
+    status: experimental
+    description: Qualitative analysis of options — pros, cons, risks, and assumptions per option.
+
+  - id: decision.option.justify
+    status: experimental
+    description: Select a final recommendation from evaluated options with structured justification.

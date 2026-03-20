@@ -1,0 +1,119 @@
+id: decision.option.justify
+version: 1.0.0
+description: >
+  Select a final recommendation from evaluated options and produce a structured
+  justification. Consumes qualitative analysis (from eval.option.analyze) and
+  quantitative scores (from eval.option.score) to make an explicit, committed
+  choice. Outputs the recommendation, justification narrative, failure modes,
+  uncertainties, confidence assessment, and concrete next steps.
+
+  This capability is the "closing" step — it resolves ambiguity into action.
+  It must never hedge with "it depends" or "consider both".
+
+inputs:
+  scored_options:
+    type: array
+    required: true
+    description: >
+      Options with quantitative scores from eval.option.score. Each entry
+      includes option_id, overall_score, per_criterion_scores, strengths,
+      weaknesses.
+
+  analyzed_options:
+    type: array
+    required: true
+    description: >
+      Options with qualitative analysis from eval.option.analyze. Each entry
+      includes option_id, pros, cons, risks, assumptions.
+
+  tradeoffs:
+    type: array
+    required: false
+    description: >
+      Explicit trade-offs between top candidates from eval.option.score.
+
+  goal:
+    type: string
+    required: true
+    description: >
+      The original decision goal for contextual grounding.
+
+  constraints:
+    type: object
+    required: false
+    description: >
+      Hard constraints the decision must respect (budget, time, regulation).
+
+  risk_tolerance:
+    type: string
+    required: false
+    description: >
+      Risk appetite: low | medium | high. Modulates how uncertainty and
+      downside scenarios influence the final selection.
+
+outputs:
+  recommendation:
+    type: string
+    required: true
+    description: >
+      The final recommendation. Clear, concrete, actionable. Never hedged.
+
+  alternatives_considered:
+    type: array
+    required: true
+    description: >
+      All options that were evaluated, with a brief note on why each was
+      or was not selected.
+
+  confidence_score:
+    type: number
+    required: true
+    description: >
+      Numeric confidence in the recommendation (0.0-1.0). Calibrated:
+      0.0-0.3 low, 0.3-0.6 medium, 0.6-0.9 high, 0.9-1.0 very high.
+
+  confidence_level:
+    type: string
+    required: true
+    description: >
+      Human-readable confidence: low | medium | high.
+
+  uncertainties:
+    type: array
+    required: true
+    description: >
+      What is unknown or weakly supported that could change the outcome.
+
+  failure_modes:
+    type: array
+    required: true
+    description: >
+      Concrete conditions under which the recommendation could fail.
+      Specific, not generic.
+
+  next_steps:
+    type: array
+    required: true
+    description: >
+      Concrete follow-up actions: validations, pilots, execution steps.
+      Prefers action over "more analysis".
+
+  human_readable:
+    type: string
+    required: true
+    description: >
+      3-6 paragraph narrative of the decision suitable for direct human
+      consumption. Includes what was decided, why, key trade-offs, risks,
+      and next steps.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - decision-support
+    - justification
+    - recommendation

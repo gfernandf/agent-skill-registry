@@ -872,7 +872,7 @@
     "id": "decision.make",
     "version": "0.1.0",
     "name": "Make Decision",
-    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) evaluate options against criteria with comparative scoring, (3) select a recommendation with justification, failure modes, and next steps, (4) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
+    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) qualitative analysis of pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative scoring, (4) select recommendation with structured justification, failure modes, and next steps, (5) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call. Zero uses of model.output.generate — every step is a dedicated, named capability.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
     "channel": "experimental",
     "domain": "decision",
     "slug": "make",
@@ -981,6 +981,19 @@
         }
       },
       {
+        "id": "analyze_options",
+        "uses": "eval.option.analyze",
+        "input": {
+          "options": "vars.generated_options",
+          "context": "inputs.context_items",
+          "goal": "inputs.goal"
+        },
+        "output": {
+          "analyzed_options": "vars.analyzed_options",
+          "analysis_notes": "vars.analysis_notes"
+        }
+      },
+      {
         "id": "evaluate_options",
         "uses": "eval.option.score",
         "input": {
@@ -992,120 +1005,29 @@
           "scored_options": "vars.scored_options",
           "criteria_used": "outputs.criteria_used",
           "comparative_summary": "outputs.evaluation_summary",
-          "tradeoffs": "outputs.tradeoffs"
+          "tradeoffs": "vars.tradeoffs"
         }
       },
       {
-        "id": "select_decision",
-        "uses": "model.output.generate",
+        "id": "justify_decision",
+        "uses": "decision.option.justify",
         "input": {
-          "instruction": "You are a decision engine. You receive scored options with comparative analysis and must produce a FINAL DECISION — not a summary, not a re-ranking, but a clear, committed recommendation.\nRules: - Select exactly ONE option (or a qualified variant) as the recommendation. - The recommendation field must be a concrete, actionable statement.\n  NEVER output \"it depends\", \"consider both\", or similar hedges.\n- If confidence is low, still decide — but flag it clearly. - failure_modes: list 2-5 concrete conditions under which this decision\n  could fail. Be specific, not generic.\n- uncertainties: list what is unknown or weakly supported that could\n  change the outcome. Be honest.\n- next_steps: list 2-5 concrete follow-up actions. Prefer validations\n  and pilots over \"more analysis\".\n- confidence_score: calibrate honestly.\n  0.0-0.3 = low (major unknowns, weak input)\n  0.3-0.6 = medium (reasonable input, some gaps)\n  0.6-0.9 = high (strong input, clear winner)\n  0.9-1.0 = very high (overwhelming evidence)\n- confidence_level: low if score < 0.35, medium if 0.35-0.65, high if > 0.65. - human_readable: 3-6 paragraph narrative of the decision, readable as\n  a standalone memo. Include: what was decided, why, key trade-offs,\n  risks, and next steps.\n- Modulate aggressiveness by risk_tolerance: low = prefer safer options\n  even if suboptimal; high = prefer high-reward options accepting downside.\n",
-          "context_items": [
-            {
-              "id": "scored_options",
-              "content": "vars.scored_options",
-              "type": "evaluation_result"
-            },
-            {
-              "id": "evaluation_summary",
-              "content": "outputs.evaluation_summary",
-              "type": "comparative_analysis"
-            },
-            {
-              "id": "tradeoffs",
-              "content": "outputs.tradeoffs",
-              "type": "tradeoff_analysis"
-            },
-            {
-              "id": "original_context",
-              "content": "inputs.context_items",
-              "type": "background"
-            }
-          ],
-          "output_schema": {
-            "type": "object",
-            "properties": {
-              "recommendation": {
-                "type": "string"
-              },
-              "alternatives_considered": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "label": {
-                      "type": "string"
-                    },
-                    "selected": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              },
-              "confidence_score": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 1
-              },
-              "confidence_level": {
-                "type": "string",
-                "enum": [
-                  "low",
-                  "medium",
-                  "high"
-                ]
-              },
-              "uncertainties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "failure_modes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "next_steps": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "human_readable": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "recommendation",
-              "alternatives_considered",
-              "confidence_score",
-              "confidence_level",
-              "uncertainties",
-              "failure_modes",
-              "next_steps",
-              "human_readable"
-            ]
-          },
-          "constraints": {
-            "goal": "inputs.goal",
-            "risk_tolerance": "inputs.risk_tolerance",
-            "no_fabrication": true
-          }
+          "scored_options": "vars.scored_options",
+          "analyzed_options": "vars.analyzed_options",
+          "tradeoffs": "vars.tradeoffs",
+          "goal": "inputs.goal",
+          "constraints": "inputs.constraints",
+          "risk_tolerance": "inputs.risk_tolerance"
         },
         "output": {
-          "output.recommendation": "outputs.recommendation",
-          "output.alternatives_considered": "outputs.alternatives_considered",
-          "output.confidence_score": "outputs.confidence_score",
-          "output.confidence_level": "outputs.confidence_level",
-          "output.uncertainties": "outputs.uncertainties",
-          "output.failure_modes": "outputs.failure_modes",
-          "output.next_steps": "outputs.next_steps",
-          "output.human_readable": "outputs.human_readable"
+          "recommendation": "outputs.recommendation",
+          "alternatives_considered": "outputs.alternatives_considered",
+          "confidence_score": "outputs.confidence_score",
+          "confidence_level": "outputs.confidence_level",
+          "uncertainties": "outputs.uncertainties",
+          "failure_modes": "outputs.failure_modes",
+          "next_steps": "outputs.next_steps",
+          "human_readable": "outputs.human_readable"
         }
       },
       {
@@ -1148,9 +1070,10 @@
     ],
     "uses_capabilities": [
       "agent.option.generate",
+      "decision.option.justify",
+      "eval.option.analyze",
       "eval.option.score",
-      "eval.output.score",
-      "model.output.generate"
+      "eval.output.score"
     ],
     "uses_skills": [],
     "metadata": {
