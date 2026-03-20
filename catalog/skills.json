@@ -2272,7 +2272,7 @@
         "grounding"
       ],
       "category": "research",
-      "status": "experimental",
+      "status": "deprecated",
       "use_cases": [
         "Gate a research synthesis before it is used in a decision workflow",
         "Detect low-coverage or poorly grounded synthesis outputs",

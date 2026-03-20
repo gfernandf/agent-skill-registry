@@ -202,7 +202,13 @@ steps:
       warnings: vars.compute_warnings
 
 metadata:
-  status: experimental
+  status: deprecated
+  deprecated_by: eval.validate
+  deprecation_reason: >
+    Subsumed by eval.validate which provides generic artifact validation
+    (structure + consistency + coverage) without coupling to specific research
+    inputs. Also, step 3 (compute_quality_metrics) uses the model.output.generate
+    oracle pattern which the project is moving away from.
   tags:
     - research
     - quality
