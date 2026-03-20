@@ -1,15 +1,14 @@
 {
   "summary": {
-    "capabilities_total": 104,
-    "covered_domains": 25,
-    "uncovered_domains": 2,
+    "capabilities_total": 106,
+    "covered_domains": 26,
+    "uncovered_domains": 1,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 101
+    "metadata_issues": 103
   },
   "uncovered_domains": [
-    "analysis",
-    "decision"
+    "analysis"
   ],
   "semantic_family_alerts": [
     {
@@ -235,6 +234,12 @@
       ]
     },
     {
+      "capability_id": "decision.option.justify",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "doc.chunk",
       "issues": [
         "missing_tags",
@@ -252,6 +257,12 @@
       "capability_id": "email.send",
       "issues": [
         "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "eval.option.analyze",
+      "issues": [
         "missing_examples"
       ]
     },

@@ -335,6 +335,472 @@
     }
   },
   {
+    "id": "analysis.compare",
+    "version": "0.1.0",
+    "name": "Compare Options",
+    "description": "Compare alternatives, options, scenarios, or proposals in a structured and explicit way. Produces qualitative analysis (pros, cons, risks, assumptions) and quantitative scoring (multi-criteria) with a comparative summary and trade-offs.\nThis skill is the \"compare without deciding\" counterpart to decision.make. Use it when you need a transparent comparison artifact that a human or another skill will consume — without forcing a final recommendation.\nPipeline: (1) qualitative analysis per option, (2) multi-criteria scoring with comparative summary and trade-offs, (3) quality gate on the comparison.\nTypical upstream: agent.option.generate, task.frame, or direct user input. Typical downstream: decision.make, human review, or analysis.risk-assess.\n",
+    "channel": "experimental",
+    "domain": "analysis",
+    "slug": "compare",
+    "file": "skills/experimental/analysis/compare/skill.yaml",
+    "inputs": {
+      "options": {
+        "type": "array",
+        "required": true,
+        "description": "Alternatives to compare. Each option should have at minimum: id, label, description. May include key_attributes.\n"
+      },
+      "comparison_goal": {
+        "type": "string",
+        "required": true,
+        "description": "What the comparison is for — frames which criteria matter and how to weight them. Examples: \"Which cloud provider best fits our latency and cost constraints?\", \"Compare three vendor proposals for the CRM migration.\"\n"
+      },
+      "criteria": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit evaluation criteria. Each criterion: name, description, optional weight. If omitted, criteria are inferred from comparison_goal.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, prior analysis, or domain knowledge relevant to the comparison.\n"
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Hard constraints that apply to the comparison (budget, time, regulation).\n"
+      }
+    },
+    "outputs": {
+      "analyzed_options": {
+        "type": "array",
+        "required": true,
+        "description": "Options enriched with qualitative analysis: pros, cons, risks, assumptions per option.\n"
+      },
+      "scored_options": {
+        "type": "array",
+        "required": true,
+        "description": "Options with per-criterion scores, overall_score, strengths, weaknesses.\n"
+      },
+      "criteria_used": {
+        "type": "array",
+        "required": true,
+        "description": "Final criteria applied, including any inferred ones. Each with name, description, and weight.\n"
+      },
+      "comparative_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative comparison of the options explaining key differentiators.\n"
+      },
+      "tradeoffs": {
+        "type": "array",
+        "required": true,
+        "description": "Explicit trade-offs between top candidates. Each entry names the tension and what is gained/lost.\n"
+      },
+      "comparison_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality assessment of the comparison: overall_score (0-1) and per-dimension scores.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "analyze_options",
+        "uses": "eval.option.analyze",
+        "input": {
+          "options": "inputs.options",
+          "context": "inputs.context",
+          "goal": "inputs.comparison_goal"
+        },
+        "output": {
+          "analyzed_options": "outputs.analyzed_options"
+        }
+      },
+      {
+        "id": "score_options",
+        "uses": "eval.option.score",
+        "input": {
+          "options": "inputs.options",
+          "criteria": "inputs.criteria",
+          "goal": "inputs.comparison_goal"
+        },
+        "output": {
+          "scored_options": "outputs.scored_options",
+          "criteria_used": "outputs.criteria_used",
+          "comparative_summary": "outputs.comparative_summary",
+          "tradeoffs": "outputs.tradeoffs"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "analyzed_options": "outputs.analyzed_options",
+            "scored_options": "outputs.scored_options",
+            "comparative_summary": "outputs.comparative_summary",
+            "tradeoffs": "outputs.tradeoffs"
+          },
+          "rubric": {
+            "dimensions": {
+              "criteria_coverage": {
+                "description": "Are the criteria comprehensive and relevant to the comparison goal?\n",
+                "weight": 0.3
+              },
+              "analysis_depth": {
+                "description": "Are pros, cons, risks, and assumptions specific and grounded rather than generic?\n",
+                "weight": 0.3
+              },
+              "score_consistency": {
+                "description": "Are the quantitative scores consistent with the qualitative analysis?\n",
+                "weight": 0.25
+              },
+              "tradeoff_clarity": {
+                "description": "Are trade-offs explicit and actionable, not vague?\n",
+                "weight": 0.15
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.comparison_quality"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "eval.option.analyze",
+      "eval.option.score",
+      "eval.output.score"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "analysis",
+        "comparison",
+        "multi-criteria",
+        "evaluation"
+      ],
+      "category": "analysis",
+      "status": "experimental",
+      "use_cases": [
+        "Vendor or tool comparison before procurement decision",
+        "Architecture alternative evaluation",
+        "Strategy or scenario comparison",
+        "Any structured A-vs-B-vs-C analysis"
+      ],
+      "examples": [],
+      "classification": null
+    }
+  },
+  {
+    "id": "analysis.decompose",
+    "version": "0.1.0",
+    "name": "Decompose Problem",
+    "description": "Divide a complex problem or topic into manageable analysis blocks to avoid monolithic reasoning and mixed dimensions. Selects a decomposition strategy, generates described components with dependencies, and validates the decomposition for gaps and overlaps.\nPipeline: (1) classify the best decomposition strategy, (2) split into components with dependencies and order, (3) quality gate on the decomposition.\nTypical upstream: task.frame output or direct user input. Typical downstream: analysis.synthesize (per component), analysis.compare, decision.make, or any skill that benefits from scoped sub-problems.\n",
+    "channel": "experimental",
+    "domain": "analysis",
+    "slug": "decompose",
+    "file": "skills/experimental/analysis/decompose/skill.yaml",
+    "inputs": {
+      "problem": {
+        "type": "string",
+        "required": true,
+        "description": "The problem or topic to decompose. Should be a clear statement.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, prior analysis, or domain knowledge.\n"
+      },
+      "decomposition_mode": {
+        "type": "string",
+        "required": false,
+        "description": "Preferred decomposition axis: themes | dimensions | phases | questions | stakeholders | risks. If omitted, step 1 selects the best strategy.\n"
+      }
+    },
+    "outputs": {
+      "decomposition_strategy": {
+        "type": "string",
+        "required": true,
+        "description": "The strategy used for decomposition.\n"
+      },
+      "components": {
+        "type": "array",
+        "required": true,
+        "description": "List of components with id, label, description, dependencies, and analysis_order.\n"
+      },
+      "gaps": {
+        "type": "array",
+        "required": true,
+        "description": "Areas that may be missing from the decomposition.\n"
+      },
+      "overlaps": {
+        "type": "array",
+        "required": true,
+        "description": "Potential overlaps between components.\n"
+      },
+      "decomposition_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality assessment: overall_score (0-1) and per-dimension scores.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "select_strategy",
+        "uses": "text.classify",
+        "input": {
+          "text": "inputs.problem",
+          "labels": [
+            "themes",
+            "dimensions",
+            "phases",
+            "questions",
+            "stakeholders",
+            "risks"
+          ],
+          "context": "inputs.context",
+          "hint": "inputs.decomposition_mode"
+        },
+        "output": {
+          "label": "outputs.decomposition_strategy"
+        }
+      },
+      {
+        "id": "split_problem",
+        "uses": "analysis.split",
+        "input": {
+          "problem": "inputs.problem",
+          "strategy": "outputs.decomposition_strategy",
+          "context": "inputs.context"
+        },
+        "output": {
+          "components": "outputs.components",
+          "gaps": "outputs.gaps",
+          "overlaps": "outputs.overlaps"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "components": "outputs.components",
+            "gaps": "outputs.gaps",
+            "overlaps": "outputs.overlaps",
+            "strategy": "outputs.decomposition_strategy"
+          },
+          "rubric": {
+            "dimensions": {
+              "mece_compliance": {
+                "description": "Are components mutually exclusive and collectively exhaustive? Score low if significant gaps or overlaps exist.\n",
+                "weight": 0.35
+              },
+              "component_clarity": {
+                "description": "Is each component well-described with clear scope boundaries?\n",
+                "weight": 0.25
+              },
+              "dependency_coherence": {
+                "description": "Are dependencies between components logical and complete? No circular dependencies, no missing links.\n",
+                "weight": 0.2
+              },
+              "granularity": {
+                "description": "Are components at the right granularity — not too coarse (monolithic) nor too fine (fragmented)?\n",
+                "weight": 0.2
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.decomposition_quality"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "analysis.split",
+      "eval.output.score",
+      "text.classify"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "analysis",
+        "decomposition",
+        "structuring",
+        "problem-solving"
+      ],
+      "category": "analysis",
+      "status": "experimental",
+      "use_cases": [
+        "Break down a complex market analysis into dimensions",
+        "Decompose a technology migration into phases",
+        "Split a regulatory compliance review into themes",
+        "Structure a research agenda into key questions"
+      ],
+      "examples": [],
+      "classification": null
+    }
+  },
+  {
+    "id": "analysis.risk-assess",
+    "version": "0.1.0",
+    "name": "Assess Risks",
+    "description": "Identify risks, fragile assumptions, and failure modes associated with a target artifact (decision, plan, analysis, proposal, draft). Introduces adversarial thinking to counter the implicit optimism of LLM-generated outputs.\nPipeline: (1) extract risks, assumptions, failure modes, and mitigations, (2) classify risks by category, (3) quality gate on the risk analysis.\nTypical upstream: decision.make, analysis.synthesize, agent.plan.generate, or any skill producing an artifact that needs stress-testing. Typical downstream: decision.make (risk-informed), eval.validate, human review.\n",
+    "channel": "experimental",
+    "domain": "analysis",
+    "slug": "risk-assess",
+    "file": "skills/experimental/analysis/risk-assess/skill.yaml",
+    "inputs": {
+      "target": {
+        "type": "object",
+        "required": true,
+        "description": "The artifact to analyze for risks. Can be a decision, plan, synthesis, proposal, or any structured object.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information or domain knowledge relevant to risk identification.\n"
+      },
+      "risk_scope": {
+        "type": "string",
+        "required": false,
+        "description": "Focus area: broad | operational | strategic | regulatory | technical | financial. Defaults to broad.\n"
+      }
+    },
+    "outputs": {
+      "identified_risks": {
+        "type": "array",
+        "required": true,
+        "description": "Risks with id, description, category, severity_hint, related_assumptions.\n"
+      },
+      "risk_categories": {
+        "type": "array",
+        "required": true,
+        "description": "Categories found, each with name and count of risks.\n"
+      },
+      "critical_assumptions": {
+        "type": "array",
+        "required": true,
+        "description": "Fragile assumptions with id, statement, fragility_hint, related_risks.\n"
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Concrete failure scenarios with id, description, trigger_conditions, related_risks.\n"
+      },
+      "mitigation_ideas": {
+        "type": "array",
+        "required": true,
+        "description": "Preliminary mitigation suggestions per risk.\n"
+      },
+      "unknowns": {
+        "type": "array",
+        "required": true,
+        "description": "Areas where risk assessment is limited due to missing information.\n"
+      },
+      "risk_quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality assessment of the risk analysis: overall_score (0-1) and per-dimension scores.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "extract_risks",
+        "uses": "analysis.risk.extract",
+        "input": {
+          "target": "inputs.target",
+          "context": "inputs.context",
+          "risk_scope": "inputs.risk_scope"
+        },
+        "output": {
+          "risks": "outputs.identified_risks",
+          "assumptions": "outputs.critical_assumptions",
+          "failure_modes": "outputs.failure_modes",
+          "mitigation_ideas": "outputs.mitigation_ideas",
+          "extraction_notes": "outputs.unknowns"
+        }
+      },
+      {
+        "id": "classify_risks",
+        "uses": "text.classify",
+        "input": {
+          "text": "outputs.identified_risks",
+          "labels": [
+            "operational",
+            "strategic",
+            "regulatory",
+            "technical",
+            "financial",
+            "reputational",
+            "organizational"
+          ]
+        },
+        "output": {
+          "label": "outputs.risk_categories"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "risks": "outputs.identified_risks",
+            "assumptions": "outputs.critical_assumptions",
+            "failure_modes": "outputs.failure_modes",
+            "mitigation_ideas": "outputs.mitigation_ideas"
+          },
+          "rubric": {
+            "dimensions": {
+              "risk_coverage": {
+                "description": "Are risks identified across relevant categories? No obvious blind spots?\n",
+                "weight": 0.3
+              },
+              "assumption_depth": {
+                "description": "Are implicit assumptions surfaced, not just obvious ones?\n",
+                "weight": 0.25
+              },
+              "failure_mode_specificity": {
+                "description": "Are failure modes concrete with trigger conditions, not vague \"things could go wrong\" statements?\n",
+                "weight": 0.25
+              },
+              "mitigation_actionability": {
+                "description": "Are mitigation ideas specific and actionable rather than generic (\"monitor the situation\")?\n",
+                "weight": 0.2
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.risk_quality"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "analysis.risk.extract",
+      "eval.output.score",
+      "text.classify"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "risk-analysis",
+        "adversarial-thinking",
+        "assumptions",
+        "failure-modes"
+      ],
+      "category": "analysis",
+      "status": "experimental",
+      "use_cases": [
+        "Stress-test a strategic decision before execution",
+        "Identify risks in a project plan",
+        "Surface hidden assumptions in a market analysis",
+        "Pre-mortem analysis on a product launch proposal"
+      ],
+      "examples": [],
+      "classification": null
+    }
+  },
+  {
     "id": "analysis.synthesize",
     "version": "0.2.0",
     "name": "Synthesize",
@@ -1313,6 +1779,158 @@
         "invocation": "direct",
         "effect_mode": "enrich"
       }
+    }
+  },
+  {
+    "id": "eval.validate",
+    "version": "0.1.0",
+    "name": "Validate Artifact",
+    "description": "Check whether an output or artifact meets a set of quality conditions: structural completeness, internal consistency, and coverage of key areas. Produces a clear pass/fail per check with actionable recommended fixes.\nGeneric validation skill — works on any structured artifact (synthesis, decision, plan, report, etc.). Replaces domain-specific quality-assess skills with a single composable pipeline.\nPipeline: (1) structural validation against schema, (2) semantic consistency and grounding checks, (3) coverage and quality scoring with rubric.\nTypical upstream: any skill that produces an artifact to validate. Typical downstream: human review, retry with fixes, or release gate.\n",
+    "channel": "experimental",
+    "domain": "eval",
+    "slug": "validate",
+    "file": "skills/experimental/eval/validate/skill.yaml",
+    "inputs": {
+      "artifact": {
+        "type": "object",
+        "required": true,
+        "description": "The artifact to validate. Any structured object — synthesis, decision, plan, comparison, report.\n"
+      },
+      "validation_goal": {
+        "type": "string",
+        "required": true,
+        "description": "What the validation is checking for. Frames which checks matter. Examples: \"Verify this synthesis is complete and grounded\", \"Check this decision for consistency and coverage\".\n"
+      },
+      "checklist": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit list of checks to perform. Each check: name, description, severity (error | warning). If omitted, checks are inferred from validation_goal and artifact structure.\n"
+      },
+      "quality_rules": {
+        "type": "object",
+        "required": false,
+        "description": "Custom rubric dimensions and weights for the coverage/quality scoring step. If omitted, sensible defaults are inferred.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information or evidence to check the artifact against (e.g., source materials for grounding validation).\n"
+      }
+    },
+    "outputs": {
+      "checks_performed": {
+        "type": "array",
+        "required": true,
+        "description": "All checks that were run, each with: name, description, result (pass | fail | warning), and detail.\n"
+      },
+      "passed_checks": {
+        "type": "array",
+        "required": true,
+        "description": "Checks that passed.\n"
+      },
+      "failed_checks": {
+        "type": "array",
+        "required": true,
+        "description": "Checks that failed, with detail on what was wrong.\n"
+      },
+      "warnings": {
+        "type": "array",
+        "required": true,
+        "description": "Non-blocking issues detected.\n"
+      },
+      "coverage_gaps": {
+        "type": "array",
+        "required": true,
+        "description": "Key areas or dimensions that are missing or underrepresented.\n"
+      },
+      "consistency_issues": {
+        "type": "array",
+        "required": true,
+        "description": "Internal contradictions or incoherences found.\n"
+      },
+      "validation_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable summary of the validation result.\n"
+      },
+      "recommended_fixes": {
+        "type": "array",
+        "required": true,
+        "description": "Actionable fix suggestions for each failed check or warning.\n"
+      },
+      "validation_passed": {
+        "type": "boolean",
+        "required": true,
+        "description": "True if all error-severity checks passed. Warnings do not block.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "check_structure",
+        "uses": "data.schema.validate",
+        "input": {
+          "data": "inputs.artifact",
+          "schema": "inputs.checklist"
+        },
+        "output": {
+          "valid": "vars.structure_valid",
+          "errors": "vars.structure_errors"
+        }
+      },
+      {
+        "id": "check_consistency",
+        "uses": "model.response.validate",
+        "input": {
+          "output": "inputs.artifact",
+          "validation_policy": {
+            "check_coherence": true,
+            "check_grounding": true,
+            "check_coverage": true
+          },
+          "evidence_context": "inputs.context"
+        },
+        "output": {
+          "valid": "vars.consistency_valid",
+          "issues": "vars.consistency_issues",
+          "rationale": "vars.consistency_rationale"
+        }
+      },
+      {
+        "id": "score_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": "inputs.artifact",
+          "rubric": "inputs.quality_rules"
+        },
+        "output": {
+          "score": "vars.quality_score",
+          "dimensions": "vars.quality_dimensions"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.schema.validate",
+      "eval.output.score",
+      "model.response.validate"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "validation",
+        "quality-gate",
+        "consistency",
+        "coverage"
+      ],
+      "category": "eval",
+      "status": "experimental",
+      "use_cases": [
+        "Validate a synthesis artifact before delivery",
+        "Check a decision for internal consistency",
+        "Verify a plan covers all required areas",
+        "Generic output quality gate before human review"
+      ],
+      "examples": [],
+      "classification": null
     }
   },
   {
@@ -2354,6 +2972,184 @@
         "invocation": "direct",
         "effect_mode": "enrich"
       }
+    }
+  },
+  {
+    "id": "task.frame",
+    "version": "0.1.0",
+    "name": "Frame Task",
+    "description": "Take an ambiguous or broad task and convert it into a structured problem definition: what needs to be solved, what type of work it is, what information is needed, and what approach to follow.\nPrevents the agent from starting work on a misinterpreted brief. Acts as the entry point to the system — every complex workflow benefits from framing first.\nPipeline: (1) classify the task type, (2) extract objectives, constraints, and information needs, (3) propose an approach, (4) suggest which skills should run next.\nTypical upstream: direct user input or agent intake. Typical downstream: analysis.decompose, analysis.synthesize, analysis.compare, decision.make, or any domain-specific skill.\n",
+    "channel": "experimental",
+    "domain": "task",
+    "slug": "frame",
+    "file": "skills/experimental/task/frame/skill.yaml",
+    "inputs": {
+      "task": {
+        "type": "string",
+        "required": true,
+        "description": "The task description as given. May be vague, broad, or well-defined. Examples: \"We need to decide on a cloud provider\", \"Prepare a market analysis for Southeast Asia\", \"Review the Q3 incident reports and recommend process changes\".\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, organizational context, or prior outputs that help interpret the task.\n"
+      },
+      "constraints": {
+        "type": "object",
+        "required": false,
+        "description": "Known constraints: budget, time, regulation, team capacity, etc.\n"
+      },
+      "goal_hint": {
+        "type": "string",
+        "required": false,
+        "description": "Optional hint about the desired outcome type or direction, when the task description alone is ambiguous.\n"
+      }
+    },
+    "outputs": {
+      "problem_statement": {
+        "type": "string",
+        "required": true,
+        "description": "Clear, operationalized restatement of the task. Unambiguous, scoped, and actionable.\n"
+      },
+      "task_type": {
+        "type": "string",
+        "required": true,
+        "description": "Classification of the work: analysis | decision | comparison | drafting | validation | research | planning | other.\n"
+      },
+      "objectives": {
+        "type": "array",
+        "required": true,
+        "description": "Explicit objectives extracted or inferred from the task. Each objective is a string stating what must be achieved.\n"
+      },
+      "constraints_extracted": {
+        "type": "object",
+        "required": true,
+        "description": "Structured constraints: explicit ones from input plus inferred ones. Fields may include budget, time, regulation, resources, scope.\n"
+      },
+      "information_needed": {
+        "type": "array",
+        "required": true,
+        "description": "What information appears necessary to solve the task well. Each item describes a gap and optionally suggests how to fill it.\n"
+      },
+      "recommended_approach": {
+        "type": "string",
+        "required": true,
+        "description": "Proposed general approach to tackle the task. Not a detailed plan — a directional strategy (e.g., \"decompose into market dimensions, then synthesize per dimension, then compare\").\n"
+      },
+      "suggested_next_skills": {
+        "type": "array",
+        "required": true,
+        "description": "Ordered list of skill IDs that should execute after framing. Each entry includes skill_id and a brief rationale.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "classify_task",
+        "uses": "text.classify",
+        "input": {
+          "text": "inputs.task",
+          "labels": [
+            "analysis",
+            "decision",
+            "comparison",
+            "drafting",
+            "validation",
+            "research",
+            "planning",
+            "other"
+          ],
+          "context": "inputs.context"
+        },
+        "output": {
+          "label": "outputs.task_type"
+        }
+      },
+      {
+        "id": "extract_structure",
+        "uses": "text.extract",
+        "input": {
+          "text": "inputs.task",
+          "extraction_schema": {
+            "problem_statement": {
+              "type": "string",
+              "description": "Clear, operationalized restatement of the task."
+            },
+            "objectives": {
+              "type": "array",
+              "description": "What must be achieved."
+            },
+            "constraints": {
+              "type": "object",
+              "description": "Budget, time, regulation, resources, scope."
+            },
+            "information_needed": {
+              "type": "array",
+              "description": "What information is missing and how to get it."
+            }
+          },
+          "context": "inputs.context",
+          "hints": "inputs.goal_hint"
+        },
+        "output": {
+          "problem_statement": "outputs.problem_statement",
+          "objectives": "outputs.objectives",
+          "constraints": "outputs.constraints_extracted",
+          "information_needed": "outputs.information_needed"
+        }
+      },
+      {
+        "id": "propose_approach",
+        "uses": "agent.plan.generate",
+        "input": {
+          "objective": "outputs.problem_statement",
+          "context": {
+            "task_type": "outputs.task_type",
+            "objectives": "outputs.objectives",
+            "constraints": "outputs.constraints_extracted",
+            "information_needed": "outputs.information_needed"
+          }
+        },
+        "output": {
+          "plan": "outputs.recommended_approach"
+        }
+      },
+      {
+        "id": "suggest_skills",
+        "uses": "agent.route",
+        "input": {
+          "task_type": "outputs.task_type",
+          "objectives": "outputs.objectives",
+          "approach": "outputs.recommended_approach"
+        },
+        "output": {
+          "route": "outputs.suggested_next_skills"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.plan.generate",
+      "agent.route",
+      "text.classify",
+      "text.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "task-management",
+        "framing",
+        "intake",
+        "routing"
+      ],
+      "category": "task",
+      "status": "experimental",
+      "use_cases": [
+        "Interpret an ambiguous user request before starting work",
+        "Structure a complex brief into actionable components",
+        "Route a task to the right combination of analytical skills",
+        "Entry point for any multi-skill workflow"
+      ],
+      "examples": [],
+      "classification": null
     }
   },
   {

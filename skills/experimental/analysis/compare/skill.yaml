@@ -1,0 +1,169 @@
+id: analysis.compare
+version: 0.1.0
+name: Compare Options
+description: >
+  Compare alternatives, options, scenarios, or proposals in a structured and
+  explicit way. Produces qualitative analysis (pros, cons, risks, assumptions)
+  and quantitative scoring (multi-criteria) with a comparative summary and
+  trade-offs.
+
+  This skill is the "compare without deciding" counterpart to decision.make.
+  Use it when you need a transparent comparison artifact that a human or
+  another skill will consume — without forcing a final recommendation.
+
+  Pipeline: (1) qualitative analysis per option, (2) multi-criteria scoring
+  with comparative summary and trade-offs, (3) quality gate on the comparison.
+
+  Typical upstream: agent.option.generate, task.frame, or direct user input.
+  Typical downstream: decision.make, human review, or analysis.risk-assess.
+
+inputs:
+  options:
+    type: array
+    required: true
+    description: >
+      Alternatives to compare. Each option should have at minimum: id, label,
+      description. May include key_attributes.
+
+  comparison_goal:
+    type: string
+    required: true
+    description: >
+      What the comparison is for — frames which criteria matter and how to
+      weight them. Examples: "Which cloud provider best fits our latency and
+      cost constraints?", "Compare three vendor proposals for the CRM migration."
+
+  criteria:
+    type: array
+    required: false
+    description: >
+      Explicit evaluation criteria. Each criterion: name, description, optional
+      weight. If omitted, criteria are inferred from comparison_goal.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, prior analysis, or domain knowledge relevant to
+      the comparison.
+
+  constraints:
+    type: object
+    required: false
+    description: >
+      Hard constraints that apply to the comparison (budget, time, regulation).
+
+outputs:
+  analyzed_options:
+    type: array
+    required: true
+    description: >
+      Options enriched with qualitative analysis: pros, cons, risks, assumptions
+      per option.
+
+  scored_options:
+    type: array
+    required: true
+    description: >
+      Options with per-criterion scores, overall_score, strengths, weaknesses.
+
+  criteria_used:
+    type: array
+    required: true
+    description: >
+      Final criteria applied, including any inferred ones. Each with name,
+      description, and weight.
+
+  comparative_summary:
+    type: string
+    required: true
+    description: >
+      Narrative comparison of the options explaining key differentiators.
+
+  tradeoffs:
+    type: array
+    required: true
+    description: >
+      Explicit trade-offs between top candidates. Each entry names the tension
+      and what is gained/lost.
+
+  comparison_quality:
+    type: object
+    required: true
+    description: >
+      Quality assessment of the comparison: overall_score (0-1) and per-dimension
+      scores.
+
+steps:
+
+  # ── Step 1: Qualitative analysis ──────────────────────────────────────────
+  # For each option, identify pros, cons, risks, and assumptions.
+  - id: analyze_options
+    uses: eval.option.analyze
+    input:
+      options: inputs.options
+      context: inputs.context
+      goal: inputs.comparison_goal
+    output:
+      analyzed_options: outputs.analyzed_options
+
+  # ── Step 2: Quantitative scoring ─────────────────────────────────────────
+  # Multi-criteria scoring with comparative summary and trade-offs.
+  - id: score_options
+    uses: eval.option.score
+    input:
+      options: inputs.options
+      criteria: inputs.criteria
+      goal: inputs.comparison_goal
+    output:
+      scored_options: outputs.scored_options
+      criteria_used: outputs.criteria_used
+      comparative_summary: outputs.comparative_summary
+      tradeoffs: outputs.tradeoffs
+
+  # ── Step 3: Quality gate ──────────────────────────────────────────────────
+  # Evaluate the comparison itself: are criteria comprehensive? Is the analysis
+  # consistent with the scores? Are trade-offs explicit?
+  - id: assess_quality
+    uses: eval.output.score
+    input:
+      output:
+        analyzed_options: outputs.analyzed_options
+        scored_options: outputs.scored_options
+        comparative_summary: outputs.comparative_summary
+        tradeoffs: outputs.tradeoffs
+      rubric:
+        dimensions:
+          criteria_coverage:
+            description: >
+              Are the criteria comprehensive and relevant to the comparison goal?
+            weight: 0.30
+          analysis_depth:
+            description: >
+              Are pros, cons, risks, and assumptions specific and grounded
+              rather than generic?
+            weight: 0.30
+          score_consistency:
+            description: >
+              Are the quantitative scores consistent with the qualitative analysis?
+            weight: 0.25
+          tradeoff_clarity:
+            description: >
+              Are trade-offs explicit and actionable, not vague?
+            weight: 0.15
+    output:
+      score: outputs.comparison_quality
+
+metadata:
+  status: experimental
+  tags:
+    - analysis
+    - comparison
+    - multi-criteria
+    - evaluation
+  category: analysis
+  use_cases:
+    - Vendor or tool comparison before procurement decision
+    - Architecture alternative evaluation
+    - Strategy or scenario comparison
+    - Any structured A-vs-B-vs-C analysis

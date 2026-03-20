@@ -217,6 +217,136 @@
     }
   },
   {
+    "id": "analysis.risk.extract",
+    "version": "1.0.0",
+    "description": "Extract risks, fragile assumptions, failure modes, and preliminary mitigation ideas from a target artifact (decision, plan, analysis, proposal, draft). Produces a structured risk inventory with severity hints. Does NOT score or rank risks — that is the responsibility of downstream capabilities.\n",
+    "file": "capabilities/analysis.risk.extract.yaml",
+    "inputs": {
+      "target": {
+        "type": "object",
+        "required": true,
+        "description": "The artifact to analyze for risks. Can be a decision, plan, analysis output, proposal, or any structured object.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information that helps identify domain-specific risks.\n"
+      },
+      "risk_scope": {
+        "type": "string",
+        "required": false,
+        "description": "Focus area: broad | operational | strategic | regulatory | technical | financial. If omitted, defaults to broad.\n"
+      }
+    },
+    "outputs": {
+      "risks": {
+        "type": "array",
+        "required": true,
+        "description": "Identified risks. Each has: id, description, category, severity_hint (low | medium | high | critical), related_assumptions (array of assumption ids).\n"
+      },
+      "assumptions": {
+        "type": "array",
+        "required": true,
+        "description": "Fragile or implicit assumptions surfaced during analysis. Each has: id, statement, fragility_hint (low | medium | high), related_risks (array of risk ids).\n"
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Concrete ways the target could fail. Each has: id, description, trigger_conditions, related_risks (array of risk ids).\n"
+      },
+      "mitigation_ideas": {
+        "type": "array",
+        "required": false,
+        "description": "Preliminary mitigation suggestions per risk. Each has: risk_id, suggestion, effort_hint (low | medium | high).\n"
+      },
+      "extraction_notes": {
+        "type": "string",
+        "required": false,
+        "description": "Brief note on methodology, gaps in available information, or caveats.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "risk-analysis",
+        "assumptions",
+        "failure-modes"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "analysis.split",
+    "version": "1.0.0",
+    "description": "Split a complex problem, topic, or domain into a set of manageable, described components with a suggested analysis order. The decomposition strategy (by themes, dimensions, phases, questions, stakeholders, risks) is provided as input. Returns components with descriptions, dependencies between them, and flags for gaps or overlaps.\n",
+    "file": "capabilities/analysis.split.yaml",
+    "inputs": {
+      "problem": {
+        "type": "string",
+        "required": true,
+        "description": "The problem or topic to decompose. Should be a clear statement of what needs to be broken down.\n"
+      },
+      "strategy": {
+        "type": "string",
+        "required": true,
+        "description": "Decomposition axis: themes | dimensions | phases | questions | stakeholders | risks. Determines how the problem is sliced.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information that helps ground the decomposition.\n"
+      },
+      "max_components": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of components to generate. Defaults to 6. Hard cap at 10.\n"
+      }
+    },
+    "outputs": {
+      "components": {
+        "type": "array",
+        "required": true,
+        "description": "List of components. Each has: id (short slug), label, description (what it covers), dependencies (array of other component ids it depends on), and analysis_order (suggested position in the analysis sequence).\n"
+      },
+      "gaps": {
+        "type": "array",
+        "required": false,
+        "description": "Areas that may be missing from the decomposition — known unknowns.\n"
+      },
+      "overlaps": {
+        "type": "array",
+        "required": false,
+        "description": "Potential overlaps between components that the analyst should watch for.\n"
+      },
+      "decomposition_notes": {
+        "type": "string",
+        "required": false,
+        "description": "Brief note on the decomposition rationale and any trade-offs made.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "analysis",
+        "decomposition",
+        "structuring"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "audio.transcribe",
     "version": "1.0.0",
     "description": "Convert speech audio to text.",

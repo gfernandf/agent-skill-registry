@@ -37,3 +37,11 @@ capabilities:
   - id: decision.option.justify
     status: experimental
     description: Select a final recommendation from evaluated options with structured justification.
+
+  - id: analysis.split
+    status: experimental
+    description: Split a complex problem into manageable, described components with dependencies and order.
+
+  - id: analysis.risk.extract
+    status: experimental
+    description: Extract risks, fragile assumptions, failure modes, and mitigation ideas from a target artifact.

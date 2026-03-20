@@ -1,0 +1,164 @@
+id: analysis.risk-assess
+version: 0.1.0
+name: Assess Risks
+description: >
+  Identify risks, fragile assumptions, and failure modes associated with a
+  target artifact (decision, plan, analysis, proposal, draft). Introduces
+  adversarial thinking to counter the implicit optimism of LLM-generated
+  outputs.
+
+  Pipeline: (1) extract risks, assumptions, failure modes, and mitigations,
+  (2) classify risks by category, (3) quality gate on the risk analysis.
+
+  Typical upstream: decision.make, analysis.synthesize, agent.plan.generate,
+  or any skill producing an artifact that needs stress-testing.
+  Typical downstream: decision.make (risk-informed), eval.validate, human review.
+
+inputs:
+  target:
+    type: object
+    required: true
+    description: >
+      The artifact to analyze for risks. Can be a decision, plan, synthesis,
+      proposal, or any structured object.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information or domain knowledge relevant to risk identification.
+
+  risk_scope:
+    type: string
+    required: false
+    description: >
+      Focus area: broad | operational | strategic | regulatory | technical |
+      financial. Defaults to broad.
+
+outputs:
+  identified_risks:
+    type: array
+    required: true
+    description: >
+      Risks with id, description, category, severity_hint, related_assumptions.
+
+  risk_categories:
+    type: array
+    required: true
+    description: >
+      Categories found, each with name and count of risks.
+
+  critical_assumptions:
+    type: array
+    required: true
+    description: >
+      Fragile assumptions with id, statement, fragility_hint, related_risks.
+
+  failure_modes:
+    type: array
+    required: true
+    description: >
+      Concrete failure scenarios with id, description, trigger_conditions,
+      related_risks.
+
+  mitigation_ideas:
+    type: array
+    required: true
+    description: >
+      Preliminary mitigation suggestions per risk.
+
+  unknowns:
+    type: array
+    required: true
+    description: >
+      Areas where risk assessment is limited due to missing information.
+
+  risk_quality:
+    type: object
+    required: true
+    description: >
+      Quality assessment of the risk analysis: overall_score (0-1) and
+      per-dimension scores.
+
+steps:
+
+  # ── Step 1: Extract risks, assumptions, failure modes ─────────────────────
+  # Core adversarial analysis step. Surfaces everything that could go wrong.
+  - id: extract_risks
+    uses: analysis.risk.extract
+    input:
+      target: inputs.target
+      context: inputs.context
+      risk_scope: inputs.risk_scope
+    output:
+      risks: outputs.identified_risks
+      assumptions: outputs.critical_assumptions
+      failure_modes: outputs.failure_modes
+      mitigation_ideas: outputs.mitigation_ideas
+      extraction_notes: outputs.unknowns
+
+  # ── Step 2: Classify risks by category ────────────────────────────────────
+  # Group risks into operational, strategic, regulatory, etc.
+  - id: classify_risks
+    uses: text.classify
+    input:
+      text: outputs.identified_risks
+      labels:
+        - operational
+        - strategic
+        - regulatory
+        - technical
+        - financial
+        - reputational
+        - organizational
+    output:
+      label: outputs.risk_categories
+
+  # ── Step 3: Quality gate ──────────────────────────────────────────────────
+  # Is the risk analysis thorough? Are assumptions surfaced? Are failure modes
+  # specific enough?
+  - id: assess_quality
+    uses: eval.output.score
+    input:
+      output:
+        risks: outputs.identified_risks
+        assumptions: outputs.critical_assumptions
+        failure_modes: outputs.failure_modes
+        mitigation_ideas: outputs.mitigation_ideas
+      rubric:
+        dimensions:
+          risk_coverage:
+            description: >
+              Are risks identified across relevant categories? No obvious
+              blind spots?
+            weight: 0.30
+          assumption_depth:
+            description: >
+              Are implicit assumptions surfaced, not just obvious ones?
+            weight: 0.25
+          failure_mode_specificity:
+            description: >
+              Are failure modes concrete with trigger conditions, not vague
+              "things could go wrong" statements?
+            weight: 0.25
+          mitigation_actionability:
+            description: >
+              Are mitigation ideas specific and actionable rather than generic
+              ("monitor the situation")?
+            weight: 0.20
+    output:
+      score: outputs.risk_quality
+
+metadata:
+  status: experimental
+  tags:
+    - risk-analysis
+    - adversarial-thinking
+    - assumptions
+    - failure-modes
+  category: analysis
+  use_cases:
+    - Stress-test a strategic decision before execution
+    - Identify risks in a project plan
+    - Surface hidden assumptions in a market analysis
+    - Pre-mortem analysis on a product launch proposal

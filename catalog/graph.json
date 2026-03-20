@@ -21,6 +21,30 @@
       ],
       "skills": []
     },
+    "analysis.compare": {
+      "capabilities": [
+        "eval.option.analyze",
+        "eval.option.score",
+        "eval.output.score"
+      ],
+      "skills": []
+    },
+    "analysis.decompose": {
+      "capabilities": [
+        "analysis.split",
+        "eval.output.score",
+        "text.classify"
+      ],
+      "skills": []
+    },
+    "analysis.risk-assess": {
+      "capabilities": [
+        "analysis.risk.extract",
+        "eval.output.score",
+        "text.classify"
+      ],
+      "skills": []
+    },
     "analysis.synthesize": {
       "capabilities": [
         "model.output.generate",
@@ -76,6 +100,14 @@
       "capabilities": [
         "email.read",
         "text.summarize"
+      ],
+      "skills": []
+    },
+    "eval.validate": {
+      "capabilities": [
+        "data.schema.validate",
+        "eval.output.score",
+        "model.response.validate"
       ],
       "skills": []
     },
@@ -156,6 +188,15 @@
       "capabilities": [
         "table.filter",
         "text.summarize"
+      ],
+      "skills": []
+    },
+    "task.frame": {
+      "capabilities": [
+        "agent.plan.generate",
+        "agent.route",
+        "text.classify",
+        "text.extract"
       ],
       "skills": []
     },

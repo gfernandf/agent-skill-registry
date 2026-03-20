@@ -1,7 +1,7 @@
 {
   "summary": {
-    "capability_count": 106,
-    "skill_count": 37,
+    "capability_count": 108,
+    "skill_count": 42,
     "domain_count": 27,
     "channel_count": 2
   },
@@ -9,25 +9,27 @@
     "by_domain": {
       "text": 10,
       "web": 5,
+      "analysis": 4,
       "agent": 3,
       "memory": 3,
       "pdf": 3,
       "research": 3,
       "doc": 2,
-      "analysis": 1,
       "audio": 1,
       "code": 1,
       "data": 1,
       "decision": 1,
       "email": 1,
+      "eval": 1,
       "image": 1,
-      "table": 1
+      "table": 1,
+      "task": 1
     },
     "by_channel": {
       "official": 31,
-      "experimental": 6
+      "experimental": 11
     },
-    "average_steps": 2.14,
+    "average_steps": 2.26,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -46,6 +48,7 @@
       "code": 3,
       "data": 3,
       "eval": 3,
+      "analysis": 2,
       "email": 2,
       "image": 2,
       "message": 2,
@@ -65,6 +68,18 @@
         "count": 16
       },
       {
+        "id": "eval.output.score",
+        "count": 6
+      },
+      {
+        "id": "text.classify",
+        "count": 6
+      },
+      {
+        "id": "data.schema.validate",
+        "count": 4
+      },
+      {
         "id": "doc.chunk",
         "count": 4
       },
@@ -77,7 +92,7 @@
         "count": 4
       },
       {
-        "id": "data.schema.validate",
+        "id": "agent.plan.generate",
         "count": 3
       },
       {
@@ -85,7 +100,7 @@
         "count": 3
       },
       {
-        "id": "text.classify",
+        "id": "text.extract",
         "count": 3
       },
       {
@@ -101,15 +116,23 @@
         "count": 3
       },
       {
-        "id": "agent.plan.generate",
+        "id": "agent.route",
         "count": 2
       },
       {
-        "id": "eval.output.score",
+        "id": "eval.option.analyze",
+        "count": 2
+      },
+      {
+        "id": "eval.option.score",
         "count": 2
       },
       {
         "id": "memory.store",
+        "count": 2
+      },
+      {
+        "id": "model.response.validate",
         "count": 2
       },
       {
@@ -121,10 +144,6 @@
         "count": 2
       },
       {
-        "id": "text.extract",
-        "count": 2
-      },
-      {
         "id": "text.language.detect",
         "count": 2
       },
@@ -133,7 +152,11 @@
         "count": 1
       },
       {
-        "id": "agent.route",
+        "id": "analysis.risk.extract",
+        "count": 1
+      },
+      {
+        "id": "analysis.split",
         "count": 1
       },
       {
@@ -157,14 +180,6 @@
         "count": 1
       },
       {
-        "id": "eval.option.analyze",
-        "count": 1
-      },
-      {
-        "id": "eval.option.score",
-        "count": 1
-      },
-      {
         "id": "image.caption.generate",
         "count": 1
       },
@@ -174,10 +189,6 @@
       },
       {
         "id": "memory.retrieve",
-        "count": 1
-      },
-      {
-        "id": "model.response.validate",
         "count": 1
       },
       {
@@ -279,14 +290,18 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 79,
+    "skill_to_capability_edges": 95,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 5
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 37,
-    "capabilities_with_nondefault_metadata": 61,
+    "skills_with_nondefault_metadata": 42,
+    "capabilities_with_nondefault_metadata": 63,
     "top_skill_tags": [
+      {
+        "id": "analysis",
+        "count": 4
+      },
       {
         "id": "research",
         "count": 4
@@ -296,15 +311,23 @@
         "count": 2
       },
       {
-        "id": "analysis",
-        "count": 2
-      },
-      {
         "id": "decision-support",
         "count": 2
       },
       {
+        "id": "multi-criteria",
+        "count": 2
+      },
+      {
+        "id": "adversarial-thinking",
+        "count": 1
+      },
+      {
         "id": "assessment",
+        "count": 1
+      },
+      {
+        "id": "assumptions",
         "count": 1
       },
       {
@@ -312,7 +335,15 @@
         "count": 1
       },
       {
+        "id": "comparison",
+        "count": 1
+      },
+      {
         "id": "confidence",
+        "count": 1
+      },
+      {
+        "id": "consistency",
         "count": 1
       },
       {
@@ -324,7 +355,23 @@
         "count": 1
       },
       {
+        "id": "coverage",
+        "count": 1
+      },
+      {
+        "id": "decomposition",
+        "count": 1
+      },
+      {
+        "id": "evaluation",
+        "count": 1
+      },
+      {
         "id": "extraction",
+        "count": 1
+      },
+      {
+        "id": "failure-modes",
         "count": 1
       },
       {
@@ -332,11 +379,15 @@
         "count": 1
       },
       {
+        "id": "framing",
+        "count": 1
+      },
+      {
         "id": "grounding",
         "count": 1
       },
       {
-        "id": "multi-criteria",
+        "id": "intake",
         "count": 1
       },
       {
@@ -356,7 +407,15 @@
         "count": 1
       },
       {
+        "id": "problem-solving",
+        "count": 1
+      },
+      {
         "id": "quality",
+        "count": 1
+      },
+      {
+        "id": "quality-gate",
         "count": 1
       },
       {
@@ -364,7 +423,19 @@
         "count": 1
       },
       {
+        "id": "risk-analysis",
+        "count": 1
+      },
+      {
+        "id": "routing",
+        "count": 1
+      },
+      {
         "id": "structured-output",
+        "count": 1
+      },
+      {
+        "id": "structuring",
         "count": 1
       },
       {
@@ -372,7 +443,15 @@
         "count": 1
       },
       {
+        "id": "task-management",
+        "count": 1
+      },
+      {
         "id": "trace",
+        "count": 1
+      },
+      {
+        "id": "validation",
         "count": 1
       }
     ],
@@ -394,7 +473,23 @@
         "count": 2
       },
       {
+        "id": "analysis",
+        "count": 1
+      },
+      {
+        "id": "assumptions",
+        "count": 1
+      },
+      {
+        "id": "decomposition",
+        "count": 1
+      },
+      {
         "id": "developer-tools",
+        "count": 1
+      },
+      {
+        "id": "failure-modes",
         "count": 1
       },
       {
@@ -442,11 +537,19 @@
         "count": 1
       },
       {
+        "id": "risk-analysis",
+        "count": 1
+      },
+      {
         "id": "scaffolding",
         "count": 1
       },
       {
         "id": "scoring",
+        "count": 1
+      },
+      {
+        "id": "structuring",
         "count": 1
       }
     ]

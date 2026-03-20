@@ -1,0 +1,189 @@
+id: task.frame
+version: 0.1.0
+name: Frame Task
+description: >
+  Take an ambiguous or broad task and convert it into a structured problem
+  definition: what needs to be solved, what type of work it is, what
+  information is needed, and what approach to follow.
+
+  Prevents the agent from starting work on a misinterpreted brief. Acts as
+  the entry point to the system — every complex workflow benefits from
+  framing first.
+
+  Pipeline: (1) classify the task type, (2) extract objectives, constraints,
+  and information needs, (3) propose an approach, (4) suggest which skills
+  should run next.
+
+  Typical upstream: direct user input or agent intake.
+  Typical downstream: analysis.decompose, analysis.synthesize, analysis.compare,
+  decision.make, or any domain-specific skill.
+
+inputs:
+  task:
+    type: string
+    required: true
+    description: >
+      The task description as given. May be vague, broad, or well-defined.
+      Examples: "We need to decide on a cloud provider", "Prepare a market
+      analysis for Southeast Asia", "Review the Q3 incident reports and
+      recommend process changes".
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, organizational context, or prior outputs that
+      help interpret the task.
+
+  constraints:
+    type: object
+    required: false
+    description: >
+      Known constraints: budget, time, regulation, team capacity, etc.
+
+  goal_hint:
+    type: string
+    required: false
+    description: >
+      Optional hint about the desired outcome type or direction, when the
+      task description alone is ambiguous.
+
+outputs:
+  problem_statement:
+    type: string
+    required: true
+    description: >
+      Clear, operationalized restatement of the task. Unambiguous, scoped,
+      and actionable.
+
+  task_type:
+    type: string
+    required: true
+    description: >
+      Classification of the work: analysis | decision | comparison | drafting |
+      validation | research | planning | other.
+
+  objectives:
+    type: array
+    required: true
+    description: >
+      Explicit objectives extracted or inferred from the task. Each objective
+      is a string stating what must be achieved.
+
+  constraints_extracted:
+    type: object
+    required: true
+    description: >
+      Structured constraints: explicit ones from input plus inferred ones.
+      Fields may include budget, time, regulation, resources, scope.
+
+  information_needed:
+    type: array
+    required: true
+    description: >
+      What information appears necessary to solve the task well. Each item
+      describes a gap and optionally suggests how to fill it.
+
+  recommended_approach:
+    type: string
+    required: true
+    description: >
+      Proposed general approach to tackle the task. Not a detailed plan —
+      a directional strategy (e.g., "decompose into market dimensions, then
+      synthesize per dimension, then compare").
+
+  suggested_next_skills:
+    type: array
+    required: true
+    description: >
+      Ordered list of skill IDs that should execute after framing. Each entry
+      includes skill_id and a brief rationale.
+
+steps:
+
+  # ── Step 1: Classify task type ────────────────────────────────────────────
+  # Determine what kind of work this is (analysis, decision, comparison, etc.)
+  # to guide downstream routing.
+  - id: classify_task
+    uses: text.classify
+    input:
+      text: inputs.task
+      labels:
+        - analysis
+        - decision
+        - comparison
+        - drafting
+        - validation
+        - research
+        - planning
+        - other
+      context: inputs.context
+    output:
+      label: outputs.task_type
+
+  # ── Step 2: Extract objectives, constraints, information needs ────────────
+  # Parse the task description to separate what must be achieved, what limits
+  # apply, and what information is missing.
+  - id: extract_structure
+    uses: text.extract
+    input:
+      text: inputs.task
+      extraction_schema:
+        problem_statement:
+          type: string
+          description: Clear, operationalized restatement of the task.
+        objectives:
+          type: array
+          description: What must be achieved.
+        constraints:
+          type: object
+          description: Budget, time, regulation, resources, scope.
+        information_needed:
+          type: array
+          description: What information is missing and how to get it.
+      context: inputs.context
+      hints: inputs.goal_hint
+    output:
+      problem_statement: outputs.problem_statement
+      objectives: outputs.objectives
+      constraints: outputs.constraints_extracted
+      information_needed: outputs.information_needed
+
+  # ── Step 3: Propose approach ──────────────────────────────────────────────
+  # Given task type, objectives, and constraints, suggest a general approach.
+  - id: propose_approach
+    uses: agent.plan.generate
+    input:
+      objective: outputs.problem_statement
+      context:
+        task_type: outputs.task_type
+        objectives: outputs.objectives
+        constraints: outputs.constraints_extracted
+        information_needed: outputs.information_needed
+    output:
+      plan: outputs.recommended_approach
+
+  # ── Step 4: Route to next skills ──────────────────────────────────────────
+  # Suggest which skills in the system should run next based on the framing.
+  - id: suggest_skills
+    uses: agent.route
+    input:
+      task_type: outputs.task_type
+      objectives: outputs.objectives
+      approach: outputs.recommended_approach
+    output:
+      route: outputs.suggested_next_skills
+
+metadata:
+  status: experimental
+  tags:
+    - task-management
+    - framing
+    - intake
+    - routing
+  category: task
+  use_cases:
+    - Interpret an ambiguous user request before starting work
+    - Structure a complex brief into actionable components
+    - Route a task to the right combination of analytical skills
+    - Entry point for any multi-skill workflow

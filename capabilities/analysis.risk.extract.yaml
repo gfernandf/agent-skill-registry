@@ -1,0 +1,77 @@
+id: analysis.risk.extract
+version: 1.0.0
+description: >
+  Extract risks, fragile assumptions, failure modes, and preliminary mitigation
+  ideas from a target artifact (decision, plan, analysis, proposal, draft).
+  Produces a structured risk inventory with severity hints. Does NOT score or
+  rank risks — that is the responsibility of downstream capabilities.
+
+inputs:
+  target:
+    type: object
+    required: true
+    description: >
+      The artifact to analyze for risks. Can be a decision, plan, analysis
+      output, proposal, or any structured object.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information that helps identify domain-specific risks.
+
+  risk_scope:
+    type: string
+    required: false
+    description: >
+      Focus area: broad | operational | strategic | regulatory | technical |
+      financial. If omitted, defaults to broad.
+
+outputs:
+  risks:
+    type: array
+    required: true
+    description: >
+      Identified risks. Each has: id, description, category, severity_hint
+      (low | medium | high | critical), related_assumptions (array of
+      assumption ids).
+
+  assumptions:
+    type: array
+    required: true
+    description: >
+      Fragile or implicit assumptions surfaced during analysis. Each has:
+      id, statement, fragility_hint (low | medium | high), related_risks
+      (array of risk ids).
+
+  failure_modes:
+    type: array
+    required: true
+    description: >
+      Concrete ways the target could fail. Each has: id, description,
+      trigger_conditions, related_risks (array of risk ids).
+
+  mitigation_ideas:
+    type: array
+    required: false
+    description: >
+      Preliminary mitigation suggestions per risk. Each has: risk_id,
+      suggestion, effort_hint (low | medium | high).
+
+  extraction_notes:
+    type: string
+    required: false
+    description: >
+      Brief note on methodology, gaps in available information, or caveats.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - risk-analysis
+    - assumptions
+    - failure-modes
