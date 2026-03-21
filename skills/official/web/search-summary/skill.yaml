@@ -18,7 +18,7 @@ outputs:
     required: true
 steps:
 - id: search
-  uses: web.search
+  uses: web.source.search
   input:
     query: inputs.query
     limit: inputs.limit

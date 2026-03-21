@@ -1,7 +1,7 @@
 {
   "summary": {
-    "capability_count": 108,
-    "skill_count": 34,
+    "capability_count": 111,
+    "skill_count": 35,
     "domain_count": 27,
     "channel_count": 2
   },
@@ -12,8 +12,8 @@
       "analysis": 4,
       "memory": 3,
       "pdf": 3,
+      "research": 3,
       "agent": 2,
-      "research": 2,
       "audio": 1,
       "code": 1,
       "data": 1,
@@ -27,9 +27,9 @@
     },
     "by_channel": {
       "official": 24,
-      "experimental": 10
+      "experimental": 11
     },
-    "average_steps": 2.56,
+    "average_steps": 2.77,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -37,18 +37,18 @@
       "task": 15,
       "integration": 12,
       "identity": 10,
-      "text": 9,
+      "text": 10,
       "model": 8,
       "agent": 5,
       "ops": 5,
       "policy": 5,
+      "web": 5,
       "memory": 4,
       "security": 4,
-      "web": 4,
+      "analysis": 3,
       "code": 3,
       "data": 3,
       "eval": 3,
-      "analysis": 2,
       "email": 2,
       "image": 2,
       "message": 2,
@@ -65,11 +65,11 @@
     "most_used": [
       {
         "id": "text.summarize",
-        "count": 15
+        "count": 16
       },
       {
         "id": "eval.output.score",
-        "count": 6
+        "count": 7
       },
       {
         "id": "text.classify",
@@ -96,7 +96,15 @@
         "count": 3
       },
       {
+        "id": "research.source.retrieve",
+        "count": 3
+      },
+      {
         "id": "text.extract",
+        "count": 3
+      },
+      {
+        "id": "text.keyword.extract",
         "count": 3
       },
       {
@@ -116,6 +124,10 @@
         "count": 2
       },
       {
+        "id": "analysis.risk.extract",
+        "count": 2
+      },
+      {
         "id": "eval.option.analyze",
         "count": 2
       },
@@ -132,11 +144,7 @@
         "count": 2
       },
       {
-        "id": "research.source.retrieve",
-        "count": 2
-      },
-      {
-        "id": "text.keyword.extract",
+        "id": "text.entity.extract",
         "count": 2
       },
       {
@@ -144,15 +152,19 @@
         "count": 2
       },
       {
+        "id": "web.source.search",
+        "count": 2
+      },
+      {
         "id": "agent.option.generate",
         "count": 1
       },
       {
-        "id": "analysis.risk.extract",
+        "id": "analysis.split",
         "count": 1
       },
       {
-        "id": "analysis.split",
+        "id": "analysis.theme.cluster",
         "count": 1
       },
       {
@@ -200,7 +212,7 @@
         "count": 1
       },
       {
-        "id": "text.entity.extract",
+        "id": "text.merge",
         "count": 1
       },
       {
@@ -208,7 +220,7 @@
         "count": 1
       },
       {
-        "id": "web.search",
+        "id": "web.source.normalize",
         "count": 1
       }
     ],
@@ -287,21 +299,21 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 87,
+    "skill_to_capability_edges": 97,
     "skill_to_skill_edges": 0,
-    "max_capabilities_per_skill": 5
+    "max_capabilities_per_skill": 10
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 34,
-    "capabilities_with_nondefault_metadata": 63,
+    "skills_with_nondefault_metadata": 35,
+    "capabilities_with_nondefault_metadata": 66,
     "top_skill_tags": [
       {
         "id": "analysis",
-        "count": 3
+        "count": 4
       },
       {
         "id": "research",
-        "count": 3
+        "count": 4
       },
       {
         "id": "agent",
@@ -316,6 +328,10 @@
         "count": 2
       },
       {
+        "id": "multi-source",
+        "count": 2
+      },
+      {
         "id": "adversarial-thinking",
         "count": 1
       },
@@ -325,6 +341,10 @@
       },
       {
         "id": "assumptions",
+        "count": 1
+      },
+      {
+        "id": "briefing",
         "count": 1
       },
       {
@@ -376,7 +396,7 @@
         "count": 1
       },
       {
-        "id": "multi-source",
+        "id": "market-intelligence",
         "count": 1
       },
       {
@@ -438,12 +458,20 @@
       {
         "id": "validation",
         "count": 1
+      },
+      {
+        "id": "web",
+        "count": 1
       }
     ],
     "top_capability_tags": [
       {
         "id": "decision-support",
         "count": 4
+      },
+      {
+        "id": "analysis",
+        "count": 2
       },
       {
         "id": "cognitive-unit",
@@ -454,15 +482,27 @@
         "count": 2
       },
       {
+        "id": "preprocessing",
+        "count": 2
+      },
+      {
+        "id": "structuring",
+        "count": 2
+      },
+      {
         "id": "trace",
         "count": 2
       },
       {
-        "id": "analysis",
+        "id": "assumptions",
         "count": 1
       },
       {
-        "id": "assumptions",
+        "id": "clustering",
+        "count": 1
+      },
+      {
+        "id": "corpus",
         "count": 1
       },
       {
@@ -486,6 +526,10 @@
         "count": 1
       },
       {
+        "id": "merge",
+        "count": 1
+      },
+      {
         "id": "meta",
         "count": 1
       },
@@ -495,6 +539,10 @@
       },
       {
         "id": "multi-criteria",
+        "count": 1
+      },
+      {
+        "id": "normalization",
         "count": 1
       },
       {
@@ -534,7 +582,19 @@
         "count": 1
       },
       {
-        "id": "structuring",
+        "id": "text",
+        "count": 1
+      },
+      {
+        "id": "themes",
+        "count": 1
+      },
+      {
+        "id": "utility",
+        "count": 1
+      },
+      {
+        "id": "web",
         "count": 1
       }
     ]

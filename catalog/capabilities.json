@@ -347,6 +347,67 @@
     }
   },
   {
+    "id": "analysis.theme.cluster",
+    "version": "1.0.0",
+    "description": "Group a collection of text items into coherent thematic clusters. Identifies dominant themes, assigns each item to one or more clusters, and produces a summary per cluster with signal strength. Accepts optional hint labels to guide (not force) the thematic structure.\n",
+    "file": "capabilities/analysis.theme.cluster.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "Items to cluster. Each item must include id and content (text). May also include title, type, source, metadata.\n"
+      },
+      "hint_labels": {
+        "type": "array",
+        "required": false,
+        "description": "Suggested theme labels to guide clustering. The implementation may merge, split, rename, or add themes beyond hints. Example: [\"market_overview\", \"key_players\", \"trends\", \"risks\", \"opportunities\"].\n"
+      },
+      "max_clusters": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of clusters to produce (default 8, hard cap 15)."
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background context informing how items should be grouped."
+      }
+    },
+    "outputs": {
+      "clusters": {
+        "type": "array",
+        "required": true,
+        "description": "Themed clusters. Each cluster contains: theme (label), description, item_ids (list of assigned item ids), summary (text summary of the cluster content), signal_strength (0-1 estimate of how well-supported the theme is by the corpus).\n"
+      },
+      "unclustered": {
+        "type": "array",
+        "required": false,
+        "description": "Items that did not fit any cluster. Each entry contains id and reason.\n"
+      },
+      "cluster_quality": {
+        "type": "object",
+        "required": false,
+        "description": "Self-assessment of clustering quality: coherence_score (0-1), coverage_ratio (fraction of items assigned), overlap_warnings (list of items assigned to multiple clusters).\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "analysis",
+        "clustering",
+        "themes",
+        "structuring"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "audio.transcribe",
     "version": "1.0.0",
     "description": "Convert speech audio to text.",
@@ -2875,6 +2936,57 @@
     }
   },
   {
+    "id": "text.merge",
+    "version": "1.0.0",
+    "description": "Merge multiple text items into a single consolidated text block. Accepts an array of items with text content and produces a single string with configurable separator. Deterministic, no LLM required.\n",
+    "file": "capabilities/text.merge.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "Items to merge. Each item must include a content field (string). May also include id and title which are used as section headers when include_headers is true.\n"
+      },
+      "separator": {
+        "type": "string",
+        "required": false,
+        "description": "Separator between merged items. Defaults to double newline.\n"
+      },
+      "include_headers": {
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to include item titles as section headers in the merged text. Defaults to true when items have titles.\n"
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Merged text block from all items."
+      },
+      "item_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of items that contributed content to the merged text."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "merge",
+        "preprocessing",
+        "utility"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
     "id": "text.summarize",
     "version": "1.0.0",
     "description": "Produce a condensed version of text preserving key ideas.",
@@ -3063,10 +3175,51 @@
     }
   },
   {
-    "id": "web.search",
+    "id": "web.source.normalize",
     "version": "1.0.0",
-    "description": "Search the web for results matching a query.",
-    "file": "capabilities/web.search.yaml",
+    "description": "Normalize web search results into corpus item format suitable for downstream research and analysis capabilities. Converts raw search result objects (url, title, snippet) into structured corpus items with source_ref for lazy content resolution. Supports quick mode (snippet as content) and deep mode (source_ref for full page fetch).\n",
+    "file": "capabilities/web.source.normalize.yaml",
+    "inputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Web search results. Each result should contain at minimum a url field. May also include title, snippet, rank, domain, date.\n"
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "Processing mode. \"quick\" uses snippets as content (default). \"deep\" leaves content empty and sets source_ref for downstream resolution via research.source.retrieve.\n"
+      }
+    },
+    "outputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "Normalized corpus items. Each item contains: id, title, content (populated in quick mode, empty in deep mode), source_ref (always present, type=url), type (web_page), source (original URL), metadata (original snippet, rank, domain).\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "web",
+        "normalization",
+        "corpus",
+        "preprocessing"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "web.source.search",
+    "version": "1.0.0",
+    "description": "Search the web for sources matching a query.",
+    "file": "capabilities/web.source.search.yaml",
     "inputs": {
       "query": {
         "type": "string",

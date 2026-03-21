@@ -1,11 +1,11 @@
 {
   "summary": {
-    "capabilities_total": 108,
+    "capabilities_total": 111,
     "covered_domains": 27,
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 105
+    "metadata_issues": 108
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -190,6 +190,12 @@
     },
     {
       "capability_id": "analysis.split",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "analysis.theme.cluster",
       "issues": [
         "missing_examples"
       ]
@@ -829,6 +835,12 @@
       ]
     },
     {
+      "capability_id": "text.merge",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "text.summarize",
       "issues": [
         "missing_tags",
@@ -871,7 +883,13 @@
       ]
     },
     {
-      "capability_id": "web.search",
+      "capability_id": "web.source.normalize",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "web.source.search",
       "issues": [
         "missing_tags",
         "missing_examples"

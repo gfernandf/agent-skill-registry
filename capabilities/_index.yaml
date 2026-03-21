@@ -45,3 +45,15 @@ capabilities:
   - id: analysis.risk.extract
     status: experimental
     description: Extract risks, fragile assumptions, failure modes, and mitigation ideas from a target artifact.
+
+  - id: analysis.theme.cluster
+    status: experimental
+    description: Group text items into coherent thematic clusters with summaries and signal strength.
+
+  - id: web.source.normalize
+    status: experimental
+    description: Normalize web search results into corpus item format for downstream analysis.
+
+  - id: text.merge
+    status: experimental
+    description: Merge multiple text items into a single consolidated text block.

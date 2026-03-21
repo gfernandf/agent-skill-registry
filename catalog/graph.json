@@ -150,6 +150,21 @@
       ],
       "skills": []
     },
+    "research.generate-briefing": {
+      "capabilities": [
+        "analysis.risk.extract",
+        "analysis.theme.cluster",
+        "eval.output.score",
+        "research.source.retrieve",
+        "text.entity.extract",
+        "text.keyword.extract",
+        "text.merge",
+        "text.summarize",
+        "web.source.normalize",
+        "web.source.search"
+      ],
+      "skills": []
+    },
     "research.normalize-corpus": {
       "capabilities": [
         "model.output.generate",
@@ -253,7 +268,7 @@
     "web.search-summary": {
       "capabilities": [
         "text.summarize",
-        "web.search"
+        "web.source.search"
       ],
       "skills": []
     }

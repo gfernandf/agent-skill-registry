@@ -102,7 +102,8 @@
     "permission": "Access permission",
     "connector": "External system connector",
     "mapping": "Field mapping or translation map",
-    "event": "Domain event"
+    "event": "Domain event",
+    "theme": "Thematic category or recurring subject"
   },
 
   "verbs": {
@@ -170,6 +171,7 @@
     "upsert": "Create or update idempotently",
     "close": "Close a case, ticket, or process",
     "acknowledge": "Acknowledge receipt or state",
-    "transition": "Transition between workflow states"
+    "transition": "Transition between workflow states",
+    "cluster": "Group items by similarity or theme"
   }
 }

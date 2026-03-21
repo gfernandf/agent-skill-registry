@@ -1,0 +1,61 @@
+id: analysis.theme.cluster
+version: 1.0.0
+description: >
+  Group a collection of text items into coherent thematic clusters.
+  Identifies dominant themes, assigns each item to one or more clusters,
+  and produces a summary per cluster with signal strength. Accepts optional
+  hint labels to guide (not force) the thematic structure.
+
+inputs:
+  items:
+    type: array
+    required: true
+    description: >
+      Items to cluster. Each item must include id and content (text).
+      May also include title, type, source, metadata.
+  hint_labels:
+    type: array
+    required: false
+    description: >
+      Suggested theme labels to guide clustering. The implementation may
+      merge, split, rename, or add themes beyond hints. Example:
+      ["market_overview", "key_players", "trends", "risks", "opportunities"].
+  max_clusters:
+    type: number
+    required: false
+    description: Maximum number of clusters to produce (default 8, hard cap 15).
+  context:
+    type: string
+    required: false
+    description: Background context informing how items should be grouped.
+
+outputs:
+  clusters:
+    type: array
+    required: true
+    description: >
+      Themed clusters. Each cluster contains: theme (label), description,
+      item_ids (list of assigned item ids), summary (text summary of the
+      cluster content), signal_strength (0-1 estimate of how well-supported
+      the theme is by the corpus).
+  unclustered:
+    type: array
+    required: false
+    description: >
+      Items that did not fit any cluster. Each entry contains id and reason.
+  cluster_quality:
+    type: object
+    required: false
+    description: >
+      Self-assessment of clustering quality: coherence_score (0-1),
+      coverage_ratio (fraction of items assigned), overlap_warnings
+      (list of items assigned to multiple clusters).
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags: [analysis, clustering, themes, structuring]

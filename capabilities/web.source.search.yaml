@@ -1,6 +1,6 @@
-id: web.search
+id: web.source.search
 version: 1.0.0
-description: Search the web for results matching a query.
+description: Search the web for sources matching a query.
 inputs:
   query:
     type: string

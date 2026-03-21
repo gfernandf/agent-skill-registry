@@ -1,0 +1,42 @@
+id: web.source.normalize
+version: 1.0.0
+description: >
+  Normalize web search results into corpus item format suitable for
+  downstream research and analysis capabilities. Converts raw search
+  result objects (url, title, snippet) into structured corpus items
+  with source_ref for lazy content resolution. Supports quick mode
+  (snippet as content) and deep mode (source_ref for full page fetch).
+
+inputs:
+  results:
+    type: array
+    required: true
+    description: >
+      Web search results. Each result should contain at minimum a url field.
+      May also include title, snippet, rank, domain, date.
+  mode:
+    type: string
+    required: false
+    description: >
+      Processing mode. "quick" uses snippets as content (default).
+      "deep" leaves content empty and sets source_ref for downstream
+      resolution via research.source.retrieve.
+
+outputs:
+  items:
+    type: array
+    required: true
+    description: >
+      Normalized corpus items. Each item contains: id, title, content
+      (populated in quick mode, empty in deep mode), source_ref
+      (always present, type=url), type (web_page), source (original URL),
+      metadata (original snippet, rank, domain).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags: [web, normalization, corpus, preprocessing]

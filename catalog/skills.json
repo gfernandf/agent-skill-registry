@@ -2344,6 +2344,332 @@
     }
   },
   {
+    "id": "research.generate-briefing",
+    "version": "0.1.0",
+    "name": "Generate Research Briefing",
+    "description": "Build a structured intelligence briefing from web sources. Searches the web for a given query, normalizes results into corpus format, optionally fetches full page content (deep mode), extracts keywords and entities, summarizes the corpus, clusters information into thematic groups, and assesses risks.\nPipeline: 8 steps, 0 model.output.generate calls. All analysis is performed by dedicated capabilities with stable contracts. Steps 5a-5c run in parallel.\nModes:\n  quick (default) — works with search result snippets, lower latency.\n  deep — fetches full page content via research.source.retrieve, richer output.\n",
+    "channel": "experimental",
+    "domain": "research",
+    "slug": "generate-briefing",
+    "file": "skills/experimental/research/generate-briefing/skill.yaml",
+    "inputs": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "Search query describing the market, topic, or domain to research. Examples: \"green hydrogen market Europe\", \"pilates boutique fitness Spain\".\n"
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "\"quick\" (default) uses search snippets. \"deep\" fetches full page content for richer analysis at the cost of higher latency.\n"
+      },
+      "num_sources": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of sources to process (default 8).\n"
+      },
+      "focus": {
+        "type": "string",
+        "required": false,
+        "description": "Optional focus hint for clustering and risk analysis. Examples: \"competition and pricing\", \"regulatory landscape\", \"technology trends\".\n"
+      },
+      "theme_hints": {
+        "type": "array",
+        "required": false,
+        "description": "Optional theme labels to guide clustering. If omitted, defaults to [\"market_overview\", \"key_players\", \"trends\", \"risks\", \"opportunities\"].\n"
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true,
+        "description": "Executive summary of the briefing corpus."
+      },
+      "keywords": {
+        "type": "array",
+        "required": true,
+        "description": "Extracted keywords from the corpus."
+      },
+      "entities": {
+        "type": "array",
+        "required": true,
+        "description": "Extracted named entities (companies, people, organizations, locations)."
+      },
+      "clusters": {
+        "type": "array",
+        "required": true,
+        "description": "Thematic clusters. Each contains: theme, description, item_ids, summary, signal_strength. Default themes: market_overview, key_players, trends, risks, opportunities.\n"
+      },
+      "risks": {
+        "type": "array",
+        "required": true,
+        "description": "Identified risks with severity hints and related assumptions."
+      },
+      "assumptions": {
+        "type": "array",
+        "required": true,
+        "description": "Fragile assumptions underlying the briefing content."
+      },
+      "failure_modes": {
+        "type": "array",
+        "required": true,
+        "description": "Concrete failure scenarios related to the briefing subject."
+      },
+      "mitigation_ideas": {
+        "type": "array",
+        "required": false,
+        "description": "Preliminary mitigation suggestions per risk."
+      },
+      "sources": {
+        "type": "array",
+        "required": true,
+        "description": "Normalized source list with URLs, titles, and metadata."
+      },
+      "quality": {
+        "type": "object",
+        "required": true,
+        "description": "Quality assessment of the briefing output."
+      }
+    },
+    "steps": [
+      {
+        "id": "search",
+        "uses": "web.source.search",
+        "input": {
+          "query": "inputs.query",
+          "limit": "inputs.num_sources"
+        },
+        "output": {
+          "results": "vars.search_results"
+        }
+      },
+      {
+        "id": "normalize",
+        "uses": "web.source.normalize",
+        "input": {
+          "results": "vars.search_results",
+          "mode": "inputs.mode"
+        },
+        "output": {
+          "items": "vars.corpus_items"
+        }
+      },
+      {
+        "id": "resolve_sources",
+        "uses": "research.source.retrieve",
+        "input": {
+          "items": "vars.corpus_items"
+        },
+        "output": {
+          "items": "outputs.sources"
+        }
+      },
+      {
+        "id": "merge_text",
+        "uses": "text.merge",
+        "input": {
+          "items": "outputs.sources"
+        },
+        "output": {
+          "text": "vars.corpus_text",
+          "item_count": "vars.source_count"
+        }
+      },
+      {
+        "id": "extract_keywords",
+        "uses": "text.keyword.extract",
+        "depends_on": [],
+        "input": {
+          "text": "vars.corpus_text"
+        },
+        "output": {
+          "keywords": "outputs.keywords"
+        }
+      },
+      {
+        "id": "extract_entities",
+        "uses": "text.entity.extract",
+        "depends_on": [],
+        "input": {
+          "text": "vars.corpus_text"
+        },
+        "output": {
+          "entities": "outputs.entities"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.summarize",
+        "depends_on": [],
+        "input": {
+          "text": "vars.corpus_text"
+        },
+        "output": {
+          "summary": "outputs.summary"
+        }
+      },
+      {
+        "id": "cluster",
+        "uses": "analysis.theme.cluster",
+        "input": {
+          "items": "outputs.sources",
+          "hint_labels": "inputs.theme_hints",
+          "context": "inputs.focus"
+        },
+        "output": {
+          "clusters": "outputs.clusters"
+        }
+      },
+      {
+        "id": "extract_risks",
+        "uses": "analysis.risk.extract",
+        "input": {
+          "target": {
+            "clusters": "outputs.clusters",
+            "summary": "outputs.summary",
+            "keywords": "outputs.keywords"
+          },
+          "context": "inputs.focus",
+          "risk_scope": "broad"
+        },
+        "output": {
+          "risks": "outputs.risks",
+          "assumptions": "outputs.assumptions",
+          "failure_modes": "outputs.failure_modes",
+          "mitigation_ideas": "outputs.mitigation_ideas"
+        }
+      },
+      {
+        "id": "assess_quality",
+        "uses": "eval.output.score",
+        "input": {
+          "output": {
+            "summary": "outputs.summary",
+            "keywords": "outputs.keywords",
+            "entities": "outputs.entities",
+            "clusters": "outputs.clusters",
+            "risks": "outputs.risks"
+          },
+          "rubric": {
+            "dimensions": {
+              "source_coverage": {
+                "description": "Are enough sources represented? Is the briefing based on diverse, non-redundant material?\n",
+                "weight": 0.25
+              },
+              "thematic_completeness": {
+                "description": "Do clusters cover the expected dimensions (overview, players, trends, risks, opportunities)? Are any major themes missing?\n",
+                "weight": 0.25
+              },
+              "signal_specificity": {
+                "description": "Are keywords, entities, and cluster summaries specific and actionable rather than generic?\n",
+                "weight": 0.25
+              },
+              "risk_depth": {
+                "description": "Are risks grounded in the source material? Are assumptions explicit and failure modes concrete?\n",
+                "weight": 0.25
+              }
+            }
+          }
+        },
+        "output": {
+          "score": "outputs.quality"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "analysis.risk.extract",
+      "analysis.theme.cluster",
+      "eval.output.score",
+      "research.source.retrieve",
+      "text.entity.extract",
+      "text.keyword.extract",
+      "text.merge",
+      "text.summarize",
+      "web.source.normalize",
+      "web.source.search"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "research",
+        "briefing",
+        "web",
+        "market-intelligence",
+        "multi-source",
+        "analysis"
+      ],
+      "category": "research",
+      "status": "experimental",
+      "use_cases": [
+        "Generate market intelligence briefing from web sources",
+        "Research competitive landscape for a given industry or market",
+        "Produce a structured overview of an emerging technology or trend",
+        "Assess risks and opportunities in a new market segment"
+      ],
+      "examples": [
+        {
+          "description": "Quick briefing on green hydrogen market",
+          "input": {
+            "query": "green hydrogen market Europe 2025",
+            "mode": "quick",
+            "focus": "competition and investment"
+          },
+          "output": {
+            "summary": "The European green hydrogen market is accelerating...",
+            "keywords": [
+              "hydrogen",
+              "electrolysis",
+              "subsidy",
+              "pipeline"
+            ],
+            "entities": [
+              "Iberdrola",
+              "Air Liquide",
+              "European Commission"
+            ],
+            "clusters": [
+              {
+                "theme": "market_overview",
+                "summary": "European market growing at ~30% CAGR..."
+              },
+              {
+                "theme": "key_players",
+                "summary": "Major utilities and gas companies..."
+              }
+            ],
+            "risks": [
+              {
+                "id": "r1",
+                "description": "Subsidy dependency may create cliff risk"
+              }
+            ]
+          }
+        },
+        {
+          "description": "Deep briefing on boutique fitness competition",
+          "input": {
+            "query": "pilates boutique fitness Spain competition",
+            "mode": "deep",
+            "num_sources": 10,
+            "focus": "pricing and market segments",
+            "theme_hints": [
+              "market_size",
+              "competitors",
+              "pricing",
+              "trends",
+              "barriers"
+            ]
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
     "id": "research.normalize-corpus",
     "version": "0.1.0",
     "name": "Normalize Corpus",
@@ -3645,7 +3971,7 @@
     "steps": [
       {
         "id": "search",
-        "uses": "web.search",
+        "uses": "web.source.search",
         "input": {
           "query": "inputs.query",
           "limit": "inputs.limit"
@@ -3667,7 +3993,7 @@
     ],
     "uses_capabilities": [
       "text.summarize",
-      "web.search"
+      "web.source.search"
     ],
     "uses_skills": [],
     "metadata": {
