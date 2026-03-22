@@ -1,4 +1,4 @@
-﻿id: model.output.generate
+id: model.output.generate
 version: 1.0.0
 description: Generate structured output from a model given an instruction, context items, and an output schema.
 

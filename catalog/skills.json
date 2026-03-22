@@ -37,7 +37,7 @@
       },
       {
         "id": "route_plan",
-        "uses": "agent.route",
+        "uses": "agent.input.route",
         "input": {
           "input": "outputs.plan"
         },
@@ -47,8 +47,8 @@
       }
     ],
     "uses_capabilities": [
-      "agent.plan.generate",
-      "agent.route"
+      "agent.input.route",
+      "agent.plan.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -69,10 +69,10 @@
     "version": "0.1.0",
     "name": "Agent Trace",
     "description": "Analyze agent execution incrementally to produce structured trace state, decision graph views, and risk control signals during a run.\n",
-    "channel": "experimental",
+    "channel": "official",
     "domain": "agent",
     "slug": "trace",
-    "file": "skills/experimental/agent/trace/skill.yaml",
+    "file": "skills/official/agent/trace/skill.yaml",
     "inputs": {
       "goal": {
         "type": "string",
@@ -269,7 +269,7 @@
         "control"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "unspecified",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -446,10 +446,10 @@
     "version": "0.1.0",
     "name": "Decompose Problem",
     "description": "Divide a complex problem or topic into manageable analysis blocks to avoid monolithic reasoning and mixed dimensions. Selects a decomposition strategy, generates described components with dependencies, and validates the decomposition for gaps and overlaps.\nPipeline: (1) classify the best decomposition strategy, (2) split into components with dependencies and order, (3) quality gate on the decomposition.\nTypical upstream: task.frame output or direct user input. Typical downstream: analysis.synthesize (per component), analysis.compare, decision.make, or any skill that benefits from scoped sub-problems.\n",
-    "channel": "experimental",
+    "channel": "official",
     "domain": "analysis",
     "slug": "decompose",
-    "file": "skills/experimental/analysis/decompose/skill.yaml",
+    "file": "skills/official/analysis/decompose/skill.yaml",
     "inputs": {
       "problem": {
         "type": "string",
@@ -497,7 +497,7 @@
     "steps": [
       {
         "id": "select_strategy",
-        "uses": "text.classify",
+        "uses": "text.content.classify",
         "input": {
           "text": "inputs.problem",
           "labels": [
@@ -517,7 +517,7 @@
       },
       {
         "id": "split_problem",
-        "uses": "analysis.split",
+        "uses": "analysis.problem.split",
         "input": {
           "problem": "inputs.problem",
           "strategy": "outputs.decomposition_strategy",
@@ -566,9 +566,9 @@
       }
     ],
     "uses_capabilities": [
-      "analysis.split",
+      "analysis.problem.split",
       "eval.output.score",
-      "text.classify"
+      "text.content.classify"
     ],
     "uses_skills": [],
     "metadata": {
@@ -579,7 +579,7 @@
         "problem-solving"
       ],
       "category": "analysis",
-      "status": "experimental",
+      "status": "unspecified",
       "use_cases": [
         "Break down a complex market analysis into dimensions",
         "Decompose a technology migration into phases",
@@ -587,7 +587,11 @@
         "Structure a research agenda into key questions"
       ],
       "examples": [],
-      "classification": null
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -672,7 +676,7 @@
       },
       {
         "id": "classify_risks",
-        "uses": "text.classify",
+        "uses": "text.content.classify",
         "input": {
           "text": "outputs.identified_risks",
           "labels": [
@@ -728,7 +732,7 @@
     "uses_capabilities": [
       "analysis.risk.extract",
       "eval.output.score",
-      "text.classify"
+      "text.content.classify"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1079,10 +1083,10 @@
     "version": "0.1.0",
     "name": "Transcribe Summary",
     "description": "Transcribe audio and summarize the transcript.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "audio",
     "slug": "transcribe-summary",
-    "file": "skills/official/audio/transcribe-summary/skill.yaml",
+    "file": "skills/experimental/audio/transcribe-summary/skill.yaml",
     "inputs": {
       "audio": {
         "type": "string",
@@ -1102,7 +1106,7 @@
     "steps": [
       {
         "id": "transcribe_audio",
-        "uses": "audio.transcribe",
+        "uses": "audio.speech.transcribe",
         "input": {
           "audio": "inputs.audio"
         },
@@ -1112,7 +1116,7 @@
       },
       {
         "id": "summarize_transcript",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.transcript"
         },
@@ -1122,14 +1126,14 @@
       }
     ],
     "uses_capabilities": [
-      "audio.transcribe",
-      "text.summarize"
+      "audio.speech.transcribe",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -1182,7 +1186,7 @@
       },
       {
         "id": "summarize_diff",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.diff"
         },
@@ -1193,7 +1197,7 @@
     ],
     "uses_capabilities": [
       "code.diff.extract",
-      "text.summarize"
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1289,10 +1293,10 @@
     "version": "0.1.0",
     "name": "Make Decision",
     "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) qualitative analysis of pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative scoring, (4) select recommendation with structured justification, failure modes, and next steps, (5) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call. Zero uses of model.output.generate — every step is a dedicated, named capability.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
-    "channel": "experimental",
+    "channel": "official",
     "domain": "decision",
     "slug": "make",
-    "file": "skills/experimental/decision/make/skill.yaml",
+    "file": "skills/official/decision/make/skill.yaml",
     "inputs": {
       "goal": {
         "type": "string",
@@ -1501,7 +1505,7 @@
         "structured-output"
       ],
       "category": "decision",
-      "status": "experimental",
+      "status": "unspecified",
       "use_cases": [
         "Strategic decisions (market entry, technology selection, initiative prioritization)",
         "Operational decisions (implementation approach, vendor selection, architecture choice)",
@@ -1536,10 +1540,10 @@
     "version": "0.1.0",
     "name": "Chunk and Embed",
     "description": "Split text into chunks and generate embeddings for the original text.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "doc",
     "slug": "chunk-and-embed",
-    "file": "skills/official/doc/chunk-and-embed/skill.yaml",
+    "file": "skills/experimental/doc/chunk-and-embed/skill.yaml",
     "inputs": {
       "text": {
         "type": "string",
@@ -1567,7 +1571,7 @@
     "steps": [
       {
         "id": "chunk",
-        "uses": "doc.chunk",
+        "uses": "doc.content.chunk",
         "input": {
           "text": "inputs.text",
           "chunk_size": "inputs.chunk_size",
@@ -1579,7 +1583,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.embed",
+        "uses": "text.content.embed",
         "input": {
           "text": "inputs.text"
         },
@@ -1589,14 +1593,14 @@
       }
     ],
     "uses_capabilities": [
-      "doc.chunk",
-      "text.embed"
+      "doc.content.chunk",
+      "text.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -1634,7 +1638,7 @@
     "steps": [
       {
         "id": "read_email",
-        "uses": "email.read",
+        "uses": "email.inbox.read",
         "input": {
           "mailbox": "inputs.mailbox"
         },
@@ -1644,7 +1648,7 @@
       },
       {
         "id": "summarize_messages",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.messages"
         },
@@ -1654,8 +1658,8 @@
       }
     ],
     "uses_capabilities": [
-      "email.read",
-      "text.summarize"
+      "email.inbox.read",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1828,10 +1832,10 @@
     "version": "0.1.0",
     "name": "Caption and Classify Image",
     "description": "Generate a caption for an image and classify it.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "image",
     "slug": "caption-and-classify",
-    "file": "skills/official/image/caption-and-classify/skill.yaml",
+    "file": "skills/experimental/image/caption-and-classify/skill.yaml",
     "inputs": {
       "image": {
         "type": "string",
@@ -1869,7 +1873,7 @@
       },
       {
         "id": "classify_image",
-        "uses": "image.classify",
+        "uses": "image.content.classify",
         "input": {
           "image": "inputs.image",
           "labels": "inputs.labels"
@@ -1882,13 +1886,13 @@
     ],
     "uses_capabilities": [
       "image.caption.generate",
-      "image.classify"
+      "image.content.classify"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -1930,7 +1934,7 @@
     "steps": [
       {
         "id": "retrieve_memory",
-        "uses": "memory.retrieve",
+        "uses": "memory.entry.retrieve",
         "input": {
           "key": "inputs.key"
         },
@@ -1941,7 +1945,7 @@
       },
       {
         "id": "summarize_value",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.value"
         },
@@ -1951,8 +1955,8 @@
       }
     ],
     "uses_capabilities": [
-      "memory.retrieve",
-      "text.summarize"
+      "memory.entry.retrieve",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1973,10 +1977,10 @@
     "version": "0.1.0",
     "name": "Store Embedding",
     "description": "Generate an embedding from text and store it in memory.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "memory",
     "slug": "store-embedding",
-    "file": "skills/official/memory/store-embedding/skill.yaml",
+    "file": "skills/experimental/memory/store-embedding/skill.yaml",
     "inputs": {
       "text": {
         "type": "string",
@@ -2000,7 +2004,7 @@
     "steps": [
       {
         "id": "embed_text",
-        "uses": "text.embed",
+        "uses": "text.content.embed",
         "input": {
           "text": "inputs.text"
         },
@@ -2010,7 +2014,7 @@
       },
       {
         "id": "store_embedding",
-        "uses": "memory.store",
+        "uses": "memory.entry.store",
         "input": {
           "key": "inputs.key",
           "value": "outputs.embedding"
@@ -2021,14 +2025,14 @@
       }
     ],
     "uses_capabilities": [
-      "memory.store",
-      "text.embed"
+      "memory.entry.store",
+      "text.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -2070,7 +2074,7 @@
     "steps": [
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -2080,7 +2084,7 @@
       },
       {
         "id": "store_memory",
-        "uses": "memory.store",
+        "uses": "memory.entry.store",
         "input": {
           "key": "inputs.key",
           "value": "outputs.summary"
@@ -2091,8 +2095,8 @@
       }
     ],
     "uses_capabilities": [
-      "memory.store",
-      "text.summarize"
+      "memory.entry.store",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2113,10 +2117,10 @@
     "version": "0.1.0",
     "name": "PDF Chunk and Embed",
     "description": "Read a PDF, chunk its text, and generate embeddings for the full text.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "pdf",
     "slug": "chunk-and-embed",
-    "file": "skills/official/pdf/chunk-and-embed/skill.yaml",
+    "file": "skills/experimental/pdf/chunk-and-embed/skill.yaml",
     "inputs": {
       "path": {
         "type": "string",
@@ -2148,7 +2152,7 @@
     "steps": [
       {
         "id": "read_pdf",
-        "uses": "pdf.read",
+        "uses": "pdf.document.read",
         "input": {
           "path": "inputs.path"
         },
@@ -2158,7 +2162,7 @@
       },
       {
         "id": "chunk",
-        "uses": "doc.chunk",
+        "uses": "doc.content.chunk",
         "input": {
           "text": "outputs.text",
           "chunk_size": "inputs.chunk_size",
@@ -2170,7 +2174,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.embed",
+        "uses": "text.content.embed",
         "input": {
           "text": "outputs.text"
         },
@@ -2180,15 +2184,15 @@
       }
     ],
     "uses_capabilities": [
-      "doc.chunk",
-      "pdf.read",
-      "text.embed"
+      "doc.content.chunk",
+      "pdf.document.read",
+      "text.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -2230,7 +2234,7 @@
     "steps": [
       {
         "id": "read_pdf",
-        "uses": "pdf.read",
+        "uses": "pdf.document.read",
         "input": {
           "path": "inputs.path"
         },
@@ -2250,7 +2254,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -2260,9 +2264,9 @@
       }
     ],
     "uses_capabilities": [
-      "pdf.read",
-      "text.keyword.extract",
-      "text.summarize"
+      "pdf.document.read",
+      "text.content.summarize",
+      "text.keyword.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2306,7 +2310,7 @@
     "steps": [
       {
         "id": "read_pdf",
-        "uses": "pdf.read",
+        "uses": "pdf.document.read",
         "input": {
           "path": "inputs.path"
         },
@@ -2316,7 +2320,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -2326,8 +2330,8 @@
       }
     ],
     "uses_capabilities": [
-      "pdf.read",
-      "text.summarize"
+      "pdf.document.read",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2466,7 +2470,7 @@
       },
       {
         "id": "merge_text",
-        "uses": "text.merge",
+        "uses": "text.content.merge",
         "input": {
           "items": "outputs.sources"
         },
@@ -2499,7 +2503,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "depends_on": [],
         "input": {
           "text": "vars.corpus_text"
@@ -2581,10 +2585,10 @@
       "analysis.theme.cluster",
       "eval.output.score",
       "research.source.retrieve",
+      "text.content.merge",
+      "text.content.summarize",
       "text.entity.extract",
       "text.keyword.extract",
-      "text.merge",
-      "text.summarize",
       "web.source.normalize",
       "web.source.search"
     ],
@@ -3042,7 +3046,7 @@
     "steps": [
       {
         "id": "filter_table",
-        "uses": "table.filter",
+        "uses": "table.row.filter",
         "input": {
           "table": "inputs.table",
           "condition": "inputs.condition"
@@ -3053,7 +3057,7 @@
       },
       {
         "id": "summarize_table",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.table"
         },
@@ -3063,8 +3067,8 @@
       }
     ],
     "uses_capabilities": [
-      "table.filter",
-      "text.summarize"
+      "table.row.filter",
+      "text.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3085,10 +3089,10 @@
     "version": "0.1.0",
     "name": "Frame Task",
     "description": "Take an ambiguous or broad task and convert it into a structured problem definition: what needs to be solved, what type of work it is, what information is needed, and what approach to follow.\nPrevents the agent from starting work on a misinterpreted brief. Acts as the entry point to the system — every complex workflow benefits from framing first.\nPipeline: (1) classify the task type, (2) extract objectives, constraints, and information needs, (3) propose an approach, (4) suggest which skills should run next.\nTypical upstream: direct user input or agent intake. Typical downstream: analysis.decompose, analysis.synthesize, analysis.compare, decision.make, or any domain-specific skill.\n",
-    "channel": "experimental",
+    "channel": "official",
     "domain": "task",
     "slug": "frame",
-    "file": "skills/experimental/task/frame/skill.yaml",
+    "file": "skills/official/task/frame/skill.yaml",
     "inputs": {
       "task": {
         "type": "string",
@@ -3151,7 +3155,7 @@
     "steps": [
       {
         "id": "classify_task",
-        "uses": "text.classify",
+        "uses": "text.content.classify",
         "input": {
           "text": "inputs.task",
           "labels": [
@@ -3172,7 +3176,7 @@
       },
       {
         "id": "extract_structure",
-        "uses": "text.extract",
+        "uses": "text.content.extract",
         "input": {
           "text": "inputs.task",
           "extraction_schema": {
@@ -3215,7 +3219,7 @@
       },
       {
         "id": "suggest_skills",
-        "uses": "agent.route",
+        "uses": "agent.input.route",
         "input": {
           "input": {
             "task_type": "outputs.task_type",
@@ -3228,10 +3232,10 @@
       }
     ],
     "uses_capabilities": [
+      "agent.input.route",
       "agent.plan.generate",
-      "agent.route",
-      "text.classify",
-      "text.extract"
+      "text.content.classify",
+      "text.content.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3242,7 +3246,7 @@
         "routing"
       ],
       "category": "task",
-      "status": "experimental",
+      "status": "unspecified",
       "use_cases": [
         "Interpret an ambiguous user request before starting work",
         "Structure a complex brief into actionable components",
@@ -3250,7 +3254,11 @@
         "Entry point for any multi-skill workflow"
       ],
       "examples": [],
-      "classification": null
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -3299,7 +3307,7 @@
       },
       {
         "id": "classify",
-        "uses": "text.classify",
+        "uses": "text.content.classify",
         "input": {
           "text": "inputs.text",
           "labels": "inputs.labels"
@@ -3311,7 +3319,7 @@
       }
     ],
     "uses_capabilities": [
-      "text.classify",
+      "text.content.classify",
       "text.language.detect"
     ],
     "uses_skills": [],
@@ -3366,7 +3374,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -3376,8 +3384,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.entity.extract",
-      "text.summarize"
+      "text.content.summarize",
+      "text.entity.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3421,7 +3429,7 @@
     "steps": [
       {
         "id": "extract_text",
-        "uses": "text.extract",
+        "uses": "text.content.extract",
         "input": {
           "text": "inputs.text"
         },
@@ -3441,7 +3449,7 @@
       },
       {
         "id": "summarize_text",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -3451,9 +3459,9 @@
       }
     ],
     "uses_capabilities": [
-      "text.extract",
-      "text.keyword.extract",
-      "text.summarize"
+      "text.content.extract",
+      "text.content.summarize",
+      "text.keyword.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3507,7 +3515,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -3517,8 +3525,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.language.detect",
-      "text.summarize"
+      "text.content.summarize",
+      "text.language.detect"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3566,7 +3574,7 @@
     "steps": [
       {
         "id": "translate",
-        "uses": "text.translate",
+        "uses": "text.content.translate",
         "input": {
           "text": "inputs.text",
           "target_language": "inputs.target_language"
@@ -3577,7 +3585,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.translation"
         },
@@ -3587,8 +3595,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.summarize",
-      "text.translate"
+      "text.content.summarize",
+      "text.content.translate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3644,7 +3652,7 @@
     "steps": [
       {
         "id": "fetch",
-        "uses": "web.fetch",
+        "uses": "web.page.fetch",
         "input": {
           "url": "inputs.url"
         },
@@ -3664,7 +3672,7 @@
       },
       {
         "id": "classify",
-        "uses": "text.classify",
+        "uses": "text.content.classify",
         "input": {
           "text": "outputs.text",
           "labels": "inputs.labels"
@@ -3676,9 +3684,9 @@
       }
     ],
     "uses_capabilities": [
-      "text.classify",
-      "web.fetch",
-      "web.page.extract"
+      "text.content.classify",
+      "web.page.extract",
+      "web.page.fetch"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3718,7 +3726,7 @@
     "steps": [
       {
         "id": "fetch_page",
-        "uses": "web.fetch",
+        "uses": "web.page.fetch",
         "input": {
           "url": "inputs.url"
         },
@@ -3728,7 +3736,7 @@
       },
       {
         "id": "extract_text",
-        "uses": "text.extract",
+        "uses": "text.content.extract",
         "input": {
           "text": "vars.page_content"
         },
@@ -3738,7 +3746,7 @@
       },
       {
         "id": "summarize_text",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -3748,9 +3756,9 @@
       }
     ],
     "uses_capabilities": [
-      "text.extract",
-      "text.summarize",
-      "web.fetch"
+      "text.content.extract",
+      "text.content.summarize",
+      "web.page.fetch"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3771,10 +3779,10 @@
     "version": "0.1.0",
     "name": "Web Page Chunk and Embed",
     "description": "Fetch a web page, extract main text, chunk it, and generate embeddings.",
-    "channel": "official",
+    "channel": "experimental",
     "domain": "web",
     "slug": "page-chunk-and-embed",
-    "file": "skills/official/web/page-chunk-and-embed/skill.yaml",
+    "file": "skills/experimental/web/page-chunk-and-embed/skill.yaml",
     "inputs": {
       "url": {
         "type": "string",
@@ -3810,7 +3818,7 @@
     "steps": [
       {
         "id": "fetch",
-        "uses": "web.fetch",
+        "uses": "web.page.fetch",
         "input": {
           "url": "inputs.url"
         },
@@ -3830,7 +3838,7 @@
       },
       {
         "id": "chunk",
-        "uses": "doc.chunk",
+        "uses": "doc.content.chunk",
         "input": {
           "text": "outputs.text",
           "chunk_size": "inputs.chunk_size",
@@ -3842,7 +3850,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.embed",
+        "uses": "text.content.embed",
         "input": {
           "text": "outputs.text"
         },
@@ -3852,16 +3860,16 @@
       }
     ],
     "uses_capabilities": [
-      "doc.chunk",
-      "text.embed",
-      "web.fetch",
-      "web.page.extract"
+      "doc.content.chunk",
+      "text.content.embed",
+      "web.page.extract",
+      "web.page.fetch"
     ],
     "uses_skills": [],
     "metadata": {
       "tags": [],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "use_cases": [],
       "examples": [],
       "classification": {
@@ -3909,7 +3917,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -3919,7 +3927,7 @@
       }
     ],
     "uses_capabilities": [
-      "text.summarize",
+      "text.content.summarize",
       "web.page.extract"
     ],
     "uses_skills": [],
@@ -3982,7 +3990,7 @@
       },
       {
         "id": "summarize_results",
-        "uses": "text.summarize",
+        "uses": "text.content.summarize",
         "input": {
           "text": "outputs.results"
         },
@@ -3992,7 +4000,7 @@
       }
     ],
     "uses_capabilities": [
-      "text.summarize",
+      "text.content.summarize",
       "web.source.search"
     ],
     "uses_skills": [],

@@ -16,21 +16,21 @@ outputs:
 steps:
 
   - id: fetch_page
-    uses: web.fetch
+    uses: web.page.fetch
     input:
       url: inputs.url
     output:
       content: vars.page_content
 
   - id: extract_text
-    uses: text.extract
+    uses: text.content.extract
     input:
       text: vars.page_content
     output:
       text: vars.cleaned_text
 
   - id: summarize_text
-    uses: text.summarize
+    uses: text.content.summarize
     input:
       text: vars.cleaned_text
     output:

@@ -21,7 +21,7 @@ steps:
   output:
     plan: outputs.plan
 - id: route_plan
-  uses: agent.route
+  uses: agent.input.route
   input:
     input: outputs.plan
   output:

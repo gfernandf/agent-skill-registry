@@ -15,13 +15,13 @@ outputs:
     required: true
 steps:
 - id: read_email
-  uses: email.read
+  uses: email.inbox.read
   input:
     mailbox: inputs.mailbox
   output:
     messages: outputs.messages
 - id: summarize_messages
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.messages
   output:

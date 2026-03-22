@@ -45,12 +45,12 @@ Capabilities represent **primitive operations** that can be reused across workfl
 Examples:
 
 ```
-text.summarize
-text.classify
+text.content.summarize
+text.content.classify
 text.keyword.extract
 data.json.parse
-web.fetch
-fs.read
+web.page.fetch
+fs.file.read
 ```
 
 Capabilities are defined in:
@@ -83,9 +83,9 @@ Example workflow:
 ```
 web.fetch-summary
 
-web.fetch
-→ text.extract
-→ text.summarize
+web.page.fetch
+→ text.content.extract
+→ text.content.summarize
 ```
 
 ---
@@ -110,7 +110,7 @@ This vocabulary defines:
 Examples of valid identifiers:
 
 ```
-text.summarize
+text.content.summarize
 data.json.parse
 text.keyword.extract
 web.page.fetch

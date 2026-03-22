@@ -18,14 +18,14 @@ outputs:
     required: true
 steps:
 - id: translate
-  uses: text.translate
+  uses: text.content.translate
   input:
     text: inputs.text
     target_language: inputs.target_language
   output:
     translation: outputs.translation
 - id: summarize
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.translation
   output:

@@ -25,7 +25,7 @@ steps:
   output:
     diff: outputs.diff
 - id: summarize_diff
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.diff
   output:

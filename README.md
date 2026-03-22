@@ -55,10 +55,10 @@ They define a **contract** describing what an operation does, including:
 
 Examples:
 
-text.summarize\
-web.fetch\
-pdf.read\
-audio.transcribe\
+text.content.summarize\
+web.page.fetch\
+pdf.document.read\
+audio.speech.transcribe\
 code.diff.extract
 
 Capabilities are **not implementations**.
@@ -85,7 +85,7 @@ web.fetch-summary
 
 Workflow:
 
-web.fetch → web.page.extract → text.summarize
+web.page.fetch → web.page.extract → text.content.summarize
 
 Skills allow building reusable agent behavior without writing imperative
 code.
@@ -151,13 +151,13 @@ Example:
 
 steps:
 
--   id: fetch uses: web.fetch input: url: inputs.url output: content:
+-   id: fetch uses: web.page.fetch input: url: inputs.url output: content:
     vars.page
 
 -   id: extract uses: web.page.extract input: content: vars.page output:
     text: vars.text
 
--   id: summarize uses: text.summarize input: text: vars.text output:
+-   id: summarize uses: text.content.summarize input: text: vars.text output:
     summary: outputs.summary
 
 Execution semantics:
@@ -304,8 +304,8 @@ skill → step resolution → capability provider → execution
 
 Current registry includes:
 
--   101 capabilities
--   31 skills
+-   111 capabilities
+-   35 skills
 -   validation tooling
 -   dependency graph generation
 -   registry statistics

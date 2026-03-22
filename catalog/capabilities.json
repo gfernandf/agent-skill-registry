@@ -1,26 +1,21 @@
 [
   {
-    "id": "agent.delegate",
+    "id": "agent.input.route",
     "version": "1.0.0",
-    "description": "Delegate a task to another agent or subsystem.",
-    "file": "capabilities/agent.delegate.yaml",
+    "description": "Route an input to the appropriate handler or agent.",
+    "file": "capabilities/agent.input.route.yaml",
     "inputs": {
-      "task": {
+      "input": {
         "type": "object",
         "required": true,
-        "description": "Task to delegate."
-      },
-      "agent": {
-        "type": "string",
-        "required": true,
-        "description": "Target agent identifier."
+        "description": "Input to route."
       }
     },
     "outputs": {
-      "accepted": {
-        "type": "boolean",
+      "route": {
+        "type": "string",
         "required": true,
-        "description": "Whether delegation was accepted."
+        "description": "Selected route or handler."
       }
     },
     "metadata": {
@@ -31,7 +26,7 @@
     },
     "properties": {
       "deterministic": false,
-      "side_effects": true,
+      "side_effects": false,
       "idempotent": true
     }
   },
@@ -144,10 +139,10 @@
           "expected_outputs": {
             "suggested_id": "pdf.invoice-overdue-check",
             "capabilities_used": [
-              "pdf.read",
-              "text.extract",
-              "text.classify",
-              "memory.store"
+              "pdf.document.read",
+              "text.content.extract",
+              "text.content.classify",
+              "memory.entry.store"
             ]
           }
         }
@@ -186,28 +181,98 @@
     }
   },
   {
-    "id": "agent.route",
+    "id": "agent.task.delegate",
     "version": "1.0.0",
-    "description": "Route an input to the appropriate handler or agent.",
-    "file": "capabilities/agent.route.yaml",
+    "description": "Delegate a task to another agent or subsystem.",
+    "file": "capabilities/agent.task.delegate.yaml",
     "inputs": {
-      "input": {
+      "task": {
         "type": "object",
         "required": true,
-        "description": "Input to route."
+        "description": "Task to delegate."
+      },
+      "agent": {
+        "type": "string",
+        "required": true,
+        "description": "Target agent identifier."
       }
     },
     "outputs": {
-      "route": {
-        "type": "string",
+      "accepted": {
+        "type": "boolean",
         "required": true,
-        "description": "Selected route or handler."
+        "description": "Whether delegation was accepted."
       }
     },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "analysis.problem.split",
+    "version": "1.0.0",
+    "description": "Split a complex problem, topic, or domain into a set of manageable, described components with a suggested analysis order. The decomposition strategy (by themes, dimensions, phases, questions, stakeholders, risks) is provided as input. Returns components with descriptions, dependencies between them, and flags for gaps or overlaps.\n",
+    "file": "capabilities/analysis.problem.split.yaml",
+    "inputs": {
+      "problem": {
+        "type": "string",
+        "required": true,
+        "description": "The problem or topic to decompose. Should be a clear statement of what needs to be broken down.\n"
+      },
+      "strategy": {
+        "type": "string",
+        "required": true,
+        "description": "Decomposition axis: themes | dimensions | phases | questions | stakeholders | risks. Determines how the problem is sliced.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information that helps ground the decomposition.\n"
+      },
+      "max_components": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of components to generate. Defaults to 6. Hard cap at 10.\n"
+      }
+    },
+    "outputs": {
+      "components": {
+        "type": "array",
+        "required": true,
+        "description": "List of components. Each has: id (short slug), label, description (what it covers), dependencies (array of other component ids it depends on), and analysis_order (suggested position in the analysis sequence).\n"
+      },
+      "gaps": {
+        "type": "array",
+        "required": false,
+        "description": "Areas that may be missing from the decomposition — known unknowns.\n"
+      },
+      "overlaps": {
+        "type": "array",
+        "required": false,
+        "description": "Potential overlaps between components that the analyst should watch for.\n"
+      },
+      "decomposition_notes": {
+        "type": "string",
+        "required": false,
+        "description": "Brief note on the decomposition rationale and any trade-offs made.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "analysis",
+        "decomposition",
+        "structuring"
+      ],
+      "category": null,
+      "status": "experimental",
       "examples": []
     },
     "properties": {
@@ -282,71 +347,6 @@
     }
   },
   {
-    "id": "analysis.split",
-    "version": "1.0.0",
-    "description": "Split a complex problem, topic, or domain into a set of manageable, described components with a suggested analysis order. The decomposition strategy (by themes, dimensions, phases, questions, stakeholders, risks) is provided as input. Returns components with descriptions, dependencies between them, and flags for gaps or overlaps.\n",
-    "file": "capabilities/analysis.split.yaml",
-    "inputs": {
-      "problem": {
-        "type": "string",
-        "required": true,
-        "description": "The problem or topic to decompose. Should be a clear statement of what needs to be broken down.\n"
-      },
-      "strategy": {
-        "type": "string",
-        "required": true,
-        "description": "Decomposition axis: themes | dimensions | phases | questions | stakeholders | risks. Determines how the problem is sliced.\n"
-      },
-      "context": {
-        "type": "string",
-        "required": false,
-        "description": "Background information that helps ground the decomposition.\n"
-      },
-      "max_components": {
-        "type": "number",
-        "required": false,
-        "description": "Maximum number of components to generate. Defaults to 6. Hard cap at 10.\n"
-      }
-    },
-    "outputs": {
-      "components": {
-        "type": "array",
-        "required": true,
-        "description": "List of components. Each has: id (short slug), label, description (what it covers), dependencies (array of other component ids it depends on), and analysis_order (suggested position in the analysis sequence).\n"
-      },
-      "gaps": {
-        "type": "array",
-        "required": false,
-        "description": "Areas that may be missing from the decomposition — known unknowns.\n"
-      },
-      "overlaps": {
-        "type": "array",
-        "required": false,
-        "description": "Potential overlaps between components that the analyst should watch for.\n"
-      },
-      "decomposition_notes": {
-        "type": "string",
-        "required": false,
-        "description": "Brief note on the decomposition rationale and any trade-offs made.\n"
-      }
-    },
-    "metadata": {
-      "tags": [
-        "analysis",
-        "decomposition",
-        "structuring"
-      ],
-      "category": null,
-      "status": "experimental",
-      "examples": []
-    },
-    "properties": {
-      "deterministic": false,
-      "side_effects": false,
-      "idempotent": true
-    }
-  },
-  {
     "id": "analysis.theme.cluster",
     "version": "1.0.0",
     "description": "Group a collection of text items into coherent thematic clusters. Identifies dominant themes, assigns each item to one or more clusters, and produces a summary per cluster with signal strength. Accepts optional hint labels to guide (not force) the thematic structure.\n",
@@ -408,10 +408,10 @@
     }
   },
   {
-    "id": "audio.transcribe",
+    "id": "audio.speech.transcribe",
     "version": "1.0.0",
     "description": "Convert speech audio to text.",
-    "file": "capabilities/audio.transcribe.yaml",
+    "file": "capabilities/audio.speech.transcribe.yaml",
     "inputs": {
       "audio": {
         "type": "string",
@@ -475,10 +475,10 @@
     }
   },
   {
-    "id": "code.execute",
+    "id": "code.snippet.execute",
     "version": "1.0.0",
     "description": "Execute a code snippet.",
-    "file": "capabilities/code.execute.yaml",
+    "file": "capabilities/code.snippet.execute.yaml",
     "inputs": {
       "code": {
         "type": "string",
@@ -521,10 +521,10 @@
     }
   },
   {
-    "id": "code.format",
+    "id": "code.source.format",
     "version": "1.0.0",
     "description": "Format source code.",
-    "file": "capabilities/code.format.yaml",
+    "file": "capabilities/code.source.format.yaml",
     "inputs": {
       "code": {
         "type": "string",
@@ -765,10 +765,10 @@
     }
   },
   {
-    "id": "doc.chunk",
+    "id": "doc.content.chunk",
     "version": "1.0.0",
     "description": "Split a document or text into chunks.",
-    "file": "capabilities/doc.chunk.yaml",
+    "file": "capabilities/doc.content.chunk.yaml",
     "inputs": {
       "text": {
         "type": "string",
@@ -806,10 +806,10 @@
     }
   },
   {
-    "id": "email.read",
+    "id": "email.inbox.read",
     "version": "1.0.0",
     "description": "Read email messages from a mailbox.",
-    "file": "capabilities/email.read.yaml",
+    "file": "capabilities/email.inbox.read.yaml",
     "inputs": {
       "mailbox": {
         "type": "string",
@@ -837,10 +837,10 @@
     }
   },
   {
-    "id": "email.send",
+    "id": "email.message.send",
     "version": "1.0.0",
     "description": "Send an email message.",
-    "file": "capabilities/email.send.yaml",
+    "file": "capabilities/email.message.send.yaml",
     "inputs": {
       "to": {
         "type": "string",
@@ -1035,10 +1035,10 @@
     }
   },
   {
-    "id": "fs.read",
+    "id": "fs.file.read",
     "version": "1.0.0",
     "description": "Read content from a filesystem path.",
-    "file": "capabilities/fs.read.yaml",
+    "file": "capabilities/fs.file.read.yaml",
     "inputs": {
       "path": {
         "type": "string",
@@ -1239,10 +1239,10 @@
     }
   },
   {
-    "id": "image.classify",
+    "id": "image.content.classify",
     "version": "1.0.0",
     "description": "Classify an image into one or more categories.",
-    "file": "capabilities/image.classify.yaml",
+    "file": "capabilities/image.content.classify.yaml",
     "inputs": {
       "image": {
         "type": "string",
@@ -1448,24 +1448,10 @@
     }
   },
   {
-    "id": "memory.record.store",
-    "version": "1.0.0",
-    "description": "TODO define capability contract for memory.record.store.",
-    "file": "capabilities/memory.record.store.yaml",
-    "inputs": {},
-    "outputs": {},
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "experimental",
-      "examples": []
-    }
-  },
-  {
-    "id": "memory.retrieve",
+    "id": "memory.entry.retrieve",
     "version": "1.0.0",
     "description": "Retrieve content from a memory system.",
-    "file": "capabilities/memory.retrieve.yaml",
+    "file": "capabilities/memory.entry.retrieve.yaml",
     "inputs": {
       "key": {
         "type": "string",
@@ -1498,10 +1484,10 @@
     }
   },
   {
-    "id": "memory.store",
+    "id": "memory.entry.store",
     "version": "1.0.0",
     "description": "Store content in a memory system.",
-    "file": "capabilities/memory.store.yaml",
+    "file": "capabilities/memory.entry.store.yaml",
     "inputs": {
       "key": {
         "type": "string",
@@ -1534,6 +1520,20 @@
     }
   },
   {
+    "id": "memory.record.store",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for memory.record.store.",
+    "file": "capabilities/memory.record.store.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    }
+  },
+  {
     "id": "memory.vector.search",
     "version": "1.0.0",
     "description": "TODO define capability contract for memory.vector.search.",
@@ -1548,24 +1548,10 @@
     }
   },
   {
-    "id": "message.priority.classify",
-    "version": "1.0.0",
-    "description": "TODO define capability contract for message.priority.classify.",
-    "file": "capabilities/message.priority.classify.yaml",
-    "inputs": {},
-    "outputs": {},
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "experimental",
-      "examples": []
-    }
-  },
-  {
-    "id": "message.send",
+    "id": "message.notification.send",
     "version": "1.0.0",
     "description": "Send a generic message.",
-    "file": "capabilities/message.send.yaml",
+    "file": "capabilities/message.notification.send.yaml",
     "inputs": {
       "recipient": {
         "type": "string",
@@ -1595,6 +1581,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    }
+  },
+  {
+    "id": "message.priority.classify",
+    "version": "1.0.0",
+    "description": "TODO define capability contract for message.priority.classify.",
+    "file": "capabilities/message.priority.classify.yaml",
+    "inputs": {},
+    "outputs": {},
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "experimental",
+      "examples": []
     }
   },
   {
@@ -2096,10 +2096,10 @@
     }
   },
   {
-    "id": "pdf.read",
+    "id": "pdf.document.read",
     "version": "1.0.0",
     "description": "Read a PDF document and extract textual content.",
-    "file": "capabilities/pdf.read.yaml",
+    "file": "capabilities/pdf.document.read.yaml",
     "inputs": {
       "path": {
         "type": "string",
@@ -2121,7 +2121,7 @@
       "examples": []
     },
     "requires": [
-      "fs.read"
+      "fs.file.read"
     ]
   },
   {
@@ -2489,10 +2489,10 @@
     }
   },
   {
-    "id": "table.filter",
+    "id": "table.row.filter",
     "version": "1.0.0",
     "description": "Filter rows in tabular data according to a condition.",
-    "file": "capabilities/table.filter.yaml",
+    "file": "capabilities/table.row.filter.yaml",
     "inputs": {
       "table": {
         "type": "array",
@@ -2735,10 +2735,10 @@
     }
   },
   {
-    "id": "text.classify",
+    "id": "text.content.classify",
     "version": "1.0.0",
     "description": "Classify a text into one or more predefined categories.",
-    "file": "capabilities/text.classify.yaml",
+    "file": "capabilities/text.content.classify.yaml",
     "inputs": {
       "text": {
         "type": "string",
@@ -2776,10 +2776,10 @@
     }
   },
   {
-    "id": "text.embed",
+    "id": "text.content.embed",
     "version": "1.0.0",
     "description": "Generate vector embeddings from text.",
-    "file": "capabilities/text.embed.yaml",
+    "file": "capabilities/text.content.embed.yaml",
     "inputs": {
       "text": {
         "type": "string",
@@ -2792,6 +2792,183 @@
         "type": "array",
         "required": true,
         "description": "Generated embedding vector."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.content.extract",
+    "version": "1.0.0",
+    "description": "Extract relevant text content from an input text block.",
+    "file": "capabilities/text.content.extract.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Source text to process."
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Extracted or cleaned text content."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.content.merge",
+    "version": "1.0.0",
+    "description": "Merge multiple text items into a single consolidated text block. Accepts an array of items with text content and produces a single string with configurable separator. Deterministic, no LLM required.\n",
+    "file": "capabilities/text.content.merge.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "Items to merge. Each item must include a content field (string). May also include id and title which are used as section headers when include_headers is true.\n"
+      },
+      "separator": {
+        "type": "string",
+        "required": false,
+        "description": "Separator between merged items. Defaults to double newline.\n"
+      },
+      "include_headers": {
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to include item titles as section headers in the merged text. Defaults to true when items have titles.\n"
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Merged text block from all items."
+      },
+      "item_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of items that contributed content to the merged text."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "merge",
+        "preprocessing",
+        "utility"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.content.summarize",
+    "version": "1.0.0",
+    "description": "Produce a condensed version of text preserving key ideas.",
+    "file": "capabilities/text.content.summarize.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true
+      },
+      "max_length": {
+        "type": "integer",
+        "required": false
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    }
+  },
+  {
+    "id": "text.content.template",
+    "version": "1.0.0",
+    "description": "Render a text template using variables.",
+    "file": "capabilities/text.content.template.yaml",
+    "inputs": {
+      "template": {
+        "type": "string",
+        "required": true
+      },
+      "variables": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    }
+  },
+  {
+    "id": "text.content.translate",
+    "version": "1.0.0",
+    "description": "Translate text from one language to another.",
+    "file": "capabilities/text.content.translate.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Text to translate."
+      },
+      "target_language": {
+        "type": "string",
+        "required": true,
+        "description": "Target language."
+      },
+      "source_language": {
+        "type": "string",
+        "required": false,
+        "description": "Optional source language."
+      }
+    },
+    "outputs": {
+      "translation": {
+        "type": "string",
+        "required": true,
+        "description": "Translated text."
       }
     },
     "metadata": {
@@ -2833,37 +3010,6 @@
     },
     "properties": {
       "deterministic": false,
-      "side_effects": false,
-      "idempotent": true
-    }
-  },
-  {
-    "id": "text.extract",
-    "version": "1.0.0",
-    "description": "Extract relevant text content from an input text block.",
-    "file": "capabilities/text.extract.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true,
-        "description": "Source text to process."
-      }
-    },
-    "outputs": {
-      "text": {
-        "type": "string",
-        "required": true,
-        "description": "Extracted or cleaned text content."
-      }
-    },
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "examples": []
-    },
-    "properties": {
-      "deterministic": true,
       "side_effects": false,
       "idempotent": true
     }
@@ -2936,152 +3082,6 @@
     }
   },
   {
-    "id": "text.merge",
-    "version": "1.0.0",
-    "description": "Merge multiple text items into a single consolidated text block. Accepts an array of items with text content and produces a single string with configurable separator. Deterministic, no LLM required.\n",
-    "file": "capabilities/text.merge.yaml",
-    "inputs": {
-      "items": {
-        "type": "array",
-        "required": true,
-        "description": "Items to merge. Each item must include a content field (string). May also include id and title which are used as section headers when include_headers is true.\n"
-      },
-      "separator": {
-        "type": "string",
-        "required": false,
-        "description": "Separator between merged items. Defaults to double newline.\n"
-      },
-      "include_headers": {
-        "type": "boolean",
-        "required": false,
-        "description": "Whether to include item titles as section headers in the merged text. Defaults to true when items have titles.\n"
-      }
-    },
-    "outputs": {
-      "text": {
-        "type": "string",
-        "required": true,
-        "description": "Merged text block from all items."
-      },
-      "item_count": {
-        "type": "number",
-        "required": true,
-        "description": "Number of items that contributed content to the merged text."
-      }
-    },
-    "metadata": {
-      "tags": [
-        "text",
-        "merge",
-        "preprocessing",
-        "utility"
-      ],
-      "category": null,
-      "status": "experimental",
-      "examples": []
-    },
-    "properties": {
-      "deterministic": true,
-      "side_effects": false,
-      "idempotent": true
-    }
-  },
-  {
-    "id": "text.summarize",
-    "version": "1.0.0",
-    "description": "Produce a condensed version of text preserving key ideas.",
-    "file": "capabilities/text.summarize.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true
-      },
-      "max_length": {
-        "type": "integer",
-        "required": false
-      }
-    },
-    "outputs": {
-      "summary": {
-        "type": "string"
-      }
-    },
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "examples": []
-    }
-  },
-  {
-    "id": "text.template",
-    "version": "1.0.0",
-    "description": "Render a text template using variables.",
-    "file": "capabilities/text.template.yaml",
-    "inputs": {
-      "template": {
-        "type": "string",
-        "required": true
-      },
-      "variables": {
-        "type": "object",
-        "required": true
-      }
-    },
-    "outputs": {
-      "text": {
-        "type": "string"
-      }
-    },
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "examples": []
-    }
-  },
-  {
-    "id": "text.translate",
-    "version": "1.0.0",
-    "description": "Translate text from one language to another.",
-    "file": "capabilities/text.translate.yaml",
-    "inputs": {
-      "text": {
-        "type": "string",
-        "required": true,
-        "description": "Text to translate."
-      },
-      "target_language": {
-        "type": "string",
-        "required": true,
-        "description": "Target language."
-      },
-      "source_language": {
-        "type": "string",
-        "required": false,
-        "description": "Optional source language."
-      }
-    },
-    "outputs": {
-      "translation": {
-        "type": "string",
-        "required": true,
-        "description": "Translated text."
-      }
-    },
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "examples": []
-    },
-    "properties": {
-      "deterministic": false,
-      "side_effects": false,
-      "idempotent": true
-    }
-  },
-  {
     "id": "video.frame.extract",
     "version": "1.0.0",
     "description": "Extract frames from a video.",
@@ -3113,37 +3113,6 @@
     }
   },
   {
-    "id": "web.fetch",
-    "version": "1.0.0",
-    "description": "Fetch content from a web URL.",
-    "file": "capabilities/web.fetch.yaml",
-    "inputs": {
-      "url": {
-        "type": "string",
-        "required": true,
-        "description": "URL to retrieve."
-      }
-    },
-    "outputs": {
-      "content": {
-        "type": "string",
-        "required": true,
-        "description": "Retrieved web page content."
-      }
-    },
-    "metadata": {
-      "tags": [],
-      "category": null,
-      "status": "unspecified",
-      "examples": []
-    },
-    "properties": {
-      "deterministic": false,
-      "side_effects": false,
-      "idempotent": true
-    }
-  },
-  {
     "id": "web.page.extract",
     "version": "1.0.0",
     "description": "Extract main textual content from a web page.",
@@ -3170,6 +3139,37 @@
     },
     "properties": {
       "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "web.page.fetch",
+    "version": "1.0.0",
+    "description": "Fetch content from a web URL.",
+    "file": "capabilities/web.page.fetch.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true,
+        "description": "URL to retrieve."
+      }
+    },
+    "outputs": {
+      "content": {
+        "type": "string",
+        "required": true,
+        "description": "Retrieved web page content."
+      }
+    },
+    "metadata": {
+      "tags": [],
+      "category": null,
+      "status": "unspecified",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
       "side_effects": false,
       "idempotent": true
     }

@@ -55,7 +55,7 @@ domain.noun.verb
 Examples:
 
 ```
-text.summarize
+text.content.summarize
 text.keyword.extract
 data.json.parse
 web.page.fetch
@@ -76,12 +76,12 @@ Capabilities define **primitive operations** available to workflows.
 Examples:
 
 ```
-text.summarize
-text.classify
+text.content.summarize
+text.content.classify
 text.keyword.extract
 data.json.parse
-web.fetch
-fs.read
+web.page.fetch
+fs.file.read
 ```
 
 Capabilities are stored as YAML definitions:
@@ -114,9 +114,9 @@ Example workflow:
 ```
 web.fetch-summary
 
-web.fetch
-→ text.extract
-→ text.summarize
+web.page.fetch
+→ text.content.extract
+→ text.content.summarize
 ```
 
 Skills are stored as:

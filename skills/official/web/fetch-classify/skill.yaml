@@ -24,7 +24,7 @@ outputs:
     required: false
 steps:
 - id: fetch
-  uses: web.fetch
+  uses: web.page.fetch
   input:
     url: inputs.url
   output:
@@ -36,7 +36,7 @@ steps:
   output:
     text: outputs.text
 - id: classify
-  uses: text.classify
+  uses: text.content.classify
   input:
     text: outputs.text
     labels: inputs.labels

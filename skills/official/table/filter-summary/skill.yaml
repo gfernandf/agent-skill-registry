@@ -18,14 +18,14 @@ outputs:
     required: true
 steps:
 - id: filter_table
-  uses: table.filter
+  uses: table.row.filter
   input:
     table: inputs.table
     condition: inputs.condition
   output:
     table: outputs.table
 - id: summarize_table
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.table
   output:

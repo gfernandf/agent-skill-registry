@@ -1,0 +1,17 @@
+id: email.inbox.read
+version: 1.0.0
+description: Read email messages from a mailbox.
+inputs:
+  mailbox:
+    type: string
+    required: true
+    description: Mailbox or folder name.
+outputs:
+  messages:
+    type: array
+    required: true
+    description: Retrieved email messages.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

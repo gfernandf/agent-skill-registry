@@ -102,7 +102,7 @@ domain.noun.verb
 Examples:
 
 ```
-text.summarize
+text.content.summarize
 text.keyword.extract
 data.json.parse
 web.page.fetch
@@ -182,7 +182,7 @@ capabilities/<capability-id>.yaml
 Example:
 
 ```
-capabilities/text.summarize.yaml
+capabilities/text.content.summarize.yaml
 capabilities/data.json.parse.yaml
 ```
 

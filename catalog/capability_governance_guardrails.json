@@ -65,10 +65,11 @@
       "domain": "memory",
       "verb": "store",
       "capability_ids": [
-        "memory.record.store",
-        "memory.store"
+        "memory.entry.store",
+        "memory.record.store"
       ],
       "noun_variants": [
+        "entry",
         "record"
       ],
       "recommendation": "review-for-canonical-operation"
@@ -142,11 +143,12 @@
       "domain": "text",
       "verb": "extract",
       "capability_ids": [
+        "text.content.extract",
         "text.entity.extract",
-        "text.extract",
         "text.keyword.extract"
       ],
       "noun_variants": [
+        "content",
         "entity",
         "keyword"
       ],
@@ -156,7 +158,7 @@
   "duplicate_description_alerts": [],
   "metadata_issues": [
     {
-      "capability_id": "agent.delegate",
+      "capability_id": "agent.input.route",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -176,20 +178,20 @@
       ]
     },
     {
-      "capability_id": "agent.route",
+      "capability_id": "agent.task.delegate",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "analysis.risk.extract",
+      "capability_id": "analysis.problem.split",
       "issues": [
         "missing_examples"
       ]
     },
     {
-      "capability_id": "analysis.split",
+      "capability_id": "analysis.risk.extract",
       "issues": [
         "missing_examples"
       ]
@@ -201,7 +203,7 @@
       ]
     },
     {
-      "capability_id": "audio.transcribe",
+      "capability_id": "audio.speech.transcribe",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -215,14 +217,14 @@
       ]
     },
     {
-      "capability_id": "code.execute",
+      "capability_id": "code.snippet.execute",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "code.format",
+      "capability_id": "code.source.format",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -256,21 +258,21 @@
       ]
     },
     {
-      "capability_id": "doc.chunk",
+      "capability_id": "doc.content.chunk",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "email.read",
+      "capability_id": "email.inbox.read",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "email.send",
+      "capability_id": "email.message.send",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -296,7 +298,7 @@
       ]
     },
     {
-      "capability_id": "fs.read",
+      "capability_id": "fs.file.read",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -380,7 +382,7 @@
       ]
     },
     {
-      "capability_id": "image.classify",
+      "capability_id": "image.content.classify",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -471,21 +473,21 @@
       ]
     },
     {
+      "capability_id": "memory.entry.retrieve",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "memory.entry.store",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
       "capability_id": "memory.record.store",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "memory.retrieve",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "memory.store",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -499,14 +501,14 @@
       ]
     },
     {
-      "capability_id": "message.priority.classify",
+      "capability_id": "message.notification.send",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "message.send",
+      "capability_id": "message.priority.classify",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -590,7 +592,7 @@
       ]
     },
     {
-      "capability_id": "pdf.read",
+      "capability_id": "pdf.document.read",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -681,7 +683,7 @@
       ]
     },
     {
-      "capability_id": "table.filter",
+      "capability_id": "table.row.filter",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -793,14 +795,48 @@
       ]
     },
     {
-      "capability_id": "text.classify",
+      "capability_id": "text.content.classify",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "text.embed",
+      "capability_id": "text.content.embed",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.extract",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.merge",
+      "issues": [
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.summarize",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.template",
+      "issues": [
+        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.translate",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -808,13 +844,6 @@
     },
     {
       "capability_id": "text.entity.extract",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "text.extract",
       "issues": [
         "missing_tags",
         "missing_examples"
@@ -835,33 +864,6 @@
       ]
     },
     {
-      "capability_id": "text.merge",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "text.summarize",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "text.template",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "text.translate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
       "capability_id": "video.frame.extract",
       "issues": [
         "missing_tags",
@@ -869,14 +871,14 @@
       ]
     },
     {
-      "capability_id": "web.fetch",
+      "capability_id": "web.page.extract",
       "issues": [
         "missing_tags",
         "missing_examples"
       ]
     },
     {
-      "capability_id": "web.page.extract",
+      "capability_id": "web.page.fetch",
       "issues": [
         "missing_tags",
         "missing_examples"

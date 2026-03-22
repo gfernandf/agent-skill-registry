@@ -25,7 +25,7 @@ steps:
   output:
     results: outputs.results
 - id: summarize_results
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.results
   output:

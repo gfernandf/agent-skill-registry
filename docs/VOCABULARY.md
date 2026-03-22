@@ -49,8 +49,8 @@ domain.noun.verb
 Examples:
 
 ```
-text.summarize
-fs.read
+text.content.summarize
+fs.file.read
 data.json.parse
 text.keyword.extract
 web.page.fetch
@@ -201,10 +201,10 @@ only when necessary to disambiguate the target object.
 ### Good examples
 
 ```
-text.summarize
-text.classify
-fs.read
-web.fetch
+text.content.summarize
+text.content.classify
+fs.file.read
+web.page.fetch
 data.parse
 data.json.parse
 text.keyword.extract

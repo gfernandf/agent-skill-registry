@@ -1,0 +1,272 @@
+id: decision.make
+version: 0.1.0
+name: Make Decision
+description: >
+  Take a problem, context, and available information and produce an explicit,
+  structured, justified decision under uncertainty. Closes the gap between
+  "analysis" and "actionable decision".
+
+  Pipeline: (1) generate options if not provided, (2) qualitative analysis of
+  pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative
+  scoring, (4) select recommendation with structured justification, failure
+  modes, and next steps, (5) self-assess decision quality.
+
+  Designed to be observable at each step. Each intermediate result is inspectable
+  via agent.trace. Favors a slower, transparent pipeline over a single opaque
+  LLM call. Zero uses of model.output.generate — every step is a dedicated,
+  named capability.
+
+  Typical upstream: analysis.synthesize output as context_items.
+  Typical downstream: task planning, human review, or execution.
+
+inputs:
+  goal:
+    type: string
+    required: true
+    description: >
+      Clear description of the problem or decision to resolve.
+      Examples: "Should we expand to market X?", "Which architecture should
+      we adopt for the new platform?"
+
+  context_items:
+    type: array
+    required: false
+    description: >
+      Relevant information: outputs from analysis.synthesize, notes, data,
+      analyses. Each item should have at least a content field (string).
+      If omitted, the skill works from the goal alone (lower confidence expected).
+
+  options:
+    type: array
+    required: false
+    description: >
+      Explicit options to evaluate. Each option should have at minimum: id,
+      label, description. If omitted, step 1 generates 2-4 plausible options
+      from goal and context.
+
+  constraints:
+    type: object
+    required: false
+    description: >
+      Hard constraints the decision must respect: budget, time, regulation,
+      resources, organizational limits.
+
+  risk_tolerance:
+    type: string
+    required: false
+    description: >
+      Risk appetite: low | medium | high. Defaults to medium. Affects how
+      uncertainty and downside scenarios are weighted throughout the pipeline.
+
+outputs:
+  recommendation:
+    type: string
+    required: true
+    description: >
+      The final recommendation. Must be clear, concrete, and unambiguous.
+      Never "it depends" or "consider your options".
+
+  alternatives_considered:
+    type: array
+    required: true
+    description: >
+      List of all options evaluated, including generated ones if applicable.
+
+  criteria_used:
+    type: array
+    required: true
+    description: >
+      Criteria used for evaluation, with weights.
+
+  evaluation_summary:
+    type: string
+    required: true
+    description: >
+      Comparative summary of how options scored against criteria.
+
+  tradeoffs:
+    type: array
+    required: true
+    description: >
+      Explicit trade-offs of the chosen recommendation. What is gained, what
+      is sacrificed.
+
+  confidence_score:
+    type: number
+    required: true
+    description: >
+      Numeric confidence in the recommendation (0.0 to 1.0).
+
+  confidence_level:
+    type: string
+    required: true
+    description: >
+      Human-readable confidence: low | medium | high.
+
+  uncertainties:
+    type: array
+    required: true
+    description: >
+      What is unclear, missing, or weakly supported. Honest enumeration of
+      unknowns that could affect the decision.
+
+  failure_modes:
+    type: array
+    required: true
+    description: >
+      Conditions under which the recommendation could fail. Examples:
+      regulatory change, cost escalation, incorrect assumptions.
+
+  next_steps:
+    type: array
+    required: true
+    description: >
+      Recommended follow-up actions: validations, pilots, additional analysis,
+      execution steps.
+
+  decision_quality:
+    type: object
+    required: true
+    description: >
+      Self-assessment of the decision process: input_quality (0-1),
+      criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1),
+      quality_notes (string), assessment_passed (boolean).
+
+  human_readable:
+    type: string
+    required: true
+    description: >
+      Narrative prose version of the decision suitable for direct human
+      consumption without further post-processing.
+
+steps:
+
+  # ── Step 1: Generate options ──────────────────────────────────────────────
+  # If the user provided explicit options, this step normalizes and enriches
+  # them. If not, it generates 2-4 plausible alternatives from goal + context.
+  - id: generate_options
+    uses: agent.option.generate
+    input:
+      goal: inputs.goal
+      context: inputs.context_items
+      constraints: inputs.constraints
+      max_options: 4
+    output:
+      options: vars.generated_options
+
+  # ── Step 2: Qualitative analysis ──────────────────────────────────────────
+  # For each option, identify pros, cons, risks, and assumptions. No scoring
+  # here — pure qualitative evidence gathering.
+  - id: analyze_options
+    uses: eval.option.analyze
+    input:
+      options: vars.generated_options
+      context: inputs.context_items
+      goal: inputs.goal
+    output:
+      analyzed_options: vars.analyzed_options
+      analysis_notes: vars.analysis_notes
+
+  # ── Step 3: Quantitative scoring ─────────────────────────────────────────
+  # Multi-criteria scoring. Criteria are inferred from goal/context if not
+  # explicit. Each option gets per-criterion scores, strengths, weaknesses.
+  - id: evaluate_options
+    uses: eval.option.score
+    input:
+      options: vars.generated_options
+      goal: inputs.goal
+      risk_tolerance: inputs.risk_tolerance
+    output:
+      scored_options: vars.scored_options
+      criteria_used: outputs.criteria_used
+      comparative_summary: outputs.evaluation_summary
+      tradeoffs: outputs.tradeoffs
+
+  # ── Step 4: Select + justify recommendation ───────────────────────────────
+  # Core decision step. Takes qualitative analysis + quantitative scores and
+  # produces the final recommendation with justification, failure modes,
+  # uncertainties, and next steps. This is where the skill "closes" — no hedging.
+  - id: justify_decision
+    uses: decision.option.justify
+    input:
+      scored_options: vars.scored_options
+      analyzed_options: vars.analyzed_options
+      tradeoffs: outputs.tradeoffs
+      goal: inputs.goal
+      constraints: inputs.constraints
+      risk_tolerance: inputs.risk_tolerance
+    output:
+      recommendation: outputs.recommendation
+      alternatives_considered: outputs.alternatives_considered
+      confidence_score: outputs.confidence_score
+      confidence_level: outputs.confidence_level
+      uncertainties: outputs.uncertainties
+      failure_modes: outputs.failure_modes
+      next_steps: outputs.next_steps
+      human_readable: outputs.human_readable
+
+  # ── Step 5: Self-assess decision quality ──────────────────────────────────
+  # Independent quality gate. Evaluates the decision process itself, not
+  # the decision content. Catches low-input, inconsistent, or poorly
+  # justified decisions.
+  - id: assess_quality
+    uses: eval.output.score
+    input:
+      output:
+        recommendation: outputs.recommendation
+        confidence_score: outputs.confidence_score
+        uncertainties: outputs.uncertainties
+        failure_modes: outputs.failure_modes
+        evaluation_summary: outputs.evaluation_summary
+      rubric:
+        dimensions:
+          input_quality:
+            description: >
+              Was the decision based on sufficient, relevant input? Score low
+              if context_items were absent or sparse.
+            weight: 0.25
+          criteria_coverage:
+            description: >
+              Were the evaluation criteria comprehensive and relevant to the
+              goal? Score low if obvious criteria were missed.
+            weight: 0.25
+          analysis_consistency:
+            description: >
+              Is the recommendation consistent with the evaluation scores and
+              trade-off analysis? Flag contradictions.
+            weight: 0.30
+          justification_depth:
+            description: >
+              Are the uncertainties, failure modes, and next steps specific
+              and actionable, not generic boilerplate?
+            weight: 0.20
+    output:
+      score: outputs.decision_quality
+      dimensions: vars.quality_dimensions
+
+metadata:
+  tags:
+    - decision-support
+    - agent
+    - reasoning
+    - multi-criteria
+    - structured-output
+  category: decision
+  use_cases:
+    - Strategic decisions (market entry, technology selection, initiative prioritization)
+    - Operational decisions (implementation approach, vendor selection, architecture choice)
+    - Decisions under uncertainty (incomplete scenarios, contradictory information, complex trade-offs)
+    - Agent pipeline closure (final step after analysis.synthesize, replacing vague responses)
+  examples:
+    - goal: "Should we expand to market X?"
+      context_items:
+        - id: synthesis
+          content: "Market research synthesis indicating strong demand but high regulatory uncertainty..."
+          type: research_synthesis
+      expected_outputs:
+        recommendation: "Proceed with a controlled pilot entry in market X, limited to segment Y"
+        confidence_level: medium
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

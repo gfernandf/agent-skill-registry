@@ -15,12 +15,12 @@ A capability represents a **single functional operation** that can be reused acr
 Examples include:
 
 ```
-text.summarize
-text.classify
+text.content.summarize
+text.content.classify
 text.keyword.extract
-web.fetch
+web.page.fetch
 data.json.parse
-fs.read
+fs.file.read
 ```
 
 Capabilities should be:
@@ -48,9 +48,9 @@ domain.noun.verb
 Examples:
 
 ```
-text.summarize
-fs.read
-web.fetch
+text.content.summarize
+fs.file.read
+web.page.fetch
 data.json.parse
 text.keyword.extract
 web.page.fetch
@@ -91,10 +91,10 @@ capabilities/<capability-id>.yaml
 Examples:
 
 ```
-capabilities/text.summarize.yaml
+capabilities/text.content.summarize.yaml
 capabilities/text.keyword.extract.yaml
 capabilities/data.json.parse.yaml
-capabilities/web.fetch.yaml
+capabilities/web.page.fetch.yaml
 ```
 
 The filename must match the capability ID.
@@ -108,7 +108,7 @@ A capability file is written in YAML and follows a defined structure.
 Example:
 
 ```yaml
-id: text.summarize
+id: text.content.summarize
 version: 1.0.0
 description: Produce a concise summary of text content.
 
@@ -143,7 +143,7 @@ Must follow the allowed identifier structure and vocabulary rules.
 Example:
 
 ```
-text.summarize
+text.content.summarize
 data.json.parse
 text.keyword.extract
 ```
@@ -348,7 +348,7 @@ A capability should perform **one clear operation**.
 Good example:
 
 ```
-text.summarize
+text.content.summarize
 ```
 
 Poor example:
@@ -372,7 +372,7 @@ Example:
 Prefer:
 
 ```
-text.classify
+text.content.classify
 ```
 
 Over:
@@ -408,7 +408,7 @@ Capabilities are invoked from skills.
 Example step in a skill:
 
 ```
-uses: text.summarize
+uses: text.content.summarize
 ```
 
 Skills may also compose other skills:

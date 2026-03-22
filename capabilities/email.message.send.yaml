@@ -1,0 +1,25 @@
+id: email.message.send
+version: 1.0.0
+description: Send an email message.
+inputs:
+  to:
+    type: string
+    required: true
+    description: Recipient email address.
+  subject:
+    type: string
+    required: true
+    description: Email subject.
+  body:
+    type: string
+    required: true
+    description: Email body.
+outputs:
+  sent:
+    type: boolean
+    required: true
+    description: Whether sending succeeded.
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true

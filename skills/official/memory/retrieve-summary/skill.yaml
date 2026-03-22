@@ -18,14 +18,14 @@ outputs:
     required: true
 steps:
 - id: retrieve_memory
-  uses: memory.retrieve
+  uses: memory.entry.retrieve
   input:
     key: inputs.key
   output:
     value: outputs.value
     found: outputs.found
 - id: summarize_value
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.value
   output:

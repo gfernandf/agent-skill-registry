@@ -1,4 +1,4 @@
-﻿id: model.response.validate
+id: model.response.validate
 version: 1.0.0
 description: Validate a model-generated output for semantic coherence, evidence grounding, and structural completeness.
 

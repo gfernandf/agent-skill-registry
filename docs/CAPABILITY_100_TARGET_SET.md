@@ -31,19 +31,19 @@ For current operational scope and governance, use:
 
 ### Agent
 
-- agent.delegate
+- agent.task.delegate
 - agent.plan.generate
-- agent.route
+- agent.input.route
 
 ### Audio
 
-- audio.transcribe
+- audio.speech.transcribe
 
 ### Code
 
 - code.diff.extract
-- code.execute
-- code.format
+- code.snippet.execute
+- code.source.format
 
 ### Data
 
@@ -53,15 +53,15 @@ For current operational scope and governance, use:
 
 ### Doc / PDF / FS
 
-- doc.chunk
-- pdf.read
-- fs.read
+- doc.content.chunk
+- pdf.document.read
+- fs.file.read
 
 ### Email / Message
 
-- email.read
-- email.send
-- message.send
+- email.inbox.read
+- email.message.send
+- message.notification.send
 
 ### Eval
 
@@ -70,13 +70,13 @@ For current operational scope and governance, use:
 ### Image / Video
 
 - image.caption.generate
-- image.classify
+- image.content.classify
 - video.frame.extract
 
 ### Memory
 
-- memory.retrieve
-- memory.store
+- memory.entry.retrieve
+- memory.entry.store
 
 ### Ops
 
@@ -98,23 +98,23 @@ For current operational scope and governance, use:
 
 ### Table
 
-- table.filter
+- table.row.filter
 
 ### Text
 
-- text.classify
-- text.embed
+- text.content.classify
+- text.content.embed
 - text.entity.extract
-- text.extract
+- text.content.extract
 - text.keyword.extract
 - text.language.detect
-- text.summarize
-- text.template
-- text.translate
+- text.content.summarize
+- text.content.template
+- text.content.translate
 
 ### Web
 
-- web.fetch
+- web.page.fetch
 - web.page.extract
 - web.search
 - web.source.verify

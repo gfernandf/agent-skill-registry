@@ -1,0 +1,17 @@
+id: agent.input.route
+version: 1.0.0
+description: Route an input to the appropriate handler or agent.
+inputs:
+  input:
+    type: object
+    required: true
+    description: Input to route.
+outputs:
+  route:
+    type: string
+    required: true
+    description: Selected route or handler.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

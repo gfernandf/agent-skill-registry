@@ -1,0 +1,22 @@
+id: fs.file.read
+version: 1.0.0
+description: Read content from a filesystem path.
+
+inputs:
+  path:
+    type: string
+    required: true
+
+  mode:
+    type: string
+    required: false
+    description: "text | binary (implementation-defined)."
+
+outputs:
+  content:
+    type: string
+    description: Content read as text (if mode is text or default).
+
+  bytes:
+    type: object
+    description: Raw bytes (if mode is binary).

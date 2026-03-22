@@ -62,7 +62,7 @@ metadata:
       expected_outputs:
         suggested_id: pdf.invoice-overdue-check
         capabilities_used:
-          - pdf.read
-          - text.extract
-          - text.classify
-          - memory.store
+          - pdf.document.read
+          - text.content.extract
+          - text.content.classify
+          - memory.entry.store

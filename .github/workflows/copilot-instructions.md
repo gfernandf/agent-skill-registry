@@ -47,7 +47,7 @@ Steps reference capabilities using the `uses` field.
 
 Example:
 
-uses: text.template
+uses: text.content.template
 
 Variables in workflows follow the syntax:
 
@@ -65,8 +65,8 @@ capabilities/<capability-id>.yaml
 
 Examples:
 
-capabilities/text.template.yaml
-capabilities/pdf.read.yaml
+capabilities/text.content.template.yaml
+capabilities/pdf.document.read.yaml
 
 Capabilities may optionally declare dependencies using:
 
@@ -75,7 +75,7 @@ requires:
 
 Example:
 
-pdf.read requires fs.read.
+pdf.document.read requires fs.file.read.
 
 ---
 
@@ -87,9 +87,9 @@ domain.verb
 
 Examples:
 
-text.summarize  
-pdf.read  
-fs.read  
+text.content.summarize  
+pdf.document.read  
+fs.file.read  
 
 Skills follow the format:
 

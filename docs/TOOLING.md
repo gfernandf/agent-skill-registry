@@ -54,7 +54,7 @@ This validates the entire registry.
 You may validate an individual capability or skill:
 
 ```bash
-python tools/validate_registry.py capabilities/text.summarize.yaml
+python tools/validate_registry.py capabilities/text.content.summarize.yaml
 ```
 
 ```bash
@@ -292,9 +292,9 @@ Example:
   "skills": {
     "web.fetch-summary": {
       "capabilities": [
-        "web.fetch",
-        "text.extract",
-        "text.summarize"
+        "web.page.fetch",
+        "text.content.extract",
+        "text.content.summarize"
       ],
       "skills": []
     }
@@ -408,7 +408,7 @@ python tools/enforce_capability_sunset.py --minimum-window-days 45
 Example step:
 
 ```
-uses: text.summarize
+uses: text.content.summarize
 ```
 
 or
@@ -597,7 +597,7 @@ python tools/create_capability.py --domain text --verb summarize
 This will generate:
 
 ```
-capabilities/text.summarize.yaml
+capabilities/text.content.summarize.yaml
 ```
 
 Create a capability with noun:
@@ -627,7 +627,7 @@ The canonical capability identifier is generated automatically.
 Examples:
 
 ```
-text.summarize
+text.content.summarize
 data.json.parse
 text.keyword.extract
 ```
@@ -658,7 +658,7 @@ This helps preserve consistency in the registry core language.
 The tool creates a minimal capability definition:
 
 ```yaml
-id: text.classify
+id: text.content.classify
 version: 1.0.0
 description: Describe what this capability does.
 

@@ -19,7 +19,7 @@ outputs:
 steps:
 
   - id: extract_text
-    uses: text.extract
+    uses: text.content.extract
     input:
       text: inputs.text
     output:
@@ -33,7 +33,7 @@ steps:
       keywords: outputs.keywords
 
   - id: summarize_text
-    uses: text.summarize
+    uses: text.content.summarize
     input:
       text: vars.cleaned_text
     output:

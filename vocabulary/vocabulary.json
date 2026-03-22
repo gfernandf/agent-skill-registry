@@ -103,7 +103,18 @@
     "connector": "External system connector",
     "mapping": "Field mapping or translation map",
     "event": "Domain event",
-    "theme": "Thematic category or recurring subject"
+    "theme": "Thematic category or recurring subject",
+    "input": "Agent or user input payload",
+    "task": "Discrete task or work item",
+    "problem": "Problem to analyze or decompose",
+    "speech": "Spoken audio content",
+    "snippet": "Code snippet or fragment",
+    "content": "Generic text or document content",
+    "inbox": "Message inbox or queue",
+    "file": "Filesystem file or object",
+    "entry": "Individual stored entry",
+    "notification": "Alert or push notification",
+    "mail": "Email or mail item"
   },
 
   "verbs": {

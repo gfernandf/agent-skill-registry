@@ -2,8 +2,8 @@
   "skills": {
     "agent.plan-and-route": {
       "capabilities": [
-        "agent.plan.generate",
-        "agent.route"
+        "agent.input.route",
+        "agent.plan.generate"
       ],
       "skills": []
     },
@@ -25,9 +25,9 @@
     },
     "analysis.decompose": {
       "capabilities": [
-        "analysis.split",
+        "analysis.problem.split",
         "eval.output.score",
-        "text.classify"
+        "text.content.classify"
       ],
       "skills": []
     },
@@ -35,7 +35,7 @@
       "capabilities": [
         "analysis.risk.extract",
         "eval.output.score",
-        "text.classify"
+        "text.content.classify"
       ],
       "skills": []
     },
@@ -48,15 +48,15 @@
     },
     "audio.transcribe-summary": {
       "capabilities": [
-        "audio.transcribe",
-        "text.summarize"
+        "audio.speech.transcribe",
+        "text.content.summarize"
       ],
       "skills": []
     },
     "code.diff-summary": {
       "capabilities": [
         "code.diff.extract",
-        "text.summarize"
+        "text.content.summarize"
       ],
       "skills": []
     },
@@ -79,15 +79,15 @@
     },
     "doc.chunk-and-embed": {
       "capabilities": [
-        "doc.chunk",
-        "text.embed"
+        "doc.content.chunk",
+        "text.content.embed"
       ],
       "skills": []
     },
     "email.read-summary": {
       "capabilities": [
-        "email.read",
-        "text.summarize"
+        "email.inbox.read",
+        "text.content.summarize"
       ],
       "skills": []
     },
@@ -102,51 +102,51 @@
     "image.caption-and-classify": {
       "capabilities": [
         "image.caption.generate",
-        "image.classify"
+        "image.content.classify"
       ],
       "skills": []
     },
     "memory.retrieve-summary": {
       "capabilities": [
-        "memory.retrieve",
-        "text.summarize"
+        "memory.entry.retrieve",
+        "text.content.summarize"
       ],
       "skills": []
     },
     "memory.store-embedding": {
       "capabilities": [
-        "memory.store",
-        "text.embed"
+        "memory.entry.store",
+        "text.content.embed"
       ],
       "skills": []
     },
     "memory.store-summary": {
       "capabilities": [
-        "memory.store",
-        "text.summarize"
+        "memory.entry.store",
+        "text.content.summarize"
       ],
       "skills": []
     },
     "pdf.chunk-and-embed": {
       "capabilities": [
-        "doc.chunk",
-        "pdf.read",
-        "text.embed"
+        "doc.content.chunk",
+        "pdf.document.read",
+        "text.content.embed"
       ],
       "skills": []
     },
     "pdf.read-keyword-summary": {
       "capabilities": [
-        "pdf.read",
-        "text.keyword.extract",
-        "text.summarize"
+        "pdf.document.read",
+        "text.content.summarize",
+        "text.keyword.extract"
       ],
       "skills": []
     },
     "pdf.read-summary": {
       "capabilities": [
-        "pdf.read",
-        "text.summarize"
+        "pdf.document.read",
+        "text.content.summarize"
       ],
       "skills": []
     },
@@ -156,10 +156,10 @@
         "analysis.theme.cluster",
         "eval.output.score",
         "research.source.retrieve",
+        "text.content.merge",
+        "text.content.summarize",
         "text.entity.extract",
         "text.keyword.extract",
-        "text.merge",
-        "text.summarize",
         "web.source.normalize",
         "web.source.search"
       ],
@@ -183,91 +183,91 @@
     },
     "table.filter-summary": {
       "capabilities": [
-        "table.filter",
-        "text.summarize"
+        "table.row.filter",
+        "text.content.summarize"
       ],
       "skills": []
     },
     "task.frame": {
       "capabilities": [
+        "agent.input.route",
         "agent.plan.generate",
-        "agent.route",
-        "text.classify",
-        "text.extract"
+        "text.content.classify",
+        "text.content.extract"
       ],
       "skills": []
     },
     "text.detect-language-and-classify": {
       "capabilities": [
-        "text.classify",
+        "text.content.classify",
         "text.language.detect"
       ],
       "skills": []
     },
     "text.entity-summary": {
       "capabilities": [
-        "text.entity.extract",
-        "text.summarize"
+        "text.content.summarize",
+        "text.entity.extract"
       ],
       "skills": []
     },
     "text.keyword-summary": {
       "capabilities": [
-        "text.extract",
-        "text.keyword.extract",
-        "text.summarize"
+        "text.content.extract",
+        "text.content.summarize",
+        "text.keyword.extract"
       ],
       "skills": []
     },
     "text.language-summary": {
       "capabilities": [
-        "text.language.detect",
-        "text.summarize"
+        "text.content.summarize",
+        "text.language.detect"
       ],
       "skills": []
     },
     "text.translate-summary": {
       "capabilities": [
-        "text.summarize",
-        "text.translate"
+        "text.content.summarize",
+        "text.content.translate"
       ],
       "skills": []
     },
     "web.fetch-classify": {
       "capabilities": [
-        "text.classify",
-        "web.fetch",
-        "web.page.extract"
+        "text.content.classify",
+        "web.page.extract",
+        "web.page.fetch"
       ],
       "skills": []
     },
     "web.fetch-summary": {
       "capabilities": [
-        "text.extract",
-        "text.summarize",
-        "web.fetch"
+        "text.content.extract",
+        "text.content.summarize",
+        "web.page.fetch"
       ],
       "skills": []
     },
     "web.page-chunk-and-embed": {
       "capabilities": [
-        "doc.chunk",
-        "text.embed",
-        "web.fetch",
-        "web.page.extract"
+        "doc.content.chunk",
+        "text.content.embed",
+        "web.page.extract",
+        "web.page.fetch"
       ],
       "skills": []
     },
     "web.page-summary": {
       "capabilities": [
-        "text.summarize",
+        "text.content.summarize",
         "web.page.extract"
       ],
       "skills": []
     },
     "web.search-summary": {
       "capabilities": [
-        "text.summarize",
+        "text.content.summarize",
         "web.source.search"
       ],
       "skills": []

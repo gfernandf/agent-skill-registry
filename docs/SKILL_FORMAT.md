@@ -62,7 +62,7 @@ outputs:
 
 steps:
   - id: render
-    uses: text.template
+    uses: text.content.template
     input:
       template: "Hello {{name}}"
       variables:
@@ -465,15 +465,15 @@ Example:
 ```yaml
 steps:
   - id: fetch_a
-    uses: web.fetch
+    uses: web.page.fetch
     config:
       depends_on: []          # no dependencies — runs immediately
   - id: fetch_b
-    uses: web.fetch
+    uses: web.page.fetch
     config:
       depends_on: []          # no dependencies — runs in parallel with fetch_a
   - id: combine
-    uses: text.template
+    uses: text.content.template
     config:
       depends_on: [fetch_a, fetch_b]  # waits for both
 ```
@@ -489,8 +489,8 @@ Reference to the capability or skill executed by the step.
 Examples:
 
 ```
-uses: text.template
-uses: pdf.read
+uses: text.content.template
+uses: pdf.document.read
 ```
 
 Optional skill composition:

@@ -27,7 +27,7 @@ steps:
   output:
     language: outputs.language
 - id: classify
-  uses: text.classify
+  uses: text.content.classify
   input:
     text: inputs.text
     labels: inputs.labels

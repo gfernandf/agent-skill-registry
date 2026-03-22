@@ -140,7 +140,7 @@ steps:
   # Merge all item contents into a single text block for text-level
   # capabilities (keyword extraction, entity extraction, summarization).
   - id: merge_text
-    uses: text.merge
+    uses: text.content.merge
     input:
       items: outputs.sources
     output:
@@ -167,7 +167,7 @@ steps:
       entities: outputs.entities
 
   - id: summarize
-    uses: text.summarize
+    uses: text.content.summarize
     depends_on: []
     input:
       text: vars.corpus_text

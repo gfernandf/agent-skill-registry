@@ -26,8 +26,8 @@
       "task": 1
     },
     "by_channel": {
-      "official": 24,
-      "experimental": 11
+      "official": 22,
+      "experimental": 13
     },
     "average_steps": 2.77,
     "with_skill_dependencies": 0
@@ -64,7 +64,7 @@
     },
     "most_used": [
       {
-        "id": "text.summarize",
+        "id": "text.content.summarize",
         "count": 16
       },
       {
@@ -72,7 +72,7 @@
         "count": 7
       },
       {
-        "id": "text.classify",
+        "id": "text.content.classify",
         "count": 5
       },
       {
@@ -80,11 +80,11 @@
         "count": 4
       },
       {
-        "id": "text.embed",
+        "id": "text.content.embed",
         "count": 4
       },
       {
-        "id": "doc.chunk",
+        "id": "doc.content.chunk",
         "count": 3
       },
       {
@@ -92,7 +92,7 @@
         "count": 3
       },
       {
-        "id": "pdf.read",
+        "id": "pdf.document.read",
         "count": 3
       },
       {
@@ -100,7 +100,7 @@
         "count": 3
       },
       {
-        "id": "text.extract",
+        "id": "text.content.extract",
         "count": 3
       },
       {
@@ -108,19 +108,19 @@
         "count": 3
       },
       {
-        "id": "web.fetch",
-        "count": 3
-      },
-      {
         "id": "web.page.extract",
         "count": 3
       },
       {
-        "id": "agent.plan.generate",
+        "id": "web.page.fetch",
+        "count": 3
+      },
+      {
+        "id": "agent.input.route",
         "count": 2
       },
       {
-        "id": "agent.route",
+        "id": "agent.plan.generate",
         "count": 2
       },
       {
@@ -136,7 +136,7 @@
         "count": 2
       },
       {
-        "id": "memory.store",
+        "id": "memory.entry.store",
         "count": 2
       },
       {
@@ -160,7 +160,7 @@
         "count": 1
       },
       {
-        "id": "analysis.split",
+        "id": "analysis.problem.split",
         "count": 1
       },
       {
@@ -168,7 +168,7 @@
         "count": 1
       },
       {
-        "id": "audio.transcribe",
+        "id": "audio.speech.transcribe",
         "count": 1
       },
       {
@@ -184,7 +184,7 @@
         "count": 1
       },
       {
-        "id": "email.read",
+        "id": "email.inbox.read",
         "count": 1
       },
       {
@@ -192,11 +192,11 @@
         "count": 1
       },
       {
-        "id": "image.classify",
+        "id": "image.content.classify",
         "count": 1
       },
       {
-        "id": "memory.retrieve",
+        "id": "memory.entry.retrieve",
         "count": 1
       },
       {
@@ -208,15 +208,15 @@
         "count": 1
       },
       {
-        "id": "table.filter",
+        "id": "table.row.filter",
         "count": 1
       },
       {
-        "id": "text.merge",
+        "id": "text.content.merge",
         "count": 1
       },
       {
-        "id": "text.translate",
+        "id": "text.content.translate",
         "count": 1
       },
       {
@@ -225,13 +225,13 @@
       }
     ],
     "unused": [
-      "agent.delegate",
       "agent.plan.create",
-      "code.execute",
-      "code.format",
+      "agent.task.delegate",
+      "code.snippet.execute",
+      "code.source.format",
       "data.record.deduplicate",
-      "email.send",
-      "fs.read",
+      "email.message.send",
+      "fs.file.read",
       "identity.assignee.identify",
       "identity.decision.justify",
       "identity.permission.gate",
@@ -256,8 +256,8 @@
       "integration.record.upsert",
       "memory.record.store",
       "memory.vector.search",
+      "message.notification.send",
       "message.priority.classify",
-      "message.send",
       "model.embedding.generate",
       "model.output.classify",
       "model.output.sanitize",
@@ -293,7 +293,7 @@
       "task.priority.classify",
       "task.sla.monitor",
       "task.state.transition",
-      "text.template",
+      "text.content.template",
       "video.frame.extract",
       "web.source.verify"
     ]

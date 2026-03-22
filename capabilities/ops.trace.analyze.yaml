@@ -1,4 +1,4 @@
-﻿id: ops.trace.analyze
+id: ops.trace.analyze
 version: 1.0.0
 description: >
   Analyze incremental execution traces as a cognitive interpretation unit.

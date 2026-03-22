@@ -1,0 +1,17 @@
+id: text.content.embed
+version: 1.0.0
+description: Generate vector embeddings from text.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Input text.
+outputs:
+  embedding:
+    type: array
+    required: true
+    description: Generated embedding vector.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true

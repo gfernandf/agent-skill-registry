@@ -15,13 +15,13 @@ outputs:
     required: true
 steps:
 - id: read_pdf
-  uses: pdf.read
+  uses: pdf.document.read
   input:
     path: inputs.path
   output:
     text: outputs.text
 - id: summarize
-  uses: text.summarize
+  uses: text.content.summarize
   input:
     text: outputs.text
   output:

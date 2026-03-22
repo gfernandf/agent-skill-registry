@@ -1,0 +1,51 @@
+id: pdf.chunk-and-embed
+version: 0.1.0
+name: PDF Chunk and Embed
+description: Read a PDF, chunk its text, and generate embeddings for the full text.
+inputs:
+  path:
+    type: string
+    required: true
+  chunk_size:
+    type: number
+    required: false
+  overlap:
+    type: number
+    required: false
+outputs:
+  text:
+    type: string
+    required: true
+  chunks:
+    type: array
+    required: true
+  embedding:
+    type: array
+    required: true
+steps:
+- id: read_pdf
+  uses: pdf.document.read
+  input:
+    path: inputs.path
+  output:
+    text: outputs.text
+- id: chunk
+  uses: doc.content.chunk
+  input:
+    text: outputs.text
+    chunk_size: inputs.chunk_size
+    overlap: inputs.overlap
+  output:
+    chunks: outputs.chunks
+- id: embed
+  uses: text.content.embed
+  input:
+    text: outputs.text
+  output:
+    embedding: outputs.embedding
+metadata:
+  status: experimental
+  classification:
+    role: utility
+    invocation: direct
+    effect_mode: enrich

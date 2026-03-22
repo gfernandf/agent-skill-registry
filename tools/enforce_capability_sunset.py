@@ -16,7 +16,7 @@ def _default_base() -> Path:
 
 
 def _load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as f:
+    with path.open("r", encoding="utf-8-sig") as f:
         return yaml.safe_load(f)
 
 
