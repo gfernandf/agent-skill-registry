@@ -3,6 +3,22 @@
 An open registry of reusable **AI agent skills** and **capability
 definitions**.
 
+## Quick Start
+
+```bash
+pip install -r requirements.txt
+python tools/validate_registry.py
+python tools/generate_catalog.py
+```
+
+See the companion runtime at [agent-skills](https://github.com/gfernandf/agent-skills) for execution.
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE).
+
+---
+
 The registry provides a standardized, declarative way to define:
 
 -   primitive **capabilities**

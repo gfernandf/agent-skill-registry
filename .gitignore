@@ -1,2 +1,6 @@
 # Local editor configuration
 .vscode/
+
+# Python
+__pycache__/
+*.pyc

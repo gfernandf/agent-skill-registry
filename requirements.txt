@@ -1,0 +1,2 @@
+# Registry tooling dependencies
+pyyaml>=6.0
