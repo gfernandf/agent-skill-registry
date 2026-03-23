@@ -14,6 +14,12 @@ outputs:
     required: true
     description: Retrieved web page content.
 
+cognitive_hints:
+  role: perceive
+  produces:
+    content:
+      type: Artifact
+
 properties:
   deterministic: false
   side_effects: false

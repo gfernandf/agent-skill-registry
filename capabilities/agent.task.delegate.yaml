@@ -15,6 +15,14 @@ outputs:
     type: boolean
     required: true
     description: Whether delegation was accepted.
+
+safety:
+  trust_level: elevated
+  reversible: false
+  requires_confirmation: true
+  allowed_targets:
+    - approved_connectors
+
 properties:
   deterministic: false
   side_effects: true

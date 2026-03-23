@@ -121,6 +121,10 @@ def extract_capability_entry(path: Path, data: dict[str, Any], base: Path) -> di
         entry["aliases"] = data.get("aliases", [])
     if "examples" in data:
         entry["examples"] = data.get("examples", [])
+    if "cognitive_hints" in data:
+        entry["cognitive_hints"] = data["cognitive_hints"]
+    if "safety" in data:
+        entry["safety"] = data["safety"]
 
     return entry
 

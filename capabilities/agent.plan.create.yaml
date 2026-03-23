@@ -42,6 +42,16 @@ outputs:
       List of validation error strings found in the generated output.
       Empty list means the YAML is valid.
 
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+  produces:
+    skill_yaml:
+      type: Plan
+    capabilities_used:
+      type: Context
+
 metadata:
   status: experimental
   tags:

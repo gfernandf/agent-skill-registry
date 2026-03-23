@@ -89,6 +89,27 @@ outputs:
     required: false
     description: Human-readable summary of the current trace analysis.
 
+cognitive_hints:
+  role: reflect
+  consumes:
+    - Context
+    - Evidence
+  produces:
+    updated_trace_state:
+      type: Context
+    decision_graph:
+      type: Artifact
+    assumptions:
+      type: Evidence
+    alternative_paths:
+      type: Hypothesis
+    confidence:
+      type: Score
+    risk_candidates:
+      type: Risk
+    summary:
+      type: Summary
+
 properties:
   deterministic: false
   side_effects: false

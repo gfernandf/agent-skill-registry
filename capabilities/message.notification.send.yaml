@@ -15,6 +15,15 @@ outputs:
     type: boolean
     required: true
     description: Whether sending succeeded.
+
+safety:
+  trust_level: elevated
+  data_classification: internal
+  reversible: false
+  requires_confirmation: true
+  allowed_targets:
+    - internal_only
+
 properties:
   deterministic: true
   side_effects: true

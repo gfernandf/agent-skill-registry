@@ -64,6 +64,23 @@ outputs:
     description: >
       Brief note on methodology, gaps in available information, or caveats.
 
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Artifact
+    - Context
+  produces:
+    risks:
+      type: Risk
+    assumptions:
+      type: Evidence
+    failure_modes:
+      type: Risk
+    mitigation_ideas:
+      type: Context
+    extraction_notes:
+      type: Summary
+
 properties:
   deterministic: false
   side_effects: false

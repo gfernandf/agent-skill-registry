@@ -1,0 +1,87 @@
+# Safety Vocabulary — Controlled enumerations for the capability safety block.
+# Source of truth for trust levels, data classifications, failure policies,
+# allowed targets, and scope constraints.
+#
+# The safety block is optional for capabilities without side effects.
+# It is REQUIRED for capabilities with properties.side_effects == true
+# in official/ and community/ channels.
+
+version: "0.1.0"
+
+trust_levels:
+  sandbox:
+    description: >
+      No external effects, no sensitive data access. Safe for unrestricted
+      execution without monitoring beyond standard audit.
+    rank: 0
+  standard:
+    description: >
+      May read internal data or perform low-risk mutations. Normal audit
+      trail required.
+    rank: 1
+  elevated:
+    description: >
+      Performs significant mutations, accesses sensitive data, or
+      communicates externally. Requires explicit policy approval.
+      If reversible is false, human confirmation is implied unless
+      overridden by deployment policy.
+    rank: 2
+  privileged:
+    description: >
+      Executes arbitrary code, manages credentials, or performs
+      irreversible high-impact operations. Human confirmation required.
+      Full audit mode enforced.
+    rank: 3
+
+data_classifications:
+  public:
+    description: No restrictions on data handling.
+    rank: 0
+  internal:
+    description: Organization-internal data. Standard audit required.
+    rank: 1
+  pii:
+    description: >
+      Personally identifiable information. PII detection and redaction
+      gates recommended. Full audit mode enforced.
+    rank: 2
+  confidential:
+    description: >
+      Business-sensitive data. Encryption at rest and in transit expected.
+      Full audit mode enforced.
+    rank: 3
+  restricted:
+    description: >
+      Regulatory-controlled data (HIPAA, GDPR special categories, etc.).
+      Maximum safeguards. Human approval for any release.
+    rank: 4
+
+failure_policies:
+  - block
+  - warn
+  - degrade
+  - require_human
+
+allowed_targets:
+  internal_only:
+    description: >
+      Target must resolve to internal-domain endpoints. The deployment
+      defines the internal domain list in .agent-skills/safety_policy.yaml.
+  approved_connectors:
+    description: >
+      Target must be in the deployment's approved connector allowlist.
+  same_tenant:
+    description: >
+      Target must belong to the same organizational tenant as the caller.
+
+scope_constraints:
+  read_only:
+    description: Binding must not perform write operations.
+  sandboxed_execution:
+    description: Code execution must occur in an isolated sandbox.
+  no_credential_passthrough:
+    description: Binding must not forward caller credentials to downstream services.
+  no_external_network:
+    description: Binding must not make outbound network requests.
+  ephemeral_only:
+    description: Produced data must not be persisted beyond the current run.

@@ -293,6 +293,266 @@ See:
 
 ---
 
+## cognitive_hints (Optional)
+
+Capabilities may optionally include a `cognitive_hints` block that declares how
+the capability interacts with the CognitiveState runtime layer.
+
+When present, the block is **normative** — meaning validators enforce its
+structure and the runtime uses it for auto-wiring. When absent, the capability
+operates without cognitive-layer integration.
+
+### Schema
+
+```yaml
+cognitive_hints:
+  role: string | [string]     # required — cognitive role(s)
+  consumes:                   # optional — semantic types read
+    - TypeName
+  produces:                   # required — per-output-field type mapping
+    field_name:
+      type: TypeName          # required — from vocabulary/cognitive_types.yaml
+      merge: append | replace | deep_merge   # optional — override default
+      target: working.slot    # optional — override default_slot
+```
+
+### role
+
+The cognitive role(s) the capability plays in a reasoning pipeline.
+
+Valid values come from the `roles` list in `vocabulary/cognitive_types.yaml`:
+
+| Role | Meaning |
+|---|---|
+| `perceive` | Ingests raw data from external sources |
+| `analyze` | Decomposes, identifies patterns, extracts structure |
+| `evaluate` | Scores, compares, ranks against criteria |
+| `decide` | Makes an explicit choice, resolves ambiguity |
+| `synthesize` | Combines inputs into a new coherent output |
+| `act` | Performs a side-effect (send, write, deploy) |
+| `reflect` | Examines the agent's own reasoning trace |
+
+A capability may declare multiple roles as a list:
+
+```yaml
+cognitive_hints:
+  role: [analyze, evaluate]
+```
+
+### produces
+
+Maps each cognitively relevant output field to a semantic type from the
+vocabulary. Every key in `produces` must exist as a declared output field.
+Not all output fields need to appear — only those with meaningful cognitive
+semantics.
+
+```yaml
+produces:
+  risks:
+    type: Risk
+  assumptions:
+    type: Evidence
+  comparative_summary:
+    type: Summary
+    merge: replace
+    target: output.summary
+```
+
+Optional sub-keys:
+
+- `merge` — overrides the default merge strategy from the type's `cardinality`
+- `target` — overrides the type's `default_slot` for auto-wire placement
+
+### consumes
+
+Declares which semantic object types the capability expects to find in the
+CognitiveState before execution. Used by the planner to validate that upstream
+steps have produced the required types.
+
+```yaml
+consumes:
+  - Option
+  - Criterion
+```
+
+### Three-layer resolution
+
+Cognitive wiring resolves through three layers:
+
+1. **Vocabulary** (`vocabulary/cognitive_types.yaml`) — defines default_slot
+   and cardinality per type
+2. **Capability hints** (`cognitive_hints.produces`) — may override merge
+   and target per field
+3. **Skill output mapping** (`steps[].output`) — final authority; the skill
+   author wires fields to explicit state paths
+
+If a skill step has no output mapping but its capability has `cognitive_hints`,
+the runtime auto-wires using type defaults.
+
+### Example
+
+```yaml
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Artifact
+    - Context
+  produces:
+    risks:
+      type: Risk
+    assumptions:
+      type: Evidence
+    failure_modes:
+      type: Risk
+    mitigation_ideas:
+      type: Context
+    extraction_notes:
+      type: Summary
+```
+
+---
+
+## safety (Conditional)
+
+The `safety` block declares security, trust, and operational guardrails for a
+capability. It is **required** for any capability that declares
+`properties.side_effects: true`. For pure-read capabilities it is optional.
+
+When present, the block is **normative** — the runtime enforces its constraints.
+
+### Schema
+
+```yaml
+safety:
+  trust_level: sandbox | standard | elevated | privileged    # required
+  data_classification: public | internal | pii | confidential | restricted
+  reversible: true | false
+  requires_confirmation: true | false
+  allowed_targets:
+    - internal_only
+    - approved_connectors
+    - same_tenant
+  mandatory_pre_gates:
+    - capability: security.pii.detect
+      on_fail: block | warn | degrade | require_human
+  mandatory_post_gates:
+    - capability: security.output.gate
+      on_fail: warn
+  scope_constraints:
+    - sandboxed_execution
+    - read_only
+    - no_credential_passthrough
+    - no_external_network
+    - ephemeral_only
+```
+
+### trust_level (required)
+
+Declares the minimum trust context needed to execute this capability.
+
+| Level | Rank | Meaning |
+|---|---|---|
+| `sandbox` | 0 | No external effects, no sensitive data. Free execution. |
+| `standard` | 1 | May read internal data or perform low-risk mutations. |
+| `elevated` | 2 | Significant mutations, sensitive data, or external comms. |
+| `privileged` | 3 | Arbitrary code, credentials, irreversible high-impact ops. |
+
+The runtime rejects execution when the execution context's trust level is
+lower than the capability's declared level.
+
+### data_classification
+
+Declares the highest sensitivity of data the capability handles.
+
+| Classification | Rank | Enforcement |
+|---|---|---|
+| `public` | 0 | No restrictions. |
+| `internal` | 1 | Standard audit. |
+| `pii` | 2 | PII gates recommended. Full audit enforced. |
+| `confidential` | 3 | Encryption expected. Full audit enforced. |
+| `restricted` | 4 | Maximum safeguards. Human approval for release. |
+
+### reversible
+
+Whether the effects of the capability can be undone.
+
+- `true` — effects can be reverted (e.g. delete a draft, undo a store).
+- `false` — effects are permanent (e.g. send an email, execute code).
+
+When omitted on a capability with `side_effects: true`, the runtime treats it
+as `false` (conservative default). When `side_effects: false`, the field is
+irrelevant.
+
+### requires_confirmation
+
+When `true`, the runtime pauses execution and requests human confirmation
+before proceeding. Without confirmation, the step is not executed.
+
+### allowed_targets
+
+Controlled vocabulary of deployment-scoped target restrictions. The deployment
+defines what each target name means in `.agent-skills/safety_policy.yaml`.
+
+| Target | Meaning |
+|---|---|
+| `internal_only` | Endpoints must resolve to internal domains. |
+| `approved_connectors` | Must be in deployment's approved connector list. |
+| `same_tenant` | Must belong to the same organizational tenant. |
+
+### mandatory_pre_gates / mandatory_post_gates
+
+Lists of capability IDs that the runtime must execute before/after the
+capability. Each gate can be specified as:
+
+- **Short form**: just the capability ID string (defaults to `on_fail: block`)
+- **Full form**: `{capability: <id>, on_fail: <policy>}`
+
+| on_fail | Meaning |
+|---|---|
+| `block` | Abort the step and the skill. (default) |
+| `warn` | Emit warning event, continue execution. |
+| `degrade` | Skip the step, skill continues with null output. |
+| `require_human` | Pause for human confirmation despite gate failure. |
+
+### scope_constraints
+
+Deployment-enforced restrictions applied to the binding/service at execution
+time.
+
+| Constraint | Meaning |
+|---|---|
+| `sandboxed_execution` | Code runs in isolated sandbox. |
+| `read_only` | No write operations allowed. |
+| `no_credential_passthrough` | Must not forward caller credentials. |
+| `no_external_network` | No outbound network requests. |
+| `ephemeral_only` | Data must not persist beyond current run. |
+
+### Enforcement policy
+
+The `safety` block follows an escalating enforcement policy:
+
+- **v2 (current)**: `safety` is required for all capabilities with
+  `properties.side_effects: true`. Omitting it is a validation error.
+- Capabilities without side effects may optionally declare `safety` if they
+  handle sensitive data (e.g. a read-only PII extraction capability).
+
+### Example
+
+```yaml
+safety:
+  trust_level: elevated
+  data_classification: pii
+  reversible: false
+  requires_confirmation: true
+  allowed_targets:
+    - internal_only
+  mandatory_pre_gates:
+    - capability: security.pii.detect
+      on_fail: block
+```
+
+---
+
 ## properties
 
 Capabilities may declare execution properties.

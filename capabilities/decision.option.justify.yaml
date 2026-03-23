@@ -106,6 +106,30 @@ outputs:
       consumption. Includes what was decided, why, key trade-offs, risks,
       and next steps.
 
+cognitive_hints:
+  role: decide
+  consumes:
+    - Score
+    - Option
+    - Tradeoff
+  produces:
+    recommendation:
+      type: Decision
+    alternatives_considered:
+      type: Option
+    confidence_score:
+      type: Score
+    confidence_level:
+      type: Score
+    uncertainties:
+      type: Uncertainty
+    failure_modes:
+      type: Risk
+    next_steps:
+      type: Plan
+    human_readable:
+      type: Summary
+
 properties:
   deterministic: false
   side_effects: false

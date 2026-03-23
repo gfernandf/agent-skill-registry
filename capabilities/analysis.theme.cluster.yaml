@@ -51,6 +51,17 @@ outputs:
       coverage_ratio (fraction of items assigned), overlap_warnings
       (list of items assigned to multiple clusters).
 
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Entity
+    - Context
+  produces:
+    clusters:
+      type: Entity
+    cluster_quality:
+      type: Score
+
 properties:
   deterministic: false
   side_effects: false

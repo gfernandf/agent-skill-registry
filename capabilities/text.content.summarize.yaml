@@ -14,3 +14,11 @@ inputs:
 outputs:
   summary:
     type: string
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+  produces:
+    summary:
+      type: Summary

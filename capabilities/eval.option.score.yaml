@@ -66,6 +66,21 @@ outputs:
       Explicit trade-offs between top candidates. Each entry names the tension
       and what is gained/lost.
 
+cognitive_hints:
+  role: evaluate
+  consumes:
+    - Option
+    - Criterion
+  produces:
+    scored_options:
+      type: Score
+    criteria_used:
+      type: Criterion
+    comparative_summary:
+      type: Summary
+    tradeoffs:
+      type: Tradeoff
+
 properties:
   deterministic: false
   side_effects: false

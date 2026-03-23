@@ -15,6 +15,12 @@ outputs:
     type: boolean
     required: true
     description: Whether storage succeeded.
+
+safety:
+  trust_level: standard
+  data_classification: internal
+  reversible: true
+
 properties:
   deterministic: true
   side_effects: true

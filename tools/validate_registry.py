@@ -61,6 +61,20 @@ def load_vocabulary(base: Path) -> Dict[str, Any]:
     return load_json(vocab_path)
 
 
+def load_cognitive_types(base: Path) -> Dict[str, Any]:
+    ct_path = base / "vocabulary" / "cognitive_types.yaml"
+    if not ct_path.exists():
+        return {}
+    return load_yaml(ct_path) or {}
+
+
+def load_safety_vocabulary(base: Path) -> Dict[str, Any]:
+    sv_path = base / "vocabulary" / "safety_vocabulary.yaml"
+    if not sv_path.exists():
+        return {}
+    return load_yaml(sv_path) or {}
+
+
 def validate_capability_id_against_vocab(
     capability_id: str, vocab: Dict[str, Any], errors: List[str], path: Path
 ) -> None:
@@ -241,12 +255,247 @@ def validate_metadata_block(
 
 
 # ----------------------------------------------------------------------
+# Cognitive hints validation
+# ----------------------------------------------------------------------
+
+
+def validate_cognitive_hints_block(
+    hints: Any,
+    data: Dict[str, Any],
+    cognitive_types: Dict[str, Any],
+    path: Path,
+    errors: List[str],
+) -> None:
+    """Validate the optional cognitive_hints block of a capability YAML."""
+    if hints is None:
+        return
+
+    if not isinstance(hints, dict):
+        errors.append(f"{path}: cognitive_hints must be a mapping")
+        return
+
+    known_types = set(cognitive_types.get("types", {}).keys())
+    known_roles = set(cognitive_types.get("roles", []))
+
+    # --- role (required when hints present) ---
+    role = hints.get("role")
+    if role is None:
+        errors.append(f"{path}: cognitive_hints.role is required when cognitive_hints is present")
+    elif isinstance(role, str):
+        if known_roles and role not in known_roles:
+            errors.append(
+                f"{path}: cognitive_hints.role '{role}' not in vocabulary roles {sorted(known_roles)}"
+            )
+    elif isinstance(role, list):
+        for r in role:
+            if not isinstance(r, str):
+                errors.append(f"{path}: cognitive_hints.role entries must be strings")
+            elif known_roles and r not in known_roles:
+                errors.append(
+                    f"{path}: cognitive_hints.role entry '{r}' not in vocabulary roles {sorted(known_roles)}"
+                )
+    else:
+        errors.append(f"{path}: cognitive_hints.role must be a string or list of strings")
+
+    # --- produces (required when hints present) ---
+    produces = hints.get("produces")
+    output_fields = set(data.get("outputs", {}).keys()) if isinstance(data.get("outputs"), dict) else set()
+    if produces is None:
+        errors.append(f"{path}: cognitive_hints.produces is required when cognitive_hints is present")
+    elif not isinstance(produces, dict):
+        errors.append(f"{path}: cognitive_hints.produces must be a mapping")
+    else:
+        for field_name, field_spec in produces.items():
+            if not isinstance(field_name, str):
+                errors.append(f"{path}: cognitive_hints.produces keys must be strings")
+                continue
+            if field_name not in output_fields:
+                errors.append(
+                    f"{path}: cognitive_hints.produces field '{field_name}' "
+                    f"does not match any declared output field"
+                )
+            if not isinstance(field_spec, dict):
+                errors.append(
+                    f"{path}: cognitive_hints.produces.{field_name} must be a mapping"
+                )
+                continue
+            ptype = field_spec.get("type")
+            if not isinstance(ptype, str) or not ptype:
+                errors.append(
+                    f"{path}: cognitive_hints.produces.{field_name}.type is required"
+                )
+            elif known_types and ptype not in known_types:
+                errors.append(
+                    f"{path}: cognitive_hints.produces.{field_name}.type '{ptype}' "
+                    f"not in vocabulary types {sorted(known_types)}"
+                )
+            merge = field_spec.get("merge")
+            if merge is not None and merge not in {"append", "replace", "deep_merge", "overwrite"}:
+                errors.append(
+                    f"{path}: cognitive_hints.produces.{field_name}.merge '{merge}' "
+                    f"must be one of append, replace, deep_merge, overwrite"
+                )
+            target = field_spec.get("target")
+            if target is not None and not isinstance(target, str):
+                errors.append(
+                    f"{path}: cognitive_hints.produces.{field_name}.target must be a string"
+                )
+
+    # --- consumes (optional) ---
+    consumes = hints.get("consumes")
+    if consumes is not None:
+        if not isinstance(consumes, list):
+            errors.append(f"{path}: cognitive_hints.consumes must be a list")
+        else:
+            for item in consumes:
+                if not isinstance(item, str):
+                    errors.append(f"{path}: cognitive_hints.consumes entries must be strings")
+                elif known_types and item not in known_types:
+                    errors.append(
+                        f"{path}: cognitive_hints.consumes entry '{item}' "
+                        f"not in vocabulary types {sorted(known_types)}"
+                    )
+
+
+# ----------------------------------------------------------------------
+# Safety block validation
+# ----------------------------------------------------------------------
+
+
+def validate_safety_block(
+    safety: Any,
+    data: Dict[str, Any],
+    safety_vocab: Dict[str, Any],
+    path: Path,
+    errors: List[str],
+) -> None:
+    """Validate the optional safety block of a capability YAML."""
+    if safety is None:
+        return
+
+    if not isinstance(safety, dict):
+        errors.append(f"{path}: safety must be a mapping")
+        return
+
+    known_trust = set(safety_vocab.get("trust_levels", {}).keys())
+    known_data_class = set(safety_vocab.get("data_classifications", {}).keys())
+    known_failure = set(safety_vocab.get("failure_policies", []))
+    known_targets = set(safety_vocab.get("allowed_targets", {}).keys())
+    known_constraints = set(safety_vocab.get("scope_constraints", {}).keys())
+
+    # --- trust_level (required when safety present) ---
+    trust = safety.get("trust_level")
+    if trust is None:
+        errors.append(f"{path}: safety.trust_level is required when safety is present")
+    elif not isinstance(trust, str) or (known_trust and trust not in known_trust):
+        errors.append(
+            f"{path}: safety.trust_level '{trust}' must be one of {sorted(known_trust)}"
+        )
+
+    # --- data_classification (optional) ---
+    dc = safety.get("data_classification")
+    if dc is not None:
+        if not isinstance(dc, str) or (known_data_class and dc not in known_data_class):
+            errors.append(
+                f"{path}: safety.data_classification '{dc}' must be one of {sorted(known_data_class)}"
+            )
+
+    # --- reversible (optional, boolean) ---
+    rev = safety.get("reversible")
+    if rev is not None and not isinstance(rev, bool):
+        errors.append(f"{path}: safety.reversible must be a boolean")
+
+    # --- requires_confirmation (optional, boolean) ---
+    rc = safety.get("requires_confirmation")
+    if rc is not None and not isinstance(rc, bool):
+        errors.append(f"{path}: safety.requires_confirmation must be a boolean")
+
+    # --- allowed_targets (optional, list) ---
+    at = safety.get("allowed_targets")
+    if at is not None:
+        if not isinstance(at, list):
+            errors.append(f"{path}: safety.allowed_targets must be a list")
+        else:
+            for item in at:
+                if not isinstance(item, str):
+                    errors.append(f"{path}: safety.allowed_targets entries must be strings")
+                elif known_targets and item not in known_targets:
+                    errors.append(
+                        f"{path}: safety.allowed_targets entry '{item}' "
+                        f"not in vocabulary {sorted(known_targets)}"
+                    )
+
+    # --- mandatory_pre_gates / mandatory_post_gates ---
+    for gate_key in ("mandatory_pre_gates", "mandatory_post_gates"):
+        gates = safety.get(gate_key)
+        if gates is None:
+            continue
+        if not isinstance(gates, list):
+            errors.append(f"{path}: safety.{gate_key} must be a list")
+            continue
+        for idx, gate in enumerate(gates):
+            if isinstance(gate, str):
+                continue  # short form: capability id only, on_fail defaults to block
+            if isinstance(gate, dict):
+                gcap = gate.get("capability")
+                if not isinstance(gcap, str) or not gcap:
+                    errors.append(
+                        f"{path}: safety.{gate_key}[{idx}].capability is required"
+                    )
+                on_fail = gate.get("on_fail", "block")
+                if known_failure and on_fail not in known_failure:
+                    errors.append(
+                        f"{path}: safety.{gate_key}[{idx}].on_fail '{on_fail}' "
+                        f"must be one of {sorted(known_failure)}"
+                    )
+            else:
+                errors.append(
+                    f"{path}: safety.{gate_key}[{idx}] must be a string or mapping"
+                )
+
+    # --- scope_constraints (optional, list) ---
+    sc = safety.get("scope_constraints")
+    if sc is not None:
+        if not isinstance(sc, list):
+            errors.append(f"{path}: safety.scope_constraints must be a list")
+        else:
+            for item in sc:
+                if not isinstance(item, str):
+                    errors.append(f"{path}: safety.scope_constraints entries must be strings")
+                elif known_constraints and item not in known_constraints:
+                    errors.append(
+                        f"{path}: safety.scope_constraints entry '{item}' "
+                        f"not in vocabulary {sorted(known_constraints)}"
+                    )
+
+
+def enforce_safety_for_side_effects(
+    data: Dict[str, Any],
+    path: Path,
+    errors: List[str],
+) -> None:
+    """v2 enforcement: capabilities with side_effects: true MUST have a safety block."""
+    props = data.get("properties")
+    if not isinstance(props, dict):
+        return
+    if props.get("side_effects") is not True:
+        return
+    if data.get("safety") is None:
+        errors.append(
+            f"{path}: capability with properties.side_effects=true "
+            f"must define a 'safety' block"
+        )
+
+
+# ----------------------------------------------------------------------
 # Capability validation
 # ----------------------------------------------------------------------
 
 
 def validate_capability_structure(
-    path: Path, data: Dict[str, Any], vocab: Dict[str, Any], errors: List[str]
+    path: Path, data: Dict[str, Any], vocab: Dict[str, Any], errors: List[str],
+    cognitive_types: Dict[str, Any] | None = None,
+    safety_vocab: Dict[str, Any] | None = None,
 ) -> None:
     required = ["id", "version", "description", "inputs", "outputs"]
     for r in required:
@@ -275,6 +524,24 @@ def validate_capability_structure(
         errors.append(f"{path}: 'outputs' must be mapping")
 
     validate_metadata_block(data.get("metadata"), path, errors)
+
+    validate_cognitive_hints_block(
+        data.get("cognitive_hints"),
+        data,
+        cognitive_types or {},
+        path,
+        errors,
+    )
+
+    validate_safety_block(
+        data.get("safety"),
+        data,
+        safety_vocab or {},
+        path,
+        errors,
+    )
+
+    enforce_safety_for_side_effects(data, path, errors)
 
 
 def validate_capability_semantics(
@@ -485,6 +752,8 @@ def main() -> int:
     errors: List[str] = []
 
     vocab = load_vocabulary(base)
+    cognitive_types = load_cognitive_types(base)
+    safety_vocab = load_safety_vocabulary(base)
 
     capability_files = discover_capability_files(base)
     skill_files = discover_skill_files(base)
@@ -502,7 +771,7 @@ def main() -> int:
             errors.append(f"{path}: invalid YAML")
             continue
 
-        validate_capability_structure(path, data, vocab, errors)
+        validate_capability_structure(path, data, vocab, errors, cognitive_types, safety_vocab)
 
         cid = data.get("id")
         if isinstance(cid, str):

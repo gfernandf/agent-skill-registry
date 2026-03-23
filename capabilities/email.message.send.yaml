@@ -19,6 +19,26 @@ outputs:
     type: boolean
     required: true
     description: Whether sending succeeded.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Message
+  produces:
+    sent:
+      type: Artifact
+
+safety:
+  trust_level: elevated
+  data_classification: pii
+  reversible: false
+  requires_confirmation: true
+  allowed_targets:
+    - internal_only
+  mandatory_pre_gates:
+    - capability: security.pii.detect
+      on_fail: block
+
 properties:
   deterministic: true
   side_effects: true

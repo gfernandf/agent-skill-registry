@@ -147,6 +147,20 @@
           }
         }
       ]
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "skill_yaml": {
+          "type": "Plan"
+        },
+        "capabilities_used": {
+          "type": "Context"
+        }
+      }
     }
   },
   {
@@ -214,6 +228,14 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "reversible": false,
+      "requires_confirmation": true,
+      "allowed_targets": [
+        "approved_connectors"
+      ]
     }
   },
   {
@@ -344,6 +366,30 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Artifact",
+        "Context"
+      ],
+      "produces": {
+        "risks": {
+          "type": "Risk"
+        },
+        "assumptions": {
+          "type": "Evidence"
+        },
+        "failure_modes": {
+          "type": "Risk"
+        },
+        "mitigation_ideas": {
+          "type": "Context"
+        },
+        "extraction_notes": {
+          "type": "Summary"
+        }
+      }
     }
   },
   {
@@ -405,6 +451,21 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Entity",
+        "Context"
+      ],
+      "produces": {
+        "clusters": {
+          "type": "Entity"
+        },
+        "cluster_quality": {
+          "type": "Score"
+        }
+      }
     }
   },
   {
@@ -518,6 +579,15 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "safety": {
+      "trust_level": "privileged",
+      "data_classification": "internal",
+      "reversible": false,
+      "requires_confirmation": true,
+      "scope_constraints": [
+        "sandboxed_execution"
+      ]
     }
   },
   {
@@ -626,6 +696,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "records": {
+          "type": "Entity"
+        }
+      }
     }
   },
   {
@@ -762,6 +843,40 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "consumes": [
+        "Score",
+        "Option",
+        "Tradeoff"
+      ],
+      "produces": {
+        "recommendation": {
+          "type": "Decision"
+        },
+        "alternatives_considered": {
+          "type": "Option"
+        },
+        "confidence_score": {
+          "type": "Score"
+        },
+        "confidence_level": {
+          "type": "Score"
+        },
+        "uncertainties": {
+          "type": "Uncertainty"
+        },
+        "failure_modes": {
+          "type": "Risk"
+        },
+        "next_steps": {
+          "type": "Plan"
+        },
+        "human_readable": {
+          "type": "Summary"
+        }
+      }
     }
   },
   {
@@ -875,6 +990,32 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Message"
+      ],
+      "produces": {
+        "sent": {
+          "type": "Artifact"
+        }
+      }
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "data_classification": "pii",
+      "reversible": false,
+      "requires_confirmation": true,
+      "allowed_targets": [
+        "internal_only"
+      ],
+      "mandatory_pre_gates": [
+        {
+          "capability": "security.pii.detect",
+          "on_fail": "block"
+        }
+      ]
     }
   },
   {
@@ -991,6 +1132,27 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "consumes": [
+        "Option",
+        "Criterion"
+      ],
+      "produces": {
+        "scored_options": {
+          "type": "Score"
+        },
+        "criteria_used": {
+          "type": "Criterion"
+        },
+        "comparative_summary": {
+          "type": "Summary"
+        },
+        "tradeoffs": {
+          "type": "Tradeoff"
+        }
+      }
     }
   },
   {
@@ -1065,6 +1227,17 @@
       "category": null,
       "status": "unspecified",
       "examples": []
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "content": {
+          "type": "Artifact"
+        },
+        "bytes": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -1517,6 +1690,11 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "data_classification": "internal",
+      "reversible": true
     }
   },
   {
@@ -1581,6 +1759,15 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "data_classification": "internal",
+      "reversible": false,
+      "requires_confirmation": true,
+      "allowed_targets": [
+        "internal_only"
+      ]
     }
   },
   {
@@ -2015,6 +2202,36 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "reflect",
+      "consumes": [
+        "Context",
+        "Evidence"
+      ],
+      "produces": {
+        "updated_trace_state": {
+          "type": "Context"
+        },
+        "decision_graph": {
+          "type": "Artifact"
+        },
+        "assumptions": {
+          "type": "Evidence"
+        },
+        "alternative_paths": {
+          "type": "Hypothesis"
+        },
+        "confidence": {
+          "type": "Score"
+        },
+        "risk_candidates": {
+          "type": "Risk"
+        },
+        "summary": {
+          "type": "Summary"
+        }
+      }
     }
   },
   {
@@ -2913,6 +3130,17 @@
       "category": null,
       "status": "unspecified",
       "examples": []
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "summary": {
+          "type": "Summary"
+        }
+      }
     }
   },
   {
@@ -3172,6 +3400,14 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "content": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {

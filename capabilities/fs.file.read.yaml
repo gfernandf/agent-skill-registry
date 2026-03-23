@@ -20,3 +20,11 @@ outputs:
   bytes:
     type: object
     description: Raw bytes (if mode is binary).
+
+cognitive_hints:
+  role: perceive
+  produces:
+    content:
+      type: Artifact
+    bytes:
+      type: Artifact

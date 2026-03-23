@@ -19,6 +19,15 @@ outputs:
     type: integer
     required: false
     description: Number of removed duplicates.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    records:
+      type: Entity
+
 properties:
   deterministic: true
   side_effects: false

@@ -32,6 +32,7 @@ They define:
 -   outputs
 -   execution properties
 -   metadata
+-   cognitive hints (optional — semantic type annotations for CognitiveState)
 
 Example:
 
@@ -229,6 +230,62 @@ Capabilities may declare properties:
 -   idempotent
 
 These properties help runtimes make execution decisions.
+
+------------------------------------------------------------------------
+
+# Safety Block
+
+Capabilities with `side_effects: true` **must** include a `safety` block
+(enforcement policy v2).
+
+The safety block declares:
+
+-   `trust_level` — minimum execution context trust required (sandbox < standard < elevated < privileged)
+-   `data_classification` — sensitivity level of data handled (public < internal < pii < confidential < restricted)
+-   `reversible` — whether the action can be undone (descriptor, not a gate)
+-   `requires_confirmation` — whether human confirmation is needed before execution
+-   `allowed_targets` — where the action may reach (internal_only, approved_connectors, same_tenant)
+-   `mandatory_pre_gates` — capabilities that must pass before execution
+-   `mandatory_post_gates` — capabilities that must pass after execution
+-   `scope_constraints` — runtime restrictions (read_only, sandboxed_execution, etc.)
+
+Gate entries support per-gate failure policies:
+
+``` yaml
+mandatory_pre_gates:
+  - capability: security.pii.detect
+    on_fail: block
+```
+
+Allowed failure policies: `block`, `warn`, `degrade`, `require_human`.
+
+Controlled enumerations live in `vocabulary/safety_vocabulary.yaml`.
+See `docs/CAPABILITIES.md` for the full schema reference.
+
+------------------------------------------------------------------------
+
+# Cognitive Types Vocabulary
+
+The file `vocabulary/cognitive_types.yaml` defines the semantic object types
+used by `cognitive_hints` in capability contracts.
+
+Each type declares:
+
+-   `default_slot` — the CognitiveState path where objects of this type
+    are stored by default (e.g. `working.risks`)
+-   `cardinality` — `list`, `single`, or `keyed`
+
+Merge strategy is derived from cardinality:
+
+    list   → append
+    single → replace
+    keyed  → deep_merge
+
+The vocabulary also defines cognitive `roles` (perceive, analyze, evaluate,
+decide, synthesize, act, reflect) that capabilities declare via
+`cognitive_hints.role`.
+
+See `docs/CAPABILITIES.md` for the full `cognitive_hints` schema reference.
 
 ------------------------------------------------------------------------
 

@@ -23,6 +23,15 @@ outputs:
     type: string
     required: false
     description: Standard error.
+
+safety:
+  trust_level: privileged
+  data_classification: internal
+  reversible: false
+  requires_confirmation: true
+  scope_constraints:
+    - sandboxed_execution
+
 properties:
   deterministic: false
   side_effects: true

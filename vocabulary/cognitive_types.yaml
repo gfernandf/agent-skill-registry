@@ -1,0 +1,103 @@
+version: 0.1.0
+
+description: >
+  Controlled vocabulary of semantic object types for CognitiveState v1.
+  Each type declares a default_slot (where the runtime auto-wires outputs
+  when a skill does not specify explicit output mapping) and a cardinality
+  that determines the natural merge strategy.
+
+cardinality_rules:
+  list:
+    description: Lives in a list slot. Natural merge = append.
+    default_merge: append
+  single:
+    description: Scalar or dict value. Natural merge = replace.
+    default_merge: replace
+  keyed:
+    description: Lives in a dict indexed by name. Natural merge = deep_merge.
+    default_merge: deep_merge
+
+types:
+  Risk:
+    default_slot: working.risks
+    cardinality: list
+    description: Identified risk, fragile assumption, or failure mode.
+
+  Option:
+    default_slot: working.options
+    cardinality: list
+    description: Candidate option or alternative for a decision.
+
+  Criterion:
+    default_slot: working.criteria
+    cardinality: list
+    description: Evaluation criterion, metric, or requirement.
+
+  Evidence:
+    default_slot: working.evidence
+    cardinality: list
+    description: Supporting evidence, data point, or observation.
+
+  Entity:
+    default_slot: working.entities
+    cardinality: list
+    description: Identified entity, actor, or stakeholder.
+
+  Hypothesis:
+    default_slot: working.hypotheses
+    cardinality: list
+    description: Active hypothesis or assumption under test.
+
+  Uncertainty:
+    default_slot: working.uncertainties
+    cardinality: list
+    description: Known unknown, ambiguity, or information gap.
+
+  Decision:
+    default_slot: working.intermediate_decisions
+    cardinality: list
+    description: Reasoning checkpoint or intermediate decision.
+
+  Message:
+    default_slot: working.messages
+    cardinality: list
+    description: Conversation turn or communication unit.
+
+  Summary:
+    default_slot: output.summary
+    cardinality: single
+    description: Condensed result or synthesis.
+
+  Score:
+    default_slot: working.artifacts
+    cardinality: keyed
+    description: Quantitative evaluation or ranking result.
+
+  Tradeoff:
+    default_slot: working.artifacts
+    cardinality: keyed
+    description: Tension or tradeoff between competing concerns.
+
+  Plan:
+    default_slot: working.artifacts
+    cardinality: keyed
+    description: Structured plan, sequence, or strategy.
+
+  Artifact:
+    default_slot: working.artifacts
+    cardinality: keyed
+    description: Generic intermediate product (catch-all).
+
+  Context:
+    default_slot: frame.context
+    cardinality: single
+    description: Background information or domain context.
+
+roles:
+  - perceive
+  - analyze
+  - evaluate
+  - decide
+  - synthesize
+  - act
+  - reflect

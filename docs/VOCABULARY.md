@@ -16,7 +16,14 @@ The **source of truth** for the controlled vocabulary is:
 vocabulary/vocabulary.json
 ```
 
-This document explains how that vocabulary should be interpreted and extended.
+A second vocabulary file defines **cognitive semantic types** used by
+`cognitive_hints` in capability contracts:
+
+```
+vocabulary/cognitive_types.yaml
+```
+
+This document explains how these vocabularies should be interpreted and extended.
 
 ---
 
@@ -493,3 +500,26 @@ skill is ultimately used by an agent — that does not make every skill an
 | Max segments | 3 | 2 |
 | Validation | Strict — rejected if terms not in vocabulary | Domain validated; slug is free |
 | Naming goal | Predictable, searchable, composable | Clear, discoverable, outcome-oriented |
+
+---
+
+# Safety Vocabulary
+
+The file `vocabulary/safety_vocabulary.yaml` defines the controlled enumerations
+used by the `safety` block in capability contracts.
+
+It declares:
+
+-   **trust_levels** — sandbox (0), standard (1), elevated (2), privileged (3)
+-   **data_classifications** — public (0), internal (1), pii (2), confidential (3), restricted (4)
+-   **failure_policies** — block, warn, degrade, require_human
+-   **allowed_targets** — internal_only, approved_connectors, same_tenant
+-   **scope_constraints** — read_only, sandboxed_execution, no_credential_passthrough, no_external_network, ephemeral_only
+
+Ranked enumerations (trust_levels, data_classifications) carry a numeric `rank`
+used by the runtime for enforcement comparisons.
+
+This vocabulary is normative: the registry validator rejects any `safety` block
+value that does not appear in `safety_vocabulary.yaml`.
+
+See `docs/CAPABILITIES.md` for the full `safety` schema reference.
