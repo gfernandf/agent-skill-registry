@@ -116,17 +116,35 @@ Each step defines:
 
 The registry language supports references between values.
 
-Supported reference types:
+Supported reference types (legacy):
 
     inputs.<field>
     vars.<field>
     outputs.<field>
+
+CognitiveState v1 reference types (runtime extension):
+
+    frame.<path>
+    working.<path>
+    output.<path>
+    extensions.<path>
+
+CognitiveState v1 namespaces are supported by the `agent-skills` runtime.
+They provide structured cognitive processing for multi-step reasoning skills.
+Legacy references remain the default and work in all runtimes.
+
+Path traversal supports nested access (dict keys, list indices):
+
+    frame.constraints.budget
+    working.entities.0.name
 
 Examples:
 
     inputs.url
     vars.text
     outputs.summary
+    frame.goal
+    working.artifacts.draft
 
 ------------------------------------------------------------------------
 
@@ -141,6 +159,13 @@ Data may flow through:
 -   `inputs`
 -   `vars`
 -   `outputs`
+
+CognitiveState v1 adds four additional namespaces (runtime extension):
+
+-   `frame` (read-only reasoning context)
+-   `working` (mutable cognitive working memory)
+-   `output` (structured result metadata)
+-   `extensions` (open namespace for plugins)
 
 ### Inputs
 
@@ -212,6 +237,11 @@ These properties help runtimes make execution decisions.
 Simplified reference grammar:
 
     reference := inputs.field | vars.field | outputs.field
+
+CognitiveState v1 extended grammar (runtime extension):
+
+    reference := inputs.field | vars.field | outputs.field
+               | frame.path | working.path | output.path | extensions.path
 
 Capability identifier grammar:
 

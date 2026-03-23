@@ -530,6 +530,14 @@ vars.*
 outputs.*
 ```
 
+CognitiveState v1 also supports (agent-skills runtime extension):
+
+```
+working.*
+output.*
+extensions.*
+```
+
 Example:
 
 ```yaml
@@ -537,16 +545,44 @@ output:
   summary: outputs.summary
 ```
 
+CognitiveState v1 example:
+
+```yaml
+output:
+  entities: working.entities
+  draft: working.artifacts.first_draft
+  quality: output.result_type
+```
+
 ---
 
 # Valid References
 
-Skills support only the following reference forms:
+Skills support the following reference forms:
+
+Legacy (all runtimes):
 
 ```
 inputs.*
 vars.*
 outputs.*
+```
+
+CognitiveState v1 (agent-skills runtime extension):
+
+```
+frame.*
+working.*
+output.*
+extensions.*
+```
+
+CognitiveState v1 references support nested path traversal (dict keys, list indices):
+
+```
+frame.constraints.budget
+working.entities.0.name
+working.artifacts.draft
 ```
 
 Examples:
@@ -555,6 +591,9 @@ Examples:
 inputs.file_path
 vars.document_text
 outputs.summary
+frame.goal
+working.risks
+output.result_type
 ```
 
 ---
@@ -564,10 +603,36 @@ outputs.summary
 The following rules apply:
 
 1. Steps cannot modify `inputs`.
-2. Steps may write only to `vars` or `outputs`.
-3. Each target field should be written once.
-4. Outputs declared in the skill must be produced by a step.
-5. Steps may consume values produced by earlier steps.
+2. Steps may write to `vars` or `outputs` (legacy), or `working`, `output`, `extensions` (CognitiveState v1).
+3. Steps cannot write to `frame` (frozen) or `trace` (engine-managed).
+4. Each target field should be written once (unless a merge strategy is declared).
+5. Outputs declared in the skill must be produced by a step.
+6. Steps may consume values produced by earlier steps.
+
+### Merge Strategies (CognitiveState v1)
+
+When multiple steps write to the same target, a merge strategy may be declared
+in `step.config.merge_strategy`:
+
+| Strategy | Behavior |
+|----------|----------|
+| `overwrite` | Default. Error on duplicate target. |
+| `append` | Extends list targets via concatenation. |
+| `deep_merge` | Recursively merges dict targets. |
+| `replace` | Unconditionally overwrites, no error. |
+
+Example:
+
+```yaml
+- id: collect_risks
+  uses: analysis.risk.extract
+  config:
+    merge_strategy: append
+  input:
+    text: vars.document_text
+  output:
+    risks: working.risks
+```
 
 Execution order is determined by **data dependencies**.
 
