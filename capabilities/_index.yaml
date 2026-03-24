@@ -315,19 +315,19 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
 
   - id: security.output.gate
-    status: draft
+    status: stable
     description: Apply policy gates to decide whether an output can be released.
 
   - id: security.pii.detect
-    status: draft
+    status: stable
     description: Detect personally identifiable information in text content.
 
   - id: security.pii.redact
-    status: draft
+    status: stable
     description: Redact personally identifiable information in text content.
 
   - id: security.secret.detect
-    status: draft
+    status: stable
     description: Detect secret-like tokens in text content.
 
   - id: table.row.filter

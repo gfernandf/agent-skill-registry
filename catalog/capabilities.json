@@ -3078,10 +3078,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "security",
+        "policy-gate",
+        "output-control"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "stable",
+      "examples": [
+        {
+          "output": {
+            "text": "Contact john@acme.com for details"
+          },
+          "policy": {
+            "block_pii": true,
+            "block_secrets": false
+          },
+          "expected_allowed": false
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -3114,10 +3129,19 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "security",
+        "pii",
+        "detection"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "stable",
+      "examples": [
+        {
+          "text": "Email me at john.doe@example.com or call +1 650 555 1234",
+          "expected_contains_pii": true
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -3150,10 +3174,19 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "security",
+        "pii",
+        "redaction"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "stable",
+      "examples": [
+        {
+          "text": "Contact john.doe@example.com for the report",
+          "expected_redacted_text": "Contact REDACTED_EMAIL for the report"
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -3186,10 +3219,19 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "security",
+        "secret-detection",
+        "credential-leak"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "stable",
+      "examples": [
+        {
+          "text": "My API key is sk-1234567890ABCDEFGHIJ",
+          "expected_contains_secret": true
+        }
+      ]
     },
     "properties": {
       "deterministic": false,

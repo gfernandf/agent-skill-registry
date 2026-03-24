@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 98
+    "metadata_issues": 94
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -159,33 +159,6 @@
   ],
   "duplicate_description_alerts": [],
   "metadata_issues": [
-    {
-      "capability_id": "agent.input.route",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "agent.option.generate",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "agent.plan.generate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "agent.task.delegate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
     {
       "capability_id": "analysis.problem.split",
       "issues": [

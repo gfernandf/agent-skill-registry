@@ -64,9 +64,9 @@
     },
     "by_status": {
       "draft": 52,
-      "unspecified": 39,
+      "unspecified": 35,
       "experimental": 20,
-      "stable": 3
+      "stable": 7
     },
     "most_used": [
       {
@@ -314,7 +314,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 78,
+    "capabilities_with_nondefault_metadata": 82,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -483,6 +483,10 @@
         "count": 7
       },
       {
+        "id": "security",
+        "count": 5
+      },
+      {
         "id": "web",
         "count": 5
       },
@@ -504,6 +508,10 @@
       },
       {
         "id": "orchestration",
+        "count": 3
+      },
+      {
+        "id": "pii",
         "count": 3
       },
       {
@@ -591,11 +599,19 @@
         "count": 1
       },
       {
+        "id": "credential-leak",
+        "count": 1
+      },
+      {
         "id": "decomposition",
         "count": 1
       },
       {
         "id": "delegation",
+        "count": 1
+      },
+      {
+        "id": "detection",
         "count": 1
       },
       {
@@ -671,11 +687,15 @@
         "count": 1
       },
       {
+        "id": "output-control",
+        "count": 1
+      },
+      {
         "id": "output-type",
         "count": 1
       },
       {
-        "id": "pii",
+        "id": "policy-gate",
         "count": 1
       },
       {
@@ -696,6 +716,10 @@
       },
       {
         "id": "recommendation",
+        "count": 1
+      },
+      {
+        "id": "redaction",
         "count": 1
       },
       {
@@ -727,7 +751,7 @@
         "count": 1
       },
       {
-        "id": "security",
+        "id": "secret-detection",
         "count": 1
       },
       {

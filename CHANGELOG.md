@@ -60,3 +60,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   binding matrix, baseline notes, skills usage, boundary definitions.
 - `_index.yaml` updated with agent.* status changes and descriptions.
 - Catalog regenerated.
+
+#### security.* domain review
+- 4 capabilities promoted from `draft` to `stable` in `_index.yaml`.
+- `tags` and `examples` metadata added to all 4 security.* capabilities.
+- `docs/DOMAIN_SECURITY.md`: full domain reference with capability inventory,
+  binding matrix, safety gate integration docs, boundary definitions.
+- Catalog regenerated.

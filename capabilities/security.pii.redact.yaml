@@ -19,3 +19,13 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  status: stable
+  tags:
+    - security
+    - pii
+    - redaction
+  examples:
+    - text: "Contact john.doe@example.com for the report"
+      expected_redacted_text: "Contact REDACTED_EMAIL for the report"

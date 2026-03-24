@@ -23,3 +23,17 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: stable
+  tags:
+    - security
+    - policy-gate
+    - output-control
+  examples:
+    - output:
+        text: "Contact john@acme.com for details"
+      policy:
+        block_pii: true
+        block_secrets: false
+      expected_allowed: false
