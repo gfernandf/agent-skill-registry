@@ -141,3 +141,12 @@ metadata:
     - decision-support
     - justification
     - recommendation
+
+  examples:
+    - summary: "Justify a recommended option"
+      inputs:
+        scored_options: [{id: "a", score: 0.9}]
+        goal: "Choose deployment strategy"
+      outputs:
+        justification: "Option A selected due to highest score."
+        recommended: "a"

@@ -15,3 +15,14 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [image, vision, generation]
+  examples:
+    - summary: "Generate a caption for an image"
+      inputs:
+        image: "(binary image data)"
+      outputs:
+        caption: "A sunset over the mountains."

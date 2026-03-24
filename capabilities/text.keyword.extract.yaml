@@ -18,3 +18,13 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags: [text, nlp, extraction]
+  examples:
+    - summary: "Extract keywords from text"
+      inputs:
+        text: "Python is great for machine learning and data science."
+      outputs:
+        keywords: ["Python", "machine learning", "data science"]

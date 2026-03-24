@@ -1,11 +1,46 @@
 id: task.priority.classify
 version: 1.0.0
-description: TODO define capability contract for task.priority.classify.
+description: Classify the priority of a task based on its attributes and context.
 
-inputs: {}
+inputs:
+  task:
+    type: object
+    required: true
+    description: Task object with title, description, type, and optional urgency signals.
+  context:
+    type: object
+    required: false
+    description: Contextual information such as SLA tier or impacted users.
 
-outputs: {}
+outputs:
+  priority:
+    type: string
+    required: true
+    description: "Classified priority: critical, high, medium, or low."
+  confidence:
+    type: number
+    required: true
+    description: Confidence score (0.0–1.0).
+  rationale:
+    type: string
+    required: true
+    description: Explanation of the classification.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, priority, classification, triage]
 
+
+  examples:
+    - summary: "Classify priority of a task"
+      inputs:
+        task: {title: "DB running out of disk", type: "incident"}
+        context: {environment: "production"}
+      outputs:
+        priority: "critical"
+        confidence: 0.9

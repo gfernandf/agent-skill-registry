@@ -23,3 +23,10 @@ properties:
 metadata:
   status: stable
   tags: [text, template, utility]
+  examples:
+    - summary: "Render a template with variables"
+      inputs:
+        template: "Hello {{name}}, welcome to {{place}}!"
+        variables: {name: "Alice", place: "HQ"}
+      outputs:
+        text: "Hello Alice, welcome to HQ!"

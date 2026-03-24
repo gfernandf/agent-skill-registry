@@ -1,11 +1,41 @@
 id: integration.mapping.transform
 version: 1.0.0
-description: TODO define capability contract for integration.mapping.transform.
+description: Apply a field mapping to transform a source record into a target schema.
 
-inputs: {}
+inputs:
+  record:
+    type: object
+    required: true
+    description: Source record to transform.
+  mapping:
+    type: object
+    required: true
+    description: Mapping rules with rename, select, and defaults directives.
 
-outputs: {}
+outputs:
+  transformed:
+    type: object
+    required: true
+    description: Transformed record conforming to the target schema.
+  unmapped_fields:
+    type: array
+    required: true
+    description: Source fields that were not included in the mapping.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, mapping, transform, etl]
 
+
+  examples:
+    - summary: "Apply field mapping to a record"
+      inputs:
+        record: {first_name: "Alice"}
+        mapping: {rename: {first_name: "name"}}
+      outputs:
+        record: {name: "Alice"}

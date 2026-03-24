@@ -1,11 +1,50 @@
 id: policy.decision.justify
 version: 1.0.0
-description: TODO define capability contract for policy.decision.justify.
+description: Justify a policy decision by linking it to applicable rules and evidence.
 
-inputs: {}
+inputs:
+  decision:
+    type: string
+    required: true
+    description: The policy decision to justify (e.g. approved, denied, escalated).
+  rules:
+    type: array
+    required: true
+    description: List of policy rules considered, each with id, description, and outcome.
+  context:
+    type: object
+    required: false
+    description: Additional context or evidence for the justification.
 
-outputs: {}
+outputs:
+  justification:
+    type: string
+    required: true
+    description: Human-readable justification narrative.
+  applicable_rules:
+    type: array
+    required: true
+    description: Rules that directly apply to the decision.
+  confidence:
+    type: number
+    required: true
+    description: Confidence score for the justification (0.0 to 1.0).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [policy, decision, justification, governance]
 
+
+  examples:
+    - summary: "Justify a policy decision"
+      inputs:
+        decision: "approved"
+        rules: [{id: "R1", outcome: "approved"}]
+      outputs:
+        justification: "Approved per rule R1."
+        applicable_rules: ["R1"]

@@ -42,3 +42,11 @@ cognitive_hints:
 metadata:
   status: experimental
   tags: [text, transformation, style, llm]
+
+  examples:
+    - summary: "Transform text style or tone"
+      inputs:
+        text: "The system is operational."
+        goal: "simplify for non-technical audience"
+      outputs:
+        text: "Everything is working normally."

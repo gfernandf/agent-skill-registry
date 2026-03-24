@@ -16,3 +16,14 @@ outputs:
 
   metadata:
     type: object
+
+metadata:
+  status: experimental
+  tags: [pdf, document, read, input]
+  examples:
+    - summary: "Read text from a PDF document"
+      inputs:
+        path: "reports/q3.pdf"
+      outputs:
+        text: "Q3 revenue increased..."
+        metadata: {pages: 5}

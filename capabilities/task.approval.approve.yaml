@@ -1,11 +1,50 @@
 id: task.approval.approve
 version: 1.0.0
-description: TODO define capability contract for task.approval.approve.
+description: Approve a pending approval request.
 
-inputs: {}
+inputs:
+  approval_id:
+    type: string
+    required: true
+    description: Identifier of the approval request.
+  approver:
+    type: string
+    required: false
+    description: Identifier of the approver.
+  notes:
+    type: string
+    required: false
+    description: Optional approval notes.
 
-outputs: {}
+outputs:
+  approved:
+    type: boolean
+    required: true
+    description: Whether the approval was recorded.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: elevated
+  requires_confirmation: true
+  description: Approves a request that may trigger downstream actions.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, approval, workflow]
 
+
+  examples:
+    - summary: "Approve an approval request"
+      inputs:
+        approval_id: "apr-001"
+        approver: "manager-1"
+      outputs:
+        approved: true

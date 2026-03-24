@@ -15,3 +15,14 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [text, nlp, extraction]
+  examples:
+    - summary: "Extract named entities from text"
+      inputs:
+        text: "John Smith works at Google in Mountain View."
+      outputs:
+        entities: [{text: "John Smith", type: "PERSON"}, {text: "Google", type: "ORG"}]

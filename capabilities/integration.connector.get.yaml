@@ -1,11 +1,37 @@
 id: integration.connector.get
 version: 1.0.0
-description: TODO define capability contract for integration.connector.get.
+description: Retrieve metadata for a specific connector by identifier.
 
-inputs: {}
+inputs:
+  connector_id:
+    type: string
+    required: true
+    description: Unique identifier of the connector.
 
-outputs: {}
+outputs:
+  connector:
+    type: object
+    required: true
+    description: Connector metadata including id, name, type, and status.
+  found:
+    type: boolean
+    required: true
+    description: Whether the connector was found.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, connector, lookup]
 
+
+  examples:
+    - summary: "Retrieve connector metadata"
+      inputs:
+        connector_id: "crm-rest"
+      outputs:
+        connector: {id: "crm-rest", type: "rest", status: "active"}
+        found: true

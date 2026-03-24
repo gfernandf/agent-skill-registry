@@ -23,3 +23,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [provenance, citation, generation]
+  examples:
+    - summary: "Generate a citation from a source"
+      inputs:
+        source: {url: "https://example.com/article", title: "Example"}
+        excerpt: "Key fact"
+      outputs:
+        citation: "Example. Retrieved from https://example.com/article"

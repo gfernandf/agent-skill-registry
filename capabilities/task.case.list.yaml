@@ -1,11 +1,41 @@
 id: task.case.list
 version: 1.0.0
-description: TODO define capability contract for task.case.list.
+description: List cases, optionally filtered by status or assignee.
 
-inputs: {}
+inputs:
+  status_filter:
+    type: string
+    required: false
+    description: Filter by case status (open, closed, in_progress).
+  assignee_filter:
+    type: string
+    required: false
+    description: Filter by assignee identifier.
 
-outputs: {}
+outputs:
+  cases:
+    type: array
+    required: true
+    description: List of case objects.
+  total:
+    type: number
+    required: true
+    description: Total cases returned.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, listing]
 
+
+  examples:
+    - summary: "List cases filtered by status"
+      inputs:
+        status_filter: "open"
+      outputs:
+        cases: [{id: "CASE-1", state: "open"}]
+        total: 1

@@ -1,11 +1,56 @@
 id: task.state.transition
 version: 1.0.0
-description: TODO define capability contract for task.state.transition.
+description: Transition a task to a new state, validating the transition is allowed.
 
-inputs: {}
+inputs:
+  task_id:
+    type: string
+    required: true
+    description: Identifier of the task.
+  target_state:
+    type: string
+    required: true
+    description: Target state to transition to.
 
-outputs: {}
+outputs:
+  transitioned:
+    type: boolean
+    required: true
+    description: Whether the transition was applied.
+  previous_state:
+    type: string
+    required: true
+    description: State before the transition.
+  current_state:
+    type: string
+    required: true
+    description: State after the transition.
+  reason:
+    type: string
+    required: false
+    description: Explanation if the transition was rejected.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Transitions a task state in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, state, transition, workflow]
 
+
+  examples:
+    - summary: "Transition a task to a new state"
+      inputs:
+        task_id: "CASE-1"
+        target_state: "in_progress"
+      outputs:
+        transitioned: true
+        previous_state: "open"
+        current_state: "in_progress"

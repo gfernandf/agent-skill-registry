@@ -1,11 +1,52 @@
 id: task.milestone.schedule
 version: 1.0.0
-description: TODO define capability contract for task.milestone.schedule.
+description: Schedule a project milestone with a target date and deliverables.
 
-inputs: {}
+inputs:
+  milestone_name:
+    type: string
+    required: true
+    description: Name of the milestone.
+  target_date:
+    type: string
+    required: true
+    description: Target date in ISO-8601 format.
+  deliverables:
+    type: array
+    required: false
+    description: List of deliverable descriptions.
 
-outputs: {}
+outputs:
+  milestone_id:
+    type: string
+    required: true
+    description: Identifier of the scheduled milestone.
+  scheduled:
+    type: boolean
+    required: true
+    description: Whether the milestone was scheduled.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Schedules a milestone in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, milestone, scheduling, project]
 
+
+  examples:
+    - summary: "Schedule a project milestone"
+      inputs:
+        milestone_name: "Beta Release"
+        target_date: "2026-03-15"
+        deliverables: ["feature-x"]
+      outputs:
+        milestone_id: "MS-1"
+        scheduled: true

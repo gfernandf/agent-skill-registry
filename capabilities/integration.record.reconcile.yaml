@@ -1,11 +1,56 @@
 id: integration.record.reconcile
 version: 1.0.0
-description: TODO define capability contract for integration.record.reconcile.
+description: Reconcile records between two systems and report discrepancies.
 
-inputs: {}
+inputs:
+  records_a:
+    type: array
+    required: true
+    description: Records from system A.
+  records_b:
+    type: array
+    required: true
+    description: Records from system B.
+  key_field:
+    type: string
+    required: true
+    description: Field name to use as the record identity key.
 
-outputs: {}
+outputs:
+  matched:
+    type: array
+    required: true
+    description: Records present in both systems.
+  only_a:
+    type: array
+    required: true
+    description: Records only in system A.
+  only_b:
+    type: array
+    required: true
+    description: Records only in system B.
+  discrepancies:
+    type: array
+    required: true
+    description: Records present in both but with field-level differences.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, record, reconciliation]
 
+
+  examples:
+    - summary: "Reconcile records between two systems"
+      inputs:
+        records_a: [{id: "1"}]
+        records_b: [{id: "2"}]
+        key_field: "id"
+      outputs:
+        matched: []
+        only_a: [{id: "1"}]
+        only_b: [{id: "2"}]

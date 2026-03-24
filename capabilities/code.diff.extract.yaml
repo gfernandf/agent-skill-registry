@@ -19,3 +19,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [code, developer-tools, extraction]
+  examples:
+    - summary: "Extract diff between two code versions"
+      inputs:
+        code_a: "x = 5"
+        code_b: "x = 10"
+      outputs:
+        changes: [{type: "modified", before: "x = 5", after: "x = 10"}]

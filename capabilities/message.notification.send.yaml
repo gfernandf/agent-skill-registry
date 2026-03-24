@@ -28,3 +28,16 @@ properties:
   deterministic: true
   side_effects: true
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [messaging, notification, sending]
+  examples:
+    - summary: "Send a notification message"
+      inputs:
+        message: "Build succeeded"
+        recipient: "ops-channel"
+      outputs:
+        sent: true
+        message_id: "notif-001"

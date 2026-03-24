@@ -15,3 +15,14 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [video, media, extraction]
+  examples:
+    - summary: "Extract frames from a video"
+      inputs:
+        video: "(binary video data)"
+      outputs:
+        frames: ["(frame 1 data)", "(frame 2 data)"]

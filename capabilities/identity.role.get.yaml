@@ -1,11 +1,37 @@
 id: identity.role.get
 version: 1.0.0
-description: TODO define capability contract for identity.role.get.
+description: Retrieve a role definition by identifier.
 
-inputs: {}
+inputs:
+  role_id:
+    type: string
+    required: true
+    description: Unique identifier of the role.
 
-outputs: {}
+outputs:
+  role:
+    type: object
+    required: true
+    description: Role object with id, name, description, and permissions.
+  found:
+    type: boolean
+    required: true
+    description: Whether the role was found.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, role, lookup]
 
+
+  examples:
+    - summary: "Retrieve a role definition"
+      inputs:
+        role_id: "admin"
+      outputs:
+        role: {id: "admin", name: "Administrator"}
+        found: true

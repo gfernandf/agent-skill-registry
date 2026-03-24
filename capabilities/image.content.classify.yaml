@@ -23,3 +23,16 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [image, vision, classification]
+  examples:
+    - summary: "Classify image content by labels"
+      inputs:
+        image: "(binary image data)"
+        labels: ["cat", "dog", "bird"]
+      outputs:
+        label: "cat"
+        confidence: 0.92

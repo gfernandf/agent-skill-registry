@@ -28,3 +28,16 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [text, nlp, classification]
+  examples:
+    - summary: "Classify text into categories"
+      inputs:
+        text: "I love this product!"
+        labels: ["positive", "negative", "neutral"]
+      outputs:
+        label: "positive"
+        confidence: 0.95

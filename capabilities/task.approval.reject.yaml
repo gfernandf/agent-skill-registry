@@ -1,11 +1,51 @@
 id: task.approval.reject
 version: 1.0.0
-description: TODO define capability contract for task.approval.reject.
+description: Reject a pending approval request with a reason.
 
-inputs: {}
+inputs:
+  approval_id:
+    type: string
+    required: true
+    description: Identifier of the approval request.
+  rejector:
+    type: string
+    required: false
+    description: Identifier of the rejector.
+  reason:
+    type: string
+    required: true
+    description: Reason for rejection.
 
-outputs: {}
+outputs:
+  rejected:
+    type: boolean
+    required: true
+    description: Whether the rejection was recorded.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: elevated
+  requires_confirmation: true
+  description: Rejects a request, blocking the associated workflow.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, approval, rejection, workflow]
 
+
+  examples:
+    - summary: "Reject an approval request"
+      inputs:
+        approval_id: "apr-002"
+        rejector: "manager-2"
+        reason: "Missing justification"
+      outputs:
+        rejected: true

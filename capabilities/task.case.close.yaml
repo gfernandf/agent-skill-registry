@@ -1,11 +1,46 @@
 id: task.case.close
 version: 1.0.0
-description: TODO define capability contract for task.case.close.
+description: Close a case or ticket with a resolution.
 
-inputs: {}
+inputs:
+  case_id:
+    type: string
+    required: true
+    description: Identifier of the case to close.
+  resolution:
+    type: string
+    required: false
+    description: Resolution description.
 
-outputs: {}
+outputs:
+  closed:
+    type: boolean
+    required: true
+    description: Whether the case was closed.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Closes a case in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, close]
 
+
+  examples:
+    - summary: "Close a case with a resolution"
+      inputs:
+        case_id: "CASE-1"
+        resolution: "Fixed in v2.1"
+      outputs:
+        closed: true

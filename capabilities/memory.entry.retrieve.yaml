@@ -19,3 +19,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [memory, storage, retrieval]
+  examples:
+    - summary: "Retrieve a stored memory entry"
+      inputs:
+        key: "user_preference"
+      outputs:
+        value: "dark_mode"
+        found: true

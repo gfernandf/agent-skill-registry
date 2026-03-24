@@ -1,11 +1,45 @@
 id: memory.vector.search
 version: 1.0.0
-description: TODO define capability contract for memory.vector.search.
+description: Search memory records by vector similarity against a query embedding.
 
-inputs: {}
+inputs:
+  query:
+    type: string
+    required: true
+    description: The search query text.
+  namespace:
+    type: string
+    required: false
+    description: Optional namespace to scope the search.
+  top_k:
+    type: number
+    required: false
+    description: Maximum number of results to return. Defaults to 5.
 
-outputs: {}
+outputs:
+  results:
+    type: array
+    required: true
+    description: Ranked search results with record, score, and optional metadata.
+  total_searched:
+    type: number
+    required: true
+    description: Total number of records searched.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [memory, vector, search, similarity]
 
+
+  examples:
+    - summary: "Search memory by semantic similarity"
+      inputs:
+        query: "deployment strategy"
+        top_k: 3
+      outputs:
+        results: [{id: "r1", score: 0.89, content: "Use blue-green deployment."}]

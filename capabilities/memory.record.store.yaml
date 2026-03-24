@@ -1,11 +1,51 @@
 id: memory.record.store
 version: 1.0.0
-description: TODO define capability contract for memory.record.store.
+description: Store a structured record in memory with namespace isolation and optional TTL.
 
-inputs: {}
+inputs:
+  namespace:
+    type: string
+    required: true
+    description: Namespace to isolate the record within.
+  record:
+    type: object
+    required: true
+    description: The structured record to store, must include an id field.
+  ttl_seconds:
+    type: number
+    required: false
+    description: Optional time-to-live in seconds. Omit for no expiration.
 
-outputs: {}
+outputs:
+  stored:
+    type: boolean
+    required: true
+    description: Whether the record was stored successfully.
+  record_id:
+    type: string
+    required: true
+    description: The id of the stored record.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Stores a record in local in-memory namespace. No external side effects.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [memory, storage, record]
 
+
+  examples:
+    - summary: "Store a structured record in a namespace"
+      inputs:
+        namespace: "session"
+        record: {id: "r1", content: "Context data"}
+      outputs:
+        stored: true
+        record_id: "r1"

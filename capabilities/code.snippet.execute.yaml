@@ -36,3 +36,17 @@ properties:
   deterministic: false
   side_effects: true
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [code, developer-tools, execution, sandbox]
+  examples:
+    - summary: "Execute a Python expression"
+      inputs:
+        code: "print(2 + 3)"
+        language: "python"
+      outputs:
+        stdout: "5
+"
+        exit_code: 0

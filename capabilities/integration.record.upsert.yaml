@@ -1,11 +1,48 @@
 id: integration.record.upsert
 version: 1.0.0
-description: TODO define capability contract for integration.record.upsert.
+description: Create or update a record in an external system, depending on whether it exists.
 
-inputs: {}
+inputs:
+  connector_id:
+    type: string
+    required: true
+    description: Identifier of the target connector.
+  record:
+    type: object
+    required: true
+    description: Record data. Must include an id field for match detection.
 
-outputs: {}
+outputs:
+  action:
+    type: string
+    required: true
+    description: "Action taken: created or updated."
+  record_id:
+    type: string
+    required: true
+    description: Identifier of the created or updated record.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Creates or updates a record in a mock in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, record, upsert]
 
+
+  examples:
+    - summary: "Create-or-update a record in an external system"
+      inputs:
+        connector_id: "crm-rest"
+        record: {id: "rec-001", name: "Updated"}
+        key_fields: ["id"]
+      outputs:
+        upserted: true
+        action: "updated"

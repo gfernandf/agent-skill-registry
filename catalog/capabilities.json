@@ -40,7 +40,7 @@
         "agent-control"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "examples": [
         {
           "query": "Summarize this quarterly earnings report",
@@ -244,7 +244,7 @@
         "workflow"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "examples": [
         {
           "objective": "Build a web scraper that extracts product prices",
@@ -319,7 +319,7 @@
         "agent-control"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "examples": [
         {
           "task": {
@@ -775,10 +775,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "audio",
+        "speech",
+        "transcription",
+        "speech-to-text"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Transcribe a short speech clip",
+          "inputs": {
+            "audio": "(binary audio data)"
+          },
+          "outputs": {
+            "text": "Hello, welcome to the meeting."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -811,10 +826,31 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "code",
+        "developer-tools",
+        "extraction"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract diff between two code versions",
+          "inputs": {
+            "code_a": "x = 5",
+            "code_b": "x = 10"
+          },
+          "outputs": {
+            "changes": [
+              {
+                "type": "modified",
+                "before": "x = 5",
+                "after": "x = 10"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -857,10 +893,27 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "code",
+        "developer-tools",
+        "execution",
+        "sandbox"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Execute a Python expression",
+          "inputs": {
+            "code": "print(2 + 3)",
+            "language": "python"
+          },
+          "outputs": {
+            "stdout": "5 ",
+            "exit_code": 0
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -983,10 +1036,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "code",
+        "developer-tools",
+        "formatting"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Format Python code",
+          "inputs": {
+            "code": "def foo( x,y ): return x+y",
+            "language": "python"
+          },
+          "outputs": {
+            "code": "def foo(x, y): return x + y "
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1014,10 +1082,27 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "data",
+        "processing",
+        "parsing"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Parse a JSON string",
+          "inputs": {
+            "text": "{\"name\": \"John\", \"age\": 30}"
+          },
+          "outputs": {
+            "data": {
+              "name": "John",
+              "age": 30
+            }
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1055,10 +1140,41 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "data",
+        "processing",
+        "deduplication"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Remove duplicate records by key",
+          "inputs": {
+            "records": [
+              {
+                "id": 1,
+                "name": "Alice"
+              },
+              {
+                "id": 1,
+                "name": "Alice"
+              }
+            ],
+            "key_fields": [
+              "id"
+            ]
+          },
+          "outputs": {
+            "records": [
+              {
+                "id": 1,
+                "name": "Alice"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1208,10 +1324,32 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "data",
+        "processing",
+        "validation"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Validate data against a JSON schema",
+          "inputs": {
+            "data": {
+              "name": "John"
+            },
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "outputs": {
+            "valid": true
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1306,7 +1444,24 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Justify a recommended option",
+          "inputs": {
+            "scored_options": [
+              {
+                "id": "a",
+                "score": 0.9
+              }
+            ],
+            "goal": "Choose deployment strategy"
+          },
+          "outputs": {
+            "justification": "Option A selected due to highest score.",
+            "recommended": "a"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1378,10 +1533,28 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "document",
+        "processing",
+        "chunking"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Split a document into chunks",
+          "inputs": {
+            "text": "A long document...",
+            "chunk_size": 500
+          },
+          "outputs": {
+            "chunks": [
+              "A long doc...",
+              "ument continued..."
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1409,10 +1582,30 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "email",
+        "messaging",
+        "read",
+        "input"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Read messages from an inbox",
+          "inputs": {
+            "mailbox": "inbox"
+          },
+          "outputs": {
+            "messages": [
+              {
+                "from": "alice@example.com",
+                "subject": "Meeting notes"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1450,10 +1643,27 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "email",
+        "messaging",
+        "sending"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Send an email message",
+          "inputs": {
+            "to": "bob@example.com",
+            "subject": "Follow-up",
+            "body": "Please review the proposal."
+          },
+          "outputs": {
+            "sent": true,
+            "message_id": "msg-001"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1724,7 +1934,7 @@
         "output-validation"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "experimental",
       "examples": [
         {
           "output": {
@@ -1868,10 +2078,27 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "filesystem",
+        "io",
+        "read",
+        "input"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Read a text file",
+          "inputs": {
+            "path": "data/report.txt",
+            "mode": "text"
+          },
+          "outputs": {
+            "content": "Report contents here...",
+            "size": 1234
+          }
+        }
+      ]
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -1973,141 +2200,626 @@
   {
     "id": "identity.assignee.identify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.assignee.identify.",
+    "description": "Identify the most appropriate assignee for a task based on skills, availability, and workload.",
     "file": "capabilities/identity.assignee.identify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "task": {
+        "type": "object",
+        "required": true,
+        "description": "Task descriptor with type, required_skills, and priority."
+      },
+      "candidates": {
+        "type": "array",
+        "required": false,
+        "description": "Optional candidate list. If omitted, searches all known principals."
+      }
+    },
+    "outputs": {
+      "assignee": {
+        "type": "object",
+        "required": true,
+        "description": "Selected assignee with id, name, and match_score."
+      },
+      "alternatives": {
+        "type": "array",
+        "required": false,
+        "description": "Ranked alternative candidates."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation of the selection."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "assignment",
+        "task",
+        "matching"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Find the best assignee for a task",
+          "inputs": {
+            "task": {
+              "type": "code_review",
+              "required_skills": [
+                "python"
+              ]
+            }
+          },
+          "outputs": {
+            "assignee": {
+              "id": "alice",
+              "match_score": 0.7
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.decision.justify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.decision.justify.",
+    "description": "Justify an identity or access-related decision by referencing policies and evidence.",
     "file": "capabilities/identity.decision.justify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "decision": {
+        "type": "string",
+        "required": true,
+        "description": "The decision made (e.g. granted, denied, escalated)."
+      },
+      "subject": {
+        "type": "object",
+        "required": true,
+        "description": "The principal or resource the decision applies to."
+      },
+      "policies": {
+        "type": "array",
+        "required": false,
+        "description": "Policies considered in making the decision."
+      }
+    },
+    "outputs": {
+      "justification": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable justification."
+      },
+      "applicable_policies": {
+        "type": "array",
+        "required": true,
+        "description": "Policies that directly support the decision."
+      },
+      "confidence": {
+        "type": "number",
+        "required": true,
+        "description": "Confidence in the justification (0.0–1.0)."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "decision",
+        "justification",
+        "access"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Justify an identity-related decision",
+          "inputs": {
+            "decision": "granted",
+            "subject": {
+              "id": "alice"
+            },
+            "policies": []
+          },
+          "outputs": {
+            "justification": "Access granted based on role.",
+            "confidence": 0.9
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.permission.gate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.permission.gate.",
+    "description": "Gate an action by checking whether a principal holds the required permission.",
     "file": "capabilities/identity.permission.gate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "principal_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the principal requesting access."
+      },
+      "permission": {
+        "type": "string",
+        "required": true,
+        "description": "Permission string to check (e.g. resource:action)."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Additional context such as resource metadata or environment."
+      }
+    },
+    "outputs": {
+      "allowed": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the action is allowed."
+      },
+      "reason": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation for the gate decision."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "permission",
+        "gate",
+        "access-control"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Check whether a principal is allowed an action",
+          "inputs": {
+            "principal_id": "alice",
+            "permission": "resource:read"
+          },
+          "outputs": {
+            "allowed": true,
+            "reason": "Permission granted via admin role."
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.permission.get",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.permission.get.",
+    "description": "Retrieve a specific permission definition by identifier.",
     "file": "capabilities/identity.permission.get.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "permission_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier of the permission to retrieve."
+      }
+    },
+    "outputs": {
+      "permission": {
+        "type": "object",
+        "required": true,
+        "description": "Permission object with id, description, resource, and action."
+      },
+      "found": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the permission was found."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "permission",
+        "lookup"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve a specific permission definition",
+          "inputs": {
+            "permission_id": "resource:read"
+          },
+          "outputs": {
+            "permission": {
+              "id": "resource:read",
+              "description": "Read resources"
+            },
+            "found": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.permission.list",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.permission.list.",
+    "description": "List permissions granted to a principal, optionally filtered by resource.",
     "file": "capabilities/identity.permission.list.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "principal_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the principal whose permissions to list."
+      },
+      "resource_filter": {
+        "type": "string",
+        "required": false,
+        "description": "Optional resource prefix to filter permissions."
+      }
+    },
+    "outputs": {
+      "permissions": {
+        "type": "array",
+        "required": true,
+        "description": "List of permission objects."
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total number of permissions returned."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "permission",
+        "listing"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "List permissions for a principal",
+          "inputs": {
+            "principal_id": "alice"
+          },
+          "outputs": {
+            "permissions": [
+              {
+                "id": "resource:read"
+              }
+            ],
+            "total": 1
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.permission.verify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.permission.verify.",
+    "description": "Verify that a principal holds a specific permission and return evidence.",
     "file": "capabilities/identity.permission.verify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "principal_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the principal."
+      },
+      "permission": {
+        "type": "string",
+        "required": true,
+        "description": "Permission to verify."
+      }
+    },
+    "outputs": {
+      "verified": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the principal holds the permission."
+      },
+      "source": {
+        "type": "string",
+        "required": true,
+        "description": "How the permission was obtained (direct, role-inherited, group)."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Supporting evidence such as the role or group that grants the permission."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "permission",
+        "verification",
+        "audit"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Verify a principal holds a permission",
+          "inputs": {
+            "principal_id": "alice",
+            "permission": "resource:read"
+          },
+          "outputs": {
+            "verified": true,
+            "source": "role-inherited"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.risk.score",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.risk.score.",
+    "description": "Score the identity risk of a principal based on behaviour, role scope, and anomaly indicators.",
     "file": "capabilities/identity.risk.score.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "principal_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the principal to score."
+      },
+      "signals": {
+        "type": "object",
+        "required": false,
+        "description": "Behavioural signals such as login_failures, unusual_hours, geo_anomaly."
+      }
+    },
+    "outputs": {
+      "risk_score": {
+        "type": "number",
+        "required": true,
+        "description": "Risk score from 0.0 (safe) to 1.0 (critical)."
+      },
+      "factors": {
+        "type": "array",
+        "required": true,
+        "description": "Factors that contributed to the score."
+      },
+      "safe": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the risk is below the acceptable threshold."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "risk",
+        "scoring",
+        "anomaly"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Score risk for an identity action",
+          "inputs": {
+            "principal_id": "alice",
+            "signals": {
+              "login_failures": 5
+            }
+          },
+          "outputs": {
+            "risk_score": 0.3,
+            "factors": [
+              "high_login_failures"
+            ],
+            "safe": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.role.assign",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.role.assign.",
+    "description": "Assign a role to a principal.",
     "file": "capabilities/identity.role.assign.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "principal_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the principal receiving the role."
+      },
+      "role_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the role to assign."
+      }
+    },
+    "outputs": {
+      "assigned": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the role was successfully assigned."
+      },
+      "effective_permissions": {
+        "type": "array",
+        "required": false,
+        "description": "Permissions now effective through this role."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "role",
+        "assignment"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Assign a role to a principal",
+          "inputs": {
+            "principal_id": "alice",
+            "role_id": "editor"
+          },
+          "outputs": {
+            "assigned": true,
+            "effective_permissions": [
+              "resource:read",
+              "resource:write"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": true,
+      "description": "Assigns a role which may grant new permissions to a principal."
     }
   },
   {
     "id": "identity.role.get",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.role.get.",
+    "description": "Retrieve a role definition by identifier.",
     "file": "capabilities/identity.role.get.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "role_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier of the role."
+      }
+    },
+    "outputs": {
+      "role": {
+        "type": "object",
+        "required": true,
+        "description": "Role object with id, name, description, and permissions."
+      },
+      "found": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the role was found."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "role",
+        "lookup"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve a role definition",
+          "inputs": {
+            "role_id": "admin"
+          },
+          "outputs": {
+            "role": {
+              "id": "admin",
+              "name": "Administrator"
+            },
+            "found": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "identity.role.list",
     "version": "1.0.0",
-    "description": "TODO define capability contract for identity.role.list.",
+    "description": "List all available roles, optionally filtered by scope or tag.",
     "file": "capabilities/identity.role.list.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "scope": {
+        "type": "string",
+        "required": false,
+        "description": "Optional scope filter (e.g. organization, project)."
+      }
+    },
+    "outputs": {
+      "roles": {
+        "type": "array",
+        "required": true,
+        "description": "List of role objects."
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total number of roles returned."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "identity",
+        "role",
+        "listing"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "List available roles",
+          "inputs": {
+            "scope": "all"
+          },
+          "outputs": {
+            "roles": [
+              {
+                "id": "admin"
+              },
+              {
+                "id": "editor"
+              }
+            ],
+            "total": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -2130,10 +2842,24 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "image",
+        "vision",
+        "generation"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Generate a caption for an image",
+          "inputs": {
+            "image": "(binary image data)"
+          },
+          "outputs": {
+            "caption": "A sunset over the mountains."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -2171,10 +2897,30 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "image",
+        "vision",
+        "classification"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Classify image content by labels",
+          "inputs": {
+            "image": "(binary image data)",
+            "labels": [
+              "cat",
+              "dog",
+              "bird"
+            ]
+          },
+          "outputs": {
+            "label": "cat",
+            "confidence": 0.92
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -2262,169 +3008,804 @@
   {
     "id": "integration.connector.get",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.connector.get.",
+    "description": "Retrieve metadata for a specific connector by identifier.",
     "file": "capabilities/integration.connector.get.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier of the connector."
+      }
+    },
+    "outputs": {
+      "connector": {
+        "type": "object",
+        "required": true,
+        "description": "Connector metadata including id, name, type, and status."
+      },
+      "found": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the connector was found."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "connector",
+        "lookup"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve connector metadata",
+          "inputs": {
+            "connector_id": "crm-rest"
+          },
+          "outputs": {
+            "connector": {
+              "id": "crm-rest",
+              "type": "rest",
+              "status": "active"
+            },
+            "found": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.connector.list",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.connector.list.",
+    "description": "List available connectors, optionally filtered by type or status.",
     "file": "capabilities/integration.connector.list.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "type_filter": {
+        "type": "string",
+        "required": false,
+        "description": "Filter connectors by type (e.g. rest, database, queue)."
+      },
+      "status_filter": {
+        "type": "string",
+        "required": false,
+        "description": "Filter by status (e.g. active, inactive)."
+      }
+    },
+    "outputs": {
+      "connectors": {
+        "type": "array",
+        "required": true,
+        "description": "List of connector metadata objects."
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total connectors returned."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "connector",
+        "listing"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "List available connectors",
+          "inputs": {
+            "status_filter": "active"
+          },
+          "outputs": {
+            "connectors": [
+              {
+                "id": "crm-rest",
+                "status": "active"
+              }
+            ],
+            "total": 1
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.connector.sync",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.connector.sync.",
+    "description": "Trigger a synchronisation operation on a connector.",
     "file": "capabilities/integration.connector.sync.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the connector to sync."
+      },
+      "options": {
+        "type": "object",
+        "required": false,
+        "description": "Sync options such as full_sync or incremental."
+      }
+    },
+    "outputs": {
+      "synced": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the sync completed."
+      },
+      "records_processed": {
+        "type": "number",
+        "required": true,
+        "description": "Number of records processed during the sync."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp of the sync completion."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "connector",
+        "sync"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Trigger connector synchronization",
+          "inputs": {
+            "connector_id": "crm-rest"
+          },
+          "outputs": {
+            "synced": true,
+            "records_processed": 42
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": false,
+      "description": "Triggers a data sync that may create or update records in external systems."
     }
   },
   {
     "id": "integration.event.acknowledge",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.event.acknowledge.",
+    "description": "Acknowledge receipt of an integration event from an external system.",
     "file": "capabilities/integration.event.acknowledge.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier of the event."
+      },
+      "connector_id": {
+        "type": "string",
+        "required": false,
+        "description": "Connector the event originated from."
+      },
+      "notes": {
+        "type": "string",
+        "required": false,
+        "description": "Optional acknowledgement notes."
+      }
+    },
+    "outputs": {
+      "acknowledged": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the event was acknowledged."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp of the acknowledgement."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "event",
+        "acknowledgement"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Acknowledge an integration event",
+          "inputs": {
+            "event_id": "evt-001",
+            "handler": "sync-worker"
+          },
+          "outputs": {
+            "acknowledged": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Acknowledges an event. Baseline is local-only."
     }
   },
   {
     "id": "integration.mapping.transform",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.mapping.transform.",
+    "description": "Apply a field mapping to transform a source record into a target schema.",
     "file": "capabilities/integration.mapping.transform.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "Source record to transform."
+      },
+      "mapping": {
+        "type": "object",
+        "required": true,
+        "description": "Mapping rules with rename, select, and defaults directives."
+      }
+    },
+    "outputs": {
+      "transformed": {
+        "type": "object",
+        "required": true,
+        "description": "Transformed record conforming to the target schema."
+      },
+      "unmapped_fields": {
+        "type": "array",
+        "required": true,
+        "description": "Source fields that were not included in the mapping."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "mapping",
+        "transform",
+        "etl"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Apply field mapping to a record",
+          "inputs": {
+            "record": {
+              "first_name": "Alice"
+            },
+            "mapping": {
+              "rename": {
+                "first_name": "name"
+              }
+            }
+          },
+          "outputs": {
+            "record": {
+              "name": "Alice"
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.mapping.validate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.mapping.validate.",
+    "description": "Validate a field mapping definition for completeness and consistency.",
     "file": "capabilities/integration.mapping.validate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "mapping": {
+        "type": "object",
+        "required": true,
+        "description": "Mapping definition to validate."
+      },
+      "source_schema": {
+        "type": "object",
+        "required": false,
+        "description": "Optional source schema to check field references against."
+      }
+    },
+    "outputs": {
+      "valid": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the mapping is valid."
+      },
+      "issues": {
+        "type": "array",
+        "required": true,
+        "description": "Validation issues found."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "mapping",
+        "validation"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Validate a field mapping definition",
+          "inputs": {
+            "mapping": {
+              "rename": {
+                "first_name": "name"
+              }
+            },
+            "source_schema": {
+              "fields": [
+                "first_name"
+              ]
+            }
+          },
+          "outputs": {
+            "valid": true,
+            "warnings": []
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.record.compare",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.compare.",
+    "description": "Compare records from two systems and report differences.",
     "file": "capabilities/integration.record.compare.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "record_a": {
+        "type": "object",
+        "required": true,
+        "description": "Record from system A."
+      },
+      "record_b": {
+        "type": "object",
+        "required": true,
+        "description": "Record from system B."
+      },
+      "key_fields": {
+        "type": "array",
+        "required": false,
+        "description": "Fields to use as identity keys. Defaults to all shared fields."
+      }
+    },
+    "outputs": {
+      "match": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the records match on compared fields."
+      },
+      "differences": {
+        "type": "array",
+        "required": true,
+        "description": "List of field-level differences."
+      },
+      "similarity": {
+        "type": "number",
+        "required": true,
+        "description": "Similarity ratio (0.0–1.0)."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "comparison",
+        "reconciliation"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Compare records across systems",
+          "inputs": {
+            "record_a": {
+              "id": "1",
+              "name": "Alice"
+            },
+            "record_b": {
+              "id": "1",
+              "name": "Alicia"
+            },
+            "key_fields": [
+              "id"
+            ]
+          },
+          "outputs": {
+            "match": true,
+            "discrepancies": [
+              {
+                "field": "name",
+                "a": "Alice",
+                "b": "Alicia"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.record.create",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.create.",
+    "description": "Create a new record in an external system via a connector.",
     "file": "capabilities/integration.record.create.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the target connector."
+      },
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "Record data to create."
+      }
+    },
+    "outputs": {
+      "created": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the record was created."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the created record."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "create"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Create a record in an external system",
+          "inputs": {
+            "connector_id": "crm-rest",
+            "record": {
+              "name": "New Contact"
+            }
+          },
+          "outputs": {
+            "record_id": "rec-001",
+            "created": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Creates a record in a mock in-memory store."
     }
   },
   {
     "id": "integration.record.delete",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.delete.",
+    "description": "Delete a record in an external system via a connector.",
     "file": "capabilities/integration.record.delete.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the target connector."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the record to delete."
+      }
+    },
+    "outputs": {
+      "deleted": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the record was deleted."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "delete"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Delete a record in an external system",
+          "inputs": {
+            "connector_id": "crm-rest",
+            "record_id": "rec-001"
+          },
+          "outputs": {
+            "deleted": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": true,
+      "description": "Deletes a record. Destructive operation."
     }
   },
   {
     "id": "integration.record.reconcile",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.reconcile.",
+    "description": "Reconcile records between two systems and report discrepancies.",
     "file": "capabilities/integration.record.reconcile.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "records_a": {
+        "type": "array",
+        "required": true,
+        "description": "Records from system A."
+      },
+      "records_b": {
+        "type": "array",
+        "required": true,
+        "description": "Records from system B."
+      },
+      "key_field": {
+        "type": "string",
+        "required": true,
+        "description": "Field name to use as the record identity key."
+      }
+    },
+    "outputs": {
+      "matched": {
+        "type": "array",
+        "required": true,
+        "description": "Records present in both systems."
+      },
+      "only_a": {
+        "type": "array",
+        "required": true,
+        "description": "Records only in system A."
+      },
+      "only_b": {
+        "type": "array",
+        "required": true,
+        "description": "Records only in system B."
+      },
+      "discrepancies": {
+        "type": "array",
+        "required": true,
+        "description": "Records present in both but with field-level differences."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "reconciliation"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Reconcile records between two systems",
+          "inputs": {
+            "records_a": [
+              {
+                "id": "1"
+              }
+            ],
+            "records_b": [
+              {
+                "id": "2"
+              }
+            ],
+            "key_field": "id"
+          },
+          "outputs": {
+            "matched": [],
+            "only_a": [
+              {
+                "id": "1"
+              }
+            ],
+            "only_b": [
+              {
+                "id": "2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "integration.record.update",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.update.",
+    "description": "Update an existing record in an external system via a connector.",
     "file": "capabilities/integration.record.update.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the target connector."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the record to update."
+      },
+      "fields": {
+        "type": "object",
+        "required": true,
+        "description": "Fields to update with their new values."
+      }
+    },
+    "outputs": {
+      "updated": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the record was updated."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "update"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Update a record in an external system",
+          "inputs": {
+            "connector_id": "crm-rest",
+            "record_id": "rec-001",
+            "fields": {
+              "email": "new@example.com"
+            }
+          },
+          "outputs": {
+            "updated": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Updates a record in a mock in-memory store."
     }
   },
   {
     "id": "integration.record.upsert",
     "version": "1.0.0",
-    "description": "TODO define capability contract for integration.record.upsert.",
+    "description": "Create or update a record in an external system, depending on whether it exists.",
     "file": "capabilities/integration.record.upsert.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "connector_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the target connector."
+      },
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "Record data. Must include an id field for match detection."
+      }
+    },
+    "outputs": {
+      "action": {
+        "type": "string",
+        "required": true,
+        "description": "Action taken: created or updated."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the created or updated record."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "integration",
+        "record",
+        "upsert"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Create-or-update a record in an external system",
+          "inputs": {
+            "connector_id": "crm-rest",
+            "record": {
+              "id": "rec-001",
+              "name": "Updated"
+            },
+            "key_fields": [
+              "id"
+            ]
+          },
+          "outputs": {
+            "upserted": true,
+            "action": "updated"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Creates or updates a record in a mock in-memory store."
     }
   },
   {
@@ -2452,10 +3833,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "retrieval"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve a stored memory entry",
+          "inputs": {
+            "key": "user_preference"
+          },
+          "outputs": {
+            "value": "dark_mode",
+            "found": true
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -2488,10 +3884,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "persistence"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Store a key-value memory entry",
+          "inputs": {
+            "key": "user_preference",
+            "value": "dark_mode"
+          },
+          "outputs": {
+            "stored": true
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -2507,29 +3918,139 @@
   {
     "id": "memory.record.store",
     "version": "1.0.0",
-    "description": "TODO define capability contract for memory.record.store.",
+    "description": "Store a structured record in memory with namespace isolation and optional TTL.",
     "file": "capabilities/memory.record.store.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "namespace": {
+        "type": "string",
+        "required": true,
+        "description": "Namespace to isolate the record within."
+      },
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "The structured record to store, must include an id field."
+      },
+      "ttl_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Optional time-to-live in seconds. Omit for no expiration."
+      }
+    },
+    "outputs": {
+      "stored": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the record was stored successfully."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "The id of the stored record."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "record"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Store a structured record in a namespace",
+          "inputs": {
+            "namespace": "session",
+            "record": {
+              "id": "r1",
+              "content": "Context data"
+            }
+          },
+          "outputs": {
+            "stored": true,
+            "record_id": "r1"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Stores a record in local in-memory namespace. No external side effects."
     }
   },
   {
     "id": "memory.vector.search",
     "version": "1.0.0",
-    "description": "TODO define capability contract for memory.vector.search.",
+    "description": "Search memory records by vector similarity against a query embedding.",
     "file": "capabilities/memory.vector.search.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "The search query text."
+      },
+      "namespace": {
+        "type": "string",
+        "required": false,
+        "description": "Optional namespace to scope the search."
+      },
+      "top_k": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of results to return. Defaults to 5."
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Ranked search results with record, score, and optional metadata."
+      },
+      "total_searched": {
+        "type": "number",
+        "required": true,
+        "description": "Total number of records searched."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "vector",
+        "search",
+        "similarity"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Search memory by semantic similarity",
+          "inputs": {
+            "query": "deployment strategy",
+            "top_k": 3
+          },
+          "outputs": {
+            "results": [
+              {
+                "id": "r1",
+                "score": 0.89,
+                "content": "Use blue-green deployment."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -2557,10 +4078,26 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "messaging",
+        "notification",
+        "sending"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Send a notification message",
+          "inputs": {
+            "message": "Build succeeded",
+            "recipient": "ops-channel"
+          },
+          "outputs": {
+            "sent": true,
+            "message_id": "notif-001"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -2580,15 +4117,68 @@
   {
     "id": "message.priority.classify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for message.priority.classify.",
+    "description": "Classify the priority of a message based on content, sender, and context.",
     "file": "capabilities/message.priority.classify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "message": {
+        "type": "string",
+        "required": true,
+        "description": "The message content to classify."
+      },
+      "sender": {
+        "type": "string",
+        "required": false,
+        "description": "Identifier of the message sender."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Additional context such as channel or thread metadata."
+      }
+    },
+    "outputs": {
+      "priority": {
+        "type": "string",
+        "required": true,
+        "description": "Classified priority level: critical, high, medium, or low."
+      },
+      "confidence": {
+        "type": "number",
+        "required": true,
+        "description": "Confidence score (0.0 to 1.0)."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation of the classification."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "message",
+        "priority",
+        "classification",
+        "triage"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Classify message priority",
+          "inputs": {
+            "message": "URGENT: production outage on API gateway"
+          },
+          "outputs": {
+            "priority": "critical",
+            "confidence": 0.95
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -3212,10 +4802,36 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "operations",
+        "monitoring"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Estimate cost for a plan",
+          "inputs": {
+            "plan": {
+              "steps": [
+                {
+                  "id": "s1"
+                },
+                {
+                  "id": "s2"
+                }
+              ]
+            },
+            "limits": {
+              "max_cost": 1.0
+            }
+          },
+          "outputs": {
+            "estimated_cost": 0.35,
+            "within_budget": true
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -3226,29 +4842,143 @@
   {
     "id": "ops.event.acknowledge",
     "version": "1.0.0",
-    "description": "TODO define capability contract for ops.event.acknowledge.",
+    "description": "Acknowledge receipt and handling of an operational event.",
     "file": "capabilities/ops.event.acknowledge.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier of the event to acknowledge."
+      },
+      "handler": {
+        "type": "string",
+        "required": false,
+        "description": "Identifier of the handler acknowledging the event."
+      },
+      "notes": {
+        "type": "string",
+        "required": false,
+        "description": "Optional notes about the acknowledgement."
+      }
+    },
+    "outputs": {
+      "acknowledged": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the event was acknowledged."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp of the acknowledgement."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "ops",
+        "event",
+        "acknowledgement",
+        "incident"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Acknowledge an operational event",
+          "inputs": {
+            "event_id": "evt-001",
+            "handler": "on-call-bot"
+          },
+          "outputs": {
+            "acknowledged": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Acknowledges an operational event. Baseline is local-only with no external effects."
     }
   },
   {
     "id": "ops.event.monitor",
     "version": "1.0.0",
-    "description": "TODO define capability contract for ops.event.monitor.",
+    "description": "Monitor a stream of operational events and return status with alerts for threshold violations.",
     "file": "capabilities/ops.event.monitor.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "events": {
+        "type": "array",
+        "required": true,
+        "description": "List of operational events to monitor, each with type, severity, and timestamp."
+      },
+      "thresholds": {
+        "type": "object",
+        "required": false,
+        "description": "Alert thresholds such as max_error_count, max_latency_ms."
+      }
+    },
+    "outputs": {
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Overall status: ok, warning, or critical."
+      },
+      "alerts": {
+        "type": "array",
+        "required": true,
+        "description": "List of threshold violations detected."
+      },
+      "event_summary": {
+        "type": "object",
+        "required": true,
+        "description": "Summary counts by event type and severity."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "ops",
+        "event",
+        "monitoring",
+        "alerting"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Monitor operational events against thresholds",
+          "inputs": {
+            "events": [
+              {
+                "type": "error",
+                "severity": "critical"
+              }
+            ],
+            "thresholds": {
+              "max_error_count": 0
+            }
+          },
+          "outputs": {
+            "status": "alert",
+            "alerts": [
+              {
+                "rule": "max_error_count",
+                "actual": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -3524,10 +5254,28 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "pdf",
+        "document",
+        "read",
+        "input"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Read text from a PDF document",
+          "inputs": {
+            "path": "reports/q3.pdf"
+          },
+          "outputs": {
+            "text": "Q3 revenue increased...",
+            "metadata": {
+              "pages": 5
+            }
+          }
+        }
+      ]
     },
     "requires": [
       "fs.file.read"
@@ -3536,15 +5284,72 @@
   {
     "id": "policy.constraint.gate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for policy.constraint.gate.",
+    "description": "Evaluate a payload against a policy gate and return a pass/block decision with rationale.",
     "file": "capabilities/policy.constraint.gate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "payload": {
+        "type": "object",
+        "required": true,
+        "description": "The data payload to evaluate against the gate."
+      },
+      "gate": {
+        "type": "object",
+        "required": true,
+        "description": "Gate definition with rules (required_keys, forbidden_keys, max_size) and action (block or warn)."
+      }
+    },
+    "outputs": {
+      "decision": {
+        "type": "string",
+        "required": true,
+        "description": "Gate decision: pass or block."
+      },
+      "violations": {
+        "type": "array",
+        "required": true,
+        "description": "List of rule violations found."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable justification for the decision."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "policy",
+        "gate",
+        "constraint",
+        "governance"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Gate an action based on policy rules",
+          "inputs": {
+            "payload": {
+              "title": "Report"
+            },
+            "gate": {
+              "rules": {
+                "required_keys": [
+                  "title"
+                ]
+              },
+              "action": "block"
+            }
+          },
+          "outputs": {
+            "allowed": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -3577,10 +5382,32 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "policy",
+        "governance",
+        "validation"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Validate payload against policy constraints",
+          "inputs": {
+            "payload": {
+              "title": "Report"
+            },
+            "constraint": {
+              "required_keys": [
+                "title"
+              ]
+            }
+          },
+          "outputs": {
+            "valid": true,
+            "violations": []
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -3591,43 +5418,212 @@
   {
     "id": "policy.decision.justify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for policy.decision.justify.",
+    "description": "Justify a policy decision by linking it to applicable rules and evidence.",
     "file": "capabilities/policy.decision.justify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "decision": {
+        "type": "string",
+        "required": true,
+        "description": "The policy decision to justify (e.g. approved, denied, escalated)."
+      },
+      "rules": {
+        "type": "array",
+        "required": true,
+        "description": "List of policy rules considered, each with id, description, and outcome."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Additional context or evidence for the justification."
+      }
+    },
+    "outputs": {
+      "justification": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable justification narrative."
+      },
+      "applicable_rules": {
+        "type": "array",
+        "required": true,
+        "description": "Rules that directly apply to the decision."
+      },
+      "confidence": {
+        "type": "number",
+        "required": true,
+        "description": "Confidence score for the justification (0.0 to 1.0)."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "policy",
+        "decision",
+        "justification",
+        "governance"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Justify a policy decision",
+          "inputs": {
+            "decision": "approved",
+            "rules": [
+              {
+                "id": "R1",
+                "outcome": "approved"
+              }
+            ]
+          },
+          "outputs": {
+            "justification": "Approved per rule R1.",
+            "applicable_rules": [
+              "R1"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "policy.risk.classify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for policy.risk.classify.",
+    "description": "Classify the risk level of an action or payload according to policy categories.",
     "file": "capabilities/policy.risk.classify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "action": {
+        "type": "object",
+        "required": true,
+        "description": "The action or payload to classify, including type and details."
+      },
+      "categories": {
+        "type": "array",
+        "required": false,
+        "description": "Risk categories to evaluate. Defaults to [low, medium, high, critical]."
+      }
+    },
+    "outputs": {
+      "risk_level": {
+        "type": "string",
+        "required": true,
+        "description": "Classified risk level."
+      },
+      "factors": {
+        "type": "array",
+        "required": true,
+        "description": "Risk factors that contributed to the classification."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation of the classification."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "policy",
+        "risk",
+        "classification",
+        "governance"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Classify risk level of an action",
+          "inputs": {
+            "action": {
+              "type": "deploy",
+              "destructive": false,
+              "external": true
+            }
+          },
+          "outputs": {
+            "risk_level": "medium",
+            "factors": [
+              "external"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "policy.risk.score",
     "version": "1.0.0",
-    "description": "TODO define capability contract for policy.risk.score.",
+    "description": "Compute a numeric risk score for an action across policy dimensions.",
     "file": "capabilities/policy.risk.score.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "action": {
+        "type": "object",
+        "required": true,
+        "description": "The action or payload to score."
+      },
+      "dimensions": {
+        "type": "array",
+        "required": false,
+        "description": "Risk dimensions to evaluate (e.g. data_exposure, reversibility, blast_radius)."
+      }
+    },
+    "outputs": {
+      "risk_score": {
+        "type": "number",
+        "required": true,
+        "description": "Overall risk score (0.0 low to 1.0 critical)."
+      },
+      "dimension_scores": {
+        "type": "object",
+        "required": true,
+        "description": "Per-dimension risk scores."
+      },
+      "safe": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the action is within acceptable risk thresholds."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "policy",
+        "risk",
+        "scoring",
+        "governance"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Compute a numeric risk score for an action",
+          "inputs": {
+            "action": {
+              "type": "data_export",
+              "involves_pii": true
+            }
+          },
+          "outputs": {
+            "risk_score": 0.7,
+            "breakdown": {
+              "pii": 0.3,
+              "external": 0.2
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -3660,10 +5656,28 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "provenance",
+        "citation",
+        "generation"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Generate a citation from a source",
+          "inputs": {
+            "source": {
+              "url": "https://example.com/article",
+              "title": "Example"
+            },
+            "excerpt": "Key fact"
+          },
+          "outputs": {
+            "citation": "Example. Retrieved from https://example.com/article"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -3706,10 +5720,30 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "provenance",
+        "citation",
+        "verification"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Verify a claim against sources",
+          "inputs": {
+            "claim": "Revenue grew 15%",
+            "sources": [
+              {
+                "text": "Revenue grew 15% in Q3."
+              }
+            ]
+          },
+          "outputs": {
+            "supported": true,
+            "confidence": 0.95
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -3737,10 +5771,35 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "research",
+        "retrieval"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve full content from source references",
+          "inputs": {
+            "items": [
+              {
+                "content": "ML overview",
+                "source_ref": {
+                  "url": "https://example.com/ml"
+                }
+              }
+            ]
+          },
+          "outputs": {
+            "items": [
+              {
+                "content": "Machine learning is...",
+                "resolved": true
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4065,10 +6124,43 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "table",
+        "data",
+        "filtering"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Filter table rows by condition",
+          "inputs": {
+            "table": [
+              {
+                "name": "Alice",
+                "age": 25
+              },
+              {
+                "name": "Bob",
+                "age": 30
+              }
+            ],
+            "condition": {
+              "age": {
+                "$gt": 26
+              }
+            }
+          },
+          "outputs": {
+            "table": [
+              {
+                "name": "Bob",
+                "age": 30
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -4172,211 +6264,982 @@
   {
     "id": "task.approval.approve",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.approval.approve.",
+    "description": "Approve a pending approval request.",
     "file": "capabilities/task.approval.approve.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "approval_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the approval request."
+      },
+      "approver": {
+        "type": "string",
+        "required": false,
+        "description": "Identifier of the approver."
+      },
+      "notes": {
+        "type": "string",
+        "required": false,
+        "description": "Optional approval notes."
+      }
+    },
+    "outputs": {
+      "approved": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the approval was recorded."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "approval",
+        "workflow"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Approve an approval request",
+          "inputs": {
+            "approval_id": "apr-001",
+            "approver": "manager-1"
+          },
+          "outputs": {
+            "approved": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": true,
+      "description": "Approves a request that may trigger downstream actions."
     }
   },
   {
     "id": "task.approval.reject",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.approval.reject.",
+    "description": "Reject a pending approval request with a reason.",
     "file": "capabilities/task.approval.reject.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "approval_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the approval request."
+      },
+      "rejector": {
+        "type": "string",
+        "required": false,
+        "description": "Identifier of the rejector."
+      },
+      "reason": {
+        "type": "string",
+        "required": true,
+        "description": "Reason for rejection."
+      }
+    },
+    "outputs": {
+      "rejected": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the rejection was recorded."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "approval",
+        "rejection",
+        "workflow"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Reject an approval request",
+          "inputs": {
+            "approval_id": "apr-002",
+            "rejector": "manager-2",
+            "reason": "Missing justification"
+          },
+          "outputs": {
+            "rejected": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": true,
+      "description": "Rejects a request, blocking the associated workflow."
     }
   },
   {
     "id": "task.assignee.assign",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.assignee.assign.",
+    "description": "Assign a task to a user or team.",
     "file": "capabilities/task.assignee.assign.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "task_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the task."
+      },
+      "assignee_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the user or team to assign."
+      }
+    },
+    "outputs": {
+      "assigned": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the assignment was recorded."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "assignment"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Assign a task to a user",
+          "inputs": {
+            "task_id": "CASE-1",
+            "assignee_id": "alice"
+          },
+          "outputs": {
+            "assigned": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Assigns a task in the in-memory store."
     }
   },
   {
     "id": "task.case.close",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.close.",
+    "description": "Close a case or ticket with a resolution.",
     "file": "capabilities/task.case.close.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "case_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the case to close."
+      },
+      "resolution": {
+        "type": "string",
+        "required": false,
+        "description": "Resolution description."
+      }
+    },
+    "outputs": {
+      "closed": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the case was closed."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "close"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Close a case with a resolution",
+          "inputs": {
+            "case_id": "CASE-1",
+            "resolution": "Fixed in v2.1"
+          },
+          "outputs": {
+            "closed": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Closes a case in the in-memory store."
     }
   },
   {
     "id": "task.case.create",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.create.",
+    "description": "Create a new case or ticket.",
     "file": "capabilities/task.case.create.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "title": {
+        "type": "string",
+        "required": true,
+        "description": "Title of the case."
+      },
+      "description": {
+        "type": "string",
+        "required": false,
+        "description": "Detailed description."
+      },
+      "priority": {
+        "type": "string",
+        "required": false,
+        "description": "Priority level (low, medium, high, critical)."
+      }
+    },
+    "outputs": {
+      "case_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the created case."
+      },
+      "created": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the case was created."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "create"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Create a new case",
+          "inputs": {
+            "title": "Bug in login page",
+            "priority": "high"
+          },
+          "outputs": {
+            "case_id": "CASE-1",
+            "created": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Creates a case in the in-memory store."
     }
   },
   {
     "id": "task.case.get",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.get.",
+    "description": "Retrieve a specific case by identifier.",
     "file": "capabilities/task.case.get.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "case_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the case."
+      }
+    },
+    "outputs": {
+      "case": {
+        "type": "object",
+        "required": true,
+        "description": "Case object with all fields."
+      },
+      "found": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the case was found."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "lookup"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Retrieve a specific case",
+          "inputs": {
+            "case_id": "CASE-1"
+          },
+          "outputs": {
+            "case": {
+              "id": "CASE-1",
+              "title": "Bug in login page",
+              "state": "open"
+            },
+            "found": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "task.case.list",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.list.",
+    "description": "List cases, optionally filtered by status or assignee.",
     "file": "capabilities/task.case.list.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "status_filter": {
+        "type": "string",
+        "required": false,
+        "description": "Filter by case status (open, closed, in_progress)."
+      },
+      "assignee_filter": {
+        "type": "string",
+        "required": false,
+        "description": "Filter by assignee identifier."
+      }
+    },
+    "outputs": {
+      "cases": {
+        "type": "array",
+        "required": true,
+        "description": "List of case objects."
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total cases returned."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "listing"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "List cases filtered by status",
+          "inputs": {
+            "status_filter": "open"
+          },
+          "outputs": {
+            "cases": [
+              {
+                "id": "CASE-1",
+                "state": "open"
+              }
+            ],
+            "total": 1
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "task.case.search",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.search.",
+    "description": "Search cases by keyword or criteria.",
     "file": "capabilities/task.case.search.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "Search query string."
+      },
+      "filters": {
+        "type": "object",
+        "required": false,
+        "description": "Additional filters (status, priority, date_range)."
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Matching case objects."
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total matching cases."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "search"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Search cases by keyword",
+          "inputs": {
+            "query": "login"
+          },
+          "outputs": {
+            "results": [
+              {
+                "id": "CASE-1",
+                "title": "Bug in login page"
+              }
+            ],
+            "total": 1
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "task.case.update",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.case.update.",
+    "description": "Update fields of an existing case.",
     "file": "capabilities/task.case.update.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "case_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the case to update."
+      },
+      "fields": {
+        "type": "object",
+        "required": true,
+        "description": "Fields to update with new values."
+      }
+    },
+    "outputs": {
+      "updated": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the case was updated."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "case",
+        "update"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Update a case's fields",
+          "inputs": {
+            "case_id": "CASE-1",
+            "fields": {
+              "priority": "critical"
+            }
+          },
+          "outputs": {
+            "updated": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Updates a case in the in-memory store."
     }
   },
   {
     "id": "task.event.acknowledge",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.event.acknowledge.",
+    "description": "Acknowledge receipt of a task-related event.",
     "file": "capabilities/task.event.acknowledge.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the event."
+      },
+      "handler": {
+        "type": "string",
+        "required": false,
+        "description": "Handler acknowledging the event."
+      }
+    },
+    "outputs": {
+      "acknowledged": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the event was acknowledged."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "ISO-8601 timestamp."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "event",
+        "acknowledgement"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Acknowledge a task event",
+          "inputs": {
+            "event_id": "task-evt-001",
+            "handler": "escalation-bot"
+          },
+          "outputs": {
+            "acknowledged": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Acknowledges a task event locally."
     }
   },
   {
     "id": "task.incident.create",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.incident.create.",
+    "description": "Create a new incident ticket with severity and affected system information.",
     "file": "capabilities/task.incident.create.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "title": {
+        "type": "string",
+        "required": true,
+        "description": "Incident title."
+      },
+      "severity": {
+        "type": "string",
+        "required": true,
+        "description": "Severity level (low, medium, high, critical)."
+      },
+      "affected_system": {
+        "type": "string",
+        "required": false,
+        "description": "Name or ID of the affected system."
+      },
+      "description": {
+        "type": "string",
+        "required": false,
+        "description": "Detailed incident description."
+      }
+    },
+    "outputs": {
+      "incident_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the created incident."
+      },
+      "created": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the incident was created."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "incident",
+        "create"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Create a new incident",
+          "inputs": {
+            "title": "API 503 errors",
+            "severity": "high",
+            "affected_system": "api-gateway"
+          },
+          "outputs": {
+            "incident_id": "INC-1",
+            "created": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Creates an incident in the in-memory store."
     }
   },
   {
     "id": "task.milestone.schedule",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.milestone.schedule.",
+    "description": "Schedule a project milestone with a target date and deliverables.",
     "file": "capabilities/task.milestone.schedule.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "milestone_name": {
+        "type": "string",
+        "required": true,
+        "description": "Name of the milestone."
+      },
+      "target_date": {
+        "type": "string",
+        "required": true,
+        "description": "Target date in ISO-8601 format."
+      },
+      "deliverables": {
+        "type": "array",
+        "required": false,
+        "description": "List of deliverable descriptions."
+      }
+    },
+    "outputs": {
+      "milestone_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the scheduled milestone."
+      },
+      "scheduled": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the milestone was scheduled."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "milestone",
+        "scheduling",
+        "project"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Schedule a project milestone",
+          "inputs": {
+            "milestone_name": "Beta Release",
+            "target_date": "2026-03-15",
+            "deliverables": [
+              "feature-x"
+            ]
+          },
+          "outputs": {
+            "milestone_id": "MS-1",
+            "scheduled": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Schedules a milestone in the in-memory store."
     }
   },
   {
     "id": "task.priority.classify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.priority.classify.",
+    "description": "Classify the priority of a task based on its attributes and context.",
     "file": "capabilities/task.priority.classify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "task": {
+        "type": "object",
+        "required": true,
+        "description": "Task object with title, description, type, and optional urgency signals."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Contextual information such as SLA tier or impacted users."
+      }
+    },
+    "outputs": {
+      "priority": {
+        "type": "string",
+        "required": true,
+        "description": "Classified priority: critical, high, medium, or low."
+      },
+      "confidence": {
+        "type": "number",
+        "required": true,
+        "description": "Confidence score (0.0–1.0)."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation of the classification."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "priority",
+        "classification",
+        "triage"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Classify priority of a task",
+          "inputs": {
+            "task": {
+              "title": "DB running out of disk",
+              "type": "incident"
+            },
+            "context": {
+              "environment": "production"
+            }
+          },
+          "outputs": {
+            "priority": "critical",
+            "confidence": 0.9
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "task.sla.monitor",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.sla.monitor.",
+    "description": "Monitor SLA compliance for a set of tasks and raise alerts for breaches.",
     "file": "capabilities/task.sla.monitor.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "tasks": {
+        "type": "array",
+        "required": true,
+        "description": "List of tasks with created_at, priority, and status fields."
+      },
+      "sla_rules": {
+        "type": "object",
+        "required": true,
+        "description": "SLA rules mapping priority to max_resolution_hours."
+      }
+    },
+    "outputs": {
+      "compliant": {
+        "type": "array",
+        "required": true,
+        "description": "Tasks within SLA."
+      },
+      "breached": {
+        "type": "array",
+        "required": true,
+        "description": "Tasks that have breached SLA."
+      },
+      "at_risk": {
+        "type": "array",
+        "required": true,
+        "description": "Tasks approaching SLA breach (within 80% of limit)."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "sla",
+        "monitoring",
+        "compliance"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Monitor SLA compliance",
+          "inputs": {
+            "tasks": [
+              {
+                "id": "CASE-1",
+                "priority": "high",
+                "state": "open"
+              }
+            ],
+            "sla_rules": [
+              {
+                "priority": "high",
+                "max_resolution_hours": 4
+              }
+            ]
+          },
+          "outputs": {
+            "compliant": [],
+            "breached": [
+              "CASE-1"
+            ],
+            "at_risk": []
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "task.state.transition",
     "version": "1.0.0",
-    "description": "TODO define capability contract for task.state.transition.",
+    "description": "Transition a task to a new state, validating the transition is allowed.",
     "file": "capabilities/task.state.transition.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "task_id": {
+        "type": "string",
+        "required": true,
+        "description": "Identifier of the task."
+      },
+      "target_state": {
+        "type": "string",
+        "required": true,
+        "description": "Target state to transition to."
+      }
+    },
+    "outputs": {
+      "transitioned": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the transition was applied."
+      },
+      "previous_state": {
+        "type": "string",
+        "required": true,
+        "description": "State before the transition."
+      },
+      "current_state": {
+        "type": "string",
+        "required": true,
+        "description": "State after the transition."
+      },
+      "reason": {
+        "type": "string",
+        "required": false,
+        "description": "Explanation if the transition was rejected."
+      }
+    },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "task",
+        "state",
+        "transition",
+        "workflow"
+      ],
       "category": null,
-      "status": "draft",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Transition a task to a new state",
+          "inputs": {
+            "task_id": "CASE-1",
+            "target_state": "in_progress"
+          },
+          "outputs": {
+            "transitioned": true,
+            "previous_state": "open",
+            "current_state": "in_progress"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false,
+      "description": "Transitions a task state in the in-memory store."
     }
   },
   {
@@ -4409,10 +7272,30 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "classification"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Classify text into categories",
+          "inputs": {
+            "text": "I love this product!",
+            "labels": [
+              "positive",
+              "negative",
+              "neutral"
+            ]
+          },
+          "outputs": {
+            "label": "positive",
+            "confidence": 0.95
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4440,10 +7323,29 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "embedding",
+        "vector"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Generate a vector embedding for text",
+          "inputs": {
+            "text": "This is a test sentence."
+          },
+          "outputs": {
+            "vector": [
+              0.01,
+              -0.03,
+              0.12
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4478,7 +7380,17 @@
       ],
       "category": null,
       "status": "stable",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Extract clean text from HTML",
+          "inputs": {
+            "text": "<html><body><h1>Title</h1><p>Content.</p></body></html>"
+          },
+          "outputs": {
+            "text": "Title Content."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -4523,7 +7435,17 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Generate text from an instruction",
+          "inputs": {
+            "instruction": "Write a one-sentence description of Python."
+          },
+          "outputs": {
+            "text": "Python is a versatile, high-level programming language."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4585,7 +7507,20 @@
       ],
       "category": null,
       "status": "stable",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Merge text items into a single block",
+          "inputs": {
+            "items": [
+              "Hello",
+              "World"
+            ]
+          },
+          "outputs": {
+            "text": "Hello\nWorld"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -4614,10 +7549,24 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "summarization"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Summarize a passage of text",
+          "inputs": {
+            "text": "Machine learning is a subset of AI that enables systems to learn from data..."
+          },
+          "outputs": {
+            "summary": "ML lets systems learn from data without explicit programming."
+          }
+        }
+      ]
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -4659,7 +7608,21 @@
       ],
       "category": null,
       "status": "stable",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Render a template with variables",
+          "inputs": {
+            "template": "Hello {{name}}, welcome to {{place}}!",
+            "variables": {
+              "name": "Alice",
+              "place": "HQ"
+            }
+          },
+          "outputs": {
+            "text": "Hello Alice, welcome to HQ!"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -4700,7 +7663,18 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Transform text style or tone",
+          "inputs": {
+            "text": "The system is operational.",
+            "goal": "simplify for non-technical audience"
+          },
+          "outputs": {
+            "text": "Everything is working normally."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4749,10 +7723,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "translation"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Translate text to another language",
+          "inputs": {
+            "text": "Hello world",
+            "target_language": "es"
+          },
+          "outputs": {
+            "text": "Hola mundo"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4780,10 +7769,33 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "extraction"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract named entities from text",
+          "inputs": {
+            "text": "John Smith works at Google in Mountain View."
+          },
+          "outputs": {
+            "entities": [
+              {
+                "text": "John Smith",
+                "type": "PERSON"
+              },
+              {
+                "text": "Google",
+                "type": "ORG"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4811,10 +7823,28 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "extraction"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract keywords from text",
+          "inputs": {
+            "text": "Python is great for machine learning and data science."
+          },
+          "outputs": {
+            "keywords": [
+              "Python",
+              "machine learning",
+              "data science"
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -4847,10 +7877,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "detection"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Detect the language of a text",
+          "inputs": {
+            "text": "Bonjour le monde"
+          },
+          "outputs": {
+            "language": "fr",
+            "confidence": 0.98
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4896,7 +7941,18 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Extract an answer from context",
+          "inputs": {
+            "question": "What is Python?",
+            "context": "Python is a high-level programming language."
+          },
+          "outputs": {
+            "text": "A high-level programming language."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -4935,10 +7991,27 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "video",
+        "media",
+        "extraction"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract frames from a video",
+          "inputs": {
+            "video": "(binary video data)"
+          },
+          "outputs": {
+            "frames": [
+              "(frame 1 data)",
+              "(frame 2 data)"
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,

@@ -43,3 +43,12 @@ properties:
 metadata:
   status: stable
   tags: [text, merge, preprocessing, utility]
+
+  examples:
+    - summary: "Merge text items into a single block"
+      inputs:
+        items: ["Hello", "World"]
+      outputs:
+        text: "Hello
+
+World"

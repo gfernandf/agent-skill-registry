@@ -1,11 +1,45 @@
 id: policy.risk.score
 version: 1.0.0
-description: TODO define capability contract for policy.risk.score.
+description: Compute a numeric risk score for an action across policy dimensions.
 
-inputs: {}
+inputs:
+  action:
+    type: object
+    required: true
+    description: The action or payload to score.
+  dimensions:
+    type: array
+    required: false
+    description: Risk dimensions to evaluate (e.g. data_exposure, reversibility, blast_radius).
 
-outputs: {}
+outputs:
+  risk_score:
+    type: number
+    required: true
+    description: Overall risk score (0.0 low to 1.0 critical).
+  dimension_scores:
+    type: object
+    required: true
+    description: Per-dimension risk scores.
+  safe:
+    type: boolean
+    required: true
+    description: Whether the action is within acceptable risk thresholds.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [policy, risk, scoring, governance]
 
+
+  examples:
+    - summary: "Compute a numeric risk score for an action"
+      inputs:
+        action: {type: "data_export", involves_pii: true}
+      outputs:
+        risk_score: 0.7
+        breakdown: {pii: 0.3, external: 0.2}

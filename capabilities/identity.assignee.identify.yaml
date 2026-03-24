@@ -1,11 +1,44 @@
 id: identity.assignee.identify
 version: 1.0.0
-description: TODO define capability contract for identity.assignee.identify.
+description: Identify the most appropriate assignee for a task based on skills, availability, and workload.
 
-inputs: {}
+inputs:
+  task:
+    type: object
+    required: true
+    description: Task descriptor with type, required_skills, and priority.
+  candidates:
+    type: array
+    required: false
+    description: Optional candidate list. If omitted, searches all known principals.
 
-outputs: {}
+outputs:
+  assignee:
+    type: object
+    required: true
+    description: Selected assignee with id, name, and match_score.
+  alternatives:
+    type: array
+    required: false
+    description: Ranked alternative candidates.
+  rationale:
+    type: string
+    required: true
+    description: Explanation of the selection.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, assignment, task, matching]
 
+
+  examples:
+    - summary: "Find the best assignee for a task"
+      inputs:
+        task: {type: "code_review", required_skills: ["python"]}
+      outputs:
+        assignee: {id: "alice", match_score: 0.7}

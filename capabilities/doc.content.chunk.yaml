@@ -23,3 +23,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [document, processing, chunking]
+  examples:
+    - summary: "Split a document into chunks"
+      inputs:
+        text: "A long document..."
+        chunk_size: 500
+      outputs:
+        chunks: ["A long doc...", "ument continued..."]

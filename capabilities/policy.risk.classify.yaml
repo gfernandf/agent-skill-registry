@@ -1,11 +1,45 @@
 id: policy.risk.classify
 version: 1.0.0
-description: TODO define capability contract for policy.risk.classify.
+description: Classify the risk level of an action or payload according to policy categories.
 
-inputs: {}
+inputs:
+  action:
+    type: object
+    required: true
+    description: The action or payload to classify, including type and details.
+  categories:
+    type: array
+    required: false
+    description: Risk categories to evaluate. Defaults to [low, medium, high, critical].
 
-outputs: {}
+outputs:
+  risk_level:
+    type: string
+    required: true
+    description: Classified risk level.
+  factors:
+    type: array
+    required: true
+    description: Risk factors that contributed to the classification.
+  rationale:
+    type: string
+    required: true
+    description: Explanation of the classification.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [policy, risk, classification, governance]
 
+
+  examples:
+    - summary: "Classify risk level of an action"
+      inputs:
+        action: {type: "deploy", destructive: false, external: true}
+      outputs:
+        risk_level: "medium"
+        factors: ["external"]

@@ -49,3 +49,10 @@ cognitive_hints:
 metadata:
   status: experimental
   tags: [text, generation, llm]
+
+  examples:
+    - summary: "Generate text from an instruction"
+      inputs:
+        instruction: "Write a one-sentence description of Python."
+      outputs:
+        text: "Python is a versatile, high-level programming language."

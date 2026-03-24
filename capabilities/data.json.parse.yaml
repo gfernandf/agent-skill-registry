@@ -15,3 +15,14 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [data, processing, parsing]
+  examples:
+    - summary: "Parse a JSON string"
+      inputs:
+        text: "{\"name\": \"John\", \"age\": 30}"
+      outputs:
+        data: {name: "John", age: 30}

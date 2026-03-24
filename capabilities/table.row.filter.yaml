@@ -19,3 +19,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [table, data, filtering]
+  examples:
+    - summary: "Filter table rows by condition"
+      inputs:
+        table: [{name: "Alice", age: 25}, {name: "Bob", age: 30}]
+        condition: {age: {$gt: 26}}
+      outputs:
+        table: [{name: "Bob", age: 30}]

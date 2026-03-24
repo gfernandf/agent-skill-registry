@@ -1,11 +1,47 @@
 id: integration.record.update
 version: 1.0.0
-description: TODO define capability contract for integration.record.update.
+description: Update an existing record in an external system via a connector.
 
-inputs: {}
+inputs:
+  connector_id:
+    type: string
+    required: true
+    description: Identifier of the target connector.
+  record_id:
+    type: string
+    required: true
+    description: Identifier of the record to update.
+  fields:
+    type: object
+    required: true
+    description: Fields to update with their new values.
 
-outputs: {}
+outputs:
+  updated:
+    type: boolean
+    required: true
+    description: Whether the record was updated.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Updates a record in a mock in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, record, update]
 
+
+  examples:
+    - summary: "Update a record in an external system"
+      inputs:
+        connector_id: "crm-rest"
+        record_id: "rec-001"
+        fields: {email: "new@example.com"}
+      outputs:
+        updated: true

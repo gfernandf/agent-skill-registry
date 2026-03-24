@@ -47,3 +47,11 @@ cognitive_hints:
 metadata:
   status: experimental
   tags: [text, qa, extraction, llm]
+
+  examples:
+    - summary: "Extract an answer from context"
+      inputs:
+        question: "What is Python?"
+        context: "Python is a high-level programming language."
+      outputs:
+        text: "A high-level programming language."

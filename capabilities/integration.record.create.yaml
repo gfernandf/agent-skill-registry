@@ -1,11 +1,47 @@
 id: integration.record.create
 version: 1.0.0
-description: TODO define capability contract for integration.record.create.
+description: Create a new record in an external system via a connector.
 
-inputs: {}
+inputs:
+  connector_id:
+    type: string
+    required: true
+    description: Identifier of the target connector.
+  record:
+    type: object
+    required: true
+    description: Record data to create.
 
-outputs: {}
+outputs:
+  created:
+    type: boolean
+    required: true
+    description: Whether the record was created.
+  record_id:
+    type: string
+    required: true
+    description: Identifier of the created record.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Creates a record in a mock in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, record, create]
 
+
+  examples:
+    - summary: "Create a record in an external system"
+      inputs:
+        connector_id: "crm-rest"
+        record: {name: "New Contact"}
+      outputs:
+        record_id: "rec-001"
+        created: true

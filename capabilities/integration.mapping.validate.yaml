@@ -1,11 +1,42 @@
 id: integration.mapping.validate
 version: 1.0.0
-description: TODO define capability contract for integration.mapping.validate.
+description: Validate a field mapping definition for completeness and consistency.
 
-inputs: {}
+inputs:
+  mapping:
+    type: object
+    required: true
+    description: Mapping definition to validate.
+  source_schema:
+    type: object
+    required: false
+    description: Optional source schema to check field references against.
 
-outputs: {}
+outputs:
+  valid:
+    type: boolean
+    required: true
+    description: Whether the mapping is valid.
+  issues:
+    type: array
+    required: true
+    description: Validation issues found.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, mapping, validation]
 
+
+  examples:
+    - summary: "Validate a field mapping definition"
+      inputs:
+        mapping: {rename: {first_name: "name"}}
+        source_schema: {fields: ["first_name"]}
+      outputs:
+        valid: true
+        warnings: []

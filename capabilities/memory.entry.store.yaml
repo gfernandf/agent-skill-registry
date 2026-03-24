@@ -25,3 +25,15 @@ properties:
   deterministic: true
   side_effects: true
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [memory, storage, persistence]
+  examples:
+    - summary: "Store a key-value memory entry"
+      inputs:
+        key: "user_preference"
+        value: "dark_mode"
+      outputs:
+        stored: true

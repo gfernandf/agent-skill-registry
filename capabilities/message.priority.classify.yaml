@@ -1,11 +1,49 @@
 id: message.priority.classify
 version: 1.0.0
-description: TODO define capability contract for message.priority.classify.
+description: Classify the priority of a message based on content, sender, and context.
 
-inputs: {}
+inputs:
+  message:
+    type: string
+    required: true
+    description: The message content to classify.
+  sender:
+    type: string
+    required: false
+    description: Identifier of the message sender.
+  context:
+    type: object
+    required: false
+    description: Additional context such as channel or thread metadata.
 
-outputs: {}
+outputs:
+  priority:
+    type: string
+    required: true
+    description: "Classified priority level: critical, high, medium, or low."
+  confidence:
+    type: number
+    required: true
+    description: Confidence score (0.0 to 1.0).
+  rationale:
+    type: string
+    required: true
+    description: Explanation of the classification.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [message, priority, classification, triage]
 
+
+  examples:
+    - summary: "Classify message priority"
+      inputs:
+        message: "URGENT: production outage on API gateway"
+      outputs:
+        priority: "critical"
+        confidence: 0.95

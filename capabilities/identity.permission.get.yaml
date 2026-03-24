@@ -1,11 +1,37 @@
 id: identity.permission.get
 version: 1.0.0
-description: TODO define capability contract for identity.permission.get.
+description: Retrieve a specific permission definition by identifier.
 
-inputs: {}
+inputs:
+  permission_id:
+    type: string
+    required: true
+    description: Unique identifier of the permission to retrieve.
 
-outputs: {}
+outputs:
+  permission:
+    type: object
+    required: true
+    description: Permission object with id, description, resource, and action.
+  found:
+    type: boolean
+    required: true
+    description: Whether the permission was found.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, permission, lookup]
 
+
+  examples:
+    - summary: "Retrieve a specific permission definition"
+      inputs:
+        permission_id: "resource:read"
+      outputs:
+        permission: {id: "resource:read", description: "Read resources"}
+        found: true

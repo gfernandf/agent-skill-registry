@@ -23,3 +23,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [data, processing, validation]
+  examples:
+    - summary: "Validate data against a JSON schema"
+      inputs:
+        data: {name: "John"}
+        schema: {type: "object", required: ["name"]}
+      outputs:
+        valid: true

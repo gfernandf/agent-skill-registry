@@ -1,11 +1,47 @@
 id: task.sla.monitor
 version: 1.0.0
-description: TODO define capability contract for task.sla.monitor.
+description: Monitor SLA compliance for a set of tasks and raise alerts for breaches.
 
-inputs: {}
+inputs:
+  tasks:
+    type: array
+    required: true
+    description: List of tasks with created_at, priority, and status fields.
+  sla_rules:
+    type: object
+    required: true
+    description: SLA rules mapping priority to max_resolution_hours.
 
-outputs: {}
+outputs:
+  compliant:
+    type: array
+    required: true
+    description: Tasks within SLA.
+  breached:
+    type: array
+    required: true
+    description: Tasks that have breached SLA.
+  at_risk:
+    type: array
+    required: true
+    description: Tasks approaching SLA breach (within 80% of limit).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, sla, monitoring, compliance]
 
+
+  examples:
+    - summary: "Monitor SLA compliance"
+      inputs:
+        tasks: [{id: "CASE-1", priority: "high", state: "open"}]
+        sla_rules: [{priority: "high", max_resolution_hours: 4}]
+      outputs:
+        compliant: []
+        breached: ["CASE-1"]
+        at_risk: []

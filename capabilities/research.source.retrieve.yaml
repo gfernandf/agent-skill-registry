@@ -28,3 +28,14 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [research, retrieval]
+  examples:
+    - summary: "Retrieve full content from source references"
+      inputs:
+        items: [{content: "ML overview", source_ref: {url: "https://example.com/ml"}}]
+      outputs:
+        items: [{content: "Machine learning is...", resolved: true}]

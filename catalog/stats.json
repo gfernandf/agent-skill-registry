@@ -63,10 +63,9 @@
       "video": 1
     },
     "by_status": {
-      "draft": 52,
-      "unspecified": 35,
-      "experimental": 28,
-      "stable": 7
+      "experimental": 109,
+      "stable": 7,
+      "draft": 6
     },
     "most_used": [
       {
@@ -322,7 +321,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 91,
+    "capabilities_with_nondefault_metadata": 122,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -483,12 +482,60 @@
     ],
     "top_capability_tags": [
       {
+        "id": "task",
+        "count": 16
+      },
+      {
+        "id": "text",
+        "count": 14
+      },
+      {
+        "id": "integration",
+        "count": 12
+      },
+      {
+        "id": "identity",
+        "count": 10
+      },
+      {
         "id": "model",
         "count": 8
       },
       {
-        "id": "text",
+        "id": "extraction",
         "count": 7
+      },
+      {
+        "id": "nlp",
+        "count": 7
+      },
+      {
+        "id": "record",
+        "count": 7
+      },
+      {
+        "id": "case",
+        "count": 6
+      },
+      {
+        "id": "classification",
+        "count": 6
+      },
+      {
+        "id": "governance",
+        "count": 6
+      },
+      {
+        "id": "data",
+        "count": 5
+      },
+      {
+        "id": "listing",
+        "count": 5
+      },
+      {
+        "id": "policy",
+        "count": 5
       },
       {
         "id": "security",
@@ -499,7 +546,15 @@
         "count": 5
       },
       {
+        "id": "code",
+        "count": 4
+      },
+      {
         "id": "decision-support",
+        "count": 4
+      },
+      {
+        "id": "developer-tools",
         "count": 4
       },
       {
@@ -507,15 +562,95 @@
         "count": 4
       },
       {
+        "id": "event",
+        "count": 4
+      },
+      {
+        "id": "generation",
+        "count": 4
+      },
+      {
         "id": "llm",
         "count": 4
+      },
+      {
+        "id": "lookup",
+        "count": 4
+      },
+      {
+        "id": "memory",
+        "count": 4
+      },
+      {
+        "id": "monitoring",
+        "count": 4
+      },
+      {
+        "id": "permission",
+        "count": 4
+      },
+      {
+        "id": "processing",
+        "count": 4
+      },
+      {
+        "id": "risk",
+        "count": 4
+      },
+      {
+        "id": "scoring",
+        "count": 4
+      },
+      {
+        "id": "validation",
+        "count": 4
+      },
+      {
+        "id": "workflow",
+        "count": 4
+      },
+      {
+        "id": "acknowledgement",
+        "count": 3
       },
       {
         "id": "analysis",
         "count": 3
       },
       {
-        "id": "extraction",
+        "id": "assignment",
+        "count": 3
+      },
+      {
+        "id": "connector",
+        "count": 3
+      },
+      {
+        "id": "create",
+        "count": 3
+      },
+      {
+        "id": "filesystem",
+        "count": 3
+      },
+      {
+        "id": "image",
+        "count": 3
+      },
+      {
+        "id": "input",
+        "count": 3
+      },
+      {
+        "id": "justification",
+        "count": 3
+      },
+      {
+        "id": "mapping",
+        "count": 3
+      },
+      {
+        "id": "messaging",
         "count": 3
       },
       {
@@ -535,7 +670,51 @@
         "count": 3
       },
       {
+        "id": "read",
+        "count": 3
+      },
+      {
+        "id": "retrieval",
+        "count": 3
+      },
+      {
+        "id": "role",
+        "count": 3
+      },
+      {
+        "id": "search",
+        "count": 3
+      },
+      {
+        "id": "storage",
+        "count": 3
+      },
+      {
+        "id": "table",
+        "count": 3
+      },
+      {
+        "id": "vector",
+        "count": 3
+      },
+      {
+        "id": "verification",
+        "count": 3
+      },
+      {
         "id": "agent-control",
+        "count": 2
+      },
+      {
+        "id": "approval",
+        "count": 2
+      },
+      {
+        "id": "audio",
+        "count": 2
+      },
+      {
+        "id": "citation",
         "count": 2
       },
       {
@@ -543,19 +722,59 @@
         "count": 2
       },
       {
+        "id": "decision",
+        "count": 2
+      },
+      {
+        "id": "detection",
+        "count": 2
+      },
+      {
         "id": "discovery",
         "count": 2
       },
       {
-        "id": "filesystem",
+        "id": "document",
         "count": 2
       },
       {
-        "id": "generation",
+        "id": "email",
+        "count": 2
+      },
+      {
+        "id": "embedding",
+        "count": 2
+      },
+      {
+        "id": "etl",
+        "count": 2
+      },
+      {
+        "id": "gate",
+        "count": 2
+      },
+      {
+        "id": "incident",
+        "count": 2
+      },
+      {
+        "id": "ops",
         "count": 2
       },
       {
         "id": "planning",
+        "count": 2
+      },
+      {
+        "id": "priority",
+        "count": 2
+      },
+      {
+        "id": "provenance",
+        "count": 2
+      },
+      {
+        "id": "reconciliation",
         "count": 2
       },
       {
@@ -567,15 +786,15 @@
         "count": 2
       },
       {
-        "id": "scoring",
+        "id": "sending",
+        "count": 2
+      },
+      {
+        "id": "similarity",
         "count": 2
       },
       {
         "id": "structuring",
-        "count": 2
-      },
-      {
-        "id": "table",
         "count": 2
       },
       {
@@ -587,11 +806,43 @@
         "count": 2
       },
       {
+        "id": "transform",
+        "count": 2
+      },
+      {
+        "id": "triage",
+        "count": 2
+      },
+      {
+        "id": "update",
+        "count": 2
+      },
+      {
         "id": "utility",
         "count": 2
       },
       {
+        "id": "vision",
+        "count": 2
+      },
+      {
+        "id": "access",
+        "count": 1
+      },
+      {
+        "id": "access-control",
+        "count": 1
+      },
+      {
         "id": "aggregation",
+        "count": 1
+      },
+      {
+        "id": "alerting",
+        "count": 1
+      },
+      {
+        "id": "anomaly",
         "count": 1
       },
       {
@@ -599,7 +850,7 @@
         "count": 1
       },
       {
-        "id": "audio",
+        "id": "audit",
         "count": 1
       },
       {
@@ -607,7 +858,11 @@
         "count": 1
       },
       {
-        "id": "classification",
+        "id": "chunking",
+        "count": 1
+      },
+      {
+        "id": "close",
         "count": 1
       },
       {
@@ -615,11 +870,19 @@
         "count": 1
       },
       {
-        "id": "code",
+        "id": "coherence",
         "count": 1
       },
       {
-        "id": "coherence",
+        "id": "comparison",
+        "count": 1
+      },
+      {
+        "id": "compliance",
+        "count": 1
+      },
+      {
+        "id": "constraint",
         "count": 1
       },
       {
@@ -635,11 +898,11 @@
         "count": 1
       },
       {
-        "id": "data",
+        "id": "decomposition",
         "count": 1
       },
       {
-        "id": "decomposition",
+        "id": "deduplication",
         "count": 1
       },
       {
@@ -647,11 +910,7 @@
         "count": 1
       },
       {
-        "id": "detection",
-        "count": 1
-      },
-      {
-        "id": "developer-tools",
+        "id": "delete",
         "count": 1
       },
       {
@@ -659,11 +918,7 @@
         "count": 1
       },
       {
-        "id": "embedding",
-        "count": 1
-      },
-      {
-        "id": "etl",
+        "id": "execution",
         "count": 1
       },
       {
@@ -675,7 +930,11 @@
         "count": 1
       },
       {
-        "id": "governance",
+        "id": "filtering",
+        "count": 1
+      },
+      {
+        "id": "formatting",
         "count": 1
       },
       {
@@ -691,27 +950,27 @@
         "count": 1
       },
       {
-        "id": "image",
-        "count": 1
-      },
-      {
         "id": "injection",
         "count": 1
       },
       {
-        "id": "justification",
+        "id": "io",
         "count": 1
       },
       {
-        "id": "listing",
+        "id": "matching",
         "count": 1
       },
       {
-        "id": "mapping",
+        "id": "media",
         "count": 1
       },
       {
         "id": "merge",
+        "count": 1
+      },
+      {
+        "id": "message",
         "count": 1
       },
       {
@@ -723,7 +982,7 @@
         "count": 1
       },
       {
-        "id": "monitoring",
+        "id": "milestone",
         "count": 1
       },
       {
@@ -735,11 +994,19 @@
         "count": 1
       },
       {
+        "id": "notification",
+        "count": 1
+      },
+      {
         "id": "observability",
         "count": 1
       },
       {
         "id": "ocr",
+        "count": 1
+      },
+      {
+        "id": "operations",
         "count": 1
       },
       {
@@ -763,7 +1030,23 @@
         "count": 1
       },
       {
+        "id": "parsing",
+        "count": 1
+      },
+      {
+        "id": "pdf",
+        "count": 1
+      },
+      {
+        "id": "persistence",
+        "count": 1
+      },
+      {
         "id": "policy-gate",
+        "count": 1
+      },
+      {
+        "id": "project",
         "count": 1
       },
       {
@@ -795,19 +1078,23 @@
         "count": 1
       },
       {
+        "id": "rejection",
+        "count": 1
+      },
+      {
         "id": "rendering",
         "count": 1
       },
       {
-        "id": "retrieval",
-        "count": 1
-      },
-      {
-        "id": "risk",
+        "id": "research",
         "count": 1
       },
       {
         "id": "risk-analysis",
+        "count": 1
+      },
+      {
+        "id": "sandbox",
         "count": 1
       },
       {
@@ -819,7 +1106,7 @@
         "count": 1
       },
       {
-        "id": "search",
+        "id": "scheduling",
         "count": 1
       },
       {
@@ -831,7 +1118,7 @@
         "count": 1
       },
       {
-        "id": "similarity",
+        "id": "sla",
         "count": 1
       },
       {
@@ -839,7 +1126,19 @@
         "count": 1
       },
       {
+        "id": "speech",
+        "count": 1
+      },
+      {
         "id": "speech-synthesis",
+        "count": 1
+      },
+      {
+        "id": "speech-to-text",
+        "count": 1
+      },
+      {
+        "id": "state",
         "count": 1
       },
       {
@@ -855,6 +1154,14 @@
         "count": 1
       },
       {
+        "id": "summarization",
+        "count": 1
+      },
+      {
+        "id": "sync",
+        "count": 1
+      },
+      {
         "id": "text-extraction",
         "count": 1
       },
@@ -867,11 +1174,19 @@
         "count": 1
       },
       {
-        "id": "transform",
+        "id": "transcription",
         "count": 1
       },
       {
         "id": "transformation",
+        "count": 1
+      },
+      {
+        "id": "transition",
+        "count": 1
+      },
+      {
+        "id": "translation",
         "count": 1
       },
       {
@@ -883,19 +1198,11 @@
         "count": 1
       },
       {
-        "id": "validation",
+        "id": "upsert",
         "count": 1
       },
       {
-        "id": "vector",
-        "count": 1
-      },
-      {
-        "id": "verification",
-        "count": 1
-      },
-      {
-        "id": "workflow",
+        "id": "video",
         "count": 1
       },
       {

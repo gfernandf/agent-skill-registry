@@ -27,3 +27,16 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [provenance, citation, verification]
+  examples:
+    - summary: "Verify a claim against sources"
+      inputs:
+        claim: "Revenue grew 15%"
+        sources: [{text: "Revenue grew 15% in Q3."}]
+      outputs:
+        supported: true
+        confidence: 0.95

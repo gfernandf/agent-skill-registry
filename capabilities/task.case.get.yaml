@@ -1,11 +1,37 @@
 id: task.case.get
 version: 1.0.0
-description: TODO define capability contract for task.case.get.
+description: Retrieve a specific case by identifier.
 
-inputs: {}
+inputs:
+  case_id:
+    type: string
+    required: true
+    description: Identifier of the case.
 
-outputs: {}
+outputs:
+  case:
+    type: object
+    required: true
+    description: Case object with all fields.
+  found:
+    type: boolean
+    required: true
+    description: Whether the case was found.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, lookup]
 
+
+  examples:
+    - summary: "Retrieve a specific case"
+      inputs:
+        case_id: "CASE-1"
+      outputs:
+        case: {id: "CASE-1", title: "Bug in login page", state: "open"}
+        found: true

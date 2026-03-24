@@ -1,11 +1,46 @@
 id: identity.permission.gate
 version: 1.0.0
-description: TODO define capability contract for identity.permission.gate.
+description: Gate an action by checking whether a principal holds the required permission.
 
-inputs: {}
+inputs:
+  principal_id:
+    type: string
+    required: true
+    description: Identifier of the principal requesting access.
+  permission:
+    type: string
+    required: true
+    description: Permission string to check (e.g. resource:action).
+  context:
+    type: object
+    required: false
+    description: Additional context such as resource metadata or environment.
 
-outputs: {}
+outputs:
+  allowed:
+    type: boolean
+    required: true
+    description: Whether the action is allowed.
+  reason:
+    type: string
+    required: true
+    description: Explanation for the gate decision.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, permission, gate, access-control]
 
+
+  examples:
+    - summary: "Check whether a principal is allowed an action"
+      inputs:
+        principal_id: "alice"
+        permission: "resource:read"
+      outputs:
+        allowed: true
+        reason: "Permission granted via admin role."

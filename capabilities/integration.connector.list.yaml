@@ -1,11 +1,41 @@
 id: integration.connector.list
 version: 1.0.0
-description: TODO define capability contract for integration.connector.list.
+description: List available connectors, optionally filtered by type or status.
 
-inputs: {}
+inputs:
+  type_filter:
+    type: string
+    required: false
+    description: Filter connectors by type (e.g. rest, database, queue).
+  status_filter:
+    type: string
+    required: false
+    description: Filter by status (e.g. active, inactive).
 
-outputs: {}
+outputs:
+  connectors:
+    type: array
+    required: true
+    description: List of connector metadata objects.
+  total:
+    type: number
+    required: true
+    description: Total connectors returned.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, connector, listing]
 
+
+  examples:
+    - summary: "List available connectors"
+      inputs:
+        status_filter: "active"
+      outputs:
+        connectors: [{id: "crm-rest", status: "active"}]
+        total: 1

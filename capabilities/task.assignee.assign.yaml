@@ -1,11 +1,46 @@
 id: task.assignee.assign
 version: 1.0.0
-description: TODO define capability contract for task.assignee.assign.
+description: Assign a task to a user or team.
 
-inputs: {}
+inputs:
+  task_id:
+    type: string
+    required: true
+    description: Identifier of the task.
+  assignee_id:
+    type: string
+    required: true
+    description: Identifier of the user or team to assign.
 
-outputs: {}
+outputs:
+  assigned:
+    type: boolean
+    required: true
+    description: Whether the assignment was recorded.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Assigns a task in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, assignment]
 
+
+  examples:
+    - summary: "Assign a task to a user"
+      inputs:
+        task_id: "CASE-1"
+        assignee_id: "alice"
+      outputs:
+        assigned: true

@@ -1,11 +1,45 @@
 id: policy.constraint.gate
 version: 1.0.0
-description: TODO define capability contract for policy.constraint.gate.
+description: Evaluate a payload against a policy gate and return a pass/block decision with rationale.
 
-inputs: {}
+inputs:
+  payload:
+    type: object
+    required: true
+    description: The data payload to evaluate against the gate.
+  gate:
+    type: object
+    required: true
+    description: Gate definition with rules (required_keys, forbidden_keys, max_size) and action (block or warn).
 
-outputs: {}
+outputs:
+  decision:
+    type: string
+    required: true
+    description: "Gate decision: pass or block."
+  violations:
+    type: array
+    required: true
+    description: List of rule violations found.
+  rationale:
+    type: string
+    required: true
+    description: Human-readable justification for the decision.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [policy, gate, constraint, governance]
 
+
+  examples:
+    - summary: "Gate an action based on policy rules"
+      inputs:
+        payload: {title: "Report"}
+        gate: {rules: {required_keys: ["title"]}, action: "block"}
+      outputs:
+        allowed: true

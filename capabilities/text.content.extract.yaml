@@ -22,3 +22,10 @@ properties:
 metadata:
   status: stable
   tags: [text, extraction, preprocessing]
+  examples:
+    - summary: "Extract clean text from HTML"
+      inputs:
+        text: "<html><body><h1>Title</h1><p>Content.</p></body></html>"
+      outputs:
+        text: "Title
+Content."

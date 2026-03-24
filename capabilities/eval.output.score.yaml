@@ -73,3 +73,5 @@ metadata:
             description: "Are claims supported by sources?"
             weight: 1.5
       expected_score_range: [0.5, 1.0]
+
+  status: experimental

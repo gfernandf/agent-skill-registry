@@ -67,3 +67,5 @@ metadata:
         priority: high
       agent: summarizer
       expected_accepted: true
+
+  status: experimental

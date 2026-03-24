@@ -1,11 +1,51 @@
 id: identity.decision.justify
 version: 1.0.0
-description: TODO define capability contract for identity.decision.justify.
+description: Justify an identity or access-related decision by referencing policies and evidence.
 
-inputs: {}
+inputs:
+  decision:
+    type: string
+    required: true
+    description: The decision made (e.g. granted, denied, escalated).
+  subject:
+    type: object
+    required: true
+    description: The principal or resource the decision applies to.
+  policies:
+    type: array
+    required: false
+    description: Policies considered in making the decision.
 
-outputs: {}
+outputs:
+  justification:
+    type: string
+    required: true
+    description: Human-readable justification.
+  applicable_policies:
+    type: array
+    required: true
+    description: Policies that directly support the decision.
+  confidence:
+    type: number
+    required: true
+    description: Confidence in the justification (0.0–1.0).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, decision, justification, access]
 
+
+  examples:
+    - summary: "Justify an identity-related decision"
+      inputs:
+        decision: "granted"
+        subject: {id: "alice"}
+        policies: []
+      outputs:
+        justification: "Access granted based on role."
+        confidence: 0.9

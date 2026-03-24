@@ -1,11 +1,37 @@
 id: identity.role.list
 version: 1.0.0
-description: TODO define capability contract for identity.role.list.
+description: List all available roles, optionally filtered by scope or tag.
 
-inputs: {}
+inputs:
+  scope:
+    type: string
+    required: false
+    description: Optional scope filter (e.g. organization, project).
 
-outputs: {}
+outputs:
+  roles:
+    type: array
+    required: true
+    description: List of role objects.
+  total:
+    type: number
+    required: true
+    description: Total number of roles returned.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, role, listing]
 
+
+  examples:
+    - summary: "List available roles"
+      inputs:
+        scope: "all"
+      outputs:
+        roles: [{id: "admin"}, {id: "editor"}]
+        total: 2

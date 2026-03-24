@@ -1,11 +1,42 @@
 id: task.case.update
 version: 1.0.0
-description: TODO define capability contract for task.case.update.
+description: Update fields of an existing case.
 
-inputs: {}
+inputs:
+  case_id:
+    type: string
+    required: true
+    description: Identifier of the case to update.
+  fields:
+    type: object
+    required: true
+    description: Fields to update with new values.
 
-outputs: {}
+outputs:
+  updated:
+    type: boolean
+    required: true
+    description: Whether the case was updated.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Updates a case in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, update]
 
+
+  examples:
+    - summary: "Update a case's fields"
+      inputs:
+        case_id: "CASE-1"
+        fields: {priority: "critical"}
+      outputs:
+        updated: true

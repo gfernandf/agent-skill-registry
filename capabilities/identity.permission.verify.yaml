@@ -1,11 +1,46 @@
 id: identity.permission.verify
 version: 1.0.0
-description: TODO define capability contract for identity.permission.verify.
+description: Verify that a principal holds a specific permission and return evidence.
 
-inputs: {}
+inputs:
+  principal_id:
+    type: string
+    required: true
+    description: Identifier of the principal.
+  permission:
+    type: string
+    required: true
+    description: Permission to verify.
 
-outputs: {}
+outputs:
+  verified:
+    type: boolean
+    required: true
+    description: Whether the principal holds the permission.
+  source:
+    type: string
+    required: true
+    description: How the permission was obtained (direct, role-inherited, group).
+  evidence:
+    type: object
+    required: false
+    description: Supporting evidence such as the role or group that grants the permission.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, permission, verification, audit]
 
+
+  examples:
+    - summary: "Verify a principal holds a permission"
+      inputs:
+        principal_id: "alice"
+        permission: "resource:read"
+      outputs:
+        verified: true
+        source: "role-inherited"

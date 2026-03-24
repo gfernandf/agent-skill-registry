@@ -51,3 +51,5 @@ metadata:
     - query: "Summarize this quarterly earnings report"
       agents: ["summarizer", "analyst", "translator"]
       expected_route: summarizer
+
+  status: experimental

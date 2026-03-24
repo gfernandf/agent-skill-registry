@@ -1,11 +1,51 @@
 id: task.case.create
 version: 1.0.0
-description: TODO define capability contract for task.case.create.
+description: Create a new case or ticket.
 
-inputs: {}
+inputs:
+  title:
+    type: string
+    required: true
+    description: Title of the case.
+  description:
+    type: string
+    required: false
+    description: Detailed description.
+  priority:
+    type: string
+    required: false
+    description: Priority level (low, medium, high, critical).
 
-outputs: {}
+outputs:
+  case_id:
+    type: string
+    required: true
+    description: Identifier of the created case.
+  created:
+    type: boolean
+    required: true
+    description: Whether the case was created.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Creates a case in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, create]
 
+
+  examples:
+    - summary: "Create a new case"
+      inputs:
+        title: "Bug in login page"
+        priority: "high"
+      outputs:
+        case_id: "CASE-1"
+        created: true

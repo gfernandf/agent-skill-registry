@@ -27,3 +27,16 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [operations, monitoring]
+  examples:
+    - summary: "Estimate cost for a plan"
+      inputs:
+        plan: {steps: [{id: "s1"}, {id: "s2"}]}
+        limits: {max_cost: 1.0}
+      outputs:
+        estimated_cost: 0.35
+        within_budget: true

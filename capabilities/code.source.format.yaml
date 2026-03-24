@@ -19,3 +19,18 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [code, developer-tools, formatting]
+  examples:
+    - summary: "Format Python code"
+      inputs:
+        code: "def foo( x,y ):
+  return x+y"
+        language: "python"
+      outputs:
+        code: "def foo(x, y):
+    return x + y
+"

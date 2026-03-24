@@ -1,11 +1,46 @@
 id: task.event.acknowledge
 version: 1.0.0
-description: TODO define capability contract for task.event.acknowledge.
+description: Acknowledge receipt of a task-related event.
 
-inputs: {}
+inputs:
+  event_id:
+    type: string
+    required: true
+    description: Identifier of the event.
+  handler:
+    type: string
+    required: false
+    description: Handler acknowledging the event.
 
-outputs: {}
+outputs:
+  acknowledged:
+    type: boolean
+    required: true
+    description: Whether the event was acknowledged.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Acknowledges a task event locally.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, event, acknowledgement]
 
+
+  examples:
+    - summary: "Acknowledge a task event"
+      inputs:
+        event_id: "task-evt-001"
+        handler: "escalation-bot"
+      outputs:
+        acknowledged: true

@@ -23,3 +23,15 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [text, nlp, translation]
+  examples:
+    - summary: "Translate text to another language"
+      inputs:
+        text: "Hello world"
+        target_language: "es"
+      outputs:
+        text: "Hola mundo"

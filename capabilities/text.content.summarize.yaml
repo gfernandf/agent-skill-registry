@@ -22,3 +22,13 @@ cognitive_hints:
   produces:
     summary:
       type: Summary
+
+metadata:
+  status: experimental
+  tags: [text, nlp, summarization]
+  examples:
+    - summary: "Summarize a passage of text"
+      inputs:
+        text: "Machine learning is a subset of AI that enables systems to learn from data..."
+      outputs:
+        summary: "ML lets systems learn from data without explicit programming."

@@ -43,3 +43,17 @@ properties:
   deterministic: true
   side_effects: true
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [email, messaging, sending]
+  examples:
+    - summary: "Send an email message"
+      inputs:
+        to: "bob@example.com"
+        subject: "Follow-up"
+        body: "Please review the proposal."
+      outputs:
+        sent: true
+        message_id: "msg-001"

@@ -32,3 +32,15 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [data, processing, deduplication]
+  examples:
+    - summary: "Remove duplicate records by key"
+      inputs:
+        records: [{id: 1, name: "Alice"}, {id: 1, name: "Alice"}]
+        key_fields: ["id"]
+      outputs:
+        records: [{id: 1, name: "Alice"}]

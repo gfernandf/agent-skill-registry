@@ -23,3 +23,16 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [policy, governance, validation]
+  examples:
+    - summary: "Validate payload against policy constraints"
+      inputs:
+        payload: {title: "Report"}
+        constraint: {required_keys: ["title"]}
+      outputs:
+        valid: true
+        violations: []

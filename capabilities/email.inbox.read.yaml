@@ -15,3 +15,14 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [email, messaging, read, input]
+  examples:
+    - summary: "Read messages from an inbox"
+      inputs:
+        mailbox: "inbox"
+      outputs:
+        messages: [{from: "alice@example.com", subject: "Meeting notes"}]

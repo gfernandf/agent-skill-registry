@@ -1,11 +1,51 @@
 id: integration.record.compare
 version: 1.0.0
-description: TODO define capability contract for integration.record.compare.
+description: Compare records from two systems and report differences.
 
-inputs: {}
+inputs:
+  record_a:
+    type: object
+    required: true
+    description: Record from system A.
+  record_b:
+    type: object
+    required: true
+    description: Record from system B.
+  key_fields:
+    type: array
+    required: false
+    description: Fields to use as identity keys. Defaults to all shared fields.
 
-outputs: {}
+outputs:
+  match:
+    type: boolean
+    required: true
+    description: Whether the records match on compared fields.
+  differences:
+    type: array
+    required: true
+    description: List of field-level differences.
+  similarity:
+    type: number
+    required: true
+    description: Similarity ratio (0.0–1.0).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, record, comparison, reconciliation]
 
+
+  examples:
+    - summary: "Compare records across systems"
+      inputs:
+        record_a: {id: "1", name: "Alice"}
+        record_b: {id: "1", name: "Alicia"}
+        key_fields: ["id"]
+      outputs:
+        match: true
+        discrepancies: [{field: "name", a: "Alice", b: "Alicia"}]

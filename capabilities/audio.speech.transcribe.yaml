@@ -15,3 +15,14 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [audio, speech, transcription, speech-to-text]
+  examples:
+    - summary: "Transcribe a short speech clip"
+      inputs:
+        audio: "(binary audio data)"
+      outputs:
+        text: "Hello, welcome to the meeting."

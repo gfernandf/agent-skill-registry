@@ -1,11 +1,50 @@
 id: integration.connector.sync
 version: 1.0.0
-description: TODO define capability contract for integration.connector.sync.
+description: Trigger a synchronisation operation on a connector.
 
-inputs: {}
+inputs:
+  connector_id:
+    type: string
+    required: true
+    description: Identifier of the connector to sync.
+  options:
+    type: object
+    required: false
+    description: Sync options such as full_sync or incremental.
 
-outputs: {}
+outputs:
+  synced:
+    type: boolean
+    required: true
+    description: Whether the sync completed.
+  records_processed:
+    type: number
+    required: true
+    description: Number of records processed during the sync.
+  timestamp:
+    type: string
+    required: true
+    description: ISO-8601 timestamp of the sync completion.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: elevated
+  requires_confirmation: false
+  description: Triggers a data sync that may create or update records in external systems.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [integration, connector, sync]
 
+
+  examples:
+    - summary: "Trigger connector synchronization"
+      inputs:
+        connector_id: "crm-rest"
+      outputs:
+        synced: true
+        records_processed: 42

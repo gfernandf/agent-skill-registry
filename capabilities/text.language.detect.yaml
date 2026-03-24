@@ -19,3 +19,15 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+
+metadata:
+  status: experimental
+  tags: [text, nlp, detection]
+  examples:
+    - summary: "Detect the language of a text"
+      inputs:
+        text: "Bonjour le monde"
+      outputs:
+        language: "fr"
+        confidence: 0.98

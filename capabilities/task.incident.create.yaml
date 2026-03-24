@@ -1,11 +1,56 @@
 id: task.incident.create
 version: 1.0.0
-description: TODO define capability contract for task.incident.create.
+description: Create a new incident ticket with severity and affected system information.
 
-inputs: {}
+inputs:
+  title:
+    type: string
+    required: true
+    description: Incident title.
+  severity:
+    type: string
+    required: true
+    description: Severity level (low, medium, high, critical).
+  affected_system:
+    type: string
+    required: false
+    description: Name or ID of the affected system.
+  description:
+    type: string
+    required: false
+    description: Detailed incident description.
 
-outputs: {}
+outputs:
+  incident_id:
+    type: string
+    required: true
+    description: Identifier of the created incident.
+  created:
+    type: boolean
+    required: true
+    description: Whether the incident was created.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+  description: Creates an incident in the in-memory store.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, incident, create]
 
+
+  examples:
+    - summary: "Create a new incident"
+      inputs:
+        title: "API 503 errors"
+        severity: "high"
+        affected_system: "api-gateway"
+      outputs:
+        incident_id: "INC-1"
+        created: true

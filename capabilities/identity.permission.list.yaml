@@ -1,11 +1,41 @@
 id: identity.permission.list
 version: 1.0.0
-description: TODO define capability contract for identity.permission.list.
+description: List permissions granted to a principal, optionally filtered by resource.
 
-inputs: {}
+inputs:
+  principal_id:
+    type: string
+    required: true
+    description: Identifier of the principal whose permissions to list.
+  resource_filter:
+    type: string
+    required: false
+    description: Optional resource prefix to filter permissions.
 
-outputs: {}
+outputs:
+  permissions:
+    type: array
+    required: true
+    description: List of permission objects.
+  total:
+    type: number
+    required: true
+    description: Total number of permissions returned.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, permission, listing]
 
+
+  examples:
+    - summary: "List permissions for a principal"
+      inputs:
+        principal_id: "alice"
+      outputs:
+        permissions: [{id: "resource:read"}]
+        total: 1

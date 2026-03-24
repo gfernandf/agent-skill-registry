@@ -1,11 +1,46 @@
 id: ops.event.monitor
 version: 1.0.0
-description: TODO define capability contract for ops.event.monitor.
+description: Monitor a stream of operational events and return status with alerts for threshold violations.
 
-inputs: {}
+inputs:
+  events:
+    type: array
+    required: true
+    description: List of operational events to monitor, each with type, severity, and timestamp.
+  thresholds:
+    type: object
+    required: false
+    description: Alert thresholds such as max_error_count, max_latency_ms.
 
-outputs: {}
+outputs:
+  status:
+    type: string
+    required: true
+    description: "Overall status: ok, warning, or critical."
+  alerts:
+    type: array
+    required: true
+    description: List of threshold violations detected.
+  event_summary:
+    type: object
+    required: true
+    description: Summary counts by event type and severity.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [ops, event, monitoring, alerting]
 
+
+  examples:
+    - summary: "Monitor operational events against thresholds"
+      inputs:
+        events: [{type: "error", severity: "critical"}]
+        thresholds: {max_error_count: 0}
+      outputs:
+        status: "alert"
+        alerts: [{rule: "max_error_count", actual: 1}]

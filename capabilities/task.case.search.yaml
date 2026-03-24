@@ -1,11 +1,41 @@
 id: task.case.search
 version: 1.0.0
-description: TODO define capability contract for task.case.search.
+description: Search cases by keyword or criteria.
 
-inputs: {}
+inputs:
+  query:
+    type: string
+    required: true
+    description: Search query string.
+  filters:
+    type: object
+    required: false
+    description: Additional filters (status, priority, date_range).
 
-outputs: {}
+outputs:
+  results:
+    type: array
+    required: true
+    description: Matching case objects.
+  total:
+    type: number
+    required: true
+    description: Total matching cases.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [task, case, search]
 
+
+  examples:
+    - summary: "Search cases by keyword"
+      inputs:
+        query: "login"
+      outputs:
+        results: [{id: "CASE-1", title: "Bug in login page"}]
+        total: 1

@@ -1,11 +1,47 @@
 id: identity.role.assign
 version: 1.0.0
-description: TODO define capability contract for identity.role.assign.
+description: Assign a role to a principal.
 
-inputs: {}
+inputs:
+  principal_id:
+    type: string
+    required: true
+    description: Identifier of the principal receiving the role.
+  role_id:
+    type: string
+    required: true
+    description: Identifier of the role to assign.
 
-outputs: {}
+outputs:
+  assigned:
+    type: boolean
+    required: true
+    description: Whether the role was successfully assigned.
+  effective_permissions:
+    type: array
+    required: false
+    description: Permissions now effective through this role.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: elevated
+  requires_confirmation: true
+  description: Assigns a role which may grant new permissions to a principal.
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, role, assignment]
 
+
+  examples:
+    - summary: "Assign a role to a principal"
+      inputs:
+        principal_id: "alice"
+        role_id: "editor"
+      outputs:
+        assigned: true
+        effective_permissions: ["resource:read", "resource:write"]

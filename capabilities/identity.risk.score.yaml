@@ -1,11 +1,47 @@
 id: identity.risk.score
 version: 1.0.0
-description: TODO define capability contract for identity.risk.score.
+description: Score the identity risk of a principal based on behaviour, role scope, and anomaly indicators.
 
-inputs: {}
+inputs:
+  principal_id:
+    type: string
+    required: true
+    description: Identifier of the principal to score.
+  signals:
+    type: object
+    required: false
+    description: Behavioural signals such as login_failures, unusual_hours, geo_anomaly.
 
-outputs: {}
+outputs:
+  risk_score:
+    type: number
+    required: true
+    description: Risk score from 0.0 (safe) to 1.0 (critical).
+  factors:
+    type: array
+    required: true
+    description: Factors that contributed to the score.
+  safe:
+    type: boolean
+    required: true
+    description: Whether the risk is below the acceptable threshold.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
-  status: draft
+  status: experimental
+  tags: [identity, risk, scoring, anomaly]
 
+
+  examples:
+    - summary: "Score risk for an identity action"
+      inputs:
+        principal_id: "alice"
+        signals: {login_failures: 5}
+      outputs:
+        risk_score: 0.3
+        factors: ["high_login_failures"]
+        safe: true
