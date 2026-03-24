@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 106
+    "metadata_issues": 98
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -511,62 +511,6 @@
     },
     {
       "capability_id": "message.priority.classify",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.embedding.generate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.output.classify",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.output.generate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.output.sanitize",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.output.score",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.prompt.template",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.response.validate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "model.risk.score",
       "issues": [
         "missing_tags",
         "missing_examples"

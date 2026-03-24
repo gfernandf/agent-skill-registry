@@ -60,3 +60,11 @@ metadata:
     - decision-support
     - planning
     - option-generation
+  examples:
+    - goal: "Choose a cloud provider for our ML training workloads"
+      constraints:
+        budget_monthly: 5000
+        region: eu-west
+      expected_options_count: 3
+    - planning
+    - option-generation

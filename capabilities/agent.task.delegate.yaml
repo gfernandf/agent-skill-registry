@@ -1,20 +1,48 @@
 id: agent.task.delegate
 version: 1.0.0
-description: Delegate a task to another agent or subsystem.
+status: experimental
+description: >
+  Delegate a task to another agent or subsystem for execution. The caller
+  provides a structured task description and a target agent identifier.
+  Returns acceptance status and an optional delegation reference for
+  tracking. Requires elevated trust and user confirmation before dispatch.
+
 inputs:
   task:
     type: object
     required: true
-    description: Task to delegate.
+    description: >
+      Structured task object with fields: description (string, required),
+      priority (string: low|medium|high, optional), payload (object, optional
+      — arbitrary data the target agent needs).
   agent:
     type: string
     required: true
-    description: Target agent identifier.
+    description: >
+      Identifier of the target agent or subsystem to delegate to.
+      Must match an entry in allowed_targets or approved connectors.
+  timeout_seconds:
+    type: number
+    required: false
+    description: >
+      Maximum time to wait for acceptance acknowledgement. Defaults to 30.
+
 outputs:
   accepted:
     type: boolean
     required: true
-    description: Whether delegation was accepted.
+    description: Whether the target agent accepted the delegation.
+  delegation_id:
+    type: string
+    required: false
+    description: >
+      Reference identifier for tracking the delegated task. Returned only
+      when the target agent supports async tracking.
+  reason:
+    type: string
+    required: false
+    description: >
+      Explanation when delegation is rejected (accepted=false).
 
 safety:
   trust_level: elevated
@@ -27,3 +55,15 @@ properties:
   deterministic: false
   side_effects: true
   idempotent: true
+
+metadata:
+  tags:
+    - delegation
+    - orchestration
+    - agent-control
+  examples:
+    - task:
+        description: "Summarize the Q3 financial report"
+        priority: high
+      agent: summarizer
+      expected_accepted: true

@@ -2,27 +2,56 @@
   {
     "id": "agent.input.route",
     "version": "1.0.0",
-    "description": "Route an input to the appropriate handler or agent.",
+    "description": "Route an incoming request to the most appropriate handler, agent, or capability based on the input content and available targets. Returns the selected route identifier and an optional confidence score.\n",
     "file": "capabilities/agent.input.route.yaml",
     "inputs": {
-      "input": {
-        "type": "object",
+      "query": {
+        "type": "string",
         "required": true,
-        "description": "Input to route."
+        "description": "The incoming request text or question to be routed.\n"
+      },
+      "agents": {
+        "type": "array",
+        "required": false,
+        "description": "List of available agent or handler identifiers. When provided, the router restricts its selection to this set.\n"
+      },
+      "routing_strategy": {
+        "type": "string",
+        "required": false,
+        "description": "Routing strategy hint: \"keyword\", \"semantic\", or \"round-robin\". Defaults to \"keyword\".\n"
       }
     },
     "outputs": {
       "route": {
         "type": "string",
         "required": true,
-        "description": "Selected route or handler."
+        "description": "Selected handler or agent identifier."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Confidence score (0.0–1.0) for the selected route. Omitted when the baseline deterministic router is used.\n"
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "routing",
+        "orchestration",
+        "agent-control"
+      ],
       "category": null,
       "status": "unspecified",
-      "examples": []
+      "examples": [
+        {
+          "query": "Summarize this quarterly earnings report",
+          "agents": [
+            "summarizer",
+            "analyst",
+            "translator"
+          ],
+          "expected_route": "summarizer"
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -77,7 +106,18 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "goal": "Choose a cloud provider for our ML training workloads",
+          "constraints": {
+            "budget_monthly": 5000,
+            "region": "eu-west"
+          },
+          "expected_options_count": 3
+        },
+        "planning",
+        "option-generation"
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -166,27 +206,66 @@
   {
     "id": "agent.plan.generate",
     "version": "1.0.0",
-    "description": "Generate a plan for solving a task or objective.",
+    "description": "Generate a structured execution plan for solving a task or objective. The plan contains ordered steps, each referencing a capability or action, along with assumptions and risk notes. Used as the planning backbone for skill orchestration and agent workflows.\n",
     "file": "capabilities/agent.plan.generate.yaml",
     "inputs": {
       "objective": {
         "type": "string",
         "required": true,
-        "description": "Objective to solve."
+        "description": "High-level goal or task description to plan for.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, constraints, or prior analysis that the planner should take into account.\n"
+      },
+      "max_steps": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of steps in the generated plan. Defaults to 10.\n"
       }
     },
     "outputs": {
       "plan": {
         "type": "object",
         "required": true,
-        "description": "Generated plan."
+        "description": "Structured plan object with fields: objective (string), steps (array of {id, action, description, depends_on}), assumptions (array of strings), risks (array of strings).\n"
+      },
+      "step_count": {
+        "type": "number",
+        "required": false,
+        "description": "Number of steps in the generated plan."
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "planning",
+        "orchestration",
+        "workflow"
+      ],
       "category": null,
       "status": "unspecified",
-      "examples": []
+      "examples": [
+        {
+          "objective": "Build a web scraper that extracts product prices",
+          "expected_plan": {
+            "steps": [
+              {
+                "action": "web.page.scrape",
+                "description": "Fetch target product page HTML"
+              },
+              {
+                "action": "text.content.extract",
+                "description": "Extract price data from HTML content"
+              },
+              {
+                "action": "data.schema.validate",
+                "description": "Validate extracted price records"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -197,32 +276,60 @@
   {
     "id": "agent.task.delegate",
     "version": "1.0.0",
-    "description": "Delegate a task to another agent or subsystem.",
+    "description": "Delegate a task to another agent or subsystem for execution. The caller provides a structured task description and a target agent identifier. Returns acceptance status and an optional delegation reference for tracking. Requires elevated trust and user confirmation before dispatch.\n",
     "file": "capabilities/agent.task.delegate.yaml",
     "inputs": {
       "task": {
         "type": "object",
         "required": true,
-        "description": "Task to delegate."
+        "description": "Structured task object with fields: description (string, required), priority (string: low|medium|high, optional), payload (object, optional — arbitrary data the target agent needs).\n"
       },
       "agent": {
         "type": "string",
         "required": true,
-        "description": "Target agent identifier."
+        "description": "Identifier of the target agent or subsystem to delegate to. Must match an entry in allowed_targets or approved connectors.\n"
+      },
+      "timeout_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum time to wait for acceptance acknowledgement. Defaults to 30.\n"
       }
     },
     "outputs": {
       "accepted": {
         "type": "boolean",
         "required": true,
-        "description": "Whether delegation was accepted."
+        "description": "Whether the target agent accepted the delegation."
+      },
+      "delegation_id": {
+        "type": "string",
+        "required": false,
+        "description": "Reference identifier for tracking the delegated task. Returned only when the target agent supports async tracking.\n"
+      },
+      "reason": {
+        "type": "string",
+        "required": false,
+        "description": "Explanation when delegation is rejected (accepted=false).\n"
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "delegation",
+        "orchestration",
+        "agent-control"
+      ],
       "category": null,
       "status": "unspecified",
-      "examples": []
+      "examples": [
+        {
+          "task": {
+            "description": "Summarize the Q3 financial report",
+            "priority": "high"
+          },
+          "agent": "summarizer",
+          "expected_accepted": true
+        }
+      ]
     },
     "properties": {
       "deterministic": false,

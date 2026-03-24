@@ -3,8 +3,8 @@ version: 0.1
 capabilities:
 
   - id: agent.task.delegate
-    status: draft
-    description: Delegate a task to another agent or subsystem.
+    status: experimental
+    description: Delegate a task to another agent or subsystem for execution with elevated trust and confirmation.
 
   - id: agent.option.generate
     status: experimental
@@ -17,12 +17,12 @@ capabilities:
 
 
   - id: agent.plan.generate
-    status: draft
-    description: Generate a plan for solving a task or objective.
+    status: experimental
+    description: Generate a structured execution plan with ordered steps, assumptions, and risk notes for a given objective.
 
   - id: agent.input.route
-    status: draft
-    description: Route an input to the appropriate handler or agent.
+    status: experimental
+    description: Route an incoming request to the most appropriate handler or agent based on content and available targets.
 
   - id: analysis.risk.extract
     status: experimental

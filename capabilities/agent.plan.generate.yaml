@@ -1,17 +1,60 @@
 id: agent.plan.generate
 version: 1.0.0
-description: Generate a plan for solving a task or objective.
+status: experimental
+description: >
+  Generate a structured execution plan for solving a task or objective.
+  The plan contains ordered steps, each referencing a capability or action,
+  along with assumptions and risk notes. Used as the planning backbone for
+  skill orchestration and agent workflows.
+
 inputs:
   objective:
     type: string
     required: true
-    description: Objective to solve.
+    description: >
+      High-level goal or task description to plan for.
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, constraints, or prior analysis that the
+      planner should take into account.
+  max_steps:
+    type: number
+    required: false
+    description: >
+      Maximum number of steps in the generated plan. Defaults to 10.
+
 outputs:
   plan:
     type: object
     required: true
-    description: Generated plan.
+    description: >
+      Structured plan object with fields: objective (string),
+      steps (array of {id, action, description, depends_on}),
+      assumptions (array of strings), risks (array of strings).
+  step_count:
+    type: number
+    required: false
+    description: Number of steps in the generated plan.
+
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  tags:
+    - planning
+    - orchestration
+    - workflow
+  examples:
+    - objective: "Build a web scraper that extracts product prices"
+      expected_plan:
+        steps:
+          - action: "web.page.scrape"
+            description: "Fetch target product page HTML"
+          - action: "text.content.extract"
+            description: "Extract price data from HTML content"
+          - action: "data.schema.validate"
+            description: "Validate extracted price records"

@@ -314,7 +314,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 75,
+    "capabilities_with_nondefault_metadata": 78,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -503,8 +503,16 @@
         "count": 3
       },
       {
+        "id": "orchestration",
+        "count": 3
+      },
+      {
         "id": "preprocessing",
         "count": 3
+      },
+      {
+        "id": "agent-control",
+        "count": 2
       },
       {
         "id": "analysis",
@@ -519,7 +527,15 @@
         "count": 2
       },
       {
+        "id": "planning",
+        "count": 2
+      },
+      {
         "id": "quality",
+        "count": 2
+      },
+      {
+        "id": "routing",
         "count": 2
       },
       {
@@ -576,6 +592,10 @@
       },
       {
         "id": "decomposition",
+        "count": 1
+      },
+      {
+        "id": "delegation",
         "count": 1
       },
       {
@@ -659,10 +679,6 @@
         "count": 1
       },
       {
-        "id": "planning",
-        "count": 1
-      },
-      {
         "id": "prompt",
         "count": 1
       },
@@ -696,10 +712,6 @@
       },
       {
         "id": "risk-analysis",
-        "count": 1
-      },
-      {
-        "id": "routing",
         "count": 1
       },
       {
@@ -756,6 +768,10 @@
       },
       {
         "id": "verification",
+        "count": 1
+      },
+      {
+        "id": "workflow",
         "count": 1
       }
     ]

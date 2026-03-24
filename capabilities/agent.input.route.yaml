@@ -1,17 +1,53 @@
 id: agent.input.route
 version: 1.0.0
-description: Route an input to the appropriate handler or agent.
+status: experimental
+description: >
+  Route an incoming request to the most appropriate handler, agent, or
+  capability based on the input content and available targets. Returns the
+  selected route identifier and an optional confidence score.
+
 inputs:
-  input:
-    type: object
+  query:
+    type: string
     required: true
-    description: Input to route.
+    description: >
+      The incoming request text or question to be routed.
+  agents:
+    type: array
+    required: false
+    description: >
+      List of available agent or handler identifiers. When provided, the
+      router restricts its selection to this set.
+  routing_strategy:
+    type: string
+    required: false
+    description: >
+      Routing strategy hint: "keyword", "semantic", or "round-robin".
+      Defaults to "keyword".
+
 outputs:
   route:
     type: string
     required: true
-    description: Selected route or handler.
+    description: Selected handler or agent identifier.
+  confidence:
+    type: number
+    required: false
+    description: >
+      Confidence score (0.0–1.0) for the selected route. Omitted when the
+      baseline deterministic router is used.
+
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  tags:
+    - routing
+    - orchestration
+    - agent-control
+  examples:
+    - query: "Summarize this quarterly earnings report"
+      agents: ["summarizer", "analyst", "translator"]
+      expected_route: summarizer

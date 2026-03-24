@@ -48,3 +48,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   binding matrix, baseline notes, skills usage, boundary definitions.
 - `_index.yaml` updated with all model.* entries and status changes.
 - Catalog regenerated.
+
+#### agent.* domain review
+- **3 capabilities fleshed out** (from draft stubs to full contracts):
+  - `agent.input.route` — route requests to appropriate handler/agent.
+  - `agent.plan.generate` — generate structured execution plans.
+  - `agent.task.delegate` — delegate tasks with safety controls.
+- All 3 promoted from `draft` to `experimental`.
+- `tags` and `examples` metadata added to all 5 agent.* capabilities.
+- `docs/DOMAIN_AGENT.md`: full domain reference with capability inventory,
+  binding matrix, baseline notes, skills usage, boundary definitions.
+- `_index.yaml` updated with agent.* status changes and descriptions.
+- Catalog regenerated.
