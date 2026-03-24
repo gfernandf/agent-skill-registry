@@ -100,6 +100,7 @@ def main() -> int:
 
     capability_ids: list[str] = []
     capability_domains: Counter[str] = Counter()
+    capability_statuses: Counter[str] = Counter()
     skill_domains: Counter[str] = Counter()
     skill_channels: Counter[str] = Counter()
     capability_usage: Counter[str] = Counter()
@@ -135,6 +136,9 @@ def main() -> int:
         metadata = capability.get("metadata", {})
         if is_nondefault_metadata(metadata, DEFAULT_CAPABILITY_METADATA):
             capabilities_with_nondefault_metadata += 1
+
+        cap_status = metadata.get("status", "unspecified") if isinstance(metadata, dict) else "unspecified"
+        capability_statuses[cap_status] += 1
 
         if isinstance(metadata, dict):
             tags = metadata.get("tags", [])
@@ -220,6 +224,7 @@ def main() -> int:
         },
         "capabilities": {
             "by_domain": sort_counter_desc(capability_domains),
+            "by_status": sort_counter_desc(capability_statuses),
             "most_used": counter_to_ranked_list(capability_usage),
             "unused": unused_capabilities,
         },

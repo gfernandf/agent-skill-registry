@@ -104,43 +104,43 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Read content from a filesystem path.
 
   - id: identity.assignee.identify
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.assignee.identify.
 
   - id: identity.decision.justify
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.decision.justify.
 
   - id: identity.permission.gate
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.permission.gate.
 
   - id: identity.permission.get
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.permission.get.
 
   - id: identity.permission.list
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.permission.list.
 
   - id: identity.permission.verify
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.permission.verify.
 
   - id: identity.risk.score
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.risk.score.
 
   - id: identity.role.assign
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.role.assign.
 
   - id: identity.role.get
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.role.get.
 
   - id: identity.role.list
-    status: experimental
+    status: draft
     description: TODO define capability contract for identity.role.list.
 
   - id: image.caption.generate
@@ -152,55 +152,55 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Classify an image into one or more categories.
 
   - id: integration.connector.get
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.connector.get.
 
   - id: integration.connector.list
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.connector.list.
 
   - id: integration.connector.sync
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.connector.sync.
 
   - id: integration.event.acknowledge
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.event.acknowledge.
 
   - id: integration.mapping.transform
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.mapping.transform.
 
   - id: integration.mapping.validate
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.mapping.validate.
 
   - id: integration.record.compare
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.compare.
 
   - id: integration.record.create
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.create.
 
   - id: integration.record.delete
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.delete.
 
   - id: integration.record.reconcile
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.reconcile.
 
   - id: integration.record.update
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.update.
 
   - id: integration.record.upsert
-    status: experimental
+    status: draft
     description: TODO define capability contract for integration.record.upsert.
 
   - id: memory.record.store
-    status: experimental
+    status: draft
     description: TODO define capability contract for memory.record.store.
 
   - id: memory.entry.retrieve
@@ -212,11 +212,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Store content in a memory system.
 
   - id: memory.vector.search
-    status: experimental
+    status: draft
     description: TODO define capability contract for memory.vector.search.
 
   - id: message.priority.classify
-    status: experimental
+    status: draft
     description: TODO define capability contract for message.priority.classify.
 
   - id: message.notification.send
@@ -224,11 +224,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Send a generic message.
 
   - id: model.embedding.generate
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.embedding.generate.
 
   - id: model.output.classify
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.output.classify.
 
   - id: model.output.generate
@@ -236,15 +236,15 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Generate structured output from a model given an instruction, context items, and an output schema.
 
   - id: model.output.sanitize
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.output.sanitize.
 
   - id: model.output.score
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.output.score.
 
   - id: model.prompt.template
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.prompt.template.
 
   - id: model.response.validate
@@ -252,7 +252,7 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Validate a model-generated output for semantic coherence, evidence grounding, and structural completeness.
 
   - id: model.risk.score
-    status: experimental
+    status: draft
     description: TODO define capability contract for model.risk.score.
 
   - id: ops.budget.estimate
@@ -260,11 +260,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Estimate execution budget for a plan.
 
   - id: ops.event.acknowledge
-    status: experimental
+    status: draft
     description: TODO define capability contract for ops.event.acknowledge.
 
   - id: ops.event.monitor
-    status: experimental
+    status: draft
     description: TODO define capability contract for ops.event.monitor.
 
   - id: ops.trace.analyze
@@ -282,7 +282,7 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Read a PDF document and extract textual content.
 
   - id: policy.constraint.gate
-    status: experimental
+    status: draft
     description: TODO define capability contract for policy.constraint.gate.
 
   - id: policy.constraint.validate
@@ -290,15 +290,15 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Validate an output payload against an explicit constraint policy.
 
   - id: policy.decision.justify
-    status: experimental
+    status: draft
     description: TODO define capability contract for policy.decision.justify.
 
   - id: policy.risk.classify
-    status: experimental
+    status: draft
     description: TODO define capability contract for policy.risk.classify.
 
   - id: policy.risk.score
-    status: experimental
+    status: draft
     description: TODO define capability contract for policy.risk.score.
 
   - id: provenance.citation.generate
@@ -335,63 +335,63 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Filter rows in tabular data according to a condition.
 
   - id: task.approval.approve
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.approval.approve.
 
   - id: task.approval.reject
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.approval.reject.
 
   - id: task.assignee.assign
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.assignee.assign.
 
   - id: task.case.close
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.close.
 
   - id: task.case.create
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.create.
 
   - id: task.case.get
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.get.
 
   - id: task.case.list
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.list.
 
   - id: task.case.search
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.search.
 
   - id: task.case.update
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.case.update.
 
   - id: task.event.acknowledge
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.event.acknowledge.
 
   - id: task.incident.create
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.incident.create.
 
   - id: task.milestone.schedule
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.milestone.schedule.
 
   - id: task.priority.classify
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.priority.classify.
 
   - id: task.sla.monitor
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.sla.monitor.
 
   - id: task.state.transition
-    status: experimental
+    status: draft
     description: TODO define capability contract for task.state.transition.
 
   - id: text.content.classify

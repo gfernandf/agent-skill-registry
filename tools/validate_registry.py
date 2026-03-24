@@ -117,7 +117,7 @@ def validate_capability_id_against_vocab(
 # ----------------------------------------------------------------------
 
 
-ALLOWED_STATUS = {"stable", "experimental", "deprecated", "unspecified"}
+ALLOWED_STATUS = {"stable", "experimental", "draft", "deprecated", "unspecified"}
 
 ALLOWED_ROLES = {"procedure", "utility", "sidecar"}
 ALLOWED_INVOCATIONS = {"direct", "attach", "both"}
