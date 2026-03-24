@@ -61,6 +61,18 @@ outputs:
     description: >
       Brief note on the decomposition rationale and any trade-offs made.
 
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Context
+  produces:
+    components:
+      type: Entity
+    gaps:
+      type: Risk
+    overlaps:
+      type: Risk
+
 properties:
   deterministic: false
   side_effects: false
@@ -72,3 +84,16 @@ metadata:
     - analysis
     - decomposition
     - structuring
+  examples:
+    - summary: Decompose cloud migration project by phases
+      inputs:
+        problem: "Migrate on-premise ERP to AWS"
+        strategy: phases
+      outputs:
+        components:
+          - id: c1
+            label: "Assessment & inventory"
+            analysis_order: 1
+          - id: c2
+            label: "Architecture design"
+            analysis_order: 2

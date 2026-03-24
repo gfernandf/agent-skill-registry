@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 90
+    "metadata_issues": 87
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -248,25 +248,6 @@
     },
     {
       "capability_id": "email.message.send",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "eval.option.analyze",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "eval.option.score",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "eval.output.score",
       "issues": [
         "missing_tags",
         "missing_examples"

@@ -402,12 +402,51 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Decompose cloud migration project by phases",
+          "inputs": {
+            "problem": "Migrate on-premise ERP to AWS",
+            "strategy": "phases"
+          },
+          "outputs": {
+            "components": [
+              {
+                "id": "c1",
+                "label": "Assessment & inventory",
+                "analysis_order": 1
+              },
+              {
+                "id": "c2",
+                "label": "Architecture design",
+                "analysis_order": 2
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "components": {
+          "type": "Entity"
+        },
+        "gaps": {
+          "type": "Risk"
+        },
+        "overlaps": {
+          "type": "Risk"
+        }
+      }
     }
   },
   {
@@ -467,7 +506,28 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Extract risks from a vendor-selection proposal",
+          "inputs": {
+            "target": {
+              "type": "proposal",
+              "title": "Vendor selection for cloud hosting",
+              "body": "We recommend Vendor A based on pricing alone."
+            },
+            "risk_scope": "strategic"
+          },
+          "outputs": {
+            "risks": [
+              {
+                "id": "r1",
+                "description": "Single-criterion selection ignores reliability and support.",
+                "severity_hint": "high"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -552,7 +612,48 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Cluster customer-feedback items into themes",
+          "inputs": {
+            "items": [
+              {
+                "id": "fb1",
+                "content": "The app crashes when I upload large files."
+              },
+              {
+                "id": "fb2",
+                "content": "I love the new dark mode feature."
+              },
+              {
+                "id": "fb3",
+                "content": "Upload fails for files over 10 MB."
+              }
+            ],
+            "hint_labels": [
+              "stability",
+              "ux"
+            ]
+          },
+          "outputs": {
+            "clusters": [
+              {
+                "theme": "stability",
+                "item_ids": [
+                  "fb1",
+                  "fb3"
+                ]
+              },
+              {
+                "theme": "ux",
+                "item_ids": [
+                  "fb2"
+                ]
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,

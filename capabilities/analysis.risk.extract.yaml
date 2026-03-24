@@ -92,3 +92,16 @@ metadata:
     - risk-analysis
     - assumptions
     - failure-modes
+  examples:
+    - summary: Extract risks from a vendor-selection proposal
+      inputs:
+        target:
+          type: proposal
+          title: "Vendor selection for cloud hosting"
+          body: "We recommend Vendor A based on pricing alone."
+        risk_scope: strategic
+      outputs:
+        risks:
+          - id: r1
+            description: "Single-criterion selection ignores reliability and support."
+            severity_hint: high
