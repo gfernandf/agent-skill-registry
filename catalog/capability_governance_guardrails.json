@@ -1,11 +1,11 @@
 {
   "summary": {
-    "capabilities_total": 111,
+    "capabilities_total": 114,
     "covered_domains": 27,
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 108
+    "metadata_issues": 111
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -145,12 +145,14 @@
       "capability_ids": [
         "text.content.extract",
         "text.entity.extract",
-        "text.keyword.extract"
+        "text.keyword.extract",
+        "text.response.extract"
       ],
       "noun_variants": [
         "content",
         "entity",
-        "keyword"
+        "keyword",
+        "response"
       ],
       "recommendation": "review-for-canonical-operation"
     }
@@ -811,7 +813,12 @@
     {
       "capability_id": "text.content.extract",
       "issues": [
-        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.generate",
+      "issues": [
         "missing_examples"
       ]
     },
@@ -831,7 +838,12 @@
     {
       "capability_id": "text.content.template",
       "issues": [
-        "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.content.transform",
+      "issues": [
         "missing_examples"
       ]
     },
@@ -860,6 +872,12 @@
       "capability_id": "text.language.detect",
       "issues": [
         "missing_tags",
+        "missing_examples"
+      ]
+    },
+    {
+      "capability_id": "text.response.extract",
+      "issues": [
         "missing_examples"
       ]
     },
