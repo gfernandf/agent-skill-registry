@@ -402,6 +402,10 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     status: draft
     description: Generate vector embeddings from text.
 
+  - id: text.content.generate
+    status: experimental
+    description: Generate new text from an instruction and optional context.
+
   - id: text.entity.extract
     status: draft
     description: Extract named entities from a text block.
@@ -419,9 +423,16 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Detect the language of a text.
 
   - id: text.content.merge
-    status: experimental
+    status: stable
     description: Merge multiple text items into a single consolidated text block. Accepts an array of items with text content and produces a single string with configurable separator. Deterministic, no LLM required.
 
+  - id: text.response.extract
+    status: experimental
+    description: Extract an answer to a question from a context passage.
+
+  - id: text.content.transform
+    status: experimental
+    description: Transform existing text applying a directive.
 
   - id: text.content.summarize
     status: draft

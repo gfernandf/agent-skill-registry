@@ -3043,15 +3043,75 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "extraction",
+        "preprocessing"
+      ],
       "category": null,
-      "status": "unspecified",
+      "status": "stable",
       "examples": []
     },
     "properties": {
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "text.content.generate",
+    "version": "1.0.0",
+    "description": "Generate new text from an instruction and optional context. Use when the goal is to produce original content (drafts, descriptions, paragraphs, emails, explanations) rather than transforming existing text. For condensing existing text use text.content.summarize; for modifying style/tone of existing text use text.content.rewrite.\n",
+    "file": "capabilities/text.content.generate.yaml",
+    "inputs": {
+      "instruction": {
+        "type": "string",
+        "required": true,
+        "description": "What to generate — the directive that guides content production (e.g. \"Write a product description for …\").\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Optional background information the generator can draw from. Not the text to transform (use rewrite/summarize for that).\n"
+      },
+      "max_length": {
+        "type": "integer",
+        "required": false,
+        "description": "Soft upper bound on output length in characters."
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The generated text."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "generation",
+        "llm"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -3096,7 +3156,7 @@
         "utility"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": []
     },
     "properties": {
@@ -3164,10 +3224,71 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "template",
+        "utility"
+      ],
       "category": null,
-      "status": "unspecified",
+      "status": "stable",
       "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    }
+  },
+  {
+    "id": "text.content.transform",
+    "version": "1.0.0",
+    "description": "Transform existing text applying a directive — change tone, simplify, expand, formalize, or adjust style while preserving the original meaning. For producing entirely new content use text.content.generate; for condensing use text.content.summarize.\n",
+    "file": "capabilities/text.content.transform.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The original text to transform."
+      },
+      "goal": {
+        "type": "string",
+        "required": true,
+        "description": "The transformation directive — what should change about the text (e.g. \"make it more formal\", \"simplify for a 10-year-old\", \"expand with examples\", \"change tone to friendly\").\n"
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The transformed text."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "transformation",
+        "style",
+        "llm"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -3307,6 +3428,63 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "text.response.extract",
+    "version": "1.0.0",
+    "description": "Extract an answer to a question from a context passage.  The response must be grounded in the provided context — the capability should not fabricate information beyond what the context contains.  For open-ended text production use text.content.generate; for condensing a passage use text.content.summarize.\n",
+    "file": "capabilities/text.response.extract.yaml",
+    "inputs": {
+      "question": {
+        "type": "string",
+        "required": true,
+        "description": "The question to answer."
+      },
+      "context": {
+        "type": "string",
+        "required": true,
+        "description": "The reference passage that contains the information needed to answer the question.\n"
+      }
+    },
+    "outputs": {
+      "answer": {
+        "type": "string",
+        "required": true,
+        "description": "The answer derived from the context."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Confidence score (0.0–1.0) that the answer is supported by the context."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "qa",
+        "extraction",
+        "llm"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "answer": {
+          "type": "Evidence"
+        }
+      }
     }
   },
   {

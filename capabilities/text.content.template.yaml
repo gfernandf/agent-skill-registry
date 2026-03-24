@@ -14,3 +14,12 @@ inputs:
 outputs:
   text:
     type: string
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: stable
+  tags: [text, template, utility]

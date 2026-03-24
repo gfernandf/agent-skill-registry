@@ -1,0 +1,44 @@
+id: text.content.transform
+version: 1.0.0
+description: >
+  Transform existing text applying a directive — change tone, simplify,
+  expand, formalize, or adjust style while preserving the original meaning.
+  For producing entirely new content use text.content.generate;
+  for condensing use text.content.summarize.
+
+inputs:
+  text:
+    type: string
+    required: true
+    description: The original text to transform.
+
+  goal:
+    type: string
+    required: true
+    description: >
+      The transformation directive — what should change about the text
+      (e.g. "make it more formal", "simplify for a 10-year-old",
+      "expand with examples", "change tone to friendly").
+
+outputs:
+  text:
+    type: string
+    required: true
+    description: The transformed text.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+  produces:
+    text:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [text, transformation, style, llm]

@@ -1,0 +1,51 @@
+id: text.content.generate
+version: 1.0.0
+description: >
+  Generate new text from an instruction and optional context.
+  Use when the goal is to produce original content (drafts, descriptions,
+  paragraphs, emails, explanations) rather than transforming existing text.
+  For condensing existing text use text.content.summarize; for modifying
+  style/tone of existing text use text.content.rewrite.
+
+inputs:
+  instruction:
+    type: string
+    required: true
+    description: >
+      What to generate — the directive that guides content production
+      (e.g. "Write a product description for …").
+
+  context:
+    type: string
+    required: false
+    description: >
+      Optional background information the generator can draw from.
+      Not the text to transform (use rewrite/summarize for that).
+
+  max_length:
+    type: integer
+    required: false
+    description: Soft upper bound on output length in characters.
+
+outputs:
+  text:
+    type: string
+    required: true
+    description: The generated text.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+  produces:
+    text:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [text, generation, llm]

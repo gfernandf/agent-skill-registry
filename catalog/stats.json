@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 111,
+    "capability_count": 114,
     "skill_count": 35,
     "domain_count": 27,
     "channel_count": 2
@@ -35,9 +35,9 @@
   "capabilities": {
     "by_domain": {
       "task": 15,
+      "text": 13,
       "integration": 12,
       "identity": 10,
-      "text": 10,
       "model": 8,
       "agent": 5,
       "ops": 5,
@@ -64,8 +64,9 @@
     },
     "by_status": {
       "draft": 52,
-      "unspecified": 45,
-      "experimental": 14
+      "unspecified": 43,
+      "experimental": 16,
+      "stable": 3
     },
     "most_used": [
       {
@@ -298,7 +299,10 @@
       "task.priority.classify",
       "task.sla.monitor",
       "task.state.transition",
+      "text.content.generate",
       "text.content.template",
+      "text.content.transform",
+      "text.response.extract",
       "video.frame.extract",
       "web.source.verify"
     ]
@@ -310,7 +314,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 66,
+    "capabilities_with_nondefault_metadata": 71,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -471,8 +475,20 @@
     ],
     "top_capability_tags": [
       {
+        "id": "text",
+        "count": 6
+      },
+      {
         "id": "decision-support",
         "count": 4
+      },
+      {
+        "id": "llm",
+        "count": 3
+      },
+      {
+        "id": "preprocessing",
+        "count": 3
       },
       {
         "id": "analysis",
@@ -487,7 +503,7 @@
         "count": 2
       },
       {
-        "id": "preprocessing",
+        "id": "extraction",
         "count": 2
       },
       {
@@ -496,6 +512,10 @@
       },
       {
         "id": "trace",
+        "count": 2
+      },
+      {
+        "id": "utility",
         "count": 2
       },
       {
@@ -520,6 +540,10 @@
       },
       {
         "id": "failure-modes",
+        "count": 1
+      },
+      {
+        "id": "generation",
         "count": 1
       },
       {
@@ -563,6 +587,10 @@
         "count": 1
       },
       {
+        "id": "qa",
+        "count": 1
+      },
+      {
         "id": "qualitative-analysis",
         "count": 1
       },
@@ -587,7 +615,11 @@
         "count": 1
       },
       {
-        "id": "text",
+        "id": "style",
+        "count": 1
+      },
+      {
+        "id": "template",
         "count": 1
       },
       {
@@ -595,7 +627,7 @@
         "count": 1
       },
       {
-        "id": "utility",
+        "id": "transformation",
         "count": 1
       },
       {

@@ -1,0 +1,49 @@
+id: text.response.extract
+version: 1.0.0
+description: >
+  Extract an answer to a question from a context passage.  The response
+  must be grounded in the provided context — the capability should not
+  fabricate information beyond what the context contains.  For open-ended
+  text production use text.content.generate; for condensing a passage
+  use text.content.summarize.
+
+inputs:
+  question:
+    type: string
+    required: true
+    description: The question to answer.
+
+  context:
+    type: string
+    required: true
+    description: >
+      The reference passage that contains the information needed to
+      answer the question.
+
+outputs:
+  answer:
+    type: string
+    required: true
+    description: The answer derived from the context.
+
+  confidence:
+    type: number
+    required: false
+    description: Confidence score (0.0–1.0) that the answer is supported by the context.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Context
+  produces:
+    answer:
+      type: Evidence
+
+metadata:
+  status: experimental
+  tags: [text, qa, extraction, llm]

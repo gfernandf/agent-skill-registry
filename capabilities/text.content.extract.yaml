@@ -18,3 +18,7 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: stable
+  tags: [text, extraction, preprocessing]
