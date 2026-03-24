@@ -1,10 +1,38 @@
 id: model.embedding.generate
 version: 1.0.0
-description: TODO define capability contract for model.embedding.generate.
+description: Generate a vector embedding for a text input using a model-level embedding service.
 
-inputs: {}
+inputs:
+  text:
+    type: string
+    required: true
+    description: The text to embed.
 
-outputs: {}
+  model:
+    type: string
+    required: false
+    description: "Embedding model identifier. Defaults to the service default (e.g. text-embedding-3-small)."
+
+  dimensions:
+    type: integer
+    required: false
+    description: Desired embedding dimensionality. Not all models support this.
+
+outputs:
+  embedding:
+    type: array
+    required: true
+    description: Numeric vector representing the text embedding.
+
+  model:
+    type: string
+    required: false
+    description: Model actually used to produce the embedding.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft

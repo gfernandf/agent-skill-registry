@@ -1787,29 +1787,98 @@
   {
     "id": "model.embedding.generate",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.embedding.generate.",
+    "description": "Generate a vector embedding for a text input using a model-level embedding service.",
     "file": "capabilities/model.embedding.generate.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The text to embed."
+      },
+      "model": {
+        "type": "string",
+        "required": false,
+        "description": "Embedding model identifier. Defaults to the service default (e.g. text-embedding-3-small)."
+      },
+      "dimensions": {
+        "type": "integer",
+        "required": false,
+        "description": "Desired embedding dimensionality. Not all models support this."
+      }
+    },
+    "outputs": {
+      "embedding": {
+        "type": "array",
+        "required": true,
+        "description": "Numeric vector representing the text embedding."
+      },
+      "model": {
+        "type": "string",
+        "required": false,
+        "description": "Model actually used to produce the embedding."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "model.output.classify",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.output.classify.",
+    "description": "Classify a model-generated output into one of the provided categories based on its content and structure.",
     "file": "capabilities/model.output.classify.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "The model-generated output to classify."
+      },
+      "categories": {
+        "type": "array",
+        "required": true,
+        "description": "List of candidate category labels (e.g. ['summary', 'analysis', 'code', 'list', 'error'])."
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Optional context describing the task that produced the output."
+      }
+    },
+    "outputs": {
+      "category": {
+        "type": "string",
+        "required": true,
+        "description": "The best-matching category label."
+      },
+      "confidence": {
+        "type": "number",
+        "required": true,
+        "description": "Confidence score between 0.0 and 1.0."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Brief explanation of why this category was chosen."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -1876,43 +1945,149 @@
   {
     "id": "model.output.sanitize",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.output.sanitize.",
+    "description": "Sanitize a model-generated output by removing or masking harmful content, PII, prompt leakage, and disallowed patterns.",
     "file": "capabilities/model.output.sanitize.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "The model-generated output to sanitize."
+      },
+      "policy": {
+        "type": "object",
+        "required": false,
+        "description": "Sanitization policy with toggles such as remove_pii, remove_harmful, remove_prompt_leakage. Defaults to all enabled."
+      }
+    },
+    "outputs": {
+      "sanitized_output": {
+        "type": "object",
+        "required": true,
+        "description": "The sanitized output with disallowed content removed or masked."
+      },
+      "removals": {
+        "type": "array",
+        "required": false,
+        "description": "List of removal actions taken, each with field, pattern, and action."
+      },
+      "clean": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the output required no sanitization (true = already clean)."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "model.output.score",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.output.score.",
+    "description": "Score a model-generated output on multiple quality dimensions such as relevance, fluency, completeness, and faithfulness.",
     "file": "capabilities/model.output.score.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "The model-generated output to score."
+      },
+      "instruction": {
+        "type": "string",
+        "required": true,
+        "description": "The original instruction that produced the output."
+      },
+      "reference": {
+        "type": "object",
+        "required": false,
+        "description": "Optional reference or ground truth to compare against."
+      },
+      "dimensions": {
+        "type": "array",
+        "required": false,
+        "description": "Quality dimensions to evaluate. Defaults to ['relevance', 'fluency', 'completeness', 'faithfulness']."
+      }
+    },
+    "outputs": {
+      "scores": {
+        "type": "object",
+        "required": true,
+        "description": "Mapping of dimension name to score (0.0–1.0)."
+      },
+      "overall": {
+        "type": "number",
+        "required": true,
+        "description": "Weighted overall quality score between 0.0 and 1.0."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable summary of the scoring rationale."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
     "id": "model.prompt.template",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.prompt.template.",
+    "description": "Render a model prompt from a named or inline template and a set of variable bindings.",
     "file": "capabilities/model.prompt.template.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "template": {
+        "type": "string",
+        "required": true,
+        "description": "Prompt template string with ${variable} placeholders."
+      },
+      "variables": {
+        "type": "object",
+        "required": true,
+        "description": "Key-value mapping of variable names to their values."
+      },
+      "format": {
+        "type": "string",
+        "required": false,
+        "description": "Output format hint: plain | chat_messages. Defaults to plain."
+      }
+    },
+    "outputs": {
+      "prompt": {
+        "type": "string",
+        "required": true,
+        "description": "The fully rendered prompt string."
+      },
+      "unresolved": {
+        "type": "array",
+        "required": false,
+        "description": "List of placeholder names that could not be resolved from variables."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {
@@ -1974,15 +2149,57 @@
   {
     "id": "model.risk.score",
     "version": "1.0.0",
-    "description": "TODO define capability contract for model.risk.score.",
+    "description": "Assess the risk level of a model-generated output across safety dimensions such as toxicity, bias, hallucination likelihood, and prompt injection.",
     "file": "capabilities/model.risk.score.yaml",
-    "inputs": {},
-    "outputs": {},
+    "inputs": {
+      "output": {
+        "type": "object",
+        "required": true,
+        "description": "The model-generated output to assess."
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Original task context or instruction for grounding the assessment."
+      },
+      "dimensions": {
+        "type": "array",
+        "required": false,
+        "description": "Risk dimensions to evaluate. Defaults to ['toxicity', 'bias', 'hallucination', 'prompt_injection']."
+      }
+    },
+    "outputs": {
+      "risk_score": {
+        "type": "number",
+        "required": true,
+        "description": "Overall risk score between 0.0 (safe) and 1.0 (high risk)."
+      },
+      "dimension_scores": {
+        "type": "object",
+        "required": true,
+        "description": "Mapping of dimension name to individual risk score (0.0–1.0)."
+      },
+      "flags": {
+        "type": "array",
+        "required": false,
+        "description": "List of specific risk flags triggered, each with dimension and detail."
+      },
+      "safe": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the output is considered safe (risk_score below threshold)."
+      }
+    },
     "metadata": {
       "tags": [],
       "category": null,
       "status": "draft",
       "examples": []
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     }
   },
   {

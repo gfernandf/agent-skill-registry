@@ -225,11 +225,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: model.embedding.generate
     status: draft
-    description: TODO define capability contract for model.embedding.generate.
+    description: Generate a vector embedding for a text input using a model-level embedding service.
 
   - id: model.output.classify
     status: draft
-    description: TODO define capability contract for model.output.classify.
+    description: Classify a model-generated output into one of the provided categories.
 
   - id: model.output.generate
     status: experimental
@@ -237,15 +237,15 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: model.output.sanitize
     status: draft
-    description: TODO define capability contract for model.output.sanitize.
+    description: Sanitize a model-generated output by removing harmful content, PII, and prompt leakage.
 
   - id: model.output.score
     status: draft
-    description: TODO define capability contract for model.output.score.
+    description: Score a model-generated output on quality dimensions such as relevance, fluency, and completeness.
 
   - id: model.prompt.template
     status: draft
-    description: TODO define capability contract for model.prompt.template.
+    description: Render a model prompt from a template and variable bindings.
 
   - id: model.response.validate
     status: experimental
@@ -253,7 +253,7 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: model.risk.score
     status: draft
-    description: TODO define capability contract for model.risk.score.
+    description: Assess the risk level of a model-generated output across safety dimensions.
 
   - id: ops.budget.estimate
     status: draft

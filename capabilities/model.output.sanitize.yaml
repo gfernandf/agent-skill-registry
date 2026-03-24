@@ -1,10 +1,38 @@
 id: model.output.sanitize
 version: 1.0.0
-description: TODO define capability contract for model.output.sanitize.
+description: Sanitize a model-generated output by removing or masking harmful content, PII, prompt leakage, and disallowed patterns.
 
-inputs: {}
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated output to sanitize.
 
-outputs: {}
+  policy:
+    type: object
+    required: false
+    description: "Sanitization policy with toggles such as remove_pii, remove_harmful, remove_prompt_leakage. Defaults to all enabled."
+
+outputs:
+  sanitized_output:
+    type: object
+    required: true
+    description: The sanitized output with disallowed content removed or masked.
+
+  removals:
+    type: array
+    required: false
+    description: List of removal actions taken, each with field, pattern, and action.
+
+  clean:
+    type: boolean
+    required: true
+    description: Whether the output required no sanitization (true = already clean).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft

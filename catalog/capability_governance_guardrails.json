@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 111
+    "metadata_issues": 106
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -883,40 +883,6 @@
     },
     {
       "capability_id": "video.frame.extract",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "web.page.extract",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "web.page.fetch",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "web.source.normalize",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "web.source.search",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "web.source.verify",
       "issues": [
         "missing_tags",
         "missing_examples"

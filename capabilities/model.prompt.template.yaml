@@ -1,10 +1,38 @@
 id: model.prompt.template
 version: 1.0.0
-description: TODO define capability contract for model.prompt.template.
+description: Render a model prompt from a named or inline template and a set of variable bindings.
 
-inputs: {}
+inputs:
+  template:
+    type: string
+    required: true
+    description: "Prompt template string with ${variable} placeholders."
 
-outputs: {}
+  variables:
+    type: object
+    required: true
+    description: Key-value mapping of variable names to their values.
+
+  format:
+    type: string
+    required: false
+    description: "Output format hint: plain | chat_messages. Defaults to plain."
+
+outputs:
+  prompt:
+    type: string
+    required: true
+    description: The fully rendered prompt string.
+
+  unresolved:
+    type: array
+    required: false
+    description: List of placeholder names that could not be resolved from variables.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft

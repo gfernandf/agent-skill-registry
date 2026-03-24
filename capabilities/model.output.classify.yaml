@@ -1,10 +1,43 @@
 id: model.output.classify
 version: 1.0.0
-description: TODO define capability contract for model.output.classify.
+description: Classify a model-generated output into one of the provided categories based on its content and structure.
 
-inputs: {}
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated output to classify.
 
-outputs: {}
+  categories:
+    type: array
+    required: true
+    description: "List of candidate category labels (e.g. ['summary', 'analysis', 'code', 'list', 'error'])."
+
+  context:
+    type: string
+    required: false
+    description: Optional context describing the task that produced the output.
+
+outputs:
+  category:
+    type: string
+    required: true
+    description: The best-matching category label.
+
+  confidence:
+    type: number
+    required: true
+    description: Confidence score between 0.0 and 1.0.
+
+  rationale:
+    type: string
+    required: false
+    description: Brief explanation of why this category was chosen.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft

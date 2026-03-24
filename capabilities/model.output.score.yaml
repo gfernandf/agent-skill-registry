@@ -1,10 +1,48 @@
 id: model.output.score
 version: 1.0.0
-description: TODO define capability contract for model.output.score.
+description: Score a model-generated output on multiple quality dimensions such as relevance, fluency, completeness, and faithfulness.
 
-inputs: {}
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated output to score.
 
-outputs: {}
+  instruction:
+    type: string
+    required: true
+    description: The original instruction that produced the output.
+
+  reference:
+    type: object
+    required: false
+    description: Optional reference or ground truth to compare against.
+
+  dimensions:
+    type: array
+    required: false
+    description: "Quality dimensions to evaluate. Defaults to ['relevance', 'fluency', 'completeness', 'faithfulness']."
+
+outputs:
+  scores:
+    type: object
+    required: true
+    description: "Mapping of dimension name to score (0.0–1.0)."
+
+  overall:
+    type: number
+    required: true
+    description: Weighted overall quality score between 0.0 and 1.0.
+
+  rationale:
+    type: string
+    required: false
+    description: Human-readable summary of the scoring rationale.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft

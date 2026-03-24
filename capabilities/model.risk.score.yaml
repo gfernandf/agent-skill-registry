@@ -1,10 +1,48 @@
 id: model.risk.score
 version: 1.0.0
-description: TODO define capability contract for model.risk.score.
+description: Assess the risk level of a model-generated output across safety dimensions such as toxicity, bias, hallucination likelihood, and prompt injection.
 
-inputs: {}
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated output to assess.
 
-outputs: {}
+  context:
+    type: string
+    required: false
+    description: Original task context or instruction for grounding the assessment.
+
+  dimensions:
+    type: array
+    required: false
+    description: "Risk dimensions to evaluate. Defaults to ['toxicity', 'bias', 'hallucination', 'prompt_injection']."
+
+outputs:
+  risk_score:
+    type: number
+    required: true
+    description: Overall risk score between 0.0 (safe) and 1.0 (high risk).
+
+  dimension_scores:
+    type: object
+    required: true
+    description: Mapping of dimension name to individual risk score (0.0–1.0).
+
+  flags:
+    type: array
+    required: false
+    description: List of specific risk flags triggered, each with dimension and detail.
+
+  safe:
+    type: boolean
+    required: true
+    description: Whether the output is considered safe (risk_score below threshold).
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
 
 metadata:
   status: draft
