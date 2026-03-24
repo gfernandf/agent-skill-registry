@@ -3538,15 +3538,38 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "extraction",
+        "html",
+        "text"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "description": "Extract text from an HTML page",
+          "inputs": {
+            "content": "<html><body><h1>Title</h1><p>Main content.</p></body></html>"
+          },
+          "outputs": {
+            "text": "Title\nMain content."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -3569,10 +3592,25 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "http",
+        "retrieval"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "description": "Fetch a news article",
+          "inputs": {
+            "url": "https://example.com/article/123"
+          },
+          "outputs": {
+            "content": "<html><body><h1>Example Article</h1>...</body></html>"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -3621,12 +3659,46 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "description": "Normalize search results in quick mode",
+          "inputs": {
+            "results": [
+              {
+                "url": "https://example.com/page",
+                "title": "Example Page",
+                "snippet": "A sample page for testing."
+              }
+            ],
+            "mode": "quick"
+          },
+          "outputs": {
+            "items": [
+              {
+                "id": "web-0",
+                "title": "Example Page",
+                "type": "web_page",
+                "content": "A sample page for testing.",
+                "source": "https://example.com/page"
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "items": {
+          "type": "Evidence",
+          "merge": "append"
+        }
+      }
     }
   },
   {
@@ -3654,15 +3726,45 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "search",
+        "discovery"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "description": "Search for machine learning resources",
+          "inputs": {
+            "query": "machine learning tutorials",
+            "limit": 5
+          },
+          "outputs": {
+            "results": [
+              {
+                "url": "https://example.com/ml-tutorial",
+                "title": "ML Tutorial",
+                "snippet": "An introduction to machine learning."
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "results": {
+          "type": "Evidence",
+          "merge": "append"
+        }
+      }
     }
   },
   {
@@ -3695,15 +3797,42 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "trust",
+        "verification",
+        "security"
+      ],
       "category": null,
-      "status": "unspecified",
-      "examples": []
+      "status": "experimental",
+      "examples": [
+        {
+          "description": "Verify a news source",
+          "inputs": {
+            "url": "https://example.com/news"
+          },
+          "outputs": {
+            "trusted": true,
+            "reason": "Public HTTPS source with valid domain."
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "trusted": {
+          "type": "Evidence"
+        },
+        "reason": {
+          "type": "Evidence"
+        }
+      }
     }
   }
 ]

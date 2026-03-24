@@ -24,3 +24,13 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags: [web, fetch, http, retrieval]
+  examples:
+    - description: Fetch a news article
+      inputs:
+        url: "https://example.com/article/123"
+      outputs:
+        content: "<html><body><h1>Example Article</h1>...</body></html>"

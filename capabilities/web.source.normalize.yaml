@@ -37,6 +37,28 @@ properties:
   side_effects: false
   idempotent: true
 
+cognitive_hints:
+  role: analyze
+  produces:
+    items:
+      type: Evidence
+      merge: append
+
 metadata:
   status: experimental
   tags: [web, normalization, corpus, preprocessing]
+  examples:
+    - description: Normalize search results in quick mode
+      inputs:
+        results:
+          - url: "https://example.com/page"
+            title: "Example Page"
+            snippet: "A sample page for testing."
+        mode: "quick"
+      outputs:
+        items:
+          - id: "web-0"
+            title: "Example Page"
+            type: "web_page"
+            content: "A sample page for testing."
+            source: "https://example.com/page"

@@ -451,11 +451,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     description: Extract frames from a video.
 
   - id: web.page.fetch
-    status: draft
+    status: experimental
     description: Fetch content from a web URL.
 
   - id: web.page.extract
-    status: draft
+    status: experimental
     description: Extract main textual content from a web page.
 
   - id: web.source.normalize
@@ -464,9 +464,9 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
 
   - id: web.source.search
-    status: draft
+    status: experimental
     description: Search the web for sources matching a query.
 
   - id: web.source.verify
-    status: draft
+    status: experimental
     description: Verify trust and integrity signals for a web source URL.

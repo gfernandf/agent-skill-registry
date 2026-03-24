@@ -19,7 +19,26 @@ outputs:
     type: object
     required: false
     description: Normalized source details.
+cognitive_hints:
+  role: evaluate
+  produces:
+    trusted:
+      type: Evidence
+    reason:
+      type: Evidence
+
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags: [web, trust, verification, security]
+  examples:
+    - description: Verify a news source
+      inputs:
+        url: "https://example.com/news"
+      outputs:
+        trusted: true
+        reason: "Public HTTPS source with valid domain."

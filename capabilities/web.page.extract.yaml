@@ -11,7 +11,24 @@ outputs:
     type: string
     required: true
     description: Extracted main text.
+
+cognitive_hints:
+  role: perceive
+  produces:
+    text:
+      type: Artifact
+
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags: [web, extraction, html, text]
+  examples:
+    - description: Extract text from an HTML page
+      inputs:
+        content: "<html><body><h1>Title</h1><p>Main content.</p></body></html>"
+      outputs:
+        text: "Title\nMain content."

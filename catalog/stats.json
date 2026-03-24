@@ -64,8 +64,8 @@
     },
     "by_status": {
       "draft": 52,
-      "unspecified": 43,
-      "experimental": 16,
+      "unspecified": 39,
+      "experimental": 20,
       "stable": 3
     },
     "most_used": [
@@ -314,7 +314,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 71,
+    "capabilities_with_nondefault_metadata": 75,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -476,11 +476,19 @@
     "top_capability_tags": [
       {
         "id": "text",
-        "count": 6
+        "count": 7
+      },
+      {
+        "id": "web",
+        "count": 5
       },
       {
         "id": "decision-support",
         "count": 4
+      },
+      {
+        "id": "extraction",
+        "count": 3
       },
       {
         "id": "llm",
@@ -500,10 +508,6 @@
       },
       {
         "id": "evaluation",
-        "count": 2
-      },
-      {
-        "id": "extraction",
         "count": 2
       },
       {
@@ -539,7 +543,15 @@
         "count": 1
       },
       {
+        "id": "discovery",
+        "count": 1
+      },
+      {
         "id": "failure-modes",
+        "count": 1
+      },
+      {
+        "id": "fetch",
         "count": 1
       },
       {
@@ -548,6 +560,14 @@
       },
       {
         "id": "governance",
+        "count": 1
+      },
+      {
+        "id": "html",
+        "count": 1
+      },
+      {
+        "id": "http",
         "count": 1
       },
       {
@@ -603,6 +623,10 @@
         "count": 1
       },
       {
+        "id": "retrieval",
+        "count": 1
+      },
+      {
         "id": "risk-analysis",
         "count": 1
       },
@@ -612,6 +636,14 @@
       },
       {
         "id": "scoring",
+        "count": 1
+      },
+      {
+        "id": "search",
+        "count": 1
+      },
+      {
+        "id": "security",
         "count": 1
       },
       {
@@ -631,7 +663,11 @@
         "count": 1
       },
       {
-        "id": "web",
+        "id": "trust",
+        "count": 1
+      },
+      {
+        "id": "verification",
         "count": 1
       }
     ]

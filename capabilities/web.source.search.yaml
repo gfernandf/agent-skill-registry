@@ -15,7 +15,29 @@ outputs:
     type: array
     required: true
     description: Search results.
+
+cognitive_hints:
+  role: perceive
+  produces:
+    results:
+      type: Evidence
+      merge: append
+
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  status: experimental
+  tags: [web, search, discovery]
+  examples:
+    - description: Search for machine learning resources
+      inputs:
+        query: "machine learning tutorials"
+        limit: 5
+      outputs:
+        results:
+          - url: "https://example.com/ml-tutorial"
+            title: "ML Tutorial"
+            snippet: "An introduction to machine learning."
