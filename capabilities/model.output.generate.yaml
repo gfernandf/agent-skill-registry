@@ -51,4 +51,12 @@ properties:
 
 metadata:
   status: experimental
+  tags: [model, generation, structured-output, llm]
+  examples:
+    - summary: Generate a risk assessment from meeting notes
+      inputs:
+        instruction: "Produce a risk assessment from the meeting notes."
+        context_items: [{"id": "1", "content": "Budget overrun likely in Q3.", "type": "note"}]
+        output_schema: {"type": "object", "properties": {"risks": {"type": "array"}, "severity": {"type": "string"}}}
+        detail_level: standard
 

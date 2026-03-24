@@ -46,4 +46,11 @@ properties:
 
 metadata:
   status: draft
+  tags: [model, quality, scoring, evaluation]
+  examples:
+    - summary: Score a generated summary on quality dimensions
+      inputs:
+        output: {"summary": "Cloud revenue drove 15% growth."}
+        instruction: "Summarize the quarterly financial results"
+        dimensions: ["relevance", "fluency", "completeness"]
 

@@ -46,4 +46,11 @@ properties:
 
 metadata:
   status: experimental
+  tags: [model, validation, grounding, coherence, quality]
+  examples:
+    - summary: Validate a generated summary against source evidence
+      inputs:
+        output: {"summary": "Revenue grew 20%.", "confidence": 0.85}
+        validation_policy: {"coherence": true, "grounding": true, "coverage": true}
+        evidence_context: [{"content": "Revenue increased by 20% year-over-year."}]
 

@@ -36,4 +36,10 @@ properties:
 
 metadata:
   status: draft
+  tags: [model, prompt, template, rendering]
+  examples:
+    - summary: Render a summarization prompt
+      inputs:
+        template: "Summarize the following text about ${topic}:\n\n${text}"
+        variables: {"topic": "climate change", "text": "Global temperatures rose 1.2C..."}
 

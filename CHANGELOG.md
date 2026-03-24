@@ -27,3 +27,24 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   binding matrix, and skill inventory.
 - `_index.yaml` updated with all new entries and status changes.
 - Catalog regenerated (114 capabilities, 35 skills).
+
+#### web.* domain review
+- 5/5 web.* capabilities promoted to `experimental`.
+- `docs/DOMAIN_WEB.md`: full domain reference with capability inventory,
+  binding matrix, and boundary definitions.
+- `_index.yaml` updated with web.* status changes.
+
+#### model.* domain implementation
+- **6 capabilities fleshed out** (from draft stubs to full contracts):
+  - `model.embedding.generate` — produce vector embedding from text.
+  - `model.output.classify` — classify output into a label set.
+  - `model.output.score` — score output quality on multiple axes.
+  - `model.output.sanitize` — strip PII/harmful/leaked content.
+  - `model.prompt.template` — interpolate variables into a prompt template.
+  - `model.risk.score` — score content risk (toxicity, bias, injection).
+- All 6 promoted to `experimental` status.
+- `tags` and `examples` metadata added to all 8 model.* capabilities.
+- `docs/DOMAIN_MODEL.md`: full domain reference with capability inventory,
+  binding matrix, baseline notes, skills usage, boundary definitions.
+- `_index.yaml` updated with all model.* entries and status changes.
+- Catalog regenerated.

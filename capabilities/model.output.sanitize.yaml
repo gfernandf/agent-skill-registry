@@ -36,4 +36,10 @@ properties:
 
 metadata:
   status: draft
+  tags: [model, safety, sanitize, pii, content-filter]
+  examples:
+    - summary: Remove PII from model output
+      inputs:
+        output: {"text": "Contact john@example.com for details."}
+        policy: {"remove_pii": true, "remove_harmful": true}
 

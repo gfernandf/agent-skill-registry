@@ -475,6 +475,10 @@
     ],
     "top_capability_tags": [
       {
+        "id": "model",
+        "count": 8
+      },
+      {
         "id": "text",
         "count": 7
       },
@@ -487,11 +491,15 @@
         "count": 4
       },
       {
-        "id": "extraction",
+        "id": "llm",
+        "count": 4
+      },
+      {
+        "id": "evaluation",
         "count": 3
       },
       {
-        "id": "llm",
+        "id": "extraction",
         "count": 3
       },
       {
@@ -507,11 +515,27 @@
         "count": 2
       },
       {
-        "id": "evaluation",
+        "id": "generation",
+        "count": 2
+      },
+      {
+        "id": "quality",
+        "count": 2
+      },
+      {
+        "id": "safety",
+        "count": 2
+      },
+      {
+        "id": "scoring",
         "count": 2
       },
       {
         "id": "structuring",
+        "count": 2
+      },
+      {
+        "id": "template",
         "count": 2
       },
       {
@@ -527,7 +551,23 @@
         "count": 1
       },
       {
+        "id": "bias",
+        "count": 1
+      },
+      {
+        "id": "classification",
+        "count": 1
+      },
+      {
         "id": "clustering",
+        "count": 1
+      },
+      {
+        "id": "coherence",
+        "count": 1
+      },
+      {
+        "id": "content-filter",
         "count": 1
       },
       {
@@ -547,6 +587,10 @@
         "count": 1
       },
       {
+        "id": "embedding",
+        "count": 1
+      },
+      {
         "id": "failure-modes",
         "count": 1
       },
@@ -555,11 +599,11 @@
         "count": 1
       },
       {
-        "id": "generation",
+        "id": "governance",
         "count": 1
       },
       {
-        "id": "governance",
+        "id": "grounding",
         "count": 1
       },
       {
@@ -568,6 +612,10 @@
       },
       {
         "id": "http",
+        "count": 1
+      },
+      {
+        "id": "injection",
         "count": 1
       },
       {
@@ -603,7 +651,19 @@
         "count": 1
       },
       {
+        "id": "output-type",
+        "count": 1
+      },
+      {
+        "id": "pii",
+        "count": 1
+      },
+      {
         "id": "planning",
+        "count": 1
+      },
+      {
+        "id": "prompt",
         "count": 1
       },
       {
@@ -623,7 +683,15 @@
         "count": 1
       },
       {
+        "id": "rendering",
+        "count": 1
+      },
+      {
         "id": "retrieval",
+        "count": 1
+      },
+      {
+        "id": "risk",
         "count": 1
       },
       {
@@ -631,11 +699,15 @@
         "count": 1
       },
       {
-        "id": "scaffolding",
+        "id": "routing",
         "count": 1
       },
       {
-        "id": "scoring",
+        "id": "sanitize",
+        "count": 1
+      },
+      {
+        "id": "scaffolding",
         "count": 1
       },
       {
@@ -647,15 +719,23 @@
         "count": 1
       },
       {
+        "id": "similarity",
+        "count": 1
+      },
+      {
+        "id": "structured-output",
+        "count": 1
+      },
+      {
         "id": "style",
         "count": 1
       },
       {
-        "id": "template",
+        "id": "themes",
         "count": 1
       },
       {
-        "id": "themes",
+        "id": "toxicity",
         "count": 1
       },
       {
@@ -664,6 +744,14 @@
       },
       {
         "id": "trust",
+        "count": 1
+      },
+      {
+        "id": "validation",
+        "count": 1
+      },
+      {
+        "id": "vector",
         "count": 1
       },
       {

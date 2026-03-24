@@ -1819,10 +1819,23 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "embedding",
+        "vector",
+        "similarity"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Embed a product description for semantic search",
+          "inputs": {
+            "text": "Premium wireless headphones with active noise cancellation",
+            "dimensions": 256
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1870,10 +1883,31 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "classification",
+        "output-type",
+        "routing"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Classify a model output as summary vs analysis",
+          "inputs": {
+            "output": {
+              "text": "Revenue grew 15% YoY driven by cloud services."
+            },
+            "categories": [
+              "summary",
+              "analysis",
+              "code",
+              "error"
+            ],
+            "context": "Financial report analysis task"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1931,10 +1965,41 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "generation",
+        "structured-output",
+        "llm"
+      ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Generate a risk assessment from meeting notes",
+          "inputs": {
+            "instruction": "Produce a risk assessment from the meeting notes.",
+            "context_items": [
+              {
+                "id": "1",
+                "content": "Budget overrun likely in Q3.",
+                "type": "note"
+              }
+            ],
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "risks": {
+                  "type": "array"
+                },
+                "severity": {
+                  "type": "string"
+                }
+              }
+            },
+            "detail_level": "standard"
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1977,10 +2042,29 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "safety",
+        "sanitize",
+        "pii",
+        "content-filter"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Remove PII from model output",
+          "inputs": {
+            "output": {
+              "text": "Contact john@example.com for details."
+            },
+            "policy": {
+              "remove_pii": true,
+              "remove_harmful": true
+            }
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -2033,10 +2117,30 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "quality",
+        "scoring",
+        "evaluation"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Score a generated summary on quality dimensions",
+          "inputs": {
+            "output": {
+              "summary": "Cloud revenue drove 15% growth."
+            },
+            "instruction": "Summarize the quarterly financial results",
+            "dimensions": [
+              "relevance",
+              "fluency",
+              "completeness"
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -2079,10 +2183,26 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "prompt",
+        "template",
+        "rendering"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Render a summarization prompt",
+          "inputs": {
+            "template": "Summarize the following text about ${topic}:\n\n${text}",
+            "variables": {
+              "topic": "climate change",
+              "text": "Global temperatures rose 1.2C..."
+            }
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -2135,10 +2255,36 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "validation",
+        "grounding",
+        "coherence",
+        "quality"
+      ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Validate a generated summary against source evidence",
+          "inputs": {
+            "output": {
+              "summary": "Revenue grew 20%.",
+              "confidence": 0.85
+            },
+            "validation_policy": {
+              "coherence": true,
+              "grounding": true,
+              "coverage": true
+            },
+            "evidence_context": [
+              {
+                "content": "Revenue increased by 20% year-over-year."
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -2191,10 +2337,32 @@
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "model",
+        "safety",
+        "risk",
+        "toxicity",
+        "bias",
+        "injection"
+      ],
       "category": null,
       "status": "draft",
-      "examples": []
+      "examples": [
+        {
+          "summary": "Assess risk of a model response",
+          "inputs": {
+            "output": {
+              "text": "The quarterly results show strong growth."
+            },
+            "context": "Financial analysis task",
+            "dimensions": [
+              "toxicity",
+              "bias",
+              "hallucination"
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
