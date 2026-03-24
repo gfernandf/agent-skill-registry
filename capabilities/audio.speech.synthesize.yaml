@@ -1,0 +1,72 @@
+id: audio.speech.synthesize
+version: 1.0.0
+description: >
+  Convert text into speech audio (text-to-speech). Returns synthesized audio
+  content and metadata about the output. The baseline returns a placeholder;
+  production bindings integrate with TTS engines.
+
+inputs:
+  text:
+    type: string
+    required: true
+    description: >
+      The text to convert to speech.
+
+  language:
+    type: string
+    required: false
+    description: >
+      Target language/locale for synthesis (e.g., "en-US", "es-ES").
+      Defaults to "en-US".
+
+  voice:
+    type: string
+    required: false
+    description: >
+      Voice identifier or profile name. Implementation-dependent.
+
+outputs:
+  audio:
+    type: object
+    required: true
+    description: >
+      Synthesized audio payload. Contains: data (bytes), format (string,
+      e.g. "wav", "mp3"), duration_ms (number).
+
+  metadata:
+    type: object
+    required: false
+    description: >
+      Synthesis metadata: language, voice_used, char_count, word_count.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Artifact
+  produces:
+    audio:
+      type: Artifact
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - audio
+    - tts
+    - speech-synthesis
+  examples:
+    - summary: Synthesize a greeting in English
+      inputs:
+        text: "Hello, welcome to the platform."
+        language: "en-US"
+      outputs:
+        audio:
+          format: wav
+          duration_ms: 2100
+        metadata:
+          language: "en-US"
+          char_count: 31

@@ -677,6 +677,85 @@
     }
   },
   {
+    "id": "audio.speech.synthesize",
+    "version": "1.0.0",
+    "description": "Convert text into speech audio (text-to-speech). Returns synthesized audio content and metadata about the output. The baseline returns a placeholder; production bindings integrate with TTS engines.\n",
+    "file": "capabilities/audio.speech.synthesize.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The text to convert to speech.\n"
+      },
+      "language": {
+        "type": "string",
+        "required": false,
+        "description": "Target language/locale for synthesis (e.g., \"en-US\", \"es-ES\"). Defaults to \"en-US\".\n"
+      },
+      "voice": {
+        "type": "string",
+        "required": false,
+        "description": "Voice identifier or profile name. Implementation-dependent.\n"
+      }
+    },
+    "outputs": {
+      "audio": {
+        "type": "object",
+        "required": true,
+        "description": "Synthesized audio payload. Contains: data (bytes), format (string, e.g. \"wav\", \"mp3\"), duration_ms (number).\n"
+      },
+      "metadata": {
+        "type": "object",
+        "required": false,
+        "description": "Synthesis metadata: language, voice_used, char_count, word_count.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "audio",
+        "tts",
+        "speech-synthesis"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Synthesize a greeting in English",
+          "inputs": {
+            "text": "Hello, welcome to the platform.",
+            "language": "en-US"
+          },
+          "outputs": {
+            "audio": {
+              "format": "wav",
+              "duration_ms": 2100
+            },
+            "metadata": {
+              "language": "en-US",
+              "char_count": 31
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Artifact"
+      ],
+      "produces": {
+        "audio": {
+          "type": "Artifact"
+        }
+      }
+    }
+  },
+  {
     "id": "audio.speech.transcribe",
     "version": "1.0.0",
     "description": "Convert speech audio to text.",
@@ -799,6 +878,87 @@
     }
   },
   {
+    "id": "code.source.analyze",
+    "version": "1.0.0",
+    "description": "Analyze source code for structural metrics and quality signals. Reports line counts, cyclomatic complexity estimate, function/class counts, and optional lint-style warnings. Does NOT modify the code.\n",
+    "file": "capabilities/code.source.analyze.yaml",
+    "inputs": {
+      "code": {
+        "type": "string",
+        "required": true,
+        "description": "The source code to analyze."
+      },
+      "language": {
+        "type": "string",
+        "required": true,
+        "description": "Programming language of the code (e.g., \"python\", \"javascript\")."
+      }
+    },
+    "outputs": {
+      "metrics": {
+        "type": "object",
+        "required": true,
+        "description": "Structural metrics: total_lines, code_lines, blank_lines, comment_lines, function_count, class_count, complexity_estimate.\n"
+      },
+      "warnings": {
+        "type": "array",
+        "required": false,
+        "description": "Quality warnings. Each has: line (number), severity (\"info\" | \"warning\"), message (string).\n"
+      },
+      "summary": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable summary of code quality."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "code",
+        "analysis",
+        "metrics",
+        "quality"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Analyze a Python function for structural metrics",
+          "inputs": {
+            "code": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n",
+            "language": "python"
+          },
+          "outputs": {
+            "metrics": {
+              "total_lines": 4,
+              "code_lines": 4,
+              "function_count": 1,
+              "complexity_estimate": 2
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Artifact"
+      ],
+      "produces": {
+        "metrics": {
+          "type": "Score"
+        },
+        "warnings": {
+          "type": "Risk"
+        }
+      }
+    }
+  },
+  {
     "id": "code.source.format",
     "version": "1.0.0",
     "description": "Format source code.",
@@ -899,6 +1059,107 @@
       "category": null,
       "status": "unspecified",
       "examples": []
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "records": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "data.record.transform",
+    "version": "1.0.0",
+    "description": "Transform a list of records by applying field mappings, renames, type coercions, computed fields, or filters. Designed for ETL-style reshape operations in data pipelines.\n",
+    "file": "capabilities/data.record.transform.yaml",
+    "inputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "Input records to transform. Each record is an object.\n"
+      },
+      "mapping": {
+        "type": "object",
+        "required": true,
+        "description": "Transformation specification. Supported keys: - rename: object mapping old_field → new_field - select: array of field names to keep (projection) - defaults: object mapping field → default_value for missing fields - computed: object mapping new_field → template string using {{field}} refs\n"
+      }
+    },
+    "outputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "Transformed records."
+      },
+      "transform_summary": {
+        "type": "object",
+        "required": false,
+        "description": "Summary of transformation: records_in, records_out, fields_renamed, fields_added, fields_dropped.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "data",
+        "transform",
+        "etl",
+        "mapping"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Rename and project fields from user records",
+          "inputs": {
+            "records": [
+              {
+                "first_name": "Alice",
+                "last_name": "Smith",
+                "age": 30,
+                "internal_id": "x99"
+              },
+              {
+                "first_name": "Bob",
+                "last_name": "Jones",
+                "age": 25,
+                "internal_id": "x42"
+              }
+            ],
+            "mapping": {
+              "rename": {
+                "first_name": "name"
+              },
+              "select": [
+                "name",
+                "last_name",
+                "age"
+              ]
+            }
+          },
+          "outputs": {
+            "records": [
+              {
+                "name": "Alice",
+                "last_name": "Smith",
+                "age": 30
+              },
+              {
+                "name": "Bob",
+                "last_name": "Jones",
+                "age": 25
+              }
+            ]
+          }
+        }
+      ]
     },
     "properties": {
       "deterministic": true,
@@ -1500,6 +1761,87 @@
     }
   },
   {
+    "id": "fs.file.list",
+    "version": "1.0.0",
+    "description": "List files and directories under a given path. Returns names, types (file vs directory), and optional size metadata. The path is validated against the sandbox root (AGENT_SKILLS_FS_ROOT).\n",
+    "file": "capabilities/fs.file.list.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Directory path to list. Must resolve inside the allowed sandbox root.\n"
+      },
+      "pattern": {
+        "type": "string",
+        "required": false,
+        "description": "Optional glob pattern to filter entries (e.g., \"*.txt\"). If omitted, all entries are returned.\n"
+      },
+      "recursive": {
+        "type": "boolean",
+        "required": false,
+        "description": "If true, list entries recursively. Defaults to false (top-level only).\n"
+      }
+    },
+    "outputs": {
+      "entries": {
+        "type": "array",
+        "required": true,
+        "description": "List of entries. Each has: name (string), type (\"file\" | \"directory\"), size (number, bytes, files only), path (string, relative to input path).\n"
+      },
+      "total": {
+        "type": "number",
+        "required": true,
+        "description": "Total number of entries returned."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "filesystem",
+        "listing",
+        "discovery"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "List Python files in a project directory",
+          "inputs": {
+            "path": "src/",
+            "pattern": "*.py"
+          },
+          "outputs": {
+            "entries": [
+              {
+                "name": "main.py",
+                "type": "file",
+                "size": 2048
+              },
+              {
+                "name": "utils.py",
+                "type": "file",
+                "size": 1024
+              }
+            ],
+            "total": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "entries": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
     "id": "fs.file.read",
     "version": "1.0.0",
     "description": "Read content from a filesystem path.",
@@ -1541,6 +1883,91 @@
           "type": "Artifact"
         }
       }
+    }
+  },
+  {
+    "id": "fs.file.write",
+    "version": "1.0.0",
+    "description": "Write content to a file. Creates the file if it does not exist, overwrites if it does (unless mode is \"append\"). The path is validated against the sandbox root (AGENT_SKILLS_FS_ROOT) — writes outside the allowed root are rejected.\n",
+    "file": "capabilities/fs.file.write.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Destination file path. Must resolve inside the allowed sandbox root.\n"
+      },
+      "content": {
+        "type": "string",
+        "required": true,
+        "description": "The text content to write.\n"
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "Write mode: \"overwrite\" (default) | \"append\". Overwrite replaces the entire file; append adds to the end.\n"
+      }
+    },
+    "outputs": {
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Canonical path of the written file."
+      },
+      "bytes_written": {
+        "type": "number",
+        "required": true,
+        "description": "Number of bytes written."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "filesystem",
+        "write",
+        "side-effect"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Write a report to a text file",
+          "inputs": {
+            "path": "output/report.txt",
+            "content": "Quarterly summary: revenue increased 12%.",
+            "mode": "overwrite"
+          },
+          "outputs": {
+            "path": "output/report.txt",
+            "bytes_written": 46
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Artifact"
+      ],
+      "produces": {
+        "path": {
+          "type": "Artifact"
+        }
+      }
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "risk_level": "medium",
+      "requires_confirmation": true,
+      "rationale": "File writes are side-effecting and potentially destructive (overwrite mode). Sandboxed to AGENT_SKILLS_FS_ROOT but consumers should confirm before writing to prevent accidental data loss.\n",
+      "mitigations": [
+        "Path validation enforces sandbox root",
+        "Mode defaults to overwrite — consumers must opt-in to append",
+        "Content size is bounded by runtime limits"
+      ]
     }
   },
   {
@@ -1753,6 +2180,83 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "image.content.extract",
+    "version": "1.0.0",
+    "description": "Extract text content from an image using optical character recognition (OCR). Accepts image data (bytes or file path) and returns recognized text with optional positional metadata. Designed for document processing pipelines.\n",
+    "file": "capabilities/image.content.extract.yaml",
+    "inputs": {
+      "image": {
+        "type": "string",
+        "required": true,
+        "description": "Image data as bytes or a file path to an image.\n"
+      },
+      "language": {
+        "type": "string",
+        "required": false,
+        "description": "Hint for OCR language (e.g., \"en\", \"es\", \"de\"). Defaults to \"en\".\n"
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Recognized text content from the image."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Overall OCR confidence score (0.0 to 1.0).\n"
+      },
+      "regions": {
+        "type": "array",
+        "required": false,
+        "description": "Text regions with positional metadata. Each has: text, bbox (bounding box as [x, y, width, height]), confidence.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "image",
+        "ocr",
+        "text-extraction",
+        "document-processing"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract text from a scanned invoice image",
+          "inputs": {
+            "image": "scans/invoice_001.png",
+            "language": "en"
+          },
+          "outputs": {
+            "text": "Invoice #1234 — Total: $1,250.00",
+            "confidence": 0.92
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "consumes": [
+        "Artifact"
+      ],
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        },
+        "regions": {
+          "type": "Entity"
+        }
+      }
     }
   },
   {
@@ -3436,6 +3940,107 @@
     }
   },
   {
+    "id": "table.column.aggregate",
+    "version": "1.0.0",
+    "description": "Compute aggregate values over table columns. Supports sum, avg, min, max, count. Can optionally group results by a key column.\n",
+    "file": "capabilities/table.column.aggregate.yaml",
+    "inputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Input table as a list of row objects.\n"
+      },
+      "aggregations": {
+        "type": "array",
+        "required": true,
+        "description": "Aggregation operations. Each entry has: field (column name), function (\"sum\" | \"avg\" | \"min\" | \"max\" | \"count\").\n"
+      },
+      "group_by": {
+        "type": "string",
+        "required": false,
+        "description": "Optional column name to group rows by before aggregating.\n"
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Aggregation results. If group_by is used, one result per group. Each result has the group key (if grouped) and one entry per aggregation: {field}_{function} → value.\n"
+      },
+      "row_count": {
+        "type": "number",
+        "required": true,
+        "description": "Total rows processed."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "table",
+        "aggregation",
+        "statistics"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Compute average salary grouped by department",
+          "inputs": {
+            "table": [
+              {
+                "dept": "Engineering",
+                "salary": 90000
+              },
+              {
+                "dept": "Engineering",
+                "salary": 85000
+              },
+              {
+                "dept": "Sales",
+                "salary": 70000
+              }
+            ],
+            "aggregations": [
+              {
+                "field": "salary",
+                "function": "avg"
+              }
+            ],
+            "group_by": "dept"
+          },
+          "outputs": {
+            "results": [
+              {
+                "dept": "Engineering",
+                "salary_avg": 87500
+              },
+              {
+                "dept": "Sales",
+                "salary_avg": 70000
+              }
+            ],
+            "row_count": 3
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "results": {
+          "type": "Score"
+        }
+      }
+    }
+  },
+  {
     "id": "table.row.filter",
     "version": "1.0.0",
     "description": "Filter rows in tabular data according to a condition.",
@@ -3469,6 +4074,99 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    }
+  },
+  {
+    "id": "table.row.sort",
+    "version": "1.0.0",
+    "description": "Sort table rows by one or more columns with specified order (ascending or descending). Supports multi-column sorting with priority.\n",
+    "file": "capabilities/table.row.sort.yaml",
+    "inputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Input table as a list of row objects.\n"
+      },
+      "sort_by": {
+        "type": "array",
+        "required": true,
+        "description": "Sorting specification. Each entry is an object with: field (string), order (\"asc\" | \"desc\", defaults \"asc\"). First entry is primary sort.\n"
+      }
+    },
+    "outputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Sorted table rows."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "table",
+        "sort",
+        "ordering"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Sort employees by salary descending",
+          "inputs": {
+            "table": [
+              {
+                "name": "Alice",
+                "salary": 85000
+              },
+              {
+                "name": "Bob",
+                "salary": 92000
+              },
+              {
+                "name": "Carol",
+                "salary": 78000
+              }
+            ],
+            "sort_by": [
+              {
+                "field": "salary",
+                "order": "desc"
+              }
+            ]
+          },
+          "outputs": {
+            "table": [
+              {
+                "name": "Bob",
+                "salary": 92000
+              },
+              {
+                "name": "Alice",
+                "salary": 85000
+              },
+              {
+                "name": "Carol",
+                "salary": 78000
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "table": {
+          "type": "Entity"
+        }
+      }
     }
   },
   {

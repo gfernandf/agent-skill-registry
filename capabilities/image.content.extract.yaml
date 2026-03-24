@@ -1,0 +1,69 @@
+id: image.content.extract
+version: 1.0.0
+description: >
+  Extract text content from an image using optical character recognition (OCR).
+  Accepts image data (bytes or file path) and returns recognized text with
+  optional positional metadata. Designed for document processing pipelines.
+
+inputs:
+  image:
+    type: string
+    required: true
+    description: >
+      Image data as bytes or a file path to an image.
+
+  language:
+    type: string
+    required: false
+    description: >
+      Hint for OCR language (e.g., "en", "es", "de"). Defaults to "en".
+
+outputs:
+  text:
+    type: string
+    required: true
+    description: Recognized text content from the image.
+
+  confidence:
+    type: number
+    required: false
+    description: >
+      Overall OCR confidence score (0.0 to 1.0).
+
+  regions:
+    type: array
+    required: false
+    description: >
+      Text regions with positional metadata. Each has: text, bbox (bounding
+      box as [x, y, width, height]), confidence.
+
+cognitive_hints:
+  role: perceive
+  consumes:
+    - Artifact
+  produces:
+    text:
+      type: Artifact
+    regions:
+      type: Entity
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - image
+    - ocr
+    - text-extraction
+    - document-processing
+  examples:
+    - summary: Extract text from a scanned invoice image
+      inputs:
+        image: "scans/invoice_001.png"
+        language: "en"
+      outputs:
+        text: "Invoice #1234 — Total: $1,250.00"
+        confidence: 0.92

@@ -39,6 +39,10 @@ capabilities:
     description: Group a collection of text items into coherent thematic clusters. Identifies dominant themes, assigns each item to one or more clusters, and produces a summary per cluster with signal strength. Accepts optional hint labels to guide (not force) the thematic structure.
 
 
+  - id: audio.speech.synthesize
+    status: experimental
+    description: Convert text into speech audio (text-to-speech).
+
   - id: audio.speech.transcribe
     status: draft
     description: Convert speech audio to text.
@@ -51,6 +55,10 @@ capabilities:
     status: draft
     description: Execute a code snippet.
 
+  - id: code.source.analyze
+    status: experimental
+    description: Analyze source code for structural metrics and quality signals.
+
   - id: code.source.format
     status: draft
     description: Format source code.
@@ -58,6 +66,10 @@ capabilities:
   - id: data.json.parse
     status: draft
     description: Parse JSON content into a structured representation.
+
+  - id: data.record.transform
+    status: experimental
+    description: Transform records by applying field mappings, renames, type coercions, and computed fields.
 
   - id: data.record.deduplicate
     status: draft
@@ -99,9 +111,17 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     status: experimental
     description: Score the quality of an output artifact against an optional rubric with per-dimension details and quality-level labels.
 
+  - id: fs.file.list
+    status: experimental
+    description: List files and directories under a given path.
+
   - id: fs.file.read
     status: draft
     description: Read content from a filesystem path.
+
+  - id: fs.file.write
+    status: experimental
+    description: Write content to a file inside the sandbox root.
 
   - id: identity.assignee.identify
     status: draft
@@ -150,6 +170,10 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
   - id: image.content.classify
     status: draft
     description: Classify an image into one or more categories.
+
+  - id: image.content.extract
+    status: experimental
+    description: Extract text content from an image using OCR.
 
   - id: integration.connector.get
     status: draft
@@ -330,9 +354,17 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
     status: stable
     description: Detect secret-like tokens in text content.
 
+  - id: table.column.aggregate
+    status: experimental
+    description: Compute aggregate values over table columns (sum, avg, min, max, count) with optional grouping.
+
   - id: table.row.filter
     status: draft
     description: Filter rows in tabular data according to a condition.
+
+  - id: table.row.sort
+    status: experimental
+    description: Sort table rows by one or more columns with specified order.
 
   - id: task.approval.approve
     status: draft

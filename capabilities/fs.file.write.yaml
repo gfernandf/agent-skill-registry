@@ -1,0 +1,80 @@
+id: fs.file.write
+version: 1.0.0
+description: >
+  Write content to a file. Creates the file if it does not exist, overwrites
+  if it does (unless mode is "append"). The path is validated against the
+  sandbox root (AGENT_SKILLS_FS_ROOT) — writes outside the allowed root are
+  rejected.
+
+inputs:
+  path:
+    type: string
+    required: true
+    description: >
+      Destination file path. Must resolve inside the allowed sandbox root.
+
+  content:
+    type: string
+    required: true
+    description: >
+      The text content to write.
+
+  mode:
+    type: string
+    required: false
+    description: >
+      Write mode: "overwrite" (default) | "append". Overwrite replaces the
+      entire file; append adds to the end.
+
+outputs:
+  path:
+    type: string
+    required: true
+    description: Canonical path of the written file.
+
+  bytes_written:
+    type: number
+    required: true
+    description: Number of bytes written.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Artifact
+  produces:
+    path:
+      type: Artifact
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: elevated
+  risk_level: medium
+  requires_confirmation: true
+  rationale: >
+    File writes are side-effecting and potentially destructive (overwrite mode).
+    Sandboxed to AGENT_SKILLS_FS_ROOT but consumers should confirm before
+    writing to prevent accidental data loss.
+  mitigations:
+    - Path validation enforces sandbox root
+    - Mode defaults to overwrite — consumers must opt-in to append
+    - Content size is bounded by runtime limits
+
+metadata:
+  status: experimental
+  tags:
+    - filesystem
+    - write
+    - side-effect
+  examples:
+    - summary: Write a report to a text file
+      inputs:
+        path: "output/report.txt"
+        content: "Quarterly summary: revenue increased 12%."
+        mode: overwrite
+      outputs:
+        path: "output/report.txt"
+        bytes_written: 46

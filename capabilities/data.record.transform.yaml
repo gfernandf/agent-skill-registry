@@ -1,0 +1,81 @@
+id: data.record.transform
+version: 1.0.0
+description: >
+  Transform a list of records by applying field mappings, renames, type
+  coercions, computed fields, or filters. Designed for ETL-style reshape
+  operations in data pipelines.
+
+inputs:
+  records:
+    type: array
+    required: true
+    description: >
+      Input records to transform. Each record is an object.
+
+  mapping:
+    type: object
+    required: true
+    description: >
+      Transformation specification. Supported keys:
+      - rename: object mapping old_field → new_field
+      - select: array of field names to keep (projection)
+      - defaults: object mapping field → default_value for missing fields
+      - computed: object mapping new_field → template string using {{field}} refs
+
+outputs:
+  records:
+    type: array
+    required: true
+    description: Transformed records.
+
+  transform_summary:
+    type: object
+    required: false
+    description: >
+      Summary of transformation: records_in, records_out, fields_renamed,
+      fields_added, fields_dropped.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    records:
+      type: Entity
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - data
+    - transform
+    - etl
+    - mapping
+  examples:
+    - summary: Rename and project fields from user records
+      inputs:
+        records:
+          - first_name: "Alice"
+            last_name: "Smith"
+            age: 30
+            internal_id: "x99"
+          - first_name: "Bob"
+            last_name: "Jones"
+            age: 25
+            internal_id: "x42"
+        mapping:
+          rename:
+            first_name: name
+          select: [name, last_name, age]
+      outputs:
+        records:
+          - name: "Alice"
+            last_name: "Smith"
+            age: 30
+          - name: "Bob"
+            last_name: "Jones"
+            age: 25

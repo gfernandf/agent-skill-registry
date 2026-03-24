@@ -183,6 +183,9 @@
     "close": "Close a case, ticket, or process",
     "acknowledge": "Acknowledge receipt or state",
     "transition": "Transition between workflow states",
-    "cluster": "Group items by similarity or theme"
+    "cluster": "Group items by similarity or theme",
+    "aggregate": "Compute aggregate statistics over a collection",
+    "sort": "Order items by one or more keys",
+    "synthesize": "Produce an output artifact from structured input"
   }
 }

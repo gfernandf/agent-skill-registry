@@ -1,0 +1,66 @@
+id: table.row.sort
+version: 1.0.0
+description: >
+  Sort table rows by one or more columns with specified order (ascending or
+  descending). Supports multi-column sorting with priority.
+
+inputs:
+  table:
+    type: array
+    required: true
+    description: >
+      Input table as a list of row objects.
+
+  sort_by:
+    type: array
+    required: true
+    description: >
+      Sorting specification. Each entry is an object with: field (string),
+      order ("asc" | "desc", defaults "asc"). First entry is primary sort.
+
+outputs:
+  table:
+    type: array
+    required: true
+    description: Sorted table rows.
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    table:
+      type: Entity
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - table
+    - sort
+    - ordering
+  examples:
+    - summary: Sort employees by salary descending
+      inputs:
+        table:
+          - name: "Alice"
+            salary: 85000
+          - name: "Bob"
+            salary: 92000
+          - name: "Carol"
+            salary: 78000
+        sort_by:
+          - field: salary
+            order: desc
+      outputs:
+        table:
+          - name: "Bob"
+            salary: 92000
+          - name: "Alice"
+            salary: 85000
+          - name: "Carol"
+            salary: 78000

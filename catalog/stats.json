@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 114,
+    "capability_count": 122,
     "skill_count": 35,
     "domain_count": 27,
     "channel_count": 2
@@ -43,29 +43,29 @@
       "ops": 5,
       "policy": 5,
       "web": 5,
+      "code": 4,
+      "data": 4,
       "memory": 4,
       "security": 4,
       "analysis": 3,
-      "code": 3,
-      "data": 3,
       "eval": 3,
+      "fs": 3,
+      "image": 3,
+      "table": 3,
+      "audio": 2,
       "email": 2,
-      "image": 2,
       "message": 2,
       "provenance": 2,
-      "audio": 1,
       "decision": 1,
       "doc": 1,
-      "fs": 1,
       "pdf": 1,
       "research": 1,
-      "table": 1,
       "video": 1
     },
     "by_status": {
       "draft": 52,
       "unspecified": 35,
-      "experimental": 20,
+      "experimental": 28,
       "stable": 7
     },
     "most_used": [
@@ -233,11 +233,16 @@
     "unused": [
       "agent.plan.create",
       "agent.task.delegate",
+      "audio.speech.synthesize",
       "code.snippet.execute",
+      "code.source.analyze",
       "code.source.format",
       "data.record.deduplicate",
+      "data.record.transform",
       "email.message.send",
+      "fs.file.list",
       "fs.file.read",
+      "fs.file.write",
       "identity.assignee.identify",
       "identity.decision.justify",
       "identity.permission.gate",
@@ -248,6 +253,7 @@
       "identity.role.assign",
       "identity.role.get",
       "identity.role.list",
+      "image.content.extract",
       "integration.connector.get",
       "integration.connector.list",
       "integration.connector.sync",
@@ -284,6 +290,8 @@
       "security.pii.detect",
       "security.pii.redact",
       "security.secret.detect",
+      "table.column.aggregate",
+      "table.row.sort",
       "task.approval.approve",
       "task.approval.reject",
       "task.assignee.assign",
@@ -314,7 +322,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 83,
+    "capabilities_with_nondefault_metadata": 91,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -503,6 +511,10 @@
         "count": 4
       },
       {
+        "id": "analysis",
+        "count": 3
+      },
+      {
         "id": "extraction",
         "count": 3
       },
@@ -519,15 +531,23 @@
         "count": 3
       },
       {
+        "id": "quality",
+        "count": 3
+      },
+      {
         "id": "agent-control",
         "count": 2
       },
       {
-        "id": "analysis",
+        "id": "cognitive-unit",
         "count": 2
       },
       {
-        "id": "cognitive-unit",
+        "id": "discovery",
+        "count": 2
+      },
+      {
+        "id": "filesystem",
         "count": 2
       },
       {
@@ -536,10 +556,6 @@
       },
       {
         "id": "planning",
-        "count": 2
-      },
-      {
-        "id": "quality",
         "count": 2
       },
       {
@@ -559,6 +575,10 @@
         "count": 2
       },
       {
+        "id": "table",
+        "count": 2
+      },
+      {
         "id": "template",
         "count": 2
       },
@@ -571,7 +591,15 @@
         "count": 2
       },
       {
+        "id": "aggregation",
+        "count": 1
+      },
+      {
         "id": "assumptions",
+        "count": 1
+      },
+      {
+        "id": "audio",
         "count": 1
       },
       {
@@ -584,6 +612,10 @@
       },
       {
         "id": "clustering",
+        "count": 1
+      },
+      {
+        "id": "code",
         "count": 1
       },
       {
@@ -603,6 +635,10 @@
         "count": 1
       },
       {
+        "id": "data",
+        "count": 1
+      },
+      {
         "id": "decomposition",
         "count": 1
       },
@@ -619,11 +655,15 @@
         "count": 1
       },
       {
-        "id": "discovery",
+        "id": "document-processing",
         "count": 1
       },
       {
         "id": "embedding",
+        "count": 1
+      },
+      {
+        "id": "etl",
         "count": 1
       },
       {
@@ -651,6 +691,10 @@
         "count": 1
       },
       {
+        "id": "image",
+        "count": 1
+      },
+      {
         "id": "injection",
         "count": 1
       },
@@ -659,11 +703,23 @@
         "count": 1
       },
       {
+        "id": "listing",
+        "count": 1
+      },
+      {
+        "id": "mapping",
+        "count": 1
+      },
+      {
         "id": "merge",
         "count": 1
       },
       {
         "id": "meta",
+        "count": 1
+      },
+      {
+        "id": "metrics",
         "count": 1
       },
       {
@@ -683,7 +739,15 @@
         "count": 1
       },
       {
+        "id": "ocr",
+        "count": 1
+      },
+      {
         "id": "option-generation",
+        "count": 1
+      },
+      {
+        "id": "ordering",
         "count": 1
       },
       {
@@ -763,7 +827,23 @@
         "count": 1
       },
       {
+        "id": "side-effect",
+        "count": 1
+      },
+      {
         "id": "similarity",
+        "count": 1
+      },
+      {
+        "id": "sort",
+        "count": 1
+      },
+      {
+        "id": "speech-synthesis",
+        "count": 1
+      },
+      {
+        "id": "statistics",
         "count": 1
       },
       {
@@ -775,6 +855,10 @@
         "count": 1
       },
       {
+        "id": "text-extraction",
+        "count": 1
+      },
+      {
         "id": "themes",
         "count": 1
       },
@@ -783,11 +867,19 @@
         "count": 1
       },
       {
+        "id": "transform",
+        "count": 1
+      },
+      {
         "id": "transformation",
         "count": 1
       },
       {
         "id": "trust",
+        "count": 1
+      },
+      {
+        "id": "tts",
         "count": 1
       },
       {
@@ -804,6 +896,10 @@
       },
       {
         "id": "workflow",
+        "count": 1
+      },
+      {
+        "id": "write",
         "count": 1
       }
     ]

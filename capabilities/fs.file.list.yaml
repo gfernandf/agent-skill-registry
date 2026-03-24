@@ -1,0 +1,71 @@
+id: fs.file.list
+version: 1.0.0
+description: >
+  List files and directories under a given path. Returns names, types
+  (file vs directory), and optional size metadata. The path is validated
+  against the sandbox root (AGENT_SKILLS_FS_ROOT).
+
+inputs:
+  path:
+    type: string
+    required: true
+    description: >
+      Directory path to list. Must resolve inside the allowed sandbox root.
+
+  pattern:
+    type: string
+    required: false
+    description: >
+      Optional glob pattern to filter entries (e.g., "*.txt"). If omitted,
+      all entries are returned.
+
+  recursive:
+    type: boolean
+    required: false
+    description: >
+      If true, list entries recursively. Defaults to false (top-level only).
+
+outputs:
+  entries:
+    type: array
+    required: true
+    description: >
+      List of entries. Each has: name (string), type ("file" | "directory"),
+      size (number, bytes, files only), path (string, relative to input path).
+
+  total:
+    type: number
+    required: true
+    description: Total number of entries returned.
+
+cognitive_hints:
+  role: perceive
+  produces:
+    entries:
+      type: Entity
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - filesystem
+    - listing
+    - discovery
+  examples:
+    - summary: List Python files in a project directory
+      inputs:
+        path: "src/"
+        pattern: "*.py"
+      outputs:
+        entries:
+          - name: "main.py"
+            type: file
+            size: 2048
+          - name: "utils.py"
+            type: file
+            size: 1024
+        total: 2

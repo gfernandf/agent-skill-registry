@@ -1,0 +1,80 @@
+id: table.column.aggregate
+version: 1.0.0
+description: >
+  Compute aggregate values over table columns. Supports sum, avg, min, max,
+  count. Can optionally group results by a key column.
+
+inputs:
+  table:
+    type: array
+    required: true
+    description: >
+      Input table as a list of row objects.
+
+  aggregations:
+    type: array
+    required: true
+    description: >
+      Aggregation operations. Each entry has: field (column name),
+      function ("sum" | "avg" | "min" | "max" | "count").
+
+  group_by:
+    type: string
+    required: false
+    description: >
+      Optional column name to group rows by before aggregating.
+
+outputs:
+  results:
+    type: array
+    required: true
+    description: >
+      Aggregation results. If group_by is used, one result per group.
+      Each result has the group key (if grouped) and one entry per
+      aggregation: {field}_{function} → value.
+
+  row_count:
+    type: number
+    required: true
+    description: Total rows processed.
+
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Entity
+  produces:
+    results:
+      type: Score
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - table
+    - aggregation
+    - statistics
+  examples:
+    - summary: Compute average salary grouped by department
+      inputs:
+        table:
+          - dept: "Engineering"
+            salary: 90000
+          - dept: "Engineering"
+            salary: 85000
+          - dept: "Sales"
+            salary: 70000
+        aggregations:
+          - field: salary
+            function: avg
+        group_by: dept
+      outputs:
+        results:
+          - dept: "Engineering"
+            salary_avg: 87500
+          - dept: "Sales"
+            salary_avg: 70000
+        row_count: 3

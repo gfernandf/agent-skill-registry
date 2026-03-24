@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 87
+    "metadata_issues": 84
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -159,24 +159,6 @@
   ],
   "duplicate_description_alerts": [],
   "metadata_issues": [
-    {
-      "capability_id": "analysis.problem.split",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "analysis.risk.extract",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "analysis.theme.cluster",
-      "issues": [
-        "missing_examples"
-      ]
-    },
     {
       "capability_id": "audio.speech.transcribe",
       "issues": [

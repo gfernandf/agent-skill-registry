@@ -1,0 +1,75 @@
+id: code.source.analyze
+version: 1.0.0
+description: >
+  Analyze source code for structural metrics and quality signals. Reports
+  line counts, cyclomatic complexity estimate, function/class counts, and
+  optional lint-style warnings. Does NOT modify the code.
+
+inputs:
+  code:
+    type: string
+    required: true
+    description: The source code to analyze.
+
+  language:
+    type: string
+    required: true
+    description: Programming language of the code (e.g., "python", "javascript").
+
+outputs:
+  metrics:
+    type: object
+    required: true
+    description: >
+      Structural metrics: total_lines, code_lines, blank_lines,
+      comment_lines, function_count, class_count, complexity_estimate.
+
+  warnings:
+    type: array
+    required: false
+    description: >
+      Quality warnings. Each has: line (number), severity ("info" |
+      "warning"), message (string).
+
+  summary:
+    type: string
+    required: false
+    description: Human-readable summary of code quality.
+
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Artifact
+  produces:
+    metrics:
+      type: Score
+    warnings:
+      type: Risk
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  status: experimental
+  tags:
+    - code
+    - analysis
+    - metrics
+    - quality
+  examples:
+    - summary: Analyze a Python function for structural metrics
+      inputs:
+        code: |
+          def factorial(n):
+              if n <= 1:
+                  return 1
+              return n * factorial(n - 1)
+        language: python
+      outputs:
+        metrics:
+          total_lines: 4
+          code_lines: 4
+          function_count: 1
+          complexity_estimate: 2
