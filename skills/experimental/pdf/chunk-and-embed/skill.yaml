@@ -49,3 +49,26 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: enrich
+  tags:
+  - pdf
+  - document
+  - extraction
+  - embedding
+  - vector
+  - chunking
+  - segmentation
+  use_cases:
+  - Extract text from a PDF, chunk it, and generate embeddings
+  - Prepare PDF documents for vector search
+  - Index PDF content for semantic retrieval
+  examples:
+  - description: Extract, chunk, and embed PDF content
+    input:
+      pdf_path: /docs/report.pdf
+      chunk_size: 512
+    output:
+      total_chunks: 12
+      chunks:
+      - id: c1
+        text: Executive summary...
+        page: 1

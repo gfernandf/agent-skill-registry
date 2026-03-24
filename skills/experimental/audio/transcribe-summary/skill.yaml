@@ -32,3 +32,20 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - audio
+  - speech
+  - transcription
+  - summarization
+  use_cases:
+  - Transcribe an audio file and produce a text summary
+  - Extract key points from a recorded meeting
+  - Convert speech recordings into searchable text summaries
+  examples:
+  - description: Transcribe and summarize a meeting recording
+    input:
+      audio_path: /recordings/standup.mp3
+      language: en
+    output:
+      transcript_snippet: Team discussed Q2 priorities...
+      summary: Standup covered sprint progress, blocker on API integration, and Q2 roadmap alignment.

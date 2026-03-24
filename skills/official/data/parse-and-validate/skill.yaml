@@ -39,3 +39,26 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: enrich
+  tags:
+  - data
+  - parsing
+  - validation
+  use_cases:
+  - Parse raw JSON data and validate against a schema
+  - Ensure incoming data conforms to expected structure
+  - Validate API payloads before processing
+  examples:
+  - description: Parse and validate a JSON payload
+    input:
+      raw_data: '{"name": "Alice", "age": 30}'
+      schema:
+        type: object
+        required:
+        - name
+        - age
+    output:
+      parsed:
+        name: Alice
+        age: 30
+      valid: true
+      errors: []

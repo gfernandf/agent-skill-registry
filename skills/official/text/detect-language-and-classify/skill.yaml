@@ -39,3 +39,22 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: read_only
+  tags:
+  - text
+  - nlp
+  - language
+  - classification
+  use_cases:
+  - Detect the language of text and classify its content
+  - Route multilingual inputs by language and category
+  - Tag text documents with language and topic labels
+  examples:
+  - description: Detect language and classify text
+    input:
+      text: La inteligencia artificial está transformando la industria.
+    output:
+      language: es
+      confidence: 0.97
+      categories:
+      - technology
+      - industry

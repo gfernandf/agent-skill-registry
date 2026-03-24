@@ -58,3 +58,26 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: enrich
+  tags:
+  - web
+  - fetch
+  - scraping
+  - embedding
+  - vector
+  - chunking
+  - segmentation
+  use_cases:
+  - Fetch a web page, chunk its content, and generate embeddings
+  - Index web pages for semantic search
+  - Prepare web content for vector-based retrieval
+  examples:
+  - description: Fetch, chunk, and embed web page content
+    input:
+      url: https://example.com/docs/guide
+      chunk_size: 512
+    output:
+      total_chunks: 8
+      chunks:
+      - id: c1
+        text: Getting started section...
+        embedding_dim: 768

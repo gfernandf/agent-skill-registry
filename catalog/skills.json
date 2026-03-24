@@ -52,11 +52,43 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "agent",
+        "orchestration",
+        "planning",
+        "routing",
+        "delegation"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Route an incoming user request to the appropriate capability",
+        "Generate a multi-step plan from a complex goal",
+        "Decompose an ambiguous request into actionable sub-tasks"
+      ],
+      "examples": [
+        {
+          "description": "Route a user question to the right capability",
+          "input": {
+            "goal": "Summarize this PDF for me",
+            "context": {
+              "file": "report.pdf"
+            }
+          },
+          "output": {
+            "plan": [
+              {
+                "step": 1,
+                "capability": "pdf.document.read"
+              },
+              {
+                "step": 2,
+                "capability": "text.content.summarize"
+              }
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -270,8 +302,31 @@
       ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Analyze agent execution to produce structured trace state",
+        "Monitor decision quality and risk signals during a run",
+        "Generate decision graph views for debugging agent behavior"
+      ],
+      "examples": [
+        {
+          "description": "Analyze execution trace with risk monitoring",
+          "input": {
+            "goal": "Process customer feedback",
+            "events": [
+              {
+                "type": "step_start",
+                "timestamp": "2026-01-01T10:00:00Z",
+                "step_id": "s1"
+              }
+            ]
+          },
+          "output": {
+            "trace_session_id": "ts-001",
+            "control_status": "ok",
+            "confidence": 0.85
+          }
+        }
+      ],
       "classification": {
         "role": "sidecar",
         "invocation": "attach",
@@ -437,8 +492,43 @@
         "Strategy or scenario comparison",
         "Any structured A-vs-B-vs-C analysis"
       ],
-      "examples": [],
-      "classification": null
+      "examples": [
+        {
+          "description": "Compare two strategic options",
+          "input": {
+            "items": [
+              {
+                "id": "opt-a",
+                "content": "Expand to Europe"
+              },
+              {
+                "id": "opt-b",
+                "content": "Focus on domestic market"
+              }
+            ],
+            "criteria": [
+              "cost",
+              "risk",
+              "growth"
+            ]
+          },
+          "output": {
+            "comparison_matrix": [
+              {
+                "criterion": "cost",
+                "opt-a": "high",
+                "opt-b": "low"
+              }
+            ],
+            "recommendation": "opt-b"
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -586,7 +676,23 @@
         "Split a regulatory compliance review into themes",
         "Structure a research agenda into key questions"
       ],
-      "examples": [],
+      "examples": [
+        {
+          "description": "Decompose a complex problem into sub-problems",
+          "input": {
+            "problem": "Reduce customer churn by 20%",
+            "context": "SaaS platform with 10K users"
+          },
+          "output": {
+            "sub_problems": [
+              "Identify churn drivers",
+              "Segment at-risk users",
+              "Design retention interventions",
+              "Measure intervention effectiveness"
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -750,8 +856,34 @@
         "Surface hidden assumptions in a market analysis",
         "Pre-mortem analysis on a product launch proposal"
       ],
-      "examples": [],
-      "classification": null
+      "examples": [
+        {
+          "description": "Assess risk of a project proposal",
+          "input": {
+            "proposal": "Migrate to new cloud provider",
+            "factors": [
+              "cost",
+              "downtime",
+              "vendor lock-in"
+            ]
+          },
+          "output": {
+            "risk_score": 0.65,
+            "risk_factors": [
+              {
+                "factor": "downtime",
+                "severity": "high",
+                "mitigation": "Blue-green deployment"
+              }
+            ]
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1131,11 +1263,32 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "audio",
+        "speech",
+        "transcription",
+        "summarization"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Transcribe an audio file and produce a text summary",
+        "Extract key points from a recorded meeting",
+        "Convert speech recordings into searchable text summaries"
+      ],
+      "examples": [
+        {
+          "description": "Transcribe and summarize a meeting recording",
+          "input": {
+            "audio_path": "/recordings/standup.mp3",
+            "language": "en"
+          },
+          "output": {
+            "transcript_snippet": "Team discussed Q2 priorities...",
+            "summary": "Standup covered sprint progress, blocker on API integration, and Q2 roadmap alignment."
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -1201,11 +1354,34 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "code",
+        "development",
+        "engineering",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Summarize code changes in a diff for review",
+        "Extract key modifications from a pull request diff",
+        "Generate human-readable summaries of code patches"
+      ],
+      "examples": [
+        {
+          "description": "Summarize a code diff",
+          "input": {
+            "diff": "--- a/main.py\n+++ b/main.py\n@@ -10,3 +10,5 @@\n+import logging\n+logger = logging.getLogger(__name__)"
+          },
+          "output": {
+            "summary": "Added logging import and logger initialization to main.py",
+            "files_changed": [
+              "main.py"
+            ],
+            "change_type": "enhancement"
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -1276,11 +1452,41 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "data",
+        "parsing",
+        "validation"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Parse raw JSON data and validate against a schema",
+        "Ensure incoming data conforms to expected structure",
+        "Validate API payloads before processing"
+      ],
+      "examples": [
+        {
+          "description": "Parse and validate a JSON payload",
+          "input": {
+            "raw_data": "{\"name\": \"Alice\", \"age\": 30}",
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "age"
+              ]
+            }
+          },
+          "output": {
+            "parsed": {
+              "name": "Alice",
+              "age": 30
+            },
+            "valid": true,
+            "errors": []
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -1598,11 +1804,40 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "document",
+        "chunking",
+        "processing",
+        "embedding",
+        "vector",
+        "segmentation"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Split a document into chunks and generate embeddings",
+        "Prepare documents for vector search indexing",
+        "Create semantic embeddings for document retrieval"
+      ],
+      "examples": [
+        {
+          "description": "Chunk a document and create embeddings",
+          "input": {
+            "document": "Long document text about market analysis...",
+            "chunk_size": 512
+          },
+          "output": {
+            "chunks": [
+              {
+                "id": "c1",
+                "text": "Market analysis section...",
+                "embedding_dim": 768
+              }
+            ],
+            "total_chunks": 5
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -1663,11 +1898,33 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "email",
+        "communication",
+        "messaging",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Read emails from inbox and generate summaries",
+        "Extract action items from email threads",
+        "Summarize unread emails for quick triage"
+      ],
+      "examples": [
+        {
+          "description": "Read and summarize inbox emails",
+          "input": {
+            "mailbox": "inbox",
+            "max_messages": 10,
+            "unread_only": true
+          },
+          "output": {
+            "summary": "3 unread emails: 1 meeting invite for Friday, 1 project update from team lead, 1 vendor proposal.",
+            "count": 3
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -1823,8 +2080,31 @@
         "Verify a plan covers all required areas",
         "Generic output quality gate before human review"
       ],
-      "examples": [],
-      "classification": null
+      "examples": [
+        {
+          "description": "Validate model output quality",
+          "input": {
+            "output": "The capital of France is Paris.",
+            "criteria": [
+              "factual_accuracy",
+              "completeness"
+            ]
+          },
+          "output": {
+            "valid": true,
+            "scores": {
+              "factual_accuracy": 1.0,
+              "completeness": 0.8
+            },
+            "overall": 0.9
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {
@@ -1890,11 +2170,35 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "image",
+        "vision",
+        "media",
+        "classification"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Generate captions for images and classify their content",
+        "Categorize uploaded images by visual content",
+        "Add descriptive metadata to image assets"
+      ],
+      "examples": [
+        {
+          "description": "Caption and classify an image",
+          "input": {
+            "image_path": "/images/product_photo.jpg"
+          },
+          "output": {
+            "caption": "A laptop on a wooden desk with a coffee cup",
+            "categories": [
+              "technology",
+              "workspace"
+            ],
+            "confidence": 0.92
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -1960,11 +2264,32 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "retrieval",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Retrieve stored memories and generate a summary",
+        "Find relevant past context for a given query",
+        "Synthesize stored knowledge entries into a brief"
+      ],
+      "examples": [
+        {
+          "description": "Retrieve and summarize stored memories",
+          "input": {
+            "query": "What do we know about client X preferences?",
+            "max_results": 5
+          },
+          "output": {
+            "summary": "Client X prefers email communication, has budget constraints, and prioritizes delivery speed.",
+            "sources": 3
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -2030,11 +2355,37 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "retrieval",
+        "embedding",
+        "vector"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Store text content with its vector embedding",
+        "Index new information for future semantic retrieval",
+        "Persist agent knowledge as embeddings for recall"
+      ],
+      "examples": [
+        {
+          "description": "Store text with embedding",
+          "input": {
+            "content": "Q2 revenue grew 12% YoY",
+            "namespace": "financial",
+            "metadata": {
+              "source": "quarterly_report"
+            }
+          },
+          "output": {
+            "stored": true,
+            "embedding_id": "emb-a1b2",
+            "dimensions": 768
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -2100,11 +2451,33 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "memory",
+        "storage",
+        "retrieval",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Store a summary of content in memory",
+        "Persist key findings for later retrieval",
+        "Save distilled context from agent interactions"
+      ],
+      "examples": [
+        {
+          "description": "Store a summary in memory",
+          "input": {
+            "content": "Meeting concluded with agreement to proceed with option B",
+            "key": "meeting-2026-03-20",
+            "namespace": "meetings"
+          },
+          "output": {
+            "stored": true,
+            "key": "meeting-2026-03-20"
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -2190,11 +2563,41 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "pdf",
+        "document",
+        "extraction",
+        "embedding",
+        "vector",
+        "chunking",
+        "segmentation"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Extract text from a PDF, chunk it, and generate embeddings",
+        "Prepare PDF documents for vector search",
+        "Index PDF content for semantic retrieval"
+      ],
+      "examples": [
+        {
+          "description": "Extract, chunk, and embed PDF content",
+          "input": {
+            "pdf_path": "/docs/report.pdf",
+            "chunk_size": 512
+          },
+          "output": {
+            "total_chunks": 12,
+            "chunks": [
+              {
+                "id": "c1",
+                "text": "Executive summary...",
+                "page": 1
+              }
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -2270,11 +2673,40 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "pdf",
+        "document",
+        "extraction",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Read a PDF and produce a keyword-focused summary",
+        "Extract key terms and their context from PDF documents",
+        "Generate keyword-weighted summaries of PDF content"
+      ],
+      "examples": [
+        {
+          "description": "Keyword-focused PDF summary",
+          "input": {
+            "pdf_path": "/docs/contract.pdf",
+            "keywords": [
+              "penalty",
+              "termination",
+              "liability"
+            ]
+          },
+          "output": {
+            "summary": "Contract includes a 5% penalty clause for late delivery, 30-day termination notice, and capped liability at contract value.",
+            "keyword_hits": {
+              "penalty": 3,
+              "termination": 2,
+              "liability": 4
+            }
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -2335,11 +2767,32 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "pdf",
+        "document",
+        "extraction",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Read a PDF and generate a comprehensive summary",
+        "Extract key points from PDF documents",
+        "Summarize multi-page PDFs for quick consumption"
+      ],
+      "examples": [
+        {
+          "description": "Summarize a PDF document",
+          "input": {
+            "pdf_path": "/docs/whitepaper.pdf",
+            "max_pages": 20
+          },
+          "output": {
+            "summary": "Whitepaper proposes a new framework for distributed agent coordination with emphasis on fault tolerance and state management.",
+            "pages_processed": 15
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -2768,7 +3221,33 @@
         "Normalize agent outputs, PDFs, web pages, and notes into a uniform format",
         "Deduplicate and chunk long documents before synthesis"
       ],
-      "examples": [],
+      "examples": [
+        {
+          "description": "Normalize a research corpus for analysis",
+          "input": {
+            "items": [
+              {
+                "id": "d1",
+                "content": "Raw text with inconsistent formatting..."
+              },
+              {
+                "id": "d2",
+                "content": "Another document..."
+              }
+            ]
+          },
+          "output": {
+            "normalized_items": [
+              {
+                "id": "d1",
+                "content": "Clean normalized text..."
+              }
+            ],
+            "total": 2,
+            "issues_fixed": 3
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -3006,7 +3485,33 @@
         "Detect low-coverage or poorly grounded synthesis outputs",
         "Produce a reusable confidence score for any multi-source analytical artifact"
       ],
-      "examples": [],
+      "examples": [
+        {
+          "description": "Assess quality of research sources",
+          "input": {
+            "items": [
+              {
+                "id": "s1",
+                "content": "Peer-reviewed study on AI safety",
+                "type": "article"
+              }
+            ]
+          },
+          "output": {
+            "quality_scores": [
+              {
+                "id": "s1",
+                "score": 0.88,
+                "factors": {
+                  "recency": 0.9,
+                  "credibility": 0.95,
+                  "relevance": 0.8
+                }
+              }
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -3072,11 +3577,51 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "table",
+        "data",
+        "filtering",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Filter tabular data and summarize the results",
+        "Apply criteria to a dataset and produce a focused summary",
+        "Extract insights from filtered table records"
+      ],
+      "examples": [
+        {
+          "description": "Filter and summarize tabular data",
+          "input": {
+            "table": [
+              {
+                "name": "Alice",
+                "score": 92
+              },
+              {
+                "name": "Bob",
+                "score": 78
+              }
+            ],
+            "filter": {
+              "score": {
+                ">": 80
+              }
+            }
+          },
+          "output": {
+            "filtered": [
+              {
+                "name": "Alice",
+                "score": 92
+              }
+            ],
+            "summary": "1 of 2 records match: Alice (score 92).",
+            "count": 1
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3253,7 +3798,32 @@
         "Route a task to the right combination of analytical skills",
         "Entry point for any multi-skill workflow"
       ],
-      "examples": [],
+      "examples": [
+        {
+          "description": "Frame a task for structured execution",
+          "input": {
+            "goal": "Evaluate market entry for Southeast Asia",
+            "constraints": [
+              "budget < 500K",
+              "timeline < 6 months"
+            ]
+          },
+          "output": {
+            "framed_task": {
+              "objective": "Market entry evaluation",
+              "scope": "Southeast Asia",
+              "constraints": [
+                "budget < 500K",
+                "timeline < 6 months"
+              ],
+              "success_criteria": [
+                "Viable market identified",
+                "Risk assessment complete"
+              ]
+            }
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3324,11 +3894,35 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "language",
+        "classification"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Detect the language of text and classify its content",
+        "Route multilingual inputs by language and category",
+        "Tag text documents with language and topic labels"
+      ],
+      "examples": [
+        {
+          "description": "Detect language and classify text",
+          "input": {
+            "text": "La inteligencia artificial está transformando la industria."
+          },
+          "output": {
+            "language": "es",
+            "confidence": 0.97,
+            "categories": [
+              "technology",
+              "industry"
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -3389,11 +3983,48 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "language",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Extract named entities and produce a summary",
+        "Identify key people, places, and organizations in text",
+        "Generate entity-centric summaries from documents"
+      ],
+      "examples": [
+        {
+          "description": "Extract entities and summarize",
+          "input": {
+            "text": "Apple CEO Tim Cook announced a new partnership with Samsung in Seoul."
+          },
+          "output": {
+            "entities": [
+              {
+                "text": "Tim Cook",
+                "type": "PERSON"
+              },
+              {
+                "text": "Apple",
+                "type": "ORG"
+              },
+              {
+                "text": "Samsung",
+                "type": "ORG"
+              },
+              {
+                "text": "Seoul",
+                "type": "LOC"
+              }
+            ],
+            "summary": "Apple CEO Tim Cook announced a Samsung partnership in Seoul."
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3465,11 +4096,36 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "language",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Extract keywords and generate a keyword-focused summary",
+        "Identify the most relevant terms in a text corpus",
+        "Produce concise summaries highlighting key terminology"
+      ],
+      "examples": [
+        {
+          "description": "Extract keywords and summarize",
+          "input": {
+            "text": "Machine learning models require large datasets for training. Transfer learning can reduce data requirements significantly."
+          },
+          "output": {
+            "keywords": [
+              "machine learning",
+              "datasets",
+              "training",
+              "transfer learning"
+            ],
+            "summary": "ML models need large datasets but transfer learning reduces data requirements."
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3530,11 +4186,32 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "language",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Detect the language of text and produce a summary",
+        "Summarize content in its detected source language",
+        "Process multilingual text with language-aware summarization"
+      ],
+      "examples": [
+        {
+          "description": "Detect language and summarize",
+          "input": {
+            "text": "Le marché européen montre des signes de reprise après la crise."
+          },
+          "output": {
+            "language": "fr",
+            "summary": "Le marché européen se reprend après la crise.",
+            "confidence": 0.95
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3600,11 +4277,34 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "text",
+        "nlp",
+        "language",
+        "summarization",
+        "translation"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Translate text and produce a summary of the translation",
+        "Cross-lingual summarization for multilingual content",
+        "Translate documents and distill key points"
+      ],
+      "examples": [
+        {
+          "description": "Translate and summarize text",
+          "input": {
+            "text": "Die Energiewende erfordert massive Investitionen in erneuerbare Energien.",
+            "target_language": "en"
+          },
+          "output": {
+            "translation": "The energy transition requires massive investments in renewable energy.",
+            "summary": "Germany's energy transition demands significant renewable energy investment.",
+            "source_language": "de"
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3690,11 +4390,38 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "scraping",
+        "classification",
+        "fetching",
+        "http"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Fetch a web page and classify its content",
+        "Categorize URLs by topic after fetching",
+        "Tag web resources with content classifications"
+      ],
+      "examples": [
+        {
+          "description": "Fetch a URL and classify content",
+          "input": {
+            "url": "https://example.com/blog/ai-trends-2026"
+          },
+          "output": {
+            "title": "AI Trends 2026",
+            "categories": [
+              "technology",
+              "artificial-intelligence",
+              "trends"
+            ],
+            "content_type": "blog_post"
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3762,11 +4489,33 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "scraping",
+        "summarization",
+        "fetching",
+        "http"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Fetch a web page and generate a summary",
+        "Extract key content from URLs for quick review",
+        "Summarize web articles for research consumption"
+      ],
+      "examples": [
+        {
+          "description": "Fetch and summarize a web page",
+          "input": {
+            "url": "https://example.com/article/market-report"
+          },
+          "output": {
+            "summary": "Market report shows 15% growth in SaaS sector with emerging opportunities in AI-powered automation.",
+            "word_count": 2400
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -3867,11 +4616,41 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "scraping",
+        "embedding",
+        "vector",
+        "chunking",
+        "segmentation"
+      ],
       "category": null,
       "status": "experimental",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Fetch a web page, chunk its content, and generate embeddings",
+        "Index web pages for semantic search",
+        "Prepare web content for vector-based retrieval"
+      ],
+      "examples": [
+        {
+          "description": "Fetch, chunk, and embed web page content",
+          "input": {
+            "url": "https://example.com/docs/guide",
+            "chunk_size": 512
+          },
+          "output": {
+            "total_chunks": 8,
+            "chunks": [
+              {
+                "id": "c1",
+                "text": "Getting started section...",
+                "embedding_dim": 768
+              }
+            ]
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "direct",
@@ -3932,11 +4711,31 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "scraping",
+        "summarization"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Fetch a web page and produce a comprehensive summary",
+        "Extract and summarize content from a URL",
+        "Generate structured summaries of web content"
+      ],
+      "examples": [
+        {
+          "description": "Generate a comprehensive web page summary",
+          "input": {
+            "url": "https://example.com/whitepaper/cloud-native"
+          },
+          "output": {
+            "summary": "Whitepaper advocates cloud-native architecture with microservices, containerization, and GitOps practices for enterprise adoption.",
+            "sections": 5
+          }
+        }
+      ],
       "classification": {
         "role": "utility",
         "invocation": "attach",
@@ -4005,11 +4804,34 @@
     ],
     "uses_skills": [],
     "metadata": {
-      "tags": [],
+      "tags": [
+        "web",
+        "fetch",
+        "scraping",
+        "summarization",
+        "search",
+        "discovery"
+      ],
       "category": null,
       "status": "unspecified",
-      "use_cases": [],
-      "examples": [],
+      "use_cases": [
+        "Perform a web search and summarize the results",
+        "Find and synthesize information from search results",
+        "Generate research summaries from web search queries"
+      ],
+      "examples": [
+        {
+          "description": "Search the web and summarize results",
+          "input": {
+            "query": "latest advances in quantum computing 2026",
+            "max_results": 5
+          },
+          "output": {
+            "summary": "Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum advantage demonstrations.",
+            "sources": 5
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",

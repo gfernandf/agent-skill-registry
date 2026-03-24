@@ -35,3 +35,21 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: enrich
+  tags:
+  - memory
+  - storage
+  - retrieval
+  - summarization
+  use_cases:
+  - Store a summary of content in memory
+  - Persist key findings for later retrieval
+  - Save distilled context from agent interactions
+  examples:
+  - description: Store a summary in memory
+    input:
+      content: Meeting concluded with agreement to proceed with option B
+      key: meeting-2026-03-20
+      namespace: meetings
+    output:
+      stored: true
+      key: meeting-2026-03-20

@@ -324,7 +324,43 @@
     "capabilities_with_nondefault_metadata": 122,
     "top_skill_tags": [
       {
+        "id": "summarization",
+        "count": 15
+      },
+      {
+        "id": "web",
+        "count": 6
+      },
+      {
+        "id": "fetch",
+        "count": 5
+      },
+      {
+        "id": "language",
+        "count": 5
+      },
+      {
+        "id": "nlp",
+        "count": 5
+      },
+      {
+        "id": "scraping",
+        "count": 5
+      },
+      {
+        "id": "text",
+        "count": 5
+      },
+      {
         "id": "analysis",
+        "count": 4
+      },
+      {
+        "id": "document",
+        "count": 4
+      },
+      {
+        "id": "embedding",
         "count": 4
       },
       {
@@ -332,11 +368,59 @@
         "count": 4
       },
       {
+        "id": "vector",
+        "count": 4
+      },
+      {
         "id": "agent",
+        "count": 3
+      },
+      {
+        "id": "chunking",
+        "count": 3
+      },
+      {
+        "id": "classification",
+        "count": 3
+      },
+      {
+        "id": "extraction",
+        "count": 3
+      },
+      {
+        "id": "memory",
+        "count": 3
+      },
+      {
+        "id": "pdf",
+        "count": 3
+      },
+      {
+        "id": "retrieval",
+        "count": 3
+      },
+      {
+        "id": "segmentation",
+        "count": 3
+      },
+      {
+        "id": "storage",
+        "count": 3
+      },
+      {
+        "id": "data",
         "count": 2
       },
       {
         "id": "decision-support",
+        "count": 2
+      },
+      {
+        "id": "fetching",
+        "count": 2
+      },
+      {
+        "id": "http",
         "count": 2
       },
       {
@@ -345,6 +429,14 @@
       },
       {
         "id": "multi-source",
+        "count": 2
+      },
+      {
+        "id": "routing",
+        "count": 2
+      },
+      {
+        "id": "validation",
         "count": 2
       },
       {
@@ -360,7 +452,19 @@
         "count": 1
       },
       {
+        "id": "audio",
+        "count": 1
+      },
+      {
         "id": "briefing",
+        "count": 1
+      },
+      {
+        "id": "code",
+        "count": 1
+      },
+      {
+        "id": "communication",
         "count": 1
       },
       {
@@ -392,11 +496,35 @@
         "count": 1
       },
       {
+        "id": "delegation",
+        "count": 1
+      },
+      {
+        "id": "development",
+        "count": 1
+      },
+      {
+        "id": "discovery",
+        "count": 1
+      },
+      {
+        "id": "email",
+        "count": 1
+      },
+      {
+        "id": "engineering",
+        "count": 1
+      },
+      {
         "id": "evaluation",
         "count": 1
       },
       {
         "id": "failure-modes",
+        "count": 1
+      },
+      {
+        "id": "filtering",
         "count": 1
       },
       {
@@ -408,11 +536,23 @@
         "count": 1
       },
       {
+        "id": "image",
+        "count": 1
+      },
+      {
         "id": "intake",
         "count": 1
       },
       {
         "id": "market-intelligence",
+        "count": 1
+      },
+      {
+        "id": "media",
+        "count": 1
+      },
+      {
+        "id": "messaging",
         "count": 1
       },
       {
@@ -424,11 +564,27 @@
         "count": 1
       },
       {
+        "id": "orchestration",
+        "count": 1
+      },
+      {
+        "id": "parsing",
+        "count": 1
+      },
+      {
+        "id": "planning",
+        "count": 1
+      },
+      {
         "id": "preprocessing",
         "count": 1
       },
       {
         "id": "problem-solving",
+        "count": 1
+      },
+      {
+        "id": "processing",
         "count": 1
       },
       {
@@ -448,7 +604,11 @@
         "count": 1
       },
       {
-        "id": "routing",
+        "id": "search",
+        "count": 1
+      },
+      {
+        "id": "speech",
         "count": 1
       },
       {
@@ -464,6 +624,10 @@
         "count": 1
       },
       {
+        "id": "table",
+        "count": 1
+      },
+      {
         "id": "task-management",
         "count": 1
       },
@@ -472,11 +636,15 @@
         "count": 1
       },
       {
-        "id": "validation",
+        "id": "transcription",
         "count": 1
       },
       {
-        "id": "web",
+        "id": "translation",
+        "count": 1
+      },
+      {
+        "id": "vision",
         "count": 1
       }
     ],

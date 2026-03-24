@@ -31,3 +31,25 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - agent
+  - orchestration
+  - planning
+  - routing
+  - delegation
+  use_cases:
+  - Route an incoming user request to the appropriate capability
+  - Generate a multi-step plan from a complex goal
+  - Decompose an ambiguous request into actionable sub-tasks
+  examples:
+  - description: Route a user question to the right capability
+    input:
+      goal: Summarize this PDF for me
+      context:
+        file: report.pdf
+    output:
+      plan:
+      - step: 1
+        capability: pdf.document.read
+      - step: 2
+        capability: text.content.summarize

@@ -35,3 +35,20 @@ metadata:
     role: utility
     invocation: direct
     effect_mode: read_only
+  tags:
+  - memory
+  - storage
+  - retrieval
+  - summarization
+  use_cases:
+  - Retrieve stored memories and generate a summary
+  - Find relevant past context for a given query
+  - Synthesize stored knowledge entries into a brief
+  examples:
+  - description: Retrieve and summarize stored memories
+    input:
+      query: What do we know about client X preferences?
+      max_results: 5
+    output:
+      summary: Client X prefers email communication, has budget constraints, and prioritizes delivery speed.
+      sources: 3

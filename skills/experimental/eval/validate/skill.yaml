@@ -1,168 +1,165 @@
 id: eval.validate
 version: 0.1.0
 name: Validate Artifact
-description: >
-  Check whether an output or artifact meets a set of quality conditions:
-  structural completeness, internal consistency, and coverage of key areas.
-  Produces a clear pass/fail per check with actionable recommended fixes.
+description: 'Check whether an output or artifact meets a set of quality conditions: structural completeness, internal consistency,
+  and coverage of key areas. Produces a clear pass/fail per check with actionable recommended fixes.
 
-  Generic validation skill — works on any structured artifact (synthesis,
-  decision, plan, report, etc.). Replaces domain-specific quality-assess
-  skills with a single composable pipeline.
+  Generic validation skill — works on any structured artifact (synthesis, decision, plan, report, etc.). Replaces domain-specific
+  quality-assess skills with a single composable pipeline.
 
-  Pipeline: (1) structural validation against schema, (2) semantic consistency
-  and grounding checks, (3) coverage and quality scoring with rubric.
+  Pipeline: (1) structural validation against schema, (2) semantic consistency and grounding checks, (3) coverage and quality
+  scoring with rubric.
 
-  Typical upstream: any skill that produces an artifact to validate.
-  Typical downstream: human review, retry with fixes, or release gate.
+  Typical upstream: any skill that produces an artifact to validate. Typical downstream: human review, retry with fixes, or
+  release gate.
 
+  '
 inputs:
   artifact:
     type: object
     required: true
-    description: >
-      The artifact to validate. Any structured object — synthesis, decision,
-      plan, comparison, report.
+    description: 'The artifact to validate. Any structured object — synthesis, decision, plan, comparison, report.
 
+      '
   validation_goal:
     type: string
     required: true
-    description: >
-      What the validation is checking for. Frames which checks matter.
-      Examples: "Verify this synthesis is complete and grounded", "Check this
-      decision for consistency and coverage".
+    description: 'What the validation is checking for. Frames which checks matter. Examples: "Verify this synthesis is complete
+      and grounded", "Check this decision for consistency and coverage".
 
+      '
   checklist:
     type: array
     required: false
-    description: >
-      Explicit list of checks to perform. Each check: name, description,
-      severity (error | warning). If omitted, checks are inferred from
-      validation_goal and artifact structure.
+    description: 'Explicit list of checks to perform. Each check: name, description, severity (error | warning). If omitted,
+      checks are inferred from validation_goal and artifact structure.
 
+      '
   quality_rules:
     type: object
     required: false
-    description: >
-      Custom rubric dimensions and weights for the coverage/quality scoring
-      step. If omitted, sensible defaults are inferred.
+    description: 'Custom rubric dimensions and weights for the coverage/quality scoring step. If omitted, sensible defaults
+      are inferred.
 
+      '
   context:
     type: string
     required: false
-    description: >
-      Background information or evidence to check the artifact against
-      (e.g., source materials for grounding validation).
+    description: 'Background information or evidence to check the artifact against (e.g., source materials for grounding validation).
 
+      '
 outputs:
   checks_performed:
     type: array
     required: false
-    description: >
-      All checks that were run, each with: name, description, result (pass |
-      fail | warning), and detail.
+    description: 'All checks that were run, each with: name, description, result (pass | fail | warning), and detail.
 
+      '
   passed_checks:
     type: array
     required: false
-    description: >
-      Checks that passed.
+    description: 'Checks that passed.
 
+      '
   failed_checks:
     type: array
     required: false
-    description: >
-      Checks that failed, with detail on what was wrong.
+    description: 'Checks that failed, with detail on what was wrong.
 
+      '
   warnings:
     type: array
     required: false
-    description: >
-      Non-blocking issues detected.
+    description: 'Non-blocking issues detected.
 
+      '
   coverage_gaps:
     type: array
     required: false
-    description: >
-      Key areas or dimensions that are missing or underrepresented.
+    description: 'Key areas or dimensions that are missing or underrepresented.
 
+      '
   consistency_issues:
     type: array
     required: true
-    description: >
-      Internal contradictions or incoherences found.
+    description: 'Internal contradictions or incoherences found.
 
+      '
   validation_summary:
     type: string
     required: true
-    description: >
-      Human-readable summary of the validation result.
+    description: 'Human-readable summary of the validation result.
 
+      '
   recommended_fixes:
     type: array
     required: false
-    description: >
-      Actionable fix suggestions for each failed check or warning.
+    description: 'Actionable fix suggestions for each failed check or warning.
 
+      '
   validation_passed:
     type: boolean
     required: true
-    description: >
-      True if all error-severity checks passed. Warnings do not block.
+    description: 'True if all error-severity checks passed. Warnings do not block.
 
+      '
 steps:
-
-  # ── Step 1: Structural checks ────────────────────────────────────────────
-  # Validate the artifact has the expected structure — required fields,
-  # types, minimum content.
-  - id: check_structure
-    uses: data.schema.validate
-    input:
-      data: inputs.artifact
-      schema: inputs.checklist
-    output:
-      valid: outputs.validation_passed
-      errors: vars.structure_errors
-
-  # ── Step 2: Consistency and grounding ─────────────────────────────────────
-  # Check for internal contradictions, unsupported claims, and semantic
-  # coherence. Uses evidence context when available.
-  - id: check_consistency
-    uses: model.response.validate
-    input:
-      output: inputs.artifact
-      validation_policy:
-        check_coherence: true
-        check_grounding: true
-        check_coverage: true
-      evidence_context: inputs.context
-    output:
-      valid: vars.consistency_valid
-      issues: outputs.consistency_issues
-      rationale: outputs.validation_summary
-
-  # ── Step 3: Coverage and quality scoring ──────────────────────────────────
-  # Score the artifact against a rubric — either user-provided quality_rules
-  # or inferred from validation_goal.
-  - id: score_quality
-    uses: eval.output.score
-    input:
-      output: inputs.artifact
-      rubric: inputs.quality_rules
-    output:
-      score: vars.quality_score
-      dimensions: vars.quality_dimensions
-
+- id: check_structure
+  uses: data.schema.validate
+  input:
+    data: inputs.artifact
+    schema: inputs.checklist
+  output:
+    valid: outputs.validation_passed
+    errors: vars.structure_errors
+- id: check_consistency
+  uses: model.response.validate
+  input:
+    output: inputs.artifact
+    validation_policy:
+      check_coherence: true
+      check_grounding: true
+      check_coverage: true
+    evidence_context: inputs.context
+  output:
+    valid: vars.consistency_valid
+    issues: outputs.consistency_issues
+    rationale: outputs.validation_summary
+- id: score_quality
+  uses: eval.output.score
+  input:
+    output: inputs.artifact
+    rubric: inputs.quality_rules
+  output:
+    score: vars.quality_score
+    dimensions: vars.quality_dimensions
 metadata:
   status: experimental
   tags:
-    - validation
-    - quality-gate
-    - consistency
-    - coverage
+  - validation
+  - quality-gate
+  - consistency
+  - coverage
   category: eval
   use_cases:
-    - Validate a synthesis artifact before delivery
-    - Check a decision for internal consistency
-    - Verify a plan covers all required areas
-    - Generic output quality gate before human review
+  - Validate a synthesis artifact before delivery
+  - Check a decision for internal consistency
+  - Verify a plan covers all required areas
+  - Generic output quality gate before human review
+  examples:
+  - description: Validate model output quality
+    input:
+      output: The capital of France is Paris.
+      criteria:
+      - factual_accuracy
+      - completeness
+    output:
+      valid: true
+      scores:
+        factual_accuracy: 1.0
+        completeness: 0.8
+      overall: 0.9
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich

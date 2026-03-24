@@ -35,3 +35,29 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - table
+  - data
+  - filtering
+  - summarization
+  use_cases:
+  - Filter tabular data and summarize the results
+  - Apply criteria to a dataset and produce a focused summary
+  - Extract insights from filtered table records
+  examples:
+  - description: Filter and summarize tabular data
+    input:
+      table:
+      - name: Alice
+        score: 92
+      - name: Bob
+        score: 78
+      filter:
+        score:
+          '>': 80
+    output:
+      filtered:
+      - name: Alice
+        score: 92
+      summary: '1 of 2 records match: Alice (score 92).'
+      count: 1

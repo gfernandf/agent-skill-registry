@@ -35,3 +35,29 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - code
+  - development
+  - engineering
+  - summarization
+  use_cases:
+  - Summarize code changes in a diff for review
+  - Extract key modifications from a pull request diff
+  - Generate human-readable summaries of code patches
+  examples:
+  - description: Summarize a code diff
+    input:
+      diff: '--- a/main.py
+
+        +++ b/main.py
+
+        @@ -10,3 +10,5 @@
+
+        +import logging
+
+        +logger = logging.getLogger(__name__)'
+    output:
+      summary: Added logging import and logger initialization to main.py
+      files_changed:
+      - main.py
+      change_type: enhancement

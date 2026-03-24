@@ -31,3 +31,27 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - text
+  - nlp
+  - language
+  - summarization
+  use_cases:
+  - Extract named entities and produce a summary
+  - Identify key people, places, and organizations in text
+  - Generate entity-centric summaries from documents
+  examples:
+  - description: Extract entities and summarize
+    input:
+      text: Apple CEO Tim Cook announced a new partnership with Samsung in Seoul.
+    output:
+      entities:
+      - text: Tim Cook
+        type: PERSON
+      - text: Apple
+        type: ORG
+      - text: Samsung
+        type: ORG
+      - text: Seoul
+        type: LOC
+      summary: Apple CEO Tim Cook announced a Samsung partnership in Seoul.

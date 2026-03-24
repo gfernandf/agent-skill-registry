@@ -35,3 +35,22 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - text
+  - nlp
+  - language
+  - summarization
+  - translation
+  use_cases:
+  - Translate text and produce a summary of the translation
+  - Cross-lingual summarization for multilingual content
+  - Translate documents and distill key points
+  examples:
+  - description: Translate and summarize text
+    input:
+      text: Die Energiewende erfordert massive Investitionen in erneuerbare Energien.
+      target_language: en
+    output:
+      translation: The energy transition requires massive investments in renewable energy.
+      summary: Germany's energy transition demands significant renewable energy investment.
+      source_language: de

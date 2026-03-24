@@ -40,3 +40,27 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - pdf
+  - document
+  - extraction
+  - summarization
+  use_cases:
+  - Read a PDF and produce a keyword-focused summary
+  - Extract key terms and their context from PDF documents
+  - Generate keyword-weighted summaries of PDF content
+  examples:
+  - description: Keyword-focused PDF summary
+    input:
+      pdf_path: /docs/contract.pdf
+      keywords:
+      - penalty
+      - termination
+      - liability
+    output:
+      summary: Contract includes a 5% penalty clause for late delivery, 30-day termination notice, and capped liability at
+        contract value.
+      keyword_hits:
+        penalty: 3
+        termination: 2
+        liability: 4

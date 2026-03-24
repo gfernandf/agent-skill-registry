@@ -35,3 +35,23 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - web
+  - fetch
+  - scraping
+  - summarization
+  - search
+  - discovery
+  use_cases:
+  - Perform a web search and summarize the results
+  - Find and synthesize information from search results
+  - Generate research summaries from web search queries
+  examples:
+  - description: Search the web and summarize results
+    input:
+      query: latest advances in quantum computing 2026
+      max_results: 5
+    output:
+      summary: Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum
+        advantage demonstrations.
+      sources: 5

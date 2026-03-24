@@ -2,12 +2,10 @@ id: text.keyword-summary
 version: 0.1.0
 name: Keyword and Summary Extraction
 description: Extracts keywords and generates a summary from text input.
-
 inputs:
   text:
     type: string
     required: true
-
 outputs:
   summary:
     type: string
@@ -15,31 +13,47 @@ outputs:
   keywords:
     type: array
     required: true
-
 steps:
-
-  - id: extract_text
-    uses: text.content.extract
-    input:
-      text: inputs.text
-    output:
-      text: vars.cleaned_text
-
-  - id: extract_keywords
-    uses: text.keyword.extract
-    input:
-      text: vars.cleaned_text
-    output:
-      keywords: outputs.keywords
-
-  - id: summarize_text
-    uses: text.content.summarize
-    input:
-      text: vars.cleaned_text
-    output:
-      summary: outputs.summary
+- id: extract_text
+  uses: text.content.extract
+  input:
+    text: inputs.text
+  output:
+    text: vars.cleaned_text
+- id: extract_keywords
+  uses: text.keyword.extract
+  input:
+    text: vars.cleaned_text
+  output:
+    keywords: outputs.keywords
+- id: summarize_text
+  uses: text.content.summarize
+  input:
+    text: vars.cleaned_text
+  output:
+    summary: outputs.summary
 metadata:
   classification:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - text
+  - nlp
+  - language
+  - summarization
+  use_cases:
+  - Extract keywords and generate a keyword-focused summary
+  - Identify the most relevant terms in a text corpus
+  - Produce concise summaries highlighting key terminology
+  examples:
+  - description: Extract keywords and summarize
+    input:
+      text: Machine learning models require large datasets for training. Transfer learning can reduce data requirements significantly.
+    output:
+      keywords:
+      - machine learning
+      - datasets
+      - training
+      - transfer learning
+      summary: ML models need large datasets but transfer learning reduces data requirements.

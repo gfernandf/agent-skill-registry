@@ -40,3 +40,22 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - image
+  - vision
+  - media
+  - classification
+  use_cases:
+  - Generate captions for images and classify their content
+  - Categorize uploaded images by visual content
+  - Add descriptive metadata to image assets
+  examples:
+  - description: Caption and classify an image
+    input:
+      image_path: /images/product_photo.jpg
+    output:
+      caption: A laptop on a wooden desk with a coffee cup
+      categories:
+      - technology
+      - workspace
+      confidence: 0.92

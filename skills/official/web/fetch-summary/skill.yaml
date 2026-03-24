@@ -2,41 +2,53 @@ id: web.fetch-summary
 version: 0.1.0
 name: Fetch and Summarize Web Page
 description: Fetches a web page and returns a summarized version of its main text.
-
 inputs:
   url:
     type: string
     required: true
-
 outputs:
   summary:
     type: string
     required: true
-
 steps:
-
-  - id: fetch_page
-    uses: web.page.fetch
-    input:
-      url: inputs.url
-    output:
-      content: vars.page_content
-
-  - id: extract_text
-    uses: text.content.extract
-    input:
-      text: vars.page_content
-    output:
-      text: vars.cleaned_text
-
-  - id: summarize_text
-    uses: text.content.summarize
-    input:
-      text: vars.cleaned_text
-    output:
-      summary: outputs.summary
+- id: fetch_page
+  uses: web.page.fetch
+  input:
+    url: inputs.url
+  output:
+    content: vars.page_content
+- id: extract_text
+  uses: text.content.extract
+  input:
+    text: vars.page_content
+  output:
+    text: vars.cleaned_text
+- id: summarize_text
+  uses: text.content.summarize
+  input:
+    text: vars.cleaned_text
+  output:
+    summary: outputs.summary
 metadata:
   classification:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - web
+  - fetch
+  - scraping
+  - summarization
+  - fetching
+  - http
+  use_cases:
+  - Fetch a web page and generate a summary
+  - Extract key content from URLs for quick review
+  - Summarize web articles for research consumption
+  examples:
+  - description: Fetch and summarize a web page
+    input:
+      url: https://example.com/article/market-report
+    output:
+      summary: Market report shows 15% growth in SaaS sector with emerging opportunities in AI-powered automation.
+      word_count: 2400

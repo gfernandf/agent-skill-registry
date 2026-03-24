@@ -31,3 +31,20 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - text
+  - nlp
+  - language
+  - summarization
+  use_cases:
+  - Detect the language of text and produce a summary
+  - Summarize content in its detected source language
+  - Process multilingual text with language-aware summarization
+  examples:
+  - description: Detect language and summarize
+    input:
+      text: Le marché européen montre des signes de reprise après la crise.
+    output:
+      language: fr
+      summary: Le marché européen se reprend après la crise.
+      confidence: 0.95

@@ -31,3 +31,21 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - email
+  - communication
+  - messaging
+  - summarization
+  use_cases:
+  - Read emails from inbox and generate summaries
+  - Extract action items from email threads
+  - Summarize unread emails for quick triage
+  examples:
+  - description: Read and summarize inbox emails
+    input:
+      mailbox: inbox
+      max_messages: 10
+      unread_only: true
+    output:
+      summary: '3 unread emails: 1 meeting invite for Friday, 1 project update from team lead, 1 vendor proposal.'
+      count: 3

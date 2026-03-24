@@ -31,5 +31,22 @@ metadata:
     role: utility
     invocation: attach
     attach_targets:
-      - output
+    - output
     effect_mode: enrich
+  tags:
+  - web
+  - fetch
+  - scraping
+  - summarization
+  use_cases:
+  - Fetch a web page and produce a comprehensive summary
+  - Extract and summarize content from a URL
+  - Generate structured summaries of web content
+  examples:
+  - description: Generate a comprehensive web page summary
+    input:
+      url: https://example.com/whitepaper/cloud-native
+    output:
+      summary: Whitepaper advocates cloud-native architecture with microservices, containerization, and GitOps practices for
+        enterprise adoption.
+      sections: 5

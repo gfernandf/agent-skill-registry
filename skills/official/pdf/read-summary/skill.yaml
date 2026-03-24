@@ -31,3 +31,21 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - pdf
+  - document
+  - extraction
+  - summarization
+  use_cases:
+  - Read a PDF and generate a comprehensive summary
+  - Extract key points from PDF documents
+  - Summarize multi-page PDFs for quick consumption
+  examples:
+  - description: Summarize a PDF document
+    input:
+      pdf_path: /docs/whitepaper.pdf
+      max_pages: 20
+    output:
+      summary: Whitepaper proposes a new framework for distributed agent coordination with emphasis on fault tolerance and
+        state management.
+      pages_processed: 15

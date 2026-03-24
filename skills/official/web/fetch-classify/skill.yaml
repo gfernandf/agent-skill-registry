@@ -48,3 +48,25 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
+  tags:
+  - web
+  - fetch
+  - scraping
+  - classification
+  - fetching
+  - http
+  use_cases:
+  - Fetch a web page and classify its content
+  - Categorize URLs by topic after fetching
+  - Tag web resources with content classifications
+  examples:
+  - description: Fetch a URL and classify content
+    input:
+      url: https://example.com/blog/ai-trends-2026
+    output:
+      title: AI Trends 2026
+      categories:
+      - technology
+      - artificial-intelligence
+      - trends
+      content_type: blog_post
