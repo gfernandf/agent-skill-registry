@@ -91,5 +91,24 @@ metadata:
   tags:
     - decision-support
     - evaluation
+    - multi-criteria-scoring
+  examples:
+    - options:
+        - id: opt-aws
+          label: "AWS"
+          description: "Managed Kubernetes on AWS"
+        - id: opt-gcp
+          label: "GCP"
+          description: "Serverless on GCP"
+      goal: "Choose cloud provider for ML training"
+      criteria:
+        - name: cost
+          weight: 2.0
+        - name: scalability
+          weight: 1.5
+      expected_fields: [scored_options, criteria_used, comparative_summary, tradeoffs]
+  tags:
+    - decision-support
+    - evaluation
     - multi-criteria
     - scoring

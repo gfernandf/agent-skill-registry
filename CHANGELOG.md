@@ -67,3 +67,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `docs/DOMAIN_SECURITY.md`: full domain reference with capability inventory,
   binding matrix, safety gate integration docs, boundary definitions.
 - Catalog regenerated.
+
+#### eval.* domain review
+- `eval.output.score` fleshed out from draft stub to full contract with
+  rubric dimensions, context input, and quality_level output.
+- `eval.output.score` promoted from `draft` to `experimental`.
+- `tags` and `examples` metadata added to all 3 eval.* capabilities.
+- `docs/DOMAIN_EVAL.md`: full domain reference with decision pipeline
+  integration, skill consumption map, boundary definitions.
+- `_index.yaml` updated with eval.output.score status and description.
+- Catalog regenerated.

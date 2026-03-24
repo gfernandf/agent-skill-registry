@@ -56,3 +56,13 @@ metadata:
     - decision-support
     - evaluation
     - qualitative-analysis
+  examples:
+    - options:
+        - id: opt-cloud-a
+          label: "AWS"
+          description: "Migrate to AWS with managed Kubernetes"
+        - id: opt-cloud-b
+          label: "GCP"
+          description: "Migrate to GCP with serverless focus"
+      goal: "Choose a cloud provider for ML training workloads"
+      expected_fields: [pros, cons, risks, assumptions]

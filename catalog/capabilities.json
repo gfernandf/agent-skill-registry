@@ -1167,7 +1167,29 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "options": [
+            {
+              "id": "opt-cloud-a",
+              "label": "AWS",
+              "description": "Migrate to AWS with managed Kubernetes"
+            },
+            {
+              "id": "opt-cloud-b",
+              "label": "GCP",
+              "description": "Migrate to GCP with serverless focus"
+            }
+          ],
+          "goal": "Choose a cloud provider for ML training workloads",
+          "expected_fields": [
+            "pros",
+            "cons",
+            "risks",
+            "assumptions"
+          ]
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1233,7 +1255,39 @@
       ],
       "category": null,
       "status": "experimental",
-      "examples": []
+      "examples": [
+        {
+          "options": [
+            {
+              "id": "opt-aws",
+              "label": "AWS",
+              "description": "Managed Kubernetes on AWS"
+            },
+            {
+              "id": "opt-gcp",
+              "label": "GCP",
+              "description": "Serverless on GCP"
+            }
+          ],
+          "goal": "Choose cloud provider for ML training",
+          "criteria": [
+            {
+              "name": "cost",
+              "weight": 2.0
+            },
+            {
+              "name": "scalability",
+              "weight": 1.5
+            }
+          ],
+          "expected_fields": [
+            "scored_options",
+            "criteria_used",
+            "comparative_summary",
+            "tradeoffs"
+          ]
+        }
+      ]
     },
     "properties": {
       "deterministic": false,
@@ -1265,37 +1319,78 @@
   {
     "id": "eval.output.score",
     "version": "1.0.0",
-    "description": "Score the quality of an output against a rubric.",
+    "description": "Score the quality of an output artifact against an optional rubric. Evaluates coverage (completeness of fields), depth (structural complexity), and coherence. When a rubric is provided, scores each named dimension independently. Used as a quality gate in validation skills and research pipelines.\n",
     "file": "capabilities/eval.output.score.yaml",
     "inputs": {
       "output": {
         "type": "object",
         "required": true,
-        "description": "Output artifact to evaluate."
+        "description": "Output artifact to evaluate. Can be any structured or semi-structured object (e.g. a plan, analysis result, generated content).\n"
       },
       "rubric": {
         "type": "object",
         "required": false,
-        "description": "Optional scoring rubric with weighted dimensions."
+        "description": "Scoring rubric defining named dimensions with optional weights. Each dimension is an object with: name (string), description (string), weight (number, default 1.0). When omitted, default dimensions (coverage, depth, coherence) are applied.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information about what the output is supposed to achieve. Helps the scorer assess relevance and completeness.\n"
       }
     },
     "outputs": {
       "score": {
         "type": "number",
         "required": true,
-        "description": "Overall quality score."
+        "description": "Overall quality score on a 0.0–1.0 scale. Weighted average of dimension scores when a rubric is provided.\n"
       },
       "dimensions": {
         "type": "object",
         "required": false,
-        "description": "Per-dimension scoring details."
+        "description": "Per-dimension scoring details. Each key is a dimension name mapping to an object with: score (number 0.0–1.0), rationale (string).\n"
+      },
+      "quality_level": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable quality label derived from score: excellent (>=0.9), good (>=0.7), fair (>=0.5), poor (<0.5).\n"
       }
     },
     "metadata": {
-      "tags": [],
+      "tags": [
+        "evaluation",
+        "quality-scoring",
+        "output-validation"
+      ],
       "category": null,
       "status": "unspecified",
-      "examples": []
+      "examples": [
+        {
+          "output": {
+            "summary": "Q3 revenue grew 15% YoY driven by cloud services",
+            "sources": [
+              "earnings_report.pdf"
+            ]
+          },
+          "rubric": {
+            "dimensions": [
+              {
+                "name": "coverage",
+                "description": "Are all key metrics addressed?",
+                "weight": 2.0
+              },
+              {
+                "name": "accuracy",
+                "description": "Are claims supported by sources?",
+                "weight": 1.5
+              }
+            ]
+          },
+          "expected_score_range": [
+            0.5,
+            1.0
+          ]
+        }
+      ]
     },
     "properties": {
       "deterministic": false,

@@ -314,7 +314,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 35,
-    "capabilities_with_nondefault_metadata": 82,
+    "capabilities_with_nondefault_metadata": 83,
     "top_skill_tags": [
       {
         "id": "analysis",
@@ -495,12 +495,12 @@
         "count": 4
       },
       {
-        "id": "llm",
+        "id": "evaluation",
         "count": 4
       },
       {
-        "id": "evaluation",
-        "count": 3
+        "id": "llm",
+        "count": 4
       },
       {
         "id": "extraction",
@@ -695,6 +695,10 @@
         "count": 1
       },
       {
+        "id": "output-validation",
+        "count": 1
+      },
+      {
         "id": "policy-gate",
         "count": 1
       },
@@ -708,6 +712,10 @@
       },
       {
         "id": "qualitative-analysis",
+        "count": 1
+      },
+      {
+        "id": "quality-scoring",
         "count": 1
       },
       {

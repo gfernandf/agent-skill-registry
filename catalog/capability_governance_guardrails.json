@@ -5,7 +5,7 @@
     "uncovered_domains": 0,
     "semantic_family_alerts": 11,
     "duplicate_description_alerts": 0,
-    "metadata_issues": 94
+    "metadata_issues": 90
   },
   "uncovered_domains": [],
   "semantic_family_alerts": [
@@ -568,34 +568,6 @@
     },
     {
       "capability_id": "research.source.retrieve",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "security.output.gate",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "security.pii.detect",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "security.pii.redact",
-      "issues": [
-        "missing_tags",
-        "missing_examples"
-      ]
-    },
-    {
-      "capability_id": "security.secret.detect",
       "issues": [
         "missing_tags",
         "missing_examples"

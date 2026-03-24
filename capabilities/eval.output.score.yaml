@@ -1,25 +1,75 @@
 id: eval.output.score
 version: 1.0.0
-description: Score the quality of an output against a rubric.
+status: experimental
+description: >
+  Score the quality of an output artifact against an optional rubric. Evaluates
+  coverage (completeness of fields), depth (structural complexity), and
+  coherence. When a rubric is provided, scores each named dimension
+  independently. Used as a quality gate in validation skills and research
+  pipelines.
+
 inputs:
   output:
     type: object
     required: true
-    description: Output artifact to evaluate.
+    description: >
+      Output artifact to evaluate. Can be any structured or semi-structured
+      object (e.g. a plan, analysis result, generated content).
   rubric:
     type: object
     required: false
-    description: Optional scoring rubric with weighted dimensions.
+    description: >
+      Scoring rubric defining named dimensions with optional weights.
+      Each dimension is an object with: name (string), description (string),
+      weight (number, default 1.0). When omitted, default dimensions
+      (coverage, depth, coherence) are applied.
+  context:
+    type: string
+    required: false
+    description: >
+      Background information about what the output is supposed to achieve.
+      Helps the scorer assess relevance and completeness.
+
 outputs:
   score:
     type: number
     required: true
-    description: Overall quality score.
+    description: >
+      Overall quality score on a 0.0–1.0 scale. Weighted average of
+      dimension scores when a rubric is provided.
   dimensions:
     type: object
     required: false
-    description: Per-dimension scoring details.
+    description: >
+      Per-dimension scoring details. Each key is a dimension name mapping
+      to an object with: score (number 0.0–1.0), rationale (string).
+  quality_level:
+    type: string
+    required: false
+    description: >
+      Human-readable quality label derived from score:
+      excellent (>=0.9), good (>=0.7), fair (>=0.5), poor (<0.5).
+
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
+
+metadata:
+  tags:
+    - evaluation
+    - quality-scoring
+    - output-validation
+  examples:
+    - output:
+        summary: "Q3 revenue grew 15% YoY driven by cloud services"
+        sources: ["earnings_report.pdf"]
+      rubric:
+        dimensions:
+          - name: coverage
+            description: "Are all key metrics addressed?"
+            weight: 2.0
+          - name: accuracy
+            description: "Are claims supported by sources?"
+            weight: 1.5
+      expected_score_range: [0.5, 1.0]

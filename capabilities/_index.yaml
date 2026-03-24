@@ -96,8 +96,8 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
 
   - id: eval.output.score
-    status: draft
-    description: Score the quality of an output against a rubric.
+    status: experimental
+    description: Score the quality of an output artifact against an optional rubric with per-dimension details and quality-level labels.
 
   - id: fs.file.read
     status: draft
