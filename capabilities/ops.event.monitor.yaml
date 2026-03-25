@@ -44,3 +44,15 @@ metadata:
       outputs:
         status: "alert"
         alerts: [{rule: "max_error_count", actual: 1}]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    status:
+      type: Entity
+    alerts:
+      type: Entity
+    event_summary:
+      type: Entity
+  consumes:
+  - Context

@@ -48,3 +48,13 @@ metadata:
         approver: "manager-1"
       outputs:
         approved: true
+
+cognitive_hints:
+  role: decide
+  produces:
+    approved:
+      type: Decision
+    timestamp:
+      type: Decision
+  consumes:
+  - Entity

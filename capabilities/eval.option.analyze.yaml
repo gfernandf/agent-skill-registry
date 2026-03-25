@@ -66,3 +66,14 @@ metadata:
           description: "Migrate to GCP with serverless focus"
       goal: "Choose a cloud provider for ML training workloads"
       expected_fields: [pros, cons, risks, assumptions]
+
+cognitive_hints:
+  role: analyze
+  produces:
+    analyzed_options:
+      type: Score
+    analysis_notes:
+      type: Score
+  consumes:
+  - Option
+  - Criterion

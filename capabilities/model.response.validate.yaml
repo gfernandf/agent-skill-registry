@@ -54,3 +54,17 @@ metadata:
         validation_policy: {"coherence": true, "grounding": true, "coverage": true}
         evidence_context: [{"content": "Revenue increased by 20% year-over-year."}]
 
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    valid:
+      type: Score
+    issues:
+      type: Score
+    confidence_adjustment:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context

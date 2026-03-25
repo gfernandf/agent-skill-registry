@@ -28,3 +28,11 @@ metadata:
         text: "Python is great for machine learning and data science."
       outputs:
         keywords: ["Python", "machine learning", "data science"]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    keywords:
+      type: Entity
+  consumes:
+  - Context

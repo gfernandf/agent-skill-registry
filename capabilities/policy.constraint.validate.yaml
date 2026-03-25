@@ -36,3 +36,14 @@ metadata:
       outputs:
         valid: true
         violations: []
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    valid:
+      type: Score
+    violations:
+      type: Score
+  consumes:
+  - Context
+  - Evidence

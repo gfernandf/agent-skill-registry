@@ -26,3 +26,11 @@ metadata:
         text: "This is a test sentence."
       outputs:
         vector: [0.01, -0.03, 0.12]
+
+cognitive_hints:
+  role: act
+  produces:
+    embedding:
+      type: Artifact
+  consumes:
+  - Context

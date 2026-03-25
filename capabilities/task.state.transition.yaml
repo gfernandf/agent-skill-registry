@@ -54,3 +54,17 @@ metadata:
         transitioned: true
         previous_state: "open"
         current_state: "in_progress"
+
+cognitive_hints:
+  role: act
+  produces:
+    transitioned:
+      type: Entity
+    previous_state:
+      type: Entity
+    current_state:
+      type: Entity
+    reason:
+      type: Evidence
+  consumes:
+  - Entity

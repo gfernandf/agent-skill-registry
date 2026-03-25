@@ -54,3 +54,17 @@ metadata:
         context: "Financial analysis task"
         dimensions: ["toxicity", "bias", "hallucination"]
 
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    risk_score:
+      type: Score
+    dimension_scores:
+      type: Score
+    flags:
+      type: Score
+    safe:
+      type: Score
+  consumes:
+  - Context

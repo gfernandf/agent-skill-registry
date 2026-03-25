@@ -44,3 +44,13 @@ metadata:
         handler: "escalation-bot"
       outputs:
         acknowledged: true
+
+cognitive_hints:
+  role: act
+  produces:
+    acknowledged:
+      type: Decision
+    timestamp:
+      type: Entity
+  consumes:
+  - Entity

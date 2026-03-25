@@ -35,3 +35,11 @@ metadata:
         target_language: "es"
       outputs:
         text: "Hola mundo"
+
+cognitive_hints:
+  role: act
+  produces:
+    translation:
+      type: Artifact
+  consumes:
+  - Context

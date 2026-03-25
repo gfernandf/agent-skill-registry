@@ -50,3 +50,13 @@ metadata:
       outputs:
         milestone_id: "MS-1"
         scheduled: true
+
+cognitive_hints:
+  role: act
+  produces:
+    milestone_id:
+      type: Entity
+    scheduled:
+      type: Entity
+  consumes:
+  - Entity

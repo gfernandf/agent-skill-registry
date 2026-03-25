@@ -40,3 +40,15 @@ metadata:
       outputs:
         estimated_cost: 0.35
         within_budget: true
+
+cognitive_hints:
+  role: act
+  produces:
+    estimated_cost:
+      type: Evidence
+    estimated_duration_ms:
+      type: Evidence
+    within_budget:
+      type: Evidence
+  consumes:
+  - Context

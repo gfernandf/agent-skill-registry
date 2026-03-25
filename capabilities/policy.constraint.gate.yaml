@@ -43,3 +43,16 @@ metadata:
         gate: {rules: {required_keys: ["title"]}, action: "block"}
       outputs:
         allowed: true
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    decision:
+      type: Decision
+    violations:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context
+  - Evidence

@@ -68,3 +68,13 @@ metadata:
       expected_options_count: 3
     - planning
     - option-generation
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    options:
+      type: Plan
+    generation_notes:
+      type: Plan
+  consumes:
+  - Context

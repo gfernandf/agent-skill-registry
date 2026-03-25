@@ -54,3 +54,15 @@ metadata:
         instruction: "Summarize the quarterly financial results"
         dimensions: ["relevance", "fluency", "completeness"]
 
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    scores:
+      type: Score
+    overall:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context

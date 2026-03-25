@@ -49,3 +49,13 @@ metadata:
         reason: "Missing justification"
       outputs:
         rejected: true
+
+cognitive_hints:
+  role: decide
+  produces:
+    rejected:
+      type: Decision
+    timestamp:
+      type: Decision
+  consumes:
+  - Entity

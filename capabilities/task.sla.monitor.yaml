@@ -45,3 +45,15 @@ metadata:
         compliant: []
         breached: ["CASE-1"]
         at_risk: []
+
+cognitive_hints:
+  role: perceive
+  produces:
+    compliant:
+      type: Entity
+    breached:
+      type: Entity
+    at_risk:
+      type: Entity
+  consumes:
+  - Entity

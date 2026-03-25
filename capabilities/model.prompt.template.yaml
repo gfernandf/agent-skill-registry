@@ -43,3 +43,13 @@ metadata:
         template: "Summarize the following text about ${topic}:\n\n${text}"
         variables: {"topic": "climate change", "text": "Global temperatures rose 1.2C..."}
 
+
+cognitive_hints:
+  role: act
+  produces:
+    prompt:
+      type: Entity
+    unresolved:
+      type: Entity
+  consumes:
+  - Context

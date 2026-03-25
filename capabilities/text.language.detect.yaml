@@ -31,3 +31,13 @@ metadata:
       outputs:
         language: "fr"
         confidence: 0.98
+
+cognitive_hints:
+  role: act
+  produces:
+    language:
+      type: Artifact
+    confidence:
+      type: Score
+  consumes:
+  - Context

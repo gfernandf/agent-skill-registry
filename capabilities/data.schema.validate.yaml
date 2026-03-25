@@ -35,3 +35,13 @@ metadata:
         schema: {type: "object", required: ["name"]}
       outputs:
         valid: true
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    valid:
+      type: Score
+    errors:
+      type: Score
+  consumes:
+  - Entity

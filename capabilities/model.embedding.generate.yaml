@@ -43,3 +43,13 @@ metadata:
         text: "Premium wireless headphones with active noise cancellation"
         dimensions: 256
 
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    embedding:
+      type: Entity
+    model:
+      type: Entity
+  consumes:
+  - Context

@@ -40,3 +40,11 @@ metadata:
         record_id: "rec-001"
       outputs:
         deleted: true
+
+cognitive_hints:
+  role: act
+  produces:
+    deleted:
+      type: Entity
+  consumes:
+  - Entity

@@ -54,3 +54,13 @@ metadata:
       outputs:
         incident_id: "INC-1"
         created: true
+
+cognitive_hints:
+  role: act
+  produces:
+    incident_id:
+      type: Entity
+    created:
+      type: Entity
+  consumes:
+  - Entity

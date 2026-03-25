@@ -34,3 +34,11 @@ metadata:
         code: "def foo(x, y):
     return x + y
 "
+
+cognitive_hints:
+  role: analyze
+  produces:
+    formatted_code:
+      type: Artifact
+  consumes:
+  - Artifact

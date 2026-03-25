@@ -47,3 +47,15 @@ metadata:
       outputs:
         priority: "critical"
         confidence: 0.95
+
+cognitive_hints:
+  role: analyze
+  produces:
+    priority:
+      type: Score
+    confidence:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Message

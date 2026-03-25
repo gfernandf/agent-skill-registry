@@ -61,3 +61,17 @@ metadata:
         status: "blocked"
         risk_flags:
           - "goal_drift"
+
+cognitive_hints:
+  role: perceive
+  produces:
+    status:
+      type: Entity
+    risk_flags:
+      type: Entity
+    alerts:
+      type: Entity
+    metrics:
+      type: Entity
+  consumes:
+  - Context

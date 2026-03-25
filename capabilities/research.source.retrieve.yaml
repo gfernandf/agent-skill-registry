@@ -39,3 +39,11 @@ metadata:
         items: [{content: "ML overview", source_ref: {url: "https://example.com/ml"}}]
       outputs:
         items: [{content: "Machine learning is...", resolved: true}]
+
+cognitive_hints:
+  role: act
+  produces:
+    items:
+      type: Entity
+  consumes:
+  - Context

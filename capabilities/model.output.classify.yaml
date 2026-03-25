@@ -49,3 +49,15 @@ metadata:
         categories: ["summary", "analysis", "code", "error"]
         context: "Financial report analysis task"
 
+
+cognitive_hints:
+  role: analyze
+  produces:
+    category:
+      type: Entity
+    confidence:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context

@@ -44,3 +44,15 @@ metadata:
       outputs:
         verified: true
         source: "role-inherited"
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    verified:
+      type: Score
+    source:
+      type: Score
+    evidence:
+      type: Evidence
+  consumes:
+  - Entity

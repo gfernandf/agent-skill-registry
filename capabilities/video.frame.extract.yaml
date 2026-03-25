@@ -26,3 +26,11 @@ metadata:
         video: "(binary video data)"
       outputs:
         frames: ["(frame 1 data)", "(frame 2 data)"]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    frames:
+      type: Entity
+  consumes:
+  - Context

@@ -27,3 +27,13 @@ metadata:
       outputs:
         text: "Q3 revenue increased..."
         metadata: {pages: 5}
+
+cognitive_hints:
+  role: perceive
+  produces:
+    text:
+      type: Entity
+    metadata:
+      type: Entity
+  consumes:
+  - Context

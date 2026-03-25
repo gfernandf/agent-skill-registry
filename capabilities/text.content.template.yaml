@@ -30,3 +30,11 @@ metadata:
         variables: {name: "Alice", place: "HQ"}
       outputs:
         text: "Hello Alice, welcome to HQ!"
+
+cognitive_hints:
+  role: act
+  produces:
+    text:
+      type: Artifact
+  consumes:
+  - Context

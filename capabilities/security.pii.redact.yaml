@@ -29,3 +29,13 @@ metadata:
   examples:
     - text: "Contact john.doe@example.com for the report"
       expected_redacted_text: "Contact REDACTED_EMAIL for the report"
+
+cognitive_hints:
+  role: act
+  produces:
+    redacted_text:
+      type: Entity
+    findings:
+      type: Entity
+  consumes:
+  - Context

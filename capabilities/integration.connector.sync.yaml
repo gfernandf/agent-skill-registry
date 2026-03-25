@@ -48,3 +48,15 @@ metadata:
       outputs:
         synced: true
         records_processed: 42
+
+cognitive_hints:
+  role: act
+  produces:
+    synced:
+      type: Entity
+    records_processed:
+      type: Entity
+    timestamp:
+      type: Entity
+  consumes:
+  - Entity

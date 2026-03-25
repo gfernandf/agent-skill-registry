@@ -26,3 +26,11 @@ metadata:
         audio: "(binary audio data)"
       outputs:
         text: "Hello, welcome to the meeting."
+
+cognitive_hints:
+  role: perceive
+  produces:
+    transcript:
+      type: Entity
+  consumes:
+  - Artifact

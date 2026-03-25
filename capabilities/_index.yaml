@@ -125,43 +125,43 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: identity.assignee.identify
     status: draft
-    description: TODO define capability contract for identity.assignee.identify.
+    description: Identify the most appropriate assignee for a task based on skills, availability, and workload.
 
   - id: identity.decision.justify
     status: draft
-    description: TODO define capability contract for identity.decision.justify.
+    description: Justify an identity or access-related decision by referencing policies and evidence.
 
   - id: identity.permission.gate
     status: draft
-    description: TODO define capability contract for identity.permission.gate.
+    description: Gate an action by checking whether a principal holds the required permission.
 
   - id: identity.permission.get
     status: draft
-    description: TODO define capability contract for identity.permission.get.
+    description: Retrieve a specific permission definition by identifier.
 
   - id: identity.permission.list
     status: draft
-    description: TODO define capability contract for identity.permission.list.
+    description: List permissions granted to a principal, optionally filtered by resource.
 
   - id: identity.permission.verify
     status: draft
-    description: TODO define capability contract for identity.permission.verify.
+    description: Verify that a principal holds a specific permission and return evidence.
 
   - id: identity.risk.score
     status: draft
-    description: TODO define capability contract for identity.risk.score.
+    description: Score the identity risk of a principal based on behaviour, role scope, and anomaly indicators.
 
   - id: identity.role.assign
     status: draft
-    description: TODO define capability contract for identity.role.assign.
+    description: Assign a role to a principal.
 
   - id: identity.role.get
     status: draft
-    description: TODO define capability contract for identity.role.get.
+    description: Retrieve a role definition by identifier.
 
   - id: identity.role.list
     status: draft
-    description: TODO define capability contract for identity.role.list.
+    description: List all available roles, optionally filtered by scope or tag.
 
   - id: image.caption.generate
     status: draft
@@ -177,55 +177,55 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: integration.connector.get
     status: draft
-    description: TODO define capability contract for integration.connector.get.
+    description: Retrieve metadata for a specific connector by identifier.
 
   - id: integration.connector.list
     status: draft
-    description: TODO define capability contract for integration.connector.list.
+    description: List available connectors, optionally filtered by type or status.
 
   - id: integration.connector.sync
     status: draft
-    description: TODO define capability contract for integration.connector.sync.
+    description: Trigger a synchronisation operation on a connector.
 
   - id: integration.event.acknowledge
     status: draft
-    description: TODO define capability contract for integration.event.acknowledge.
+    description: Acknowledge receipt of an integration event from an external system.
 
   - id: integration.mapping.transform
     status: draft
-    description: TODO define capability contract for integration.mapping.transform.
+    description: Apply a field mapping to transform a source record into a target schema.
 
   - id: integration.mapping.validate
     status: draft
-    description: TODO define capability contract for integration.mapping.validate.
+    description: Validate a field mapping definition for completeness and consistency.
 
   - id: integration.record.compare
     status: draft
-    description: TODO define capability contract for integration.record.compare.
+    description: Compare records from two systems and report differences.
 
   - id: integration.record.create
     status: draft
-    description: TODO define capability contract for integration.record.create.
+    description: Create a new record in an external system via a connector.
 
   - id: integration.record.delete
     status: draft
-    description: TODO define capability contract for integration.record.delete.
+    description: Delete a record in an external system via a connector.
 
   - id: integration.record.reconcile
     status: draft
-    description: TODO define capability contract for integration.record.reconcile.
+    description: Reconcile records between two systems and report discrepancies.
 
   - id: integration.record.update
     status: draft
-    description: TODO define capability contract for integration.record.update.
+    description: Update an existing record in an external system via a connector.
 
   - id: integration.record.upsert
     status: draft
-    description: TODO define capability contract for integration.record.upsert.
+    description: Create or update a record in an external system, depending on whether it exists.
 
   - id: memory.record.store
     status: draft
-    description: TODO define capability contract for memory.record.store.
+    description: Store a structured record in memory with namespace isolation and optional TTL.
 
   - id: memory.entry.retrieve
     status: draft
@@ -237,11 +237,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: memory.vector.search
     status: draft
-    description: TODO define capability contract for memory.vector.search.
+    description: Search memory records by vector similarity against a query embedding.
 
   - id: message.priority.classify
     status: draft
-    description: TODO define capability contract for message.priority.classify.
+    description: Classify the priority of a message based on content, sender, and context.
 
   - id: message.notification.send
     status: draft
@@ -285,11 +285,11 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: ops.event.acknowledge
     status: draft
-    description: TODO define capability contract for ops.event.acknowledge.
+    description: Acknowledge receipt and handling of an operational event.
 
   - id: ops.event.monitor
     status: draft
-    description: TODO define capability contract for ops.event.monitor.
+    description: Monitor a stream of operational events and return status with alerts for threshold violations.
 
   - id: ops.trace.analyze
     status: experimental
@@ -307,7 +307,7 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: policy.constraint.gate
     status: draft
-    description: TODO define capability contract for policy.constraint.gate.
+    description: Evaluate a payload against a policy gate and return a pass/block decision with rationale.
 
   - id: policy.constraint.validate
     status: draft
@@ -315,15 +315,15 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: policy.decision.justify
     status: draft
-    description: TODO define capability contract for policy.decision.justify.
+    description: Justify a policy decision by linking it to applicable rules and evidence.
 
   - id: policy.risk.classify
     status: draft
-    description: TODO define capability contract for policy.risk.classify.
+    description: Classify the risk level of an action or payload according to policy categories.
 
   - id: policy.risk.score
     status: draft
-    description: TODO define capability contract for policy.risk.score.
+    description: Compute a numeric risk score for an action across policy dimensions.
 
   - id: provenance.citation.generate
     status: draft
@@ -368,63 +368,63 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
 
   - id: task.approval.approve
     status: draft
-    description: TODO define capability contract for task.approval.approve.
+    description: Approve a pending approval request.
 
   - id: task.approval.reject
     status: draft
-    description: TODO define capability contract for task.approval.reject.
+    description: Reject a pending approval request with a reason.
 
   - id: task.assignee.assign
     status: draft
-    description: TODO define capability contract for task.assignee.assign.
+    description: Assign a task to a user or team.
 
   - id: task.case.close
     status: draft
-    description: TODO define capability contract for task.case.close.
+    description: Close a case or ticket with a resolution.
 
   - id: task.case.create
     status: draft
-    description: TODO define capability contract for task.case.create.
+    description: Create a new case or ticket.
 
   - id: task.case.get
     status: draft
-    description: TODO define capability contract for task.case.get.
+    description: Retrieve a specific case by identifier.
 
   - id: task.case.list
     status: draft
-    description: TODO define capability contract for task.case.list.
+    description: List cases, optionally filtered by status or assignee.
 
   - id: task.case.search
     status: draft
-    description: TODO define capability contract for task.case.search.
+    description: Search cases by keyword or criteria.
 
   - id: task.case.update
     status: draft
-    description: TODO define capability contract for task.case.update.
+    description: Update fields of an existing case.
 
   - id: task.event.acknowledge
     status: draft
-    description: TODO define capability contract for task.event.acknowledge.
+    description: Acknowledge receipt of a task-related event.
 
   - id: task.incident.create
     status: draft
-    description: TODO define capability contract for task.incident.create.
+    description: Create a new incident ticket with severity and affected system information.
 
   - id: task.milestone.schedule
     status: draft
-    description: TODO define capability contract for task.milestone.schedule.
+    description: Schedule a project milestone with a target date and deliverables.
 
   - id: task.priority.classify
     status: draft
-    description: TODO define capability contract for task.priority.classify.
+    description: Classify the priority of a task based on its attributes and context.
 
   - id: task.sla.monitor
     status: draft
-    description: TODO define capability contract for task.sla.monitor.
+    description: Monitor SLA compliance for a set of tasks and raise alerts for breaches.
 
   - id: task.state.transition
     status: draft
-    description: TODO define capability contract for task.state.transition.
+    description: Transition a task to a new state, validating the transition is allowed.
 
   - id: text.content.classify
     status: draft

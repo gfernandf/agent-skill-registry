@@ -44,3 +44,15 @@ metadata:
       outputs:
         priority: "critical"
         confidence: 0.9
+
+cognitive_hints:
+  role: analyze
+  produces:
+    priority:
+      type: Entity
+    confidence:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Entity

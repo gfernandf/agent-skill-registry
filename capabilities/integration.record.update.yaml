@@ -45,3 +45,11 @@ metadata:
         fields: {email: "new@example.com"}
       outputs:
         updated: true
+
+cognitive_hints:
+  role: act
+  produces:
+    updated:
+      type: Entity
+  consumes:
+  - Entity

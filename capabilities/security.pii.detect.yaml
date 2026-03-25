@@ -29,3 +29,13 @@ metadata:
   examples:
     - text: "Email me at john.doe@example.com or call +1 650 555 1234"
       expected_contains_pii: true
+
+cognitive_hints:
+  role: act
+  produces:
+    contains_pii:
+      type: Entity
+    findings:
+      type: Entity
+  consumes:
+  - Context

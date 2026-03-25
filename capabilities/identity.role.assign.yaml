@@ -45,3 +45,13 @@ metadata:
       outputs:
         assigned: true
         effective_permissions: ["resource:read", "resource:write"]
+
+cognitive_hints:
+  role: act
+  produces:
+    assigned:
+      type: Entity
+    effective_permissions:
+      type: Entity
+  consumes:
+  - Entity

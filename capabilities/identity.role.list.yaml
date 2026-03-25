@@ -35,3 +35,13 @@ metadata:
       outputs:
         roles: [{id: "admin"}, {id: "editor"}]
         total: 2
+
+cognitive_hints:
+  role: perceive
+  produces:
+    roles:
+      type: Entity
+    total:
+      type: Entity
+  consumes:
+  - Entity

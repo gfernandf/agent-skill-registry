@@ -50,3 +50,15 @@ metadata:
         stdout: "5
 "
         exit_code: 0
+
+cognitive_hints:
+  role: act
+  produces:
+    result:
+      type: Artifact
+    stdout:
+      type: Artifact
+    stderr:
+      type: Artifact
+  consumes:
+  - Artifact

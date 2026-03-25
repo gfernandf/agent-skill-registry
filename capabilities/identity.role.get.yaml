@@ -35,3 +35,13 @@ metadata:
       outputs:
         role: {id: "admin", name: "Administrator"}
         found: true
+
+cognitive_hints:
+  role: perceive
+  produces:
+    role:
+      type: Entity
+    found:
+      type: Entity
+  consumes:
+  - Entity

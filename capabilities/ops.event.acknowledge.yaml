@@ -48,3 +48,13 @@ metadata:
         handler: "on-call-bot"
       outputs:
         acknowledged: true
+
+cognitive_hints:
+  role: act
+  produces:
+    acknowledged:
+      type: Decision
+    timestamp:
+      type: Evidence
+  consumes:
+  - Context

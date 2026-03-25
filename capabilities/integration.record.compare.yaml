@@ -49,3 +49,15 @@ metadata:
       outputs:
         match: true
         discrepancies: [{field: "name", a: "Alice", b: "Alicia"}]
+
+cognitive_hints:
+  role: analyze
+  produces:
+    match:
+      type: Entity
+    differences:
+      type: Entity
+    similarity:
+      type: Entity
+  consumes:
+  - Entity

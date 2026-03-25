@@ -26,3 +26,11 @@ metadata:
         text: "{\"name\": \"John\", \"age\": 30}"
       outputs:
         data: {name: "John", age: 30}
+
+cognitive_hints:
+  role: perceive
+  produces:
+    data:
+      type: Entity
+  consumes:
+  - Entity

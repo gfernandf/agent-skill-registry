@@ -43,3 +43,16 @@ metadata:
       outputs:
         risk_level: "medium"
         factors: ["external"]
+
+cognitive_hints:
+  role: analyze
+  produces:
+    risk_level:
+      type: Decision
+    factors:
+      type: Decision
+    rationale:
+      type: Evidence
+  consumes:
+  - Context
+  - Evidence

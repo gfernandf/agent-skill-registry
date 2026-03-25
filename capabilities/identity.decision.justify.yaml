@@ -49,3 +49,15 @@ metadata:
       outputs:
         justification: "Access granted based on role."
         confidence: 0.9
+
+cognitive_hints:
+  role: decide
+  produces:
+    justification:
+      type: Evidence
+    applicable_policies:
+      type: Decision
+    confidence:
+      type: Score
+  consumes:
+  - Entity

@@ -37,3 +37,11 @@ metadata:
         value: "dark_mode"
       outputs:
         stored: true
+
+cognitive_hints:
+  role: act
+  produces:
+    stored:
+      type: Entity
+  consumes:
+  - Entity

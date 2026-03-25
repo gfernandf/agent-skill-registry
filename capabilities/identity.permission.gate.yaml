@@ -44,3 +44,13 @@ metadata:
       outputs:
         allowed: true
         reason: "Permission granted via admin role."
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    allowed:
+      type: Decision
+    reason:
+      type: Evidence
+  consumes:
+  - Entity

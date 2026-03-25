@@ -31,3 +31,13 @@ metadata:
       outputs:
         value: "dark_mode"
         found: true
+
+cognitive_hints:
+  role: act
+  produces:
+    value:
+      type: Entity
+    found:
+      type: Entity
+  consumes:
+  - Entity

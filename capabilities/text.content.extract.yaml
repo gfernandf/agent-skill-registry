@@ -29,3 +29,11 @@ metadata:
       outputs:
         text: "Title
 Content."
+
+cognitive_hints:
+  role: perceive
+  produces:
+    text:
+      type: Entity
+  consumes:
+  - Context

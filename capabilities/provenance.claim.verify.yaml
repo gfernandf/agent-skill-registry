@@ -40,3 +40,15 @@ metadata:
       outputs:
         supported: true
         confidence: 0.95
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    verified:
+      type: Score
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
+  consumes:
+  - Context

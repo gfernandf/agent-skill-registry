@@ -53,3 +53,13 @@ metadata:
       expected_route: summarizer
 
   status: experimental
+
+cognitive_hints:
+  role: decide
+  produces:
+    route:
+      type: Decision
+    confidence:
+      type: Score
+  consumes:
+  - Context

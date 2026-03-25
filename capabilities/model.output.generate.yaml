@@ -60,3 +60,15 @@ metadata:
         output_schema: {"type": "object", "properties": {"risks": {"type": "array"}, "severity": {"type": "string"}}}
         detail_level: standard
 
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    output:
+      type: Entity
+    warnings:
+      type: Entity
+    coverage:
+      type: Entity
+  consumes:
+  - Context

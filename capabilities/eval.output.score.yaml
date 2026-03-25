@@ -75,3 +75,16 @@ metadata:
       expected_score_range: [0.5, 1.0]
 
   status: experimental
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    score:
+      type: Score
+    dimensions:
+      type: Score
+    quality_level:
+      type: Score
+  consumes:
+  - Option
+  - Criterion

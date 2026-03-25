@@ -31,3 +31,11 @@ metadata:
         condition: {age: {$gt: 26}}
       outputs:
         table: [{name: "Bob", age: 30}]
+
+cognitive_hints:
+  role: act
+  produces:
+    table:
+      type: Entity
+  consumes:
+  - Entity

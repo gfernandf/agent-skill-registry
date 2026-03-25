@@ -45,3 +45,13 @@ metadata:
       outputs:
         record_id: "rec-001"
         created: true
+
+cognitive_hints:
+  role: act
+  produces:
+    created:
+      type: Entity
+    record_id:
+      type: Entity
+  consumes:
+  - Entity

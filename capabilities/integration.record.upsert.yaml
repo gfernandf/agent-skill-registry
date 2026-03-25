@@ -46,3 +46,13 @@ metadata:
       outputs:
         upserted: true
         action: "updated"
+
+cognitive_hints:
+  role: act
+  produces:
+    action:
+      type: Entity
+    record_id:
+      type: Entity
+  consumes:
+  - Entity

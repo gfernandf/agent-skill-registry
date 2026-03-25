@@ -37,3 +37,13 @@ metadata:
         block_pii: true
         block_secrets: false
       expected_allowed: false
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    allowed:
+      type: Decision
+    reasons:
+      type: Score
+  consumes:
+  - Context

@@ -43,3 +43,13 @@ metadata:
         top_k: 3
       outputs:
         results: [{id: "r1", score: 0.89, content: "Use blue-green deployment."}]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    results:
+      type: Entity
+    total_searched:
+      type: Entity
+  consumes:
+  - Entity

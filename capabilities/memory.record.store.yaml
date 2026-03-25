@@ -49,3 +49,13 @@ metadata:
       outputs:
         stored: true
         record_id: "r1"
+
+cognitive_hints:
+  role: act
+  produces:
+    stored:
+      type: Entity
+    record_id:
+      type: Entity
+  consumes:
+  - Entity

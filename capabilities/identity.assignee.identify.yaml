@@ -42,3 +42,15 @@ metadata:
         task: {type: "code_review", required_skills: ["python"]}
       outputs:
         assignee: {id: "alice", match_score: 0.7}
+
+cognitive_hints:
+  role: act
+  produces:
+    assignee:
+      type: Entity
+    alternatives:
+      type: Entity
+    rationale:
+      type: Evidence
+  consumes:
+  - Entity

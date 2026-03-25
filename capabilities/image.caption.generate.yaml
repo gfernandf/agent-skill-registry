@@ -26,3 +26,11 @@ metadata:
         image: "(binary image data)"
       outputs:
         caption: "A sunset over the mountains."
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    caption:
+      type: Artifact
+  consumes:
+  - Artifact

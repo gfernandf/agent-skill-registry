@@ -35,3 +35,11 @@ metadata:
         excerpt: "Key fact"
       outputs:
         citation: "Example. Retrieved from https://example.com/article"
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    citation:
+      type: Entity
+  consumes:
+  - Context

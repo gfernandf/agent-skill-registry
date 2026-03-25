@@ -41,3 +41,13 @@ metadata:
       outputs:
         label: "positive"
         confidence: 0.95
+
+cognitive_hints:
+  role: analyze
+  produces:
+    label:
+      type: Artifact
+    confidence:
+      type: Score
+  consumes:
+  - Context

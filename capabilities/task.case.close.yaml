@@ -44,3 +44,13 @@ metadata:
         resolution: "Fixed in v2.1"
       outputs:
         closed: true
+
+cognitive_hints:
+  role: act
+  produces:
+    closed:
+      type: Entity
+    timestamp:
+      type: Entity
+  consumes:
+  - Entity

@@ -35,3 +35,13 @@ metadata:
       outputs:
         connector: {id: "crm-rest", type: "rest", status: "active"}
         found: true
+
+cognitive_hints:
+  role: perceive
+  produces:
+    connector:
+      type: Entity
+    found:
+      type: Entity
+  consumes:
+  - Entity

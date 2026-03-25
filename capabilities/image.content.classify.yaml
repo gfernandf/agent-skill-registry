@@ -36,3 +36,13 @@ metadata:
       outputs:
         label: "cat"
         confidence: 0.92
+
+cognitive_hints:
+  role: analyze
+  produces:
+    label:
+      type: Artifact
+    confidence:
+      type: Score
+  consumes:
+  - Artifact

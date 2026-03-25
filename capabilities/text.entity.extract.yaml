@@ -26,3 +26,11 @@ metadata:
         text: "John Smith works at Google in Mountain View."
       outputs:
         entities: [{text: "John Smith", type: "PERSON"}, {text: "Google", type: "ORG"}]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    entities:
+      type: Entity
+  consumes:
+  - Context

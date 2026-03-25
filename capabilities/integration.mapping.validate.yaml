@@ -40,3 +40,13 @@ metadata:
       outputs:
         valid: true
         warnings: []
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    valid:
+      type: Score
+    issues:
+      type: Score
+  consumes:
+  - Entity

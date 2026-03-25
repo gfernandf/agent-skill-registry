@@ -43,3 +43,15 @@ metadata:
         output: {"text": "Contact john@example.com for details."}
         policy: {"remove_pii": true, "remove_harmful": true}
 
+
+cognitive_hints:
+  role: act
+  produces:
+    sanitized_output:
+      type: Entity
+    removals:
+      type: Entity
+    clean:
+      type: Entity
+  consumes:
+  - Context

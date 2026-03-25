@@ -60,3 +60,13 @@ metadata:
             description: "Validate extracted price records"
 
   status: experimental
+
+cognitive_hints:
+  role: synthesize
+  produces:
+    plan:
+      type: Plan
+    step_count:
+      type: Plan
+  consumes:
+  - Context

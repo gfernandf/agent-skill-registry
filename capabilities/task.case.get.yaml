@@ -35,3 +35,13 @@ metadata:
       outputs:
         case: {id: "CASE-1", title: "Bug in login page", state: "open"}
         found: true
+
+cognitive_hints:
+  role: perceive
+  produces:
+    case:
+      type: Entity
+    found:
+      type: Entity
+  consumes:
+  - Entity

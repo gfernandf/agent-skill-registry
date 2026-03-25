@@ -54,3 +54,17 @@ metadata:
         matched: []
         only_a: [{id: "1"}]
         only_b: [{id: "2"}]
+
+cognitive_hints:
+  role: analyze
+  produces:
+    matched:
+      type: Entity
+    only_a:
+      type: Entity
+    only_b:
+      type: Entity
+    discrepancies:
+      type: Entity
+  consumes:
+  - Entity

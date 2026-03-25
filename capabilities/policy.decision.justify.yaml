@@ -48,3 +48,16 @@ metadata:
       outputs:
         justification: "Approved per rule R1."
         applicable_rules: ["R1"]
+
+cognitive_hints:
+  role: decide
+  produces:
+    justification:
+      type: Evidence
+    applicable_rules:
+      type: Decision
+    confidence:
+      type: Score
+  consumes:
+  - Context
+  - Evidence

@@ -45,3 +45,15 @@ metadata:
         risk_score: 0.3
         factors: ["high_login_failures"]
         safe: true
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    risk_score:
+      type: Score
+    factors:
+      type: Score
+    safe:
+      type: Score
+  consumes:
+  - Entity

@@ -35,3 +35,11 @@ metadata:
         chunk_size: 500
       outputs:
         chunks: ["A long doc...", "ument continued..."]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    chunks:
+      type: Entity
+  consumes:
+  - Artifact

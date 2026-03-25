@@ -41,3 +41,11 @@ metadata:
       outputs:
         sent: true
         message_id: "notif-001"
+
+cognitive_hints:
+  role: act
+  produces:
+    sent:
+      type: Score
+  consumes:
+  - Message

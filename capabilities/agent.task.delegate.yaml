@@ -69,3 +69,15 @@ metadata:
       expected_accepted: true
 
   status: experimental
+
+cognitive_hints:
+  role: decide
+  produces:
+    accepted:
+      type: Decision
+    delegation_id:
+      type: Decision
+    reason:
+      type: Evidence
+  consumes:
+  - Context

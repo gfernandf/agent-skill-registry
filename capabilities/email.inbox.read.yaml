@@ -26,3 +26,11 @@ metadata:
         mailbox: "inbox"
       outputs:
         messages: [{from: "alice@example.com", subject: "Meeting notes"}]
+
+cognitive_hints:
+  role: perceive
+  produces:
+    messages:
+      type: Entity
+  consumes:
+  - Message

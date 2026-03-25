@@ -35,3 +35,13 @@ metadata:
       outputs:
         permission: {id: "resource:read", description: "Read resources"}
         found: true
+
+cognitive_hints:
+  role: perceive
+  produces:
+    permission:
+      type: Entity
+    found:
+      type: Entity
+  consumes:
+  - Entity
