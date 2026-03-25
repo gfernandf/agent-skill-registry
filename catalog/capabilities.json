@@ -57,6 +57,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "route": {
+          "type": "Decision"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -123,6 +137,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "options": {
+          "type": "Plan"
+        },
+        "generation_notes": {
+          "type": "Plan"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -271,6 +299,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "plan": {
+          "type": "Plan"
+        },
+        "step_count": {
+          "type": "Plan"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -335,6 +377,23 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "accepted": {
+          "type": "Decision"
+        },
+        "delegation_id": {
+          "type": "Decision"
+        },
+        "reason": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     },
     "safety": {
       "trust_level": "elevated",
@@ -799,6 +858,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "transcript": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -856,6 +926,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "diff": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -919,6 +1000,23 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "result": {
+          "type": "Artifact"
+        },
+        "stdout": {
+          "type": "Artifact"
+        },
+        "stderr": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     },
     "safety": {
       "trust_level": "privileged",
@@ -1060,6 +1158,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "formatted_code": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -1108,6 +1217,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "data": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -1355,6 +1475,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "valid": {
+          "type": "Score"
+        },
+        "errors": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -1560,6 +1694,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "chunks": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -1611,6 +1756,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "messages": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Message"
+      ]
     }
   },
   {
@@ -1767,6 +1923,21 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "analyzed_options": {
+          "type": "Score"
+        },
+        "analysis_notes": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Option",
+        "Criterion"
+      ]
     }
   },
   {
@@ -1968,6 +2139,24 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "score": {
+          "type": "Score"
+        },
+        "dimensions": {
+          "type": "Score"
+        },
+        "quality_level": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Option",
+        "Criterion"
+      ]
     }
   },
   {
@@ -2264,6 +2453,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "assignee": {
+          "type": "Entity"
+        },
+        "alternatives": {
+          "type": "Entity"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2335,6 +2541,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "justification": {
+          "type": "Evidence"
+        },
+        "applicable_policies": {
+          "type": "Decision"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2398,6 +2621,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "allowed": {
+          "type": "Decision"
+        },
+        "reason": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2452,6 +2689,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "permission": {
+          "type": "Entity"
+        },
+        "found": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2512,6 +2763,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "permissions": {
+          "type": "Entity"
+        },
+        "total": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2575,6 +2840,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "verified": {
+          "type": "Score"
+        },
+        "source": {
+          "type": "Score"
+        },
+        "evidence": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2643,6 +2925,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "risk_score": {
+          "type": "Score"
+        },
+        "factors": {
+          "type": "Score"
+        },
+        "safe": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2704,6 +3003,20 @@
       "side_effects": true,
       "idempotent": true
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "assigned": {
+          "type": "Entity"
+        },
+        "effective_permissions": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "elevated",
       "requires_confirmation": true,
@@ -2762,6 +3075,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "role": {
+          "type": "Entity"
+        },
+        "found": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2820,6 +3147,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "roles": {
+          "type": "Entity"
+        },
+        "total": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -2865,6 +3206,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "caption": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -2926,6 +3278,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "label": {
+          "type": "Artifact"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Artifact"
+      ]
     }
   },
   {
@@ -3058,6 +3424,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "connector": {
+          "type": "Entity"
+        },
+        "found": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3119,6 +3499,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "connectors": {
+          "type": "Entity"
+        },
+        "total": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3180,6 +3574,23 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "synced": {
+          "type": "Entity"
+        },
+        "records_processed": {
+          "type": "Entity"
+        },
+        "timestamp": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "elevated",
@@ -3246,6 +3657,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "acknowledged": {
+          "type": "Decision"
+        },
+        "timestamp": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -3316,6 +3741,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "transformed": {
+          "type": "Entity"
+        },
+        "unmapped_fields": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3381,6 +3820,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "valid": {
+          "type": "Score"
+        },
+        "issues": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3464,6 +3917,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "match": {
+          "type": "Entity"
+        },
+        "differences": {
+          "type": "Entity"
+        },
+        "similarity": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3524,6 +3994,20 @@
       "side_effects": true,
       "idempotent": false
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "created": {
+          "type": "Entity"
+        },
+        "record_id": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "standard",
       "requires_confirmation": false,
@@ -3579,6 +4063,17 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "deleted": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "elevated",
@@ -3674,6 +4169,26 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "matched": {
+          "type": "Entity"
+        },
+        "only_a": {
+          "type": "Entity"
+        },
+        "only_b": {
+          "type": "Entity"
+        },
+        "discrepancies": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3733,6 +4248,17 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "updated": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -3802,6 +4328,20 @@
       "side_effects": true,
       "idempotent": true
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "action": {
+          "type": "Entity"
+        },
+        "record_id": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "standard",
       "requires_confirmation": false,
@@ -3857,6 +4397,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "value": {
+          "type": "Entity"
+        },
+        "found": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -3908,6 +4462,17 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "stored": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -3978,6 +4543,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "stored": {
+          "type": "Entity"
+        },
+        "record_id": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -4051,6 +4630,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "results": {
+          "type": "Entity"
+        },
+        "total_searched": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -4103,6 +4696,17 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "sent": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Message"
+      ]
     },
     "safety": {
       "trust_level": "elevated",
@@ -4179,6 +4783,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "priority": {
+          "type": "Score"
+        },
+        "confidence": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Message"
+      ]
     }
   },
   {
@@ -4238,6 +4859,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "embedding": {
+          "type": "Entity"
+        },
+        "model": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4310,6 +4945,23 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "category": {
+          "type": "Entity"
+        },
+        "confidence": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4402,6 +5054,23 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "output": {
+          "type": "Entity"
+        },
+        "warnings": {
+          "type": "Entity"
+        },
+        "coverage": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4467,6 +5136,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "sanitized_output": {
+          "type": "Entity"
+        },
+        "removals": {
+          "type": "Entity"
+        },
+        "clean": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4543,6 +5229,23 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "scores": {
+          "type": "Score"
+        },
+        "overall": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4605,6 +5308,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "prompt": {
+          "type": "Entity"
+        },
+        "unresolved": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4687,6 +5404,26 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "valid": {
+          "type": "Score"
+        },
+        "issues": {
+          "type": "Score"
+        },
+        "confidence_adjustment": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4765,6 +5502,26 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "risk_score": {
+          "type": "Score"
+        },
+        "dimension_scores": {
+          "type": "Score"
+        },
+        "flags": {
+          "type": "Score"
+        },
+        "safe": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4837,6 +5594,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "estimated_cost": {
+          "type": "Evidence"
+        },
+        "estimated_duration_ms": {
+          "type": "Evidence"
+        },
+        "within_budget": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -4899,6 +5673,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "acknowledged": {
+          "type": "Decision"
+        },
+        "timestamp": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -4979,6 +5767,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "status": {
+          "type": "Entity"
+        },
+        "alerts": {
+          "type": "Entity"
+        },
+        "event_summary": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5232,6 +6037,26 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "status": {
+          "type": "Entity"
+        },
+        "risk_flags": {
+          "type": "Entity"
+        },
+        "alerts": {
+          "type": "Entity"
+        },
+        "metrics": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5279,7 +6104,21 @@
     },
     "requires": [
       "fs.file.read"
-    ]
+    ],
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "text": {
+          "type": "Entity"
+        },
+        "metadata": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
+    }
   },
   {
     "id": "policy.constraint.gate",
@@ -5350,6 +6189,24 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "decision": {
+          "type": "Decision"
+        },
+        "violations": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
     }
   },
   {
@@ -5413,6 +6270,21 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "valid": {
+          "type": "Score"
+        },
+        "violations": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
     }
   },
   {
@@ -5488,6 +6360,24 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "justification": {
+          "type": "Evidence"
+        },
+        "applicable_rules": {
+          "type": "Decision"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
     }
   },
   {
@@ -5556,6 +6446,24 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "risk_level": {
+          "type": "Decision"
+        },
+        "factors": {
+          "type": "Decision"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
     }
   },
   {
@@ -5624,6 +6532,24 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "risk_score": {
+          "type": "Score"
+        },
+        "dimension_scores": {
+          "type": "Score"
+        },
+        "safe": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
     }
   },
   {
@@ -5683,6 +6609,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "citation": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5749,6 +6686,23 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "verified": {
+          "type": "Score"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5805,6 +6759,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "items": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5861,6 +6826,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "allowed": {
+          "type": "Decision"
+        },
+        "reasons": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5906,6 +6885,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "contains_pii": {
+          "type": "Entity"
+        },
+        "findings": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5951,6 +6944,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "redacted_text": {
+          "type": "Entity"
+        },
+        "findings": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -5996,6 +7003,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "contains_secret": {
+          "type": "Entity"
+        },
+        "findings": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -6166,6 +7187,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "table": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -6321,6 +7353,20 @@
       "side_effects": true,
       "idempotent": true
     },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "approved": {
+          "type": "Decision"
+        },
+        "timestamp": {
+          "type": "Decision"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "elevated",
       "requires_confirmation": true,
@@ -6389,6 +7435,20 @@
       "side_effects": true,
       "idempotent": true
     },
+    "cognitive_hints": {
+      "role": "decide",
+      "produces": {
+        "rejected": {
+          "type": "Decision"
+        },
+        "timestamp": {
+          "type": "Decision"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "elevated",
       "requires_confirmation": true,
@@ -6448,6 +7508,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "assigned": {
+          "type": "Entity"
+        },
+        "timestamp": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -6509,6 +7583,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "closed": {
+          "type": "Entity"
+        },
+        "timestamp": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -6577,6 +7665,20 @@
       "side_effects": true,
       "idempotent": false
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "case_id": {
+          "type": "Entity"
+        },
+        "created": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "standard",
       "requires_confirmation": false,
@@ -6636,6 +7738,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "case": {
+          "type": "Entity"
+        },
+        "found": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -6697,6 +7813,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "cases": {
+          "type": "Entity"
+        },
+        "total": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -6758,6 +7888,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "results": {
+          "type": "Entity"
+        },
+        "total": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -6811,6 +7955,17 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "updated": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -6872,6 +8027,20 @@
       "deterministic": true,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "acknowledged": {
+          "type": "Decision"
+        },
+        "timestamp": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -6946,6 +8115,20 @@
       "side_effects": true,
       "idempotent": false
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "incident_id": {
+          "type": "Entity"
+        },
+        "created": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "standard",
       "requires_confirmation": false,
@@ -7016,6 +8199,20 @@
       "deterministic": false,
       "side_effects": true,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "milestone_id": {
+          "type": "Entity"
+        },
+        "scheduled": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     },
     "safety": {
       "trust_level": "standard",
@@ -7089,6 +8286,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "priority": {
+          "type": "Entity"
+        },
+        "confidence": {
+          "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -7166,6 +8380,23 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "compliant": {
+          "type": "Entity"
+        },
+        "breached": {
+          "type": "Entity"
+        },
+        "at_risk": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
     }
   },
   {
@@ -7236,6 +8467,26 @@
       "side_effects": true,
       "idempotent": true
     },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "transitioned": {
+          "type": "Entity"
+        },
+        "previous_state": {
+          "type": "Entity"
+        },
+        "current_state": {
+          "type": "Entity"
+        },
+        "reason": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Entity"
+      ]
+    },
     "safety": {
       "trust_level": "standard",
       "requires_confirmation": false,
@@ -7301,6 +8552,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "produces": {
+        "label": {
+          "type": "Artifact"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7351,6 +8616,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "embedding": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7396,6 +8672,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "text": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7526,6 +8813,20 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        },
+        "item_count": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7628,6 +8929,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7747,6 +9059,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "translation": {
+          "type": "Artifact"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7801,6 +9124,17 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "entities": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7850,6 +9184,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "keywords": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -7901,6 +9246,20 @@
       "deterministic": false,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "language": {
+          "type": "Artifact"
+        },
+        "confidence": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
@@ -8017,6 +9376,17 @@
       "deterministic": true,
       "side_effects": false,
       "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "produces": {
+        "frames": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
     }
   },
   {
