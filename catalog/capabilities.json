@@ -2361,7 +2361,7 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": true
     },
     "cognitive_hints": {
       "role": "act",
