@@ -3520,6 +3520,170 @@
     }
   },
   {
+    "id": "security.safe-summarize",
+    "version": "0.1.0",
+    "name": "Safe Summarize",
+    "description": "Summarize text with built-in PII protection. Detects PII, redacts it before summarization, then gates the final output to ensure no sensitive data leaks through. Demonstrates binding fallback (baseline → LLM), safety gates, and audit trail in a single workflow.",
+    "channel": "official",
+    "domain": "security",
+    "slug": "safe-summarize",
+    "file": "skills/official/security/safe-summarize/skill.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "Raw text to summarize (may contain PII)."
+      },
+      "max_length": {
+        "type": "integer",
+        "required": false,
+        "description": "Maximum summary length in characters."
+      },
+      "block_pii": {
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to block output containing residual PII (default true)."
+      }
+    },
+    "outputs": {
+      "summary": {
+        "type": "string",
+        "required": true,
+        "description": "PII-safe summary of the input text."
+      },
+      "pii_detected": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether PII was found in the original text."
+      },
+      "gate_allowed": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the output gate approved release."
+      }
+    },
+    "steps": [
+      {
+        "id": "detect_pii",
+        "uses": "security.pii.detect",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "pii_detected": "outputs.pii_detected"
+        }
+      },
+      {
+        "id": "redact_pii",
+        "uses": "security.pii.redact",
+        "input": {
+          "text": "inputs.text"
+        },
+        "output": {
+          "redacted_text": "vars.clean_text"
+        }
+      },
+      {
+        "id": "summarize",
+        "uses": "text.content.summarize",
+        "config": {
+          "depends_on": [
+            "redact_pii"
+          ]
+        },
+        "input": {
+          "text": "vars.clean_text",
+          "max_length": "inputs.max_length"
+        },
+        "output": {
+          "summary": "vars.raw_summary"
+        }
+      },
+      {
+        "id": "gate_output",
+        "uses": "security.output.gate",
+        "config": {
+          "depends_on": [
+            "summarize",
+            "detect_pii"
+          ]
+        },
+        "input": {
+          "output": {
+            "text": "vars.raw_summary",
+            "pii_detected": "outputs.pii_detected"
+          },
+          "policy": {
+            "block_pii": "inputs.block_pii"
+          }
+        },
+        "output": {
+          "allowed": "outputs.gate_allowed",
+          "reasons": "vars.gate_reasons"
+        }
+      },
+      {
+        "id": "finalize",
+        "uses": "text.content.transform",
+        "config": {
+          "depends_on": [
+            "gate_output"
+          ]
+        },
+        "input": {
+          "text": "vars.raw_summary",
+          "goal": "Return the text as-is if gate approved, otherwise return '[BLOCKED: output contained sensitive data]'"
+        },
+        "output": {
+          "text": "outputs.summary"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "security.output.gate",
+      "security.pii.detect",
+      "security.pii.redact",
+      "text.content.summarize",
+      "text.content.transform"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "security",
+        "pii",
+        "summarization",
+        "safety-gate",
+        "demo"
+      ],
+      "category": null,
+      "status": "experimental",
+      "use_cases": [
+        "Summarize customer support tickets without leaking PII",
+        "Process medical records with automatic redaction",
+        "Demonstrate binding fallback + safety gate in one workflow"
+      ],
+      "examples": [
+        {
+          "description": "Summarize text containing PII",
+          "input": {
+            "text": "John Doe (john.doe@acme.com, +1-650-555-1234) reported a billing issue with invoice #INV-2026-0042. The charge of $1,250 appeared twice on his Visa ending in 4242.",
+            "max_length": 80
+          },
+          "output": {
+            "summary": "Customer reported duplicate billing charge on invoice. Issue requires resolution.",
+            "pii_detected": true,
+            "gate_allowed": true
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
     "id": "table.filter-summary",
     "version": "0.1.0",
     "name": "Filter Table Summary",

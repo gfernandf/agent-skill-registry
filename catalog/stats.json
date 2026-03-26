@@ -1,7 +1,7 @@
 {
   "summary": {
     "capability_count": 122,
-    "skill_count": 35,
+    "skill_count": 36,
     "domain_count": 27,
     "channel_count": 2
   },
@@ -22,14 +22,15 @@
       "email": 1,
       "eval": 1,
       "image": 1,
+      "security": 1,
       "table": 1,
       "task": 1
     },
     "by_channel": {
-      "official": 22,
+      "official": 23,
       "experimental": 13
     },
-    "average_steps": 2.77,
+    "average_steps": 2.83,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -70,7 +71,7 @@
     "most_used": [
       {
         "id": "text.content.summarize",
-        "count": 16
+        "count": 17
       },
       {
         "id": "eval.output.score",
@@ -213,11 +214,27 @@
         "count": 1
       },
       {
+        "id": "security.output.gate",
+        "count": 1
+      },
+      {
+        "id": "security.pii.detect",
+        "count": 1
+      },
+      {
+        "id": "security.pii.redact",
+        "count": 1
+      },
+      {
         "id": "table.row.filter",
         "count": 1
       },
       {
         "id": "text.content.merge",
+        "count": 1
+      },
+      {
+        "id": "text.content.transform",
         "count": 1
       },
       {
@@ -285,9 +302,6 @@
       "policy.risk.score",
       "provenance.citation.generate",
       "provenance.claim.verify",
-      "security.output.gate",
-      "security.pii.detect",
-      "security.pii.redact",
       "security.secret.detect",
       "table.column.aggregate",
       "table.row.sort",
@@ -308,24 +322,23 @@
       "task.state.transition",
       "text.content.generate",
       "text.content.template",
-      "text.content.transform",
       "text.response.extract",
       "video.frame.extract",
       "web.source.verify"
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 97,
+    "skill_to_capability_edges": 102,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 10
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 35,
+    "skills_with_nondefault_metadata": 36,
     "capabilities_with_nondefault_metadata": 122,
     "top_skill_tags": [
       {
         "id": "summarization",
-        "count": 15
+        "count": 16
       },
       {
         "id": "web",
@@ -500,6 +513,10 @@
         "count": 1
       },
       {
+        "id": "demo",
+        "count": 1
+      },
+      {
         "id": "development",
         "count": 1
       },
@@ -572,6 +589,10 @@
         "count": 1
       },
       {
+        "id": "pii",
+        "count": 1
+      },
+      {
         "id": "planning",
         "count": 1
       },
@@ -604,7 +625,15 @@
         "count": 1
       },
       {
+        "id": "safety-gate",
+        "count": 1
+      },
+      {
         "id": "search",
+        "count": 1
+      },
+      {
+        "id": "security",
         "count": 1
       },
       {

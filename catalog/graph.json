@@ -181,6 +181,16 @@
       ],
       "skills": []
     },
+    "security.safe-summarize": {
+      "capabilities": [
+        "security.output.gate",
+        "security.pii.detect",
+        "security.pii.redact",
+        "text.content.summarize",
+        "text.content.transform"
+      ],
+      "skills": []
+    },
     "table.filter-summary": {
       "capabilities": [
         "table.row.filter",
