@@ -48,7 +48,7 @@ cognitive_hints:
 properties:
   deterministic: true
   side_effects: true
-  idempotent: false
+  idempotent: true
 
 safety:
   trust_level: elevated
