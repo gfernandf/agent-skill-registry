@@ -24,10 +24,16 @@ steps:
     limit: inputs.limit
   output:
     results: outputs.results
+- id: merge_results
+  uses: text.content.merge
+  input:
+    items: outputs.results
+  output:
+    text: vars.merged_results
 - id: summarize_results
   uses: text.content.summarize
   input:
-    text: outputs.results
+    text: vars.merged_results
   output:
     summary: outputs.summary
 metadata:

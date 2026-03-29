@@ -30,7 +30,7 @@
       "official": 23,
       "experimental": 13
     },
-    "average_steps": 2.83,
+    "average_steps": 2.97,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -78,11 +78,15 @@
         "count": 7
       },
       {
-        "id": "text.content.classify",
-        "count": 5
+        "id": "text.content.merge",
+        "count": 6
       },
       {
         "id": "data.schema.validate",
+        "count": 4
+      },
+      {
+        "id": "text.content.classify",
         "count": 4
       },
       {
@@ -186,6 +190,10 @@
         "count": 1
       },
       {
+        "id": "data.record.transform",
+        "count": 1
+      },
+      {
         "id": "decision.option.justify",
         "count": 1
       },
@@ -230,10 +238,6 @@
         "count": 1
       },
       {
-        "id": "text.content.merge",
-        "count": 1
-      },
-      {
         "id": "text.content.transform",
         "count": 1
       },
@@ -254,7 +258,6 @@
       "code.source.analyze",
       "code.source.format",
       "data.record.deduplicate",
-      "data.record.transform",
       "email.message.send",
       "fs.file.list",
       "fs.file.read",
@@ -328,7 +331,7 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 102,
+    "skill_to_capability_edges": 107,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 10
   },

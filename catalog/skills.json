@@ -39,7 +39,7 @@
         "id": "route_plan",
         "uses": "agent.input.route",
         "input": {
-          "input": "outputs.plan"
+          "query": "inputs.objective"
         },
         "output": {
           "route": "outputs.route"
@@ -782,21 +782,17 @@
       },
       {
         "id": "classify_risks",
-        "uses": "text.content.classify",
+        "uses": "data.record.transform",
         "input": {
-          "text": "outputs.identified_risks",
-          "labels": [
-            "operational",
-            "strategic",
-            "regulatory",
-            "technical",
-            "financial",
-            "reputational",
-            "organizational"
-          ]
+          "records": "outputs.identified_risks",
+          "mapping": {
+            "select": [
+              "category"
+            ]
+          }
         },
         "output": {
-          "label": "outputs.risk_categories"
+          "records": "outputs.risk_categories"
         }
       },
       {
@@ -837,8 +833,8 @@
     ],
     "uses_capabilities": [
       "analysis.risk.extract",
-      "eval.output.score",
-      "text.content.classify"
+      "data.record.transform",
+      "eval.output.score"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1594,11 +1590,21 @@
     },
     "steps": [
       {
+        "id": "merge_context",
+        "uses": "text.content.merge",
+        "input": {
+          "items": "inputs.context_items"
+        },
+        "output": {
+          "text": "vars.merged_context"
+        }
+      },
+      {
         "id": "generate_options",
         "uses": "agent.option.generate",
         "input": {
           "goal": "inputs.goal",
-          "context": "inputs.context_items",
+          "context": "vars.merged_context",
           "constraints": "inputs.constraints",
           "max_options": 4
         },
@@ -1611,7 +1617,7 @@
         "uses": "eval.option.analyze",
         "input": {
           "options": "vars.generated_options",
-          "context": "inputs.context_items",
+          "context": "vars.merged_context",
           "goal": "inputs.goal"
         },
         "output": {
@@ -1699,7 +1705,8 @@
       "decision.option.justify",
       "eval.option.analyze",
       "eval.option.score",
-      "eval.output.score"
+      "eval.output.score",
+      "text.content.merge"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1882,10 +1889,20 @@
         }
       },
       {
+        "id": "merge_messages",
+        "uses": "text.content.merge",
+        "input": {
+          "items": "outputs.messages"
+        },
+        "output": {
+          "text": "vars.merged_text"
+        }
+      },
+      {
         "id": "summarize_messages",
         "uses": "text.content.summarize",
         "input": {
-          "text": "outputs.messages"
+          "text": "vars.merged_text"
         },
         "output": {
           "summary": "outputs.summary"
@@ -1894,6 +1911,7 @@
     ],
     "uses_capabilities": [
       "email.inbox.read",
+      "text.content.merge",
       "text.content.summarize"
     ],
     "uses_skills": [],
@@ -2021,7 +2039,10 @@
         "uses": "data.schema.validate",
         "input": {
           "data": "inputs.artifact",
-          "schema": "inputs.checklist"
+          "schema": {
+            "type": "object",
+            "description": "Validates artifact structure"
+          }
         },
         "output": {
           "valid": "outputs.validation_passed",
@@ -2038,7 +2059,9 @@
             "check_grounding": true,
             "check_coverage": true
           },
-          "evidence_context": "inputs.context"
+          "evidence_context": [
+            "inputs.context"
+          ]
         },
         "output": {
           "valid": "vars.consistency_valid",
@@ -2248,10 +2271,22 @@
         }
       },
       {
+        "id": "merge_value",
+        "uses": "text.content.merge",
+        "input": {
+          "items": [
+            "outputs.value"
+          ]
+        },
+        "output": {
+          "text": "vars.value_text"
+        }
+      },
+      {
         "id": "summarize_value",
         "uses": "text.content.summarize",
         "input": {
-          "text": "outputs.value"
+          "text": "vars.value_text"
         },
         "output": {
           "summary": "outputs.summary"
@@ -2260,6 +2295,7 @@
     ],
     "uses_capabilities": [
       "memory.entry.retrieve",
+      "text.content.merge",
       "text.content.summarize"
     ],
     "uses_skills": [],
@@ -2342,7 +2378,10 @@
         "uses": "memory.entry.store",
         "input": {
           "key": "inputs.key",
-          "value": "outputs.embedding"
+          "value": {
+            "embedding": "outputs.embedding",
+            "source_text": "inputs.text"
+          }
         },
         "output": {
           "stored": "outputs.stored"
@@ -2438,7 +2477,10 @@
         "uses": "memory.entry.store",
         "input": {
           "key": "inputs.key",
-          "value": "outputs.summary"
+          "value": {
+            "summary": "outputs.summary",
+            "source_text": "inputs.text"
+          }
         },
         "output": {
           "stored": "outputs.stored"
@@ -3570,7 +3612,7 @@
           "text": "inputs.text"
         },
         "output": {
-          "pii_detected": "outputs.pii_detected"
+          "contains_pii": "outputs.pii_detected"
         }
       },
       {
@@ -3725,10 +3767,20 @@
         }
       },
       {
+        "id": "merge_rows",
+        "uses": "text.content.merge",
+        "input": {
+          "items": "outputs.table"
+        },
+        "output": {
+          "text": "vars.merged_rows"
+        }
+      },
+      {
         "id": "summarize_table",
         "uses": "text.content.summarize",
         "input": {
-          "text": "outputs.table"
+          "text": "vars.merged_rows"
         },
         "output": {
           "summary": "outputs.summary"
@@ -3737,6 +3789,7 @@
     ],
     "uses_capabilities": [
       "table.row.filter",
+      "text.content.merge",
       "text.content.summarize"
     ],
     "uses_skills": [],
@@ -3918,9 +3971,7 @@
         "uses": "agent.plan.generate",
         "input": {
           "objective": "outputs.problem_statement",
-          "context": {
-            "task_type": "outputs.task_type"
-          }
+          "context": "inputs.context"
         },
         "output": {
           "plan": "outputs.recommended_approach"
@@ -3930,10 +3981,7 @@
         "id": "suggest_skills",
         "uses": "agent.input.route",
         "input": {
-          "input": {
-            "task_type": "outputs.task_type",
-            "approach": "outputs.recommended_approach"
-          }
+          "query": "inputs.task"
         },
         "output": {
           "route": "outputs.suggested_next_skills"
@@ -4952,10 +5000,20 @@
         }
       },
       {
+        "id": "merge_results",
+        "uses": "text.content.merge",
+        "input": {
+          "items": "outputs.results"
+        },
+        "output": {
+          "text": "vars.merged_results"
+        }
+      },
+      {
         "id": "summarize_results",
         "uses": "text.content.summarize",
         "input": {
-          "text": "outputs.results"
+          "text": "vars.merged_results"
         },
         "output": {
           "summary": "outputs.summary"
@@ -4963,6 +5021,7 @@
       }
     ],
     "uses_capabilities": [
+      "text.content.merge",
       "text.content.summarize",
       "web.source.search"
     ],

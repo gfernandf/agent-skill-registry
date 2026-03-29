@@ -27,7 +27,9 @@ steps:
   uses: memory.entry.store
   input:
     key: inputs.key
-    value: outputs.summary
+    value:
+      summary: outputs.summary
+      source_text: inputs.text
   output:
     stored: outputs.stored
 metadata:

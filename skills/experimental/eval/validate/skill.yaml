@@ -108,7 +108,9 @@ steps:
   uses: data.schema.validate
   input:
     data: inputs.artifact
-    schema: inputs.checklist
+    schema:
+      type: object
+      description: Validates artifact structure
   output:
     valid: outputs.validation_passed
     errors: vars.structure_errors
@@ -120,7 +122,8 @@ steps:
       check_coherence: true
       check_grounding: true
       check_coverage: true
-    evidence_context: inputs.context
+    evidence_context:
+      - inputs.context
   output:
     valid: vars.consistency_valid
     issues: outputs.consistency_issues

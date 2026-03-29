@@ -24,10 +24,16 @@ steps:
     condition: inputs.condition
   output:
     table: outputs.table
+- id: merge_rows
+  uses: text.content.merge
+  input:
+    items: outputs.table
+  output:
+    text: vars.merged_rows
 - id: summarize_table
   uses: text.content.summarize
   input:
-    text: outputs.table
+    text: vars.merged_rows
   output:
     summary: outputs.summary
 metadata:

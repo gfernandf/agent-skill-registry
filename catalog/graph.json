@@ -34,8 +34,8 @@
     "analysis.risk-assess": {
       "capabilities": [
         "analysis.risk.extract",
-        "eval.output.score",
-        "text.content.classify"
+        "data.record.transform",
+        "eval.output.score"
       ],
       "skills": []
     },
@@ -73,7 +73,8 @@
         "decision.option.justify",
         "eval.option.analyze",
         "eval.option.score",
-        "eval.output.score"
+        "eval.output.score",
+        "text.content.merge"
       ],
       "skills": []
     },
@@ -87,6 +88,7 @@
     "email.read-summary": {
       "capabilities": [
         "email.inbox.read",
+        "text.content.merge",
         "text.content.summarize"
       ],
       "skills": []
@@ -109,6 +111,7 @@
     "memory.retrieve-summary": {
       "capabilities": [
         "memory.entry.retrieve",
+        "text.content.merge",
         "text.content.summarize"
       ],
       "skills": []
@@ -194,6 +197,7 @@
     "table.filter-summary": {
       "capabilities": [
         "table.row.filter",
+        "text.content.merge",
         "text.content.summarize"
       ],
       "skills": []
@@ -277,6 +281,7 @@
     },
     "web.search-summary": {
       "capabilities": [
+        "text.content.merge",
         "text.content.summarize",
         "web.source.search"
       ],

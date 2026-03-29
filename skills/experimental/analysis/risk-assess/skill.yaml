@@ -87,19 +87,14 @@ steps:
     mitigation_ideas: outputs.mitigation_ideas
     extraction_notes: outputs.unknowns
 - id: classify_risks
-  uses: text.content.classify
+  uses: data.record.transform
   input:
-    text: outputs.identified_risks
-    labels:
-    - operational
-    - strategic
-    - regulatory
-    - technical
-    - financial
-    - reputational
-    - organizational
+    records: outputs.identified_risks
+    mapping:
+      select:
+        - category
   output:
-    label: outputs.risk_categories
+    records: outputs.risk_categories
 - id: assess_quality
   uses: eval.output.score
   input:

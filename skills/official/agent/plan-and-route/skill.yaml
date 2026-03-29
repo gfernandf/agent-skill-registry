@@ -23,7 +23,7 @@ steps:
 - id: route_plan
   uses: agent.input.route
   input:
-    input: outputs.plan
+    query: inputs.objective
   output:
     route: outputs.route
 metadata:

@@ -20,10 +20,16 @@ steps:
     mailbox: inputs.mailbox
   output:
     messages: outputs.messages
+- id: merge_messages
+  uses: text.content.merge
+  input:
+    items: outputs.messages
+  output:
+    text: vars.merged_text
 - id: summarize_messages
   uses: text.content.summarize
   input:
-    text: outputs.messages
+    text: vars.merged_text
   output:
     summary: outputs.summary
 metadata:

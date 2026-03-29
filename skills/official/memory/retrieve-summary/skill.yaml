@@ -24,10 +24,17 @@ steps:
   output:
     value: outputs.value
     found: outputs.found
+- id: merge_value
+  uses: text.content.merge
+  input:
+    items:
+      - outputs.value
+  output:
+    text: vars.value_text
 - id: summarize_value
   uses: text.content.summarize
   input:
-    text: outputs.value
+    text: vars.value_text
   output:
     summary: outputs.summary
 metadata:

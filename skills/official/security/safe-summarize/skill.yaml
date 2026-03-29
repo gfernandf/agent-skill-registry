@@ -41,7 +41,7 @@ steps:
     input:
       text: inputs.text
     output:
-      pii_detected: outputs.pii_detected
+      contains_pii: outputs.pii_detected
 
   - id: redact_pii
     uses: security.pii.redact

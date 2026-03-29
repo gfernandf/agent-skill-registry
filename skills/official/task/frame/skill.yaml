@@ -130,16 +130,13 @@ steps:
   uses: agent.plan.generate
   input:
     objective: outputs.problem_statement
-    context:
-      task_type: outputs.task_type
+    context: inputs.context
   output:
     plan: outputs.recommended_approach
 - id: suggest_skills
   uses: agent.input.route
   input:
-    input:
-      task_type: outputs.task_type
-      approach: outputs.recommended_approach
+    query: inputs.task
   output:
     route: outputs.suggested_next_skills
 metadata:
