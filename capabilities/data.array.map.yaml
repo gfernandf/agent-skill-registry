@@ -1,0 +1,70 @@
+id: data.array.map
+version: 1.0.0
+description: >
+  Apply a transformation expression to each element of an input array,
+  producing a new array of the same length with transformed elements.
+  Supports field extraction, renaming, type coercion, and computed values.
+  For filtering use table.row.filter; for aggregation use
+  table.column.aggregate.
+
+inputs:
+  items:
+    type: array
+    required: true
+    description: The input array of elements to transform.
+
+  expression:
+    type: string
+    required: true
+    description: >
+      Transformation expression applied to each element. May reference
+      the current element as 'item' and its index as 'index'.
+      Example: "{name: item.full_name, score: item.points / 100}"
+
+  context:
+    type: object
+    required: false
+    description: >
+      Additional context available during transformation (e.g., lookup
+      tables, constants). Referenced as 'context' in expressions.
+
+outputs:
+  items:
+    type: array
+    required: true
+    description: The transformed array, same length as input.
+
+  item_count:
+    type: number
+    required: true
+    description: Number of items processed.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    items:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [data, array, transform, map, iteration]
+
+  examples:
+    - summary: "Extract names and normalize scores from a list"
+      inputs:
+        items:
+          - {full_name: "Alice", points: 85}
+          - {full_name: "Bob", points: 92}
+        expression: "{name: item.full_name, score: item.points / 100}"
+      outputs:
+        items:
+          - {name: "Alice", score: 0.85}
+          - {name: "Bob", score: 0.92}
+        item_count: 2

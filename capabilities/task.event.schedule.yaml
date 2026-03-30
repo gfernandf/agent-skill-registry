@@ -1,0 +1,92 @@
+id: task.event.schedule
+version: 1.0.0
+description: >
+  Schedule a future event, reminder, or recurring timer. Creates a
+  scheduled entry with a target time and optional recurrence pattern.
+  For milestone scheduling use task.milestone.schedule; for SLA
+  monitoring use task.sla.monitor.
+
+inputs:
+  title:
+    type: string
+    required: true
+    description: Title or name of the scheduled event.
+
+  description:
+    type: string
+    required: false
+    description: Detailed description of the event purpose.
+
+  scheduled_time:
+    type: string
+    required: true
+    description: >
+      Target time in ISO 8601 format (e.g., "2026-04-15T09:00:00Z").
+
+  recurrence:
+    type: string
+    required: false
+    description: >
+      Recurrence pattern: "once" (default), "daily", "weekly", "monthly".
+
+  attendees:
+    type: array
+    required: false
+    description: >
+      List of attendee identifiers (emails, user ids) to notify.
+
+  context:
+    type: object
+    required: false
+    description: >
+      Additional context or metadata to attach to the event.
+
+outputs:
+  event_id:
+    type: string
+    required: true
+    description: Unique identifier for the created event.
+
+  scheduled:
+    type: boolean
+    required: true
+    description: Whether the event was successfully scheduled.
+
+  scheduled_time:
+    type: string
+    required: true
+    description: The confirmed scheduled time in ISO 8601.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: standard
+  requires_confirmation: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Context
+  produces:
+    event_id:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [task, scheduling, calendar, event, reminder]
+
+  examples:
+    - summary: "Schedule a weekly review meeting"
+      inputs:
+        title: "Weekly Risk Review"
+        description: "Review open risks and mitigation status"
+        scheduled_time: "2026-04-01T10:00:00Z"
+        recurrence: "weekly"
+        attendees: ["risk-team@company.com"]
+      outputs:
+        event_id: "evt_83hf92"
+        scheduled: true
+        scheduled_time: "2026-04-01T10:00:00Z"

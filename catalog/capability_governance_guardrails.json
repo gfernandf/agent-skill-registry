@@ -1,9 +1,9 @@
 {
   "summary": {
-    "capabilities_total": 122,
+    "capabilities_total": 141,
     "covered_domains": 27,
     "uncovered_domains": 0,
-    "semantic_family_alerts": 11,
+    "semantic_family_alerts": 14,
     "duplicate_description_alerts": 0,
     "metadata_issues": 0
   },
@@ -19,6 +19,19 @@
       "noun_variants": [
         "option",
         "plan"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "data",
+      "verb": "map",
+      "capability_ids": [
+        "data.array.map",
+        "data.field.map"
+      ],
+      "noun_variants": [
+        "array",
+        "field"
       ],
       "recommendation": "review-for-canonical-operation"
     },
@@ -58,6 +71,19 @@
       "noun_variants": [
         "permission",
         "role"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "image",
+      "verb": "generate",
+      "capability_ids": [
+        "image.caption.generate",
+        "image.content.generate"
+      ],
+      "noun_variants": [
+        "caption",
+        "content"
       ],
       "recommendation": "review-for-canonical-operation"
     },
@@ -136,6 +162,19 @@
       "noun_variants": [
         "case",
         "incident"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "task",
+      "verb": "schedule",
+      "capability_ids": [
+        "task.event.schedule",
+        "task.milestone.schedule"
+      ],
+      "noun_variants": [
+        "event",
+        "milestone"
       ],
       "recommendation": "review-for-canonical-operation"
     },

@@ -1,0 +1,79 @@
+id: text.content.compare
+version: 1.0.0
+description: >
+  Compare two text blocks for semantic and structural similarity.
+  Reports overall similarity, specific differences, and a narrative
+  summary. For comparing code versions use code.diff.extract;
+  for comparing records use integration.record.compare.
+
+inputs:
+  text_a:
+    type: string
+    required: true
+    description: First text block to compare.
+
+  text_b:
+    type: string
+    required: true
+    description: Second text block to compare.
+
+  dimensions:
+    type: array
+    required: false
+    description: >
+      Aspects to compare: "meaning", "structure", "tone", "detail",
+      "completeness". Default: all dimensions.
+
+outputs:
+  similarity:
+    type: number
+    required: true
+    description: >
+      Overall similarity score (0.0 = completely different,
+      1.0 = semantically identical).
+
+  differences:
+    type: array
+    required: true
+    description: >
+      List of identified differences, each with a dimension,
+      description, and severity ("minor", "moderate", "major").
+
+  summary:
+    type: string
+    required: true
+    description: >
+      Narrative summary of how the two texts relate, highlighting
+      key similarities and differences.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Context
+  produces:
+    differences:
+      type: Evidence
+    summary:
+      type: Summary
+
+metadata:
+  status: experimental
+  tags: [text, comparison, similarity, diff, analysis]
+
+  examples:
+    - summary: "Compare two versions of an executive summary"
+      inputs:
+        text_a: "Revenue grew 15% in Q3 driven by the North region."
+        text_b: "Q3 saw 15% revenue growth, primarily from Northern markets."
+        dimensions: ["meaning", "tone"]
+      outputs:
+        similarity: 0.92
+        differences:
+          - {dimension: "structure", description: "Sentence structure differs — passive vs active", severity: "minor"}
+          - {dimension: "detail", description: "text_b uses 'markets' instead of 'region'", severity: "minor"}
+        summary: "Both texts convey the same core message about 15% Q3 revenue growth from the North, with minor wording and structural differences."

@@ -502,3 +502,101 @@ This capability is the \"closing\" step — it resolves ambiguity into action. I
   - id: web.source.verify
     status: experimental
     description: Verify trust and integrity signals for a web source URL.
+
+  # ── Control-flow primitives ──
+
+  - id: agent.flow.branch
+    status: experimental
+    description: Evaluate a condition against the current context and select which execution branch to follow. Primary control-flow primitive for conditional workflows.
+
+  - id: agent.flow.iterate
+    status: experimental
+    description: Iterate over a collection of items, invoking a specified capability or sub-pipeline for each element. Supports sequential and parallel execution modes.
+
+  - id: agent.flow.wait
+    status: experimental
+    description: Pause workflow execution until an external condition is met or a timeout expires. Used for human-in-the-loop approvals, external event arrival, or timed delays.
+
+  - id: agent.flow.catch
+    status: experimental
+    description: Handle an error from a prior workflow step by selecting and applying a fallback strategy. Supports retry, skip, default value substitution, and escalation.
+
+  # ── Data composition primitives ──
+
+  - id: data.array.map
+    status: experimental
+    description: Apply a transformation expression to each element of an input array, producing a new array of the same length with transformed elements.
+
+  - id: data.field.map
+    status: experimental
+    description: Rename, alias, or restructure fields in a record according to a field mapping. Canonical adapter for resolving field-name mismatches between capability outputs and inputs.
+
+  - id: data.record.join
+    status: experimental
+    description: Join records from two sources by a shared key field, producing a merged result set. Supports inner, left, right, and full join modes.
+
+  - id: data.record.merge
+    status: experimental
+    description: Deep-merge multiple structured records into a single unified record. Configurable conflict resolution. Useful for aggregating partial results from parallel workflow steps.
+
+  # ── Messaging and formatting ──
+
+  - id: message.content.format
+    status: experimental
+    description: Format structured data into human-readable message text suitable for notifications, emails, or reports. Bridges structured capability outputs and text-consuming notification steps.
+
+  # ── HTTP and external integration ──
+
+  - id: web.request.send
+    status: experimental
+    description: Send a generic HTTP request to an API endpoint and return the response. Supports GET, POST, PUT, PATCH, DELETE.
+
+  # ── Document generation ──
+
+  - id: doc.content.generate
+    status: experimental
+    description: Generate a formatted document from an instruction and optional structured sections. Produces markdown, HTML, or plain text.
+
+  # ── Scheduling ──
+
+  - id: task.event.schedule
+    status: experimental
+    description: Schedule a future event, reminder, or recurring timer with optional attendee notifications.
+
+  # ── User interaction ──
+
+  - id: agent.input.collect
+    status: experimental
+    description: Collect structured input from a user or external source by specifying required fields, types, and validation constraints.
+
+  # ── Image generation ──
+
+  - id: image.content.generate
+    status: experimental
+    description: Generate an image from a textual description or prompt with style and size configuration.
+
+  # ── Spreadsheet operations ──
+
+  - id: table.sheet.read
+    status: experimental
+    description: Read data from a spreadsheet file (CSV, Excel) into structured row objects with column headers.
+
+  - id: table.sheet.write
+    status: experimental
+    description: Write tabular data to a spreadsheet file (CSV, Excel) from structured row objects.
+
+  # ── Text analysis extensions ──
+
+  - id: text.content.compare
+    status: experimental
+    description: Compare two text blocks for semantic and structural similarity. Reports similarity score, specific differences, and a narrative summary.
+
+  - id: text.sentiment.analyze
+    status: experimental
+    description: Analyze the sentiment and emotional tone of text. Returns polarity classification, numeric score, and dimensional breakdown.
+
+  # ── Audio extensions ──
+
+  - id: audio.speaker.diarize
+    status: experimental
+    description: Identify and separate speakers in a multi-speaker audio recording. Returns time-stamped segments with speaker identifiers.

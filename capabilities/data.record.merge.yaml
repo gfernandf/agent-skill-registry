@@ -1,0 +1,77 @@
+id: data.record.merge
+version: 1.0.0
+description: >
+  Deep-merge multiple structured records into a single unified record.
+  Supports configurable conflict resolution strategies. Useful for
+  aggregating partial results from parallel workflow steps into a
+  single coherent output. For text concatenation use text.content.merge;
+  for key-based record joining use data.record.join.
+
+inputs:
+  records:
+    type: array
+    required: true
+    description: >
+      Array of records to merge, in priority order (first record has
+      lowest priority in "last_wins", highest in "first_wins").
+
+  strategy:
+    type: string
+    required: false
+    description: >
+      Conflict resolution strategy when the same field appears in
+      multiple records: "last_wins" (default), "first_wins", or
+      "deep_merge" (recursively merge nested objects).
+
+outputs:
+  record:
+    type: object
+    required: true
+    description: The merged record.
+
+  field_count:
+    type: number
+    required: true
+    description: Total number of fields in the merged record.
+
+  conflicts:
+    type: array
+    required: false
+    description: >
+      List of field paths where conflicts were resolved, each with
+      the field path, winning value source index, and discarded value.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    record:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [data, merge, aggregate, records, composition]
+
+  examples:
+    - summary: "Merge parallel analysis results into one record"
+      inputs:
+        records:
+          - {keywords: ["risk", "compliance"], language: "en"}
+          - {entities: ["ACME Corp", "Q3 2026"], sentiment: "neutral"}
+          - {summary: "Risk assessment findings for Q3"}
+        strategy: "deep_merge"
+      outputs:
+        record:
+          keywords: ["risk", "compliance"]
+          language: "en"
+          entities: ["ACME Corp", "Q3 2026"]
+          sentiment: "neutral"
+          summary: "Risk assessment findings for Q3"
+        field_count: 5
+        conflicts: []

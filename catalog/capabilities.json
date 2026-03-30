@@ -1,5 +1,534 @@
 [
   {
+    "id": "agent.flow.branch",
+    "version": "1.0.0",
+    "description": "Evaluate a condition against the current context and select which execution branch to follow. Accepts a condition expression (natural language or structured predicate) and a set of named branches. Returns the selected branch identifier and a rationale explaining the choice. This is the primary control-flow primitive for conditional workflows.\n",
+    "file": "capabilities/agent.flow.branch.yaml",
+    "inputs": {
+      "condition": {
+        "type": "string",
+        "required": true,
+        "description": "The condition to evaluate — may be a natural-language predicate (\"the risk score is above 0.7\") or a structured expression (\"risk_score > 0.7\").\n"
+      },
+      "context": {
+        "type": "object",
+        "required": true,
+        "description": "The execution context containing variables and prior step outputs against which the condition is evaluated.\n"
+      },
+      "branches": {
+        "type": "array",
+        "required": true,
+        "description": "Available branches, each an object with fields: id (string slug), label (human-readable name), and optional match_expression (structured predicate that refines the condition for this branch).\n"
+      },
+      "default_branch": {
+        "type": "string",
+        "required": false,
+        "description": "Branch id to select when no branch explicitly matches. If omitted and no match is found, the first branch is selected.\n"
+      }
+    },
+    "outputs": {
+      "selected_branch": {
+        "type": "string",
+        "required": true,
+        "description": "The id of the selected branch."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation of why this branch was selected."
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Confidence score for the branch selection (0.0–1.0)."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "control-flow",
+        "branching",
+        "conditional",
+        "orchestration"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Route workflow based on risk score",
+          "inputs": {
+            "condition": "risk_score > 0.7",
+            "context": {
+              "risk_score": 0.85,
+              "category": "financial"
+            },
+            "branches": [
+              {
+                "id": "high_risk",
+                "label": "High risk path",
+                "match_expression": "risk_score > 0.7"
+              },
+              {
+                "id": "normal",
+                "label": "Normal path"
+              }
+            ],
+            "default_branch": "normal"
+          },
+          "outputs": {
+            "selected_branch": "high_risk",
+            "rationale": "risk_score is 0.85, which exceeds the 0.7 threshold",
+            "confidence": 0.95
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "selected_branch": {
+          "type": "Decision"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      }
+    }
+  },
+  {
+    "id": "agent.flow.catch",
+    "version": "1.0.0",
+    "description": "Handle an error from a prior workflow step by selecting and applying a fallback strategy. Supports retry, skip, default value substitution, and escalation to a human operator. Returns whether the error was recovered and the result to pass downstream.\n",
+    "file": "capabilities/agent.flow.catch.yaml",
+    "inputs": {
+      "error": {
+        "type": "object",
+        "required": true,
+        "description": "The error payload from the failed step, including at minimum a message field. May also include step_id, error_code, and original_input.\n"
+      },
+      "fallback_strategy": {
+        "type": "string",
+        "required": true,
+        "description": "Strategy to apply: \"retry\" (re-execute the failed step), \"skip\" (continue without result), \"default\" (use default_value), \"escalate\" (flag for human review).\n"
+      },
+      "default_value": {
+        "type": "object",
+        "required": false,
+        "description": "Value to use as the step result when strategy is \"default\".\n"
+      },
+      "max_retries": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum retry attempts when strategy is \"retry\". Default: 1.\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Additional context to help decide on fallback behavior.\n"
+      }
+    },
+    "outputs": {
+      "result": {
+        "type": "object",
+        "required": true,
+        "description": "The recovery result to pass to the next step — either from retry success, the default_value, an empty object (skip), or an escalation ticket reference.\n"
+      },
+      "strategy_applied": {
+        "type": "string",
+        "required": true,
+        "description": "Which strategy was actually applied."
+      },
+      "recovered": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the error was successfully recovered."
+      },
+      "escalation_id": {
+        "type": "string",
+        "required": false,
+        "description": "Reference id for human escalation, present only when strategy is \"escalate\".\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "control-flow",
+        "error-handling",
+        "fallback",
+        "resilience",
+        "orchestration"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Handle OCR failure with a default value",
+          "inputs": {
+            "error": {
+              "step_id": "ocr_extract",
+              "message": "Image quality too low for OCR",
+              "error_code": "QUALITY_INSUFFICIENT"
+            },
+            "fallback_strategy": "default",
+            "default_value": {
+              "text": "[OCR extraction failed — manual review required]",
+              "confidence": 0.0
+            }
+          },
+          "outputs": {
+            "result": {
+              "text": "[OCR extraction failed — manual review required]",
+              "confidence": 0.0
+            },
+            "strategy_applied": "default",
+            "recovered": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "decide",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "result": {
+          "type": "Artifact"
+        },
+        "strategy_applied": {
+          "type": "Decision"
+        }
+      }
+    }
+  },
+  {
+    "id": "agent.flow.iterate",
+    "version": "1.0.0",
+    "description": "Iterate over a collection of items, invoking a specified capability or sub-pipeline for each element. Collects results into an output array. Supports sequential and parallel execution modes. For one-shot array transformations without capability invocation use data.array.map.\n",
+    "file": "capabilities/agent.flow.iterate.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "The collection of items to iterate over."
+      },
+      "capability": {
+        "type": "string",
+        "required": true,
+        "description": "The capability id to invoke for each item (e.g., \"text.content.summarize\"). The current item is passed as the capability's primary input.\n"
+      },
+      "input_mapping": {
+        "type": "object",
+        "required": false,
+        "description": "Mapping from capability input field names to expressions referencing the current item (as 'item') and iteration context. Example: {\"text\": \"item.content\", \"context\": \"item.metadata\"}\n"
+      },
+      "mode": {
+        "type": "string",
+        "required": false,
+        "description": "Execution mode: \"sequential\" (default) or \"parallel\".\n"
+      },
+      "max_concurrency": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum parallel invocations when mode is \"parallel\". Default: 5.\n"
+      }
+    },
+    "outputs": {
+      "results": {
+        "type": "array",
+        "required": true,
+        "description": "Array of results, one per input item, in the same order.\n"
+      },
+      "item_count": {
+        "type": "number",
+        "required": true,
+        "description": "Total items processed."
+      },
+      "error_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of items that failed processing."
+      },
+      "errors": {
+        "type": "array",
+        "required": false,
+        "description": "Error details for failed items, each with index and message.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "control-flow",
+        "loop",
+        "iteration",
+        "orchestration",
+        "batch"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Summarize each document in a collection",
+          "inputs": {
+            "items": [
+              {
+                "id": "doc1",
+                "content": "Long text about markets..."
+              },
+              {
+                "id": "doc2",
+                "content": "Long text about technology..."
+              }
+            ],
+            "capability": "text.content.summarize",
+            "input_mapping": {
+              "text": "item.content"
+            },
+            "mode": "parallel"
+          },
+          "outputs": {
+            "results": [
+              {
+                "text": "Markets summary..."
+              },
+              {
+                "text": "Technology summary..."
+              }
+            ],
+            "item_count": 2,
+            "error_count": 0
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "results": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "agent.flow.wait",
+    "version": "1.0.0",
+    "description": "Pause workflow execution until an external condition is met or a timeout expires. Used for human-in-the-loop approvals, external event arrival, or timed delays. Returns whether the condition was satisfied or the wait timed out.\n",
+    "file": "capabilities/agent.flow.wait.yaml",
+    "inputs": {
+      "condition": {
+        "type": "string",
+        "required": true,
+        "description": "Description of the condition to wait for. May be a reference to an external event type, an approval id, or a temporal expression (e.g., \"approval:REQ-42\", \"event:payment.received\", \"delay:30s\").\n"
+      },
+      "timeout_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Maximum seconds to wait before timing out. Default: 3600 (1 hour).\n"
+      },
+      "poll_interval_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Seconds between condition checks for polled conditions. Default: 10.\n"
+      }
+    },
+    "outputs": {
+      "resolved": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the condition was met before timeout."
+      },
+      "event": {
+        "type": "object",
+        "required": false,
+        "description": "The event payload that satisfied the condition, if any.\n"
+      },
+      "timed_out": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the wait ended due to timeout."
+      },
+      "elapsed_seconds": {
+        "type": "number",
+        "required": true,
+        "description": "Actual seconds elapsed during the wait."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "control-flow",
+        "wait",
+        "pause",
+        "async",
+        "human-in-the-loop"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Wait for human approval before proceeding",
+          "inputs": {
+            "condition": "approval:REQ-42",
+            "timeout_seconds": 7200
+          },
+          "outputs": {
+            "resolved": true,
+            "event": {
+              "approval_id": "REQ-42",
+              "approver": "manager@company.com",
+              "decision": "approved"
+            },
+            "timed_out": false,
+            "elapsed_seconds": 340
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "event": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "agent.input.collect",
+    "version": "1.0.0",
+    "description": "Collect structured input from a user or external source by specifying the required fields and their types. Generates appropriate prompts or form definitions and validates the collected response. For routing existing input use agent.input.route.\n",
+    "file": "capabilities/agent.input.collect.yaml",
+    "inputs": {
+      "fields": {
+        "type": "array",
+        "required": true,
+        "description": "Field definitions for the data to collect. Each element has: name (string), type (string — \"string\", \"number\", \"boolean\", \"object\", \"array\"), required (boolean), description (string), and optional default and options (for constrained choices).\n"
+      },
+      "instruction": {
+        "type": "string",
+        "required": false,
+        "description": "Additional instruction or context for the data collection (e.g., \"Ask the user to provide their project preferences\").\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background context that may help interpret or validate responses.\n"
+      }
+    },
+    "outputs": {
+      "response": {
+        "type": "object",
+        "required": true,
+        "description": "The collected data as a structured object with field names as keys.\n"
+      },
+      "complete": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether all required fields were successfully collected."
+      },
+      "missing_fields": {
+        "type": "array",
+        "required": false,
+        "description": "Names of required fields that were not provided.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "agent",
+        "input",
+        "form",
+        "collection",
+        "user-interaction"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Collect project configuration from user",
+          "inputs": {
+            "fields": [
+              {
+                "name": "project_name",
+                "type": "string",
+                "required": true,
+                "description": "Name of the project"
+              },
+              {
+                "name": "priority",
+                "type": "string",
+                "required": true,
+                "description": "Priority level",
+                "options": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              {
+                "name": "deadline",
+                "type": "string",
+                "required": false,
+                "description": "Target deadline in ISO 8601"
+              }
+            ],
+            "instruction": "Collect basic project setup information"
+          },
+          "outputs": {
+            "response": {
+              "project_name": "Q3 Risk Review",
+              "priority": "high",
+              "deadline": "2026-06-30T00:00:00Z"
+            },
+            "complete": true,
+            "missing_fields": []
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "response": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
     "id": "agent.input.route",
     "version": "1.0.0",
     "description": "Route an incoming request to the most appropriate handler, agent, or capability based on the input content and available targets. Returns the selected route identifier and an optional confidence score.\n",
@@ -736,6 +1265,95 @@
     }
   },
   {
+    "id": "audio.speaker.diarize",
+    "version": "1.0.0",
+    "description": "Identify and separate speakers in a multi-speaker audio recording. Returns time-stamped segments annotated with speaker identifiers. For speech-to-text without diarization use audio.speech.transcribe.\n",
+    "file": "capabilities/audio.speaker.diarize.yaml",
+    "inputs": {
+      "audio": {
+        "type": "string",
+        "required": true,
+        "description": "Audio content as a base64-encoded string or a file path reference.\n"
+      },
+      "max_speakers": {
+        "type": "number",
+        "required": false,
+        "description": "Expected maximum number of distinct speakers. Helps the model constrain its clustering. Default: automatic detection.\n"
+      }
+    },
+    "outputs": {
+      "segments": {
+        "type": "array",
+        "required": true,
+        "description": "Array of diarized segments, each with: speaker_id (string), start_ms (number), end_ms (number), and text (transcribed content for that segment).\n"
+      },
+      "speaker_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of distinct speakers identified."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "audio",
+        "diarization",
+        "speaker",
+        "transcription",
+        "voice"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Diarize a meeting recording with two speakers",
+          "inputs": {
+            "audio": "/recordings/meeting_2026_03.wav",
+            "max_speakers": 3
+          },
+          "outputs": {
+            "segments": [
+              {
+                "speaker_id": "speaker_1",
+                "start_ms": 0,
+                "end_ms": 5200,
+                "text": "Let's discuss the quarterly results."
+              },
+              {
+                "speaker_id": "speaker_2",
+                "start_ms": 5300,
+                "end_ms": 12100,
+                "text": "Revenue is up 15% compared to last quarter."
+              },
+              {
+                "speaker_id": "speaker_1",
+                "start_ms": 12200,
+                "end_ms": 18500,
+                "text": "Excellent. What about the risk factors?"
+              }
+            ],
+            "speaker_count": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "segments": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
     "id": "audio.speech.synthesize",
     "version": "1.0.0",
     "description": "Convert text into speech audio (text-to-speech). Returns synthesized audio content and metadata about the output. The baseline returns a placeholder; production bindings integrate with TTS engines.\n",
@@ -1172,6 +1790,195 @@
     }
   },
   {
+    "id": "data.array.map",
+    "version": "1.0.0",
+    "description": "Apply a transformation expression to each element of an input array, producing a new array of the same length with transformed elements. Supports field extraction, renaming, type coercion, and computed values. For filtering use table.row.filter; for aggregation use table.column.aggregate.\n",
+    "file": "capabilities/data.array.map.yaml",
+    "inputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "The input array of elements to transform."
+      },
+      "expression": {
+        "type": "string",
+        "required": true,
+        "description": "Transformation expression applied to each element. May reference the current element as 'item' and its index as 'index'. Example: \"{name: item.full_name, score: item.points / 100}\"\n"
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Additional context available during transformation (e.g., lookup tables, constants). Referenced as 'context' in expressions.\n"
+      }
+    },
+    "outputs": {
+      "items": {
+        "type": "array",
+        "required": true,
+        "description": "The transformed array, same length as input."
+      },
+      "item_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of items processed."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "data",
+        "array",
+        "transform",
+        "map",
+        "iteration"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Extract names and normalize scores from a list",
+          "inputs": {
+            "items": [
+              {
+                "full_name": "Alice",
+                "points": 85
+              },
+              {
+                "full_name": "Bob",
+                "points": 92
+              }
+            ],
+            "expression": "{name: item.full_name, score: item.points / 100}"
+          },
+          "outputs": {
+            "items": [
+              {
+                "name": "Alice",
+                "score": 0.85
+              },
+              {
+                "name": "Bob",
+                "score": 0.92
+              }
+            ],
+            "item_count": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "items": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "data.field.map",
+    "version": "1.0.0",
+    "description": "Rename, alias, or restructure fields in a record according to a field mapping. Produces a new record with the remapped field names. This is the canonical adapter for resolving field-name mismatches between capability outputs and inputs at composition seams. For deep structural transforms use data.record.transform.\n",
+    "file": "capabilities/data.field.map.yaml",
+    "inputs": {
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "The source record whose fields will be remapped."
+      },
+      "mapping": {
+        "type": "object",
+        "required": true,
+        "description": "Field mapping object where each key is the target field name and each value is the source field path (dot-notation for nested). Example: {\"recipient\": \"user.email\", \"body\": \"summary\"}\n"
+      },
+      "drop_unmapped": {
+        "type": "boolean",
+        "required": false,
+        "description": "If true, fields not listed in the mapping are dropped from the output. If false (default), unmapped fields pass through unchanged.\n"
+      }
+    },
+    "outputs": {
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "The record with remapped field names."
+      },
+      "mapped_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of fields that were remapped."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "data",
+        "field",
+        "rename",
+        "alias",
+        "adapter",
+        "composition"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Remap research output fields to model input fields",
+          "inputs": {
+            "record": {
+              "items": [
+                {
+                  "title": "Source A",
+                  "content": "..."
+                }
+              ],
+              "summary": "Research findings"
+            },
+            "mapping": {
+              "context_items": "items",
+              "instruction": "summary"
+            },
+            "drop_unmapped": true
+          },
+          "outputs": {
+            "record": {
+              "context_items": [
+                {
+                  "title": "Source A",
+                  "content": "..."
+                }
+              ],
+              "instruction": "Research findings"
+            },
+            "mapped_count": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "record": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
     "id": "data.json.parse",
     "version": "1.0.0",
     "description": "Parse JSON content into a structured representation.",
@@ -1308,6 +2115,224 @@
       ],
       "produces": {
         "records": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "data.record.join",
+    "version": "1.0.0",
+    "description": "Join records from two sources by a shared key field, producing a merged result set. Supports inner, left, right, and full join modes. For comparing records without merging use integration.record.compare; for reconciliation with discrepancy reporting use integration.record.reconcile.\n",
+    "file": "capabilities/data.record.join.yaml",
+    "inputs": {
+      "records_a": {
+        "type": "array",
+        "required": true,
+        "description": "First set of records (left side of join)."
+      },
+      "records_b": {
+        "type": "array",
+        "required": true,
+        "description": "Second set of records (right side of join)."
+      },
+      "key_field": {
+        "type": "string",
+        "required": true,
+        "description": "Field name used as the join key. Must exist in records from both sources.\n"
+      },
+      "join_type": {
+        "type": "string",
+        "required": false,
+        "description": "Join mode: \"inner\" (only matched), \"left\" (all from A), \"right\" (all from B), \"full\" (all from both). Default: \"inner\".\n"
+      }
+    },
+    "outputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "The joined records with fields from both sources merged."
+      },
+      "matched_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of records matched on the key field."
+      },
+      "unmatched_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of records without a match (only relevant for non-inner joins)."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "data",
+        "join",
+        "merge",
+        "records",
+        "relational"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Inner join users with orders by user_id",
+          "inputs": {
+            "records_a": [
+              {
+                "user_id": "u1",
+                "name": "Alice"
+              },
+              {
+                "user_id": "u2",
+                "name": "Bob"
+              }
+            ],
+            "records_b": [
+              {
+                "user_id": "u1",
+                "total": 150
+              },
+              {
+                "user_id": "u3",
+                "total": 80
+              }
+            ],
+            "key_field": "user_id",
+            "join_type": "inner"
+          },
+          "outputs": {
+            "records": [
+              {
+                "user_id": "u1",
+                "name": "Alice",
+                "total": 150
+              }
+            ],
+            "matched_count": 1,
+            "unmatched_count": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "records": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "data.record.merge",
+    "version": "1.0.0",
+    "description": "Deep-merge multiple structured records into a single unified record. Supports configurable conflict resolution strategies. Useful for aggregating partial results from parallel workflow steps into a single coherent output. For text concatenation use text.content.merge; for key-based record joining use data.record.join.\n",
+    "file": "capabilities/data.record.merge.yaml",
+    "inputs": {
+      "records": {
+        "type": "array",
+        "required": true,
+        "description": "Array of records to merge, in priority order (first record has lowest priority in \"last_wins\", highest in \"first_wins\").\n"
+      },
+      "strategy": {
+        "type": "string",
+        "required": false,
+        "description": "Conflict resolution strategy when the same field appears in multiple records: \"last_wins\" (default), \"first_wins\", or \"deep_merge\" (recursively merge nested objects).\n"
+      }
+    },
+    "outputs": {
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "The merged record."
+      },
+      "field_count": {
+        "type": "number",
+        "required": true,
+        "description": "Total number of fields in the merged record."
+      },
+      "conflicts": {
+        "type": "array",
+        "required": false,
+        "description": "List of field paths where conflicts were resolved, each with the field path, winning value source index, and discarded value.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "data",
+        "merge",
+        "aggregate",
+        "records",
+        "composition"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Merge parallel analysis results into one record",
+          "inputs": {
+            "records": [
+              {
+                "keywords": [
+                  "risk",
+                  "compliance"
+                ],
+                "language": "en"
+              },
+              {
+                "entities": [
+                  "ACME Corp",
+                  "Q3 2026"
+                ],
+                "sentiment": "neutral"
+              },
+              {
+                "summary": "Risk assessment findings for Q3"
+              }
+            ],
+            "strategy": "deep_merge"
+          },
+          "outputs": {
+            "record": {
+              "keywords": [
+                "risk",
+                "compliance"
+              ],
+              "language": "en",
+              "entities": [
+                "ACME Corp",
+                "Q3 2026"
+              ],
+              "sentiment": "neutral",
+              "summary": "Risk assessment findings for Q3"
+            },
+            "field_count": 5,
+            "conflicts": []
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "record": {
           "type": "Entity"
         }
       }
@@ -1705,6 +2730,105 @@
       "consumes": [
         "Artifact"
       ]
+    }
+  },
+  {
+    "id": "doc.content.generate",
+    "version": "1.0.0",
+    "description": "Generate a formatted document from an instruction and optional structured sections. Produces the document body in the requested format (markdown, HTML, or plain text) along with metadata. For reading documents use pdf.document.read or fs.file.read; for chunking use doc.content.chunk.\n",
+    "file": "capabilities/doc.content.generate.yaml",
+    "inputs": {
+      "instruction": {
+        "type": "string",
+        "required": true,
+        "description": "What the document should contain and its purpose (e.g., \"Write an executive summary of the Q3 risk assessment\").\n"
+      },
+      "context": {
+        "type": "string",
+        "required": false,
+        "description": "Background information, data, or prior analysis to incorporate.\n"
+      },
+      "sections": {
+        "type": "array",
+        "required": false,
+        "description": "Optional predefined document sections, each with a title and optional content or instruction for that section.\n"
+      },
+      "format": {
+        "type": "string",
+        "required": false,
+        "description": "Output format: \"markdown\" (default), \"html\", or \"plain\".\n"
+      }
+    },
+    "outputs": {
+      "document": {
+        "type": "string",
+        "required": true,
+        "description": "The generated document body in the requested format."
+      },
+      "format": {
+        "type": "string",
+        "required": true,
+        "description": "The format used for the generated document."
+      },
+      "word_count": {
+        "type": "number",
+        "required": true,
+        "description": "Approximate word count of the generated document."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "document",
+        "generation",
+        "report",
+        "writing",
+        "synthesis"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Generate an executive briefing from analysis results",
+          "inputs": {
+            "instruction": "Write a 1-page executive briefing on the risk assessment findings",
+            "context": "Three high risks identified: supply chain disruption (0.85), regulatory change (0.72), talent retention (0.68). Mitigation plans in progress for all.",
+            "sections": [
+              {
+                "title": "Key Findings"
+              },
+              {
+                "title": "Risk Summary"
+              },
+              {
+                "title": "Recommended Actions"
+              }
+            ],
+            "format": "markdown"
+          },
+          "outputs": {
+            "document": "# Executive Briefing: Risk Assessment\n\n## Key Findings\n...",
+            "format": "markdown",
+            "word_count": 320
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context",
+        "Evidence"
+      ],
+      "produces": {
+        "document": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -3372,6 +4496,81 @@
     }
   },
   {
+    "id": "image.content.generate",
+    "version": "1.0.0",
+    "description": "Generate an image from a textual description or prompt. Supports style directives and size configuration. For image classification use image.content.classify; for extracting text from images use image.content.extract.\n",
+    "file": "capabilities/image.content.generate.yaml",
+    "inputs": {
+      "prompt": {
+        "type": "string",
+        "required": true,
+        "description": "Text description of the image to generate.\n"
+      },
+      "style": {
+        "type": "string",
+        "required": false,
+        "description": "Visual style directive (e.g., \"photorealistic\", \"diagram\", \"watercolor\", \"technical illustration\").\n"
+      },
+      "size": {
+        "type": "string",
+        "required": false,
+        "description": "Image dimensions: \"256x256\", \"512x512\", or \"1024x1024\". Default: \"1024x1024\".\n"
+      }
+    },
+    "outputs": {
+      "image": {
+        "type": "string",
+        "required": true,
+        "description": "Generated image as a base64-encoded string or a URL reference.\n"
+      },
+      "format": {
+        "type": "string",
+        "required": true,
+        "description": "Image format (e.g., \"png\", \"jpeg\")."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "image",
+        "generation",
+        "creative",
+        "visual"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Generate a diagram for a risk assessment report",
+          "inputs": {
+            "prompt": "A flowchart showing three risk categories (high, medium, low) with arrows leading to mitigation strategies",
+            "style": "technical illustration",
+            "size": "1024x1024"
+          },
+          "outputs": {
+            "image": "data:image/png;base64,...",
+            "format": "png"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "image": {
+          "type": "Artifact"
+        }
+      }
+    }
+  },
+  {
     "id": "integration.connector.get",
     "version": "1.0.0",
     "description": "Retrieve metadata for a specific connector by identifier.",
@@ -4644,6 +5843,103 @@
       "consumes": [
         "Entity"
       ]
+    }
+  },
+  {
+    "id": "message.content.format",
+    "version": "1.0.0",
+    "description": "Format structured data into human-readable message text suitable for notifications, emails, or reports. Accepts a data payload and an optional formatting instruction, and produces formatted text in the requested format (plain, markdown, or HTML). Bridges the gap between structured capability outputs and text-consuming notification steps.\n",
+    "file": "capabilities/message.content.format.yaml",
+    "inputs": {
+      "data": {
+        "type": "object",
+        "required": true,
+        "description": "The structured data to format into a message (e.g., alert details, analysis results, SLA breach records).\n"
+      },
+      "instruction": {
+        "type": "string",
+        "required": false,
+        "description": "Optional directive guiding the formatting style or emphasis (e.g., \"highlight critical items\", \"use bullet points\").\n"
+      },
+      "format": {
+        "type": "string",
+        "required": false,
+        "description": "Output format: \"plain\" (default), \"markdown\", or \"html\".\n"
+      }
+    },
+    "outputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The formatted message text."
+      },
+      "format": {
+        "type": "string",
+        "required": true,
+        "description": "The format actually used for the output."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "message",
+        "format",
+        "notification",
+        "bridge",
+        "text"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Format SLA breach alerts into a notification message",
+          "inputs": {
+            "data": {
+              "breached": [
+                {
+                  "task_id": "T-101",
+                  "sla": "4h response",
+                  "elapsed": "6h"
+                },
+                {
+                  "task_id": "T-205",
+                  "sla": "24h resolution",
+                  "elapsed": "30h"
+                }
+              ],
+              "at_risk": [
+                {
+                  "task_id": "T-310",
+                  "sla": "4h response",
+                  "remaining": "45m"
+                }
+              ]
+            },
+            "instruction": "highlight breached items as urgent",
+            "format": "markdown"
+          },
+          "outputs": {
+            "text": "## SLA Alert\n\n**BREACHED:**\n- T-101: 4h response SLA — elapsed 6h\n- T-205: 24h resolution SLA — elapsed 30h\n\n**At Risk:**\n- T-310: 4h response — 45m remaining",
+            "format": "markdown"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "consumes": [
+        "Entity",
+        "Context"
+      ],
+      "produces": {
+        "text": {
+          "type": "Artifact"
+        }
+      }
     }
   },
   {
@@ -7294,6 +8590,209 @@
     }
   },
   {
+    "id": "table.sheet.read",
+    "version": "1.0.0",
+    "description": "Read data from a spreadsheet file (CSV, Excel, or similar tabular format). Returns the table data as an array of row objects together with column headers. For reading generic files use fs.file.read; for reading PDFs use pdf.document.read.\n",
+    "file": "capabilities/table.sheet.read.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Path to the spreadsheet file."
+      },
+      "sheet_name": {
+        "type": "string",
+        "required": false,
+        "description": "Name of the sheet or tab to read (for multi-sheet formats). Default: first sheet.\n"
+      },
+      "range": {
+        "type": "string",
+        "required": false,
+        "description": "Cell range to read (e.g., \"A1:D50\"). Default: entire sheet.\n"
+      }
+    },
+    "outputs": {
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Array of row objects, each with column names as keys.\n"
+      },
+      "headers": {
+        "type": "array",
+        "required": true,
+        "description": "List of column header names in order."
+      },
+      "row_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of data rows read (excluding header)."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "table",
+        "spreadsheet",
+        "read",
+        "csv",
+        "excel",
+        "data"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Read a CSV file into structured rows",
+          "inputs": {
+            "path": "/data/sales_q3.csv"
+          },
+          "outputs": {
+            "table": [
+              {
+                "region": "North",
+                "revenue": 150000,
+                "units": 320
+              },
+              {
+                "region": "South",
+                "revenue": 98000,
+                "units": 210
+              }
+            ],
+            "headers": [
+              "region",
+              "revenue",
+              "units"
+            ],
+            "row_count": 2
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "table": {
+          "type": "Entity"
+        }
+      }
+    }
+  },
+  {
+    "id": "table.sheet.write",
+    "version": "1.0.0",
+    "description": "Write tabular data to a spreadsheet file (CSV, Excel, or similar format). Accepts an array of row objects and optional headers. For writing generic files use fs.file.write.\n",
+    "file": "capabilities/table.sheet.write.yaml",
+    "inputs": {
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Destination path for the spreadsheet file."
+      },
+      "table": {
+        "type": "array",
+        "required": true,
+        "description": "Array of row objects to write. Each object's keys become columns.\n"
+      },
+      "headers": {
+        "type": "array",
+        "required": false,
+        "description": "Explicit column order. If omitted, keys from the first row are used in natural order.\n"
+      },
+      "sheet_name": {
+        "type": "string",
+        "required": false,
+        "description": "Sheet or tab name for multi-sheet formats. Default: \"Sheet1\".\n"
+      }
+    },
+    "outputs": {
+      "written": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the file was successfully written."
+      },
+      "row_count": {
+        "type": "number",
+        "required": true,
+        "description": "Number of data rows written."
+      },
+      "path": {
+        "type": "string",
+        "required": true,
+        "description": "Actual path where the file was written."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "table",
+        "spreadsheet",
+        "write",
+        "csv",
+        "excel",
+        "export"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Export analysis results to CSV",
+          "inputs": {
+            "path": "/output/risk_summary.csv",
+            "table": [
+              {
+                "risk": "Supply chain",
+                "score": 0.85,
+                "status": "mitigating"
+              },
+              {
+                "risk": "Regulatory",
+                "score": 0.72,
+                "status": "monitoring"
+              }
+            ],
+            "headers": [
+              "risk",
+              "score",
+              "status"
+            ]
+          },
+          "outputs": {
+            "written": true,
+            "row_count": 2,
+            "path": "/output/risk_summary.csv"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Entity"
+      ],
+      "produces": {
+        "path": {
+          "type": "Artifact"
+        }
+      }
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": false
+    }
+  },
+  {
     "id": "task.approval.approve",
     "version": "1.0.0",
     "description": "Approve a pending approval request.",
@@ -8049,6 +9548,111 @@
     }
   },
   {
+    "id": "task.event.schedule",
+    "version": "1.0.0",
+    "description": "Schedule a future event, reminder, or recurring timer. Creates a scheduled entry with a target time and optional recurrence pattern. For milestone scheduling use task.milestone.schedule; for SLA monitoring use task.sla.monitor.\n",
+    "file": "capabilities/task.event.schedule.yaml",
+    "inputs": {
+      "title": {
+        "type": "string",
+        "required": true,
+        "description": "Title or name of the scheduled event."
+      },
+      "description": {
+        "type": "string",
+        "required": false,
+        "description": "Detailed description of the event purpose."
+      },
+      "scheduled_time": {
+        "type": "string",
+        "required": true,
+        "description": "Target time in ISO 8601 format (e.g., \"2026-04-15T09:00:00Z\").\n"
+      },
+      "recurrence": {
+        "type": "string",
+        "required": false,
+        "description": "Recurrence pattern: \"once\" (default), \"daily\", \"weekly\", \"monthly\".\n"
+      },
+      "attendees": {
+        "type": "array",
+        "required": false,
+        "description": "List of attendee identifiers (emails, user ids) to notify.\n"
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Additional context or metadata to attach to the event.\n"
+      }
+    },
+    "outputs": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier for the created event."
+      },
+      "scheduled": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the event was successfully scheduled."
+      },
+      "scheduled_time": {
+        "type": "string",
+        "required": true,
+        "description": "The confirmed scheduled time in ISO 8601."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "task",
+        "scheduling",
+        "calendar",
+        "event",
+        "reminder"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Schedule a weekly review meeting",
+          "inputs": {
+            "title": "Weekly Risk Review",
+            "description": "Review open risks and mitigation status",
+            "scheduled_time": "2026-04-01T10:00:00Z",
+            "recurrence": "weekly",
+            "attendees": [
+              "risk-team@company.com"
+            ]
+          },
+          "outputs": {
+            "event_id": "evt_83hf92",
+            "scheduled": true,
+            "scheduled_time": "2026-04-01T10:00:00Z"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "event_id": {
+          "type": "Entity"
+        }
+      }
+    },
+    "safety": {
+      "trust_level": "standard",
+      "requires_confirmation": true
+    }
+  },
+  {
     "id": "task.incident.create",
     "version": "1.0.0",
     "description": "Create a new incident ticket with severity and affected system information.",
@@ -8566,6 +10170,105 @@
       "consumes": [
         "Context"
       ]
+    }
+  },
+  {
+    "id": "text.content.compare",
+    "version": "1.0.0",
+    "description": "Compare two text blocks for semantic and structural similarity. Reports overall similarity, specific differences, and a narrative summary. For comparing code versions use code.diff.extract; for comparing records use integration.record.compare.\n",
+    "file": "capabilities/text.content.compare.yaml",
+    "inputs": {
+      "text_a": {
+        "type": "string",
+        "required": true,
+        "description": "First text block to compare."
+      },
+      "text_b": {
+        "type": "string",
+        "required": true,
+        "description": "Second text block to compare."
+      },
+      "dimensions": {
+        "type": "array",
+        "required": false,
+        "description": "Aspects to compare: \"meaning\", \"structure\", \"tone\", \"detail\", \"completeness\". Default: all dimensions.\n"
+      }
+    },
+    "outputs": {
+      "similarity": {
+        "type": "number",
+        "required": true,
+        "description": "Overall similarity score (0.0 = completely different, 1.0 = semantically identical).\n"
+      },
+      "differences": {
+        "type": "array",
+        "required": true,
+        "description": "List of identified differences, each with a dimension, description, and severity (\"minor\", \"moderate\", \"major\").\n"
+      },
+      "summary": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative summary of how the two texts relate, highlighting key similarities and differences.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "comparison",
+        "similarity",
+        "diff",
+        "analysis"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Compare two versions of an executive summary",
+          "inputs": {
+            "text_a": "Revenue grew 15% in Q3 driven by the North region.",
+            "text_b": "Q3 saw 15% revenue growth, primarily from Northern markets.",
+            "dimensions": [
+              "meaning",
+              "tone"
+            ]
+          },
+          "outputs": {
+            "similarity": 0.92,
+            "differences": [
+              {
+                "dimension": "structure",
+                "description": "Sentence structure differs — passive vs active",
+                "severity": "minor"
+              },
+              {
+                "dimension": "detail",
+                "description": "text_b uses 'markets' instead of 'region'",
+                "severity": "minor"
+              }
+            ],
+            "summary": "Both texts convey the same core message about 15% Q3 revenue growth from the North, with minor wording and structural differences."
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "differences": {
+          "type": "Evidence"
+        },
+        "summary": {
+          "type": "Summary"
+        }
+      }
     }
   },
   {
@@ -9331,6 +11034,103 @@
     }
   },
   {
+    "id": "text.sentiment.analyze",
+    "version": "1.0.0",
+    "description": "Analyze the sentiment and emotional tone of text. Returns polarity classification, numeric score, and optional dimensional breakdown. For classifying text into custom categories use text.content.classify.\n",
+    "file": "capabilities/text.sentiment.analyze.yaml",
+    "inputs": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The text to analyze for sentiment."
+      },
+      "dimensions": {
+        "type": "array",
+        "required": false,
+        "description": "Sentiment dimensions to evaluate: \"polarity\", \"emotion\", \"intensity\", \"subjectivity\". Default: [\"polarity\"].\n"
+      }
+    },
+    "outputs": {
+      "sentiment": {
+        "type": "string",
+        "required": true,
+        "description": "Overall sentiment label: \"positive\", \"negative\", \"neutral\", or \"mixed\".\n"
+      },
+      "score": {
+        "type": "number",
+        "required": true,
+        "description": "Sentiment polarity score from -1.0 (most negative) to +1.0 (most positive), with 0.0 as neutral.\n"
+      },
+      "dimensions": {
+        "type": "object",
+        "required": false,
+        "description": "Per-dimension analysis when multiple dimensions are requested. Each key is a dimension name with sub-fields for label and score.\n"
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Brief explanation of the sentiment assessment with supporting evidence from the text.\n"
+      }
+    },
+    "metadata": {
+      "tags": [
+        "text",
+        "sentiment",
+        "analysis",
+        "emotion",
+        "tone"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "Analyze sentiment of customer feedback",
+          "inputs": {
+            "text": "The new feature is amazing but the documentation is incomplete and confusing.",
+            "dimensions": [
+              "polarity",
+              "emotion"
+            ]
+          },
+          "outputs": {
+            "sentiment": "mixed",
+            "score": 0.15,
+            "dimensions": {
+              "polarity": {
+                "label": "mixed",
+                "score": 0.15
+              },
+              "emotion": {
+                "label": "frustrated-pleased",
+                "score": 0.3
+              }
+            },
+            "rationale": "Positive toward the feature ('amazing') but negative about documentation ('incomplete', 'confusing'). Net sentiment is slightly positive."
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
+    },
+    "cognitive_hints": {
+      "role": "analyze",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "sentiment": {
+          "type": "Entity"
+        },
+        "score": {
+          "type": "Score"
+        }
+      }
+    }
+  },
+  {
     "id": "video.frame.extract",
     "version": "1.0.0",
     "description": "Extract frames from a video.",
@@ -9495,6 +11295,127 @@
           "type": "Artifact"
         }
       }
+    }
+  },
+  {
+    "id": "web.request.send",
+    "version": "1.0.0",
+    "description": "Send a generic HTTP request to an API endpoint and return the response. Supports all standard methods (GET, POST, PUT, PATCH, DELETE). For fetching web pages use web.page.fetch; for searching the web use web.source.search.\n",
+    "file": "capabilities/web.request.send.yaml",
+    "inputs": {
+      "url": {
+        "type": "string",
+        "required": true,
+        "description": "The target URL for the HTTP request."
+      },
+      "method": {
+        "type": "string",
+        "required": true,
+        "description": "HTTP method: \"GET\", \"POST\", \"PUT\", \"PATCH\", or \"DELETE\".\n"
+      },
+      "headers": {
+        "type": "object",
+        "required": false,
+        "description": "Request headers as key-value pairs.\n"
+      },
+      "body": {
+        "type": "object",
+        "required": false,
+        "description": "Request body payload (for POST, PUT, PATCH). Serialized as JSON.\n"
+      },
+      "timeout_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Request timeout in seconds. Default: 30."
+      }
+    },
+    "outputs": {
+      "status_code": {
+        "type": "number",
+        "required": true,
+        "description": "HTTP response status code."
+      },
+      "headers": {
+        "type": "object",
+        "required": false,
+        "description": "Response headers."
+      },
+      "body": {
+        "type": "object",
+        "required": true,
+        "description": "Parsed response body. JSON responses are parsed to objects; other content types are returned as {text: \"...\"}.\n"
+      },
+      "success": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the request returned a 2xx status code."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "web",
+        "http",
+        "api",
+        "integration",
+        "request"
+      ],
+      "category": null,
+      "status": "experimental",
+      "examples": [
+        {
+          "summary": "POST JSON to an external API",
+          "inputs": {
+            "url": "https://api.example.com/v1/records",
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "name": "New Record",
+              "status": "active"
+            },
+            "timeout_seconds": 15
+          },
+          "outputs": {
+            "status_code": 201,
+            "headers": {
+              "content-type": "application/json"
+            },
+            "body": {
+              "id": "rec_abc123",
+              "name": "New Record",
+              "status": "active"
+            },
+            "success": true
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": false
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "consumes": [
+        "Context"
+      ],
+      "produces": {
+        "body": {
+          "type": "Entity"
+        }
+      }
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "requires_confirmation": true,
+      "allowed_targets": [
+        "approved_connectors"
+      ],
+      "scope_constraints": [
+        "no_credential_passthrough"
+      ]
     }
   },
   {

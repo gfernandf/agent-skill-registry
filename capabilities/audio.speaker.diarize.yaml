@@ -1,0 +1,63 @@
+id: audio.speaker.diarize
+version: 1.0.0
+description: >
+  Identify and separate speakers in a multi-speaker audio recording.
+  Returns time-stamped segments annotated with speaker identifiers.
+  For speech-to-text without diarization use audio.speech.transcribe.
+
+inputs:
+  audio:
+    type: string
+    required: true
+    description: >
+      Audio content as a base64-encoded string or a file path reference.
+
+  max_speakers:
+    type: number
+    required: false
+    description: >
+      Expected maximum number of distinct speakers. Helps the model
+      constrain its clustering. Default: automatic detection.
+
+outputs:
+  segments:
+    type: array
+    required: true
+    description: >
+      Array of diarized segments, each with: speaker_id (string),
+      start_ms (number), end_ms (number), and text (transcribed content
+      for that segment).
+
+  speaker_count:
+    type: number
+    required: true
+    description: Number of distinct speakers identified.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: perceive
+  consumes:
+    - Context
+  produces:
+    segments:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [audio, diarization, speaker, transcription, voice]
+
+  examples:
+    - summary: "Diarize a meeting recording with two speakers"
+      inputs:
+        audio: "/recordings/meeting_2026_03.wav"
+        max_speakers: 3
+      outputs:
+        segments:
+          - {speaker_id: "speaker_1", start_ms: 0, end_ms: 5200, text: "Let's discuss the quarterly results."}
+          - {speaker_id: "speaker_2", start_ms: 5300, end_ms: 12100, text: "Revenue is up 15% compared to last quarter."}
+          - {speaker_id: "speaker_1", start_ms: 12200, end_ms: 18500, text: "Excellent. What about the risk factors?"}
+        speaker_count: 2

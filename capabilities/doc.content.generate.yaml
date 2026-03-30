@@ -1,0 +1,84 @@
+id: doc.content.generate
+version: 1.0.0
+description: >
+  Generate a formatted document from an instruction and optional
+  structured sections. Produces the document body in the requested
+  format (markdown, HTML, or plain text) along with metadata.
+  For reading documents use pdf.document.read or fs.file.read;
+  for chunking use doc.content.chunk.
+
+inputs:
+  instruction:
+    type: string
+    required: true
+    description: >
+      What the document should contain and its purpose
+      (e.g., "Write an executive summary of the Q3 risk assessment").
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background information, data, or prior analysis to incorporate.
+
+  sections:
+    type: array
+    required: false
+    description: >
+      Optional predefined document sections, each with a title and
+      optional content or instruction for that section.
+
+  format:
+    type: string
+    required: false
+    description: >
+      Output format: "markdown" (default), "html", or "plain".
+
+outputs:
+  document:
+    type: string
+    required: true
+    description: The generated document body in the requested format.
+
+  format:
+    type: string
+    required: true
+    description: The format used for the generated document.
+
+  word_count:
+    type: number
+    required: true
+    description: Approximate word count of the generated document.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+    - Evidence
+  produces:
+    document:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [document, generation, report, writing, synthesis]
+
+  examples:
+    - summary: "Generate an executive briefing from analysis results"
+      inputs:
+        instruction: "Write a 1-page executive briefing on the risk assessment findings"
+        context: "Three high risks identified: supply chain disruption (0.85), regulatory change (0.72), talent retention (0.68). Mitigation plans in progress for all."
+        sections:
+          - {title: "Key Findings"}
+          - {title: "Risk Summary"}
+          - {title: "Recommended Actions"}
+        format: "markdown"
+      outputs:
+        document: "# Executive Briefing: Risk Assessment\n\n## Key Findings\n..."
+        format: "markdown"
+        word_count: 320

@@ -1,0 +1,67 @@
+id: image.content.generate
+version: 1.0.0
+description: >
+  Generate an image from a textual description or prompt. Supports
+  style directives and size configuration. For image classification
+  use image.content.classify; for extracting text from images use
+  image.content.extract.
+
+inputs:
+  prompt:
+    type: string
+    required: true
+    description: >
+      Text description of the image to generate.
+
+  style:
+    type: string
+    required: false
+    description: >
+      Visual style directive (e.g., "photorealistic", "diagram",
+      "watercolor", "technical illustration").
+
+  size:
+    type: string
+    required: false
+    description: >
+      Image dimensions: "256x256", "512x512", or "1024x1024".
+      Default: "1024x1024".
+
+outputs:
+  image:
+    type: string
+    required: true
+    description: >
+      Generated image as a base64-encoded string or a URL reference.
+
+  format:
+    type: string
+    required: true
+    description: Image format (e.g., "png", "jpeg").
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: false
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Context
+  produces:
+    image:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [image, generation, creative, visual]
+
+  examples:
+    - summary: "Generate a diagram for a risk assessment report"
+      inputs:
+        prompt: "A flowchart showing three risk categories (high, medium, low) with arrows leading to mitigation strategies"
+        style: "technical illustration"
+        size: "1024x1024"
+      outputs:
+        image: "data:image/png;base64,..."
+        format: "png"

@@ -3,6 +3,46 @@
 All notable changes to **agent-skill-registry** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.2.0] — 2026-03-30
+
+### Added
+
+#### Composability & coverage wave — 19 new capabilities
+
+Gap analysis of 122 existing capabilities identified missing primitives for
+control flow, structural data transforms, and underserved domains. All 19
+follow the canonical grammar (`domain.noun.verb`), carry full I/O contracts,
+`cognitive_hints`, `properties`, `metadata`, and dual bindings (OpenAI + Python
+fallback).
+
+- **agent.flow.\*** — Control-flow primitives:
+  - `agent.flow.branch` — conditional branch selection.
+  - `agent.flow.iterate` — loop over a collection invoking a capability per item.
+  - `agent.flow.wait` — pause execution until condition or timeout.
+  - `agent.flow.catch` — error handling with fallback strategies.
+- **agent.input.collect** — structured multi-field form collection.
+- **data.\*** — Structural data transforms:
+  - `data.array.map` — map/transform each element of an array.
+  - `data.field.map` — rename/alias fields in a record.
+  - `data.record.join` — relational join of two record sets.
+  - `data.record.merge` — deep-merge parallel result records.
+- **message.content.format** — structure data → human-readable notification.
+- **doc.content.generate** — generate markdown/HTML documents from instruction.
+- **web.request.send** — generic HTTP request with safety blocks.
+- **task.event.schedule** — schedule future/recurring events.
+- **text.\*** — Coverage additions:
+  - `text.content.compare` — semantic diff of two texts.
+  - `text.sentiment.analyze` — polarity and emotion analysis.
+- **audio.speaker.diarize** — multi-speaker segmentation.
+- **image.content.generate** — text-to-image generation.
+- **table.sheet.read** / **table.sheet.write** — CSV/Excel I/O.
+
+Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
+`sentiment`, `speaker`, `request`) and 7 new verbs (`branch`, `iterate`,
+`wait`, `catch`, `join`, `diarize`, `collect`).
+
+`_index.yaml` updated. Catalog regenerated (141 capabilities, 36 skills).
+
 ## [0.1.0] — 2026-03-24
 
 ### Added

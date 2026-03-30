@@ -1,0 +1,105 @@
+id: web.request.send
+version: 1.0.0
+description: >
+  Send a generic HTTP request to an API endpoint and return the
+  response. Supports all standard methods (GET, POST, PUT, PATCH,
+  DELETE). For fetching web pages use web.page.fetch; for searching
+  the web use web.source.search.
+
+inputs:
+  url:
+    type: string
+    required: true
+    description: The target URL for the HTTP request.
+
+  method:
+    type: string
+    required: true
+    description: >
+      HTTP method: "GET", "POST", "PUT", "PATCH", or "DELETE".
+
+  headers:
+    type: object
+    required: false
+    description: >
+      Request headers as key-value pairs.
+
+  body:
+    type: object
+    required: false
+    description: >
+      Request body payload (for POST, PUT, PATCH). Serialized as JSON.
+
+  timeout_seconds:
+    type: number
+    required: false
+    description: "Request timeout in seconds. Default: 30."
+
+outputs:
+  status_code:
+    type: number
+    required: true
+    description: HTTP response status code.
+
+  headers:
+    type: object
+    required: false
+    description: Response headers.
+
+  body:
+    type: object
+    required: true
+    description: >
+      Parsed response body. JSON responses are parsed to objects;
+      other content types are returned as {text: "..."}.
+
+  success:
+    type: boolean
+    required: true
+    description: Whether the request returned a 2xx status code.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: elevated
+  requires_confirmation: true
+  allowed_targets:
+    - approved_connectors
+  scope_constraints:
+    - no_credential_passthrough
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Context
+  produces:
+    body:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [web, http, api, integration, request]
+
+  examples:
+    - summary: "POST JSON to an external API"
+      inputs:
+        url: "https://api.example.com/v1/records"
+        method: "POST"
+        headers:
+          Content-Type: "application/json"
+        body:
+          name: "New Record"
+          status: "active"
+        timeout_seconds: 15
+      outputs:
+        status_code: 201
+        headers:
+          content-type: "application/json"
+        body:
+          id: "rec_abc123"
+          name: "New Record"
+          status: "active"
+        success: true

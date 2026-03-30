@@ -1,0 +1,105 @@
+id: agent.flow.catch
+version: 1.0.0
+description: >
+  Handle an error from a prior workflow step by selecting and applying
+  a fallback strategy. Supports retry, skip, default value substitution,
+  and escalation to a human operator. Returns whether the error was
+  recovered and the result to pass downstream.
+
+inputs:
+  error:
+    type: object
+    required: true
+    description: >
+      The error payload from the failed step, including at minimum
+      a message field. May also include step_id, error_code, and
+      original_input.
+
+  fallback_strategy:
+    type: string
+    required: true
+    description: >
+      Strategy to apply: "retry" (re-execute the failed step),
+      "skip" (continue without result), "default" (use default_value),
+      "escalate" (flag for human review).
+
+  default_value:
+    type: object
+    required: false
+    description: >
+      Value to use as the step result when strategy is "default".
+
+  max_retries:
+    type: number
+    required: false
+    description: >
+      Maximum retry attempts when strategy is "retry". Default: 1.
+
+  context:
+    type: string
+    required: false
+    description: >
+      Additional context to help decide on fallback behavior.
+
+outputs:
+  result:
+    type: object
+    required: true
+    description: >
+      The recovery result to pass to the next step — either from retry
+      success, the default_value, an empty object (skip), or an
+      escalation ticket reference.
+
+  strategy_applied:
+    type: string
+    required: true
+    description: Which strategy was actually applied.
+
+  recovered:
+    type: boolean
+    required: true
+    description: Whether the error was successfully recovered.
+
+  escalation_id:
+    type: string
+    required: false
+    description: >
+      Reference id for human escalation, present only when strategy
+      is "escalate".
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: false
+
+cognitive_hints:
+  role: decide
+  consumes:
+    - Context
+  produces:
+    result:
+      type: Artifact
+    strategy_applied:
+      type: Decision
+
+metadata:
+  status: experimental
+  tags: [control-flow, error-handling, fallback, resilience, orchestration]
+
+  examples:
+    - summary: "Handle OCR failure with a default value"
+      inputs:
+        error:
+          step_id: "ocr_extract"
+          message: "Image quality too low for OCR"
+          error_code: "QUALITY_INSUFFICIENT"
+        fallback_strategy: "default"
+        default_value:
+          text: "[OCR extraction failed — manual review required]"
+          confidence: 0.0
+      outputs:
+        result:
+          text: "[OCR extraction failed — manual review required]"
+          confidence: 0.0
+        strategy_applied: "default"
+        recovered: true

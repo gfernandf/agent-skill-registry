@@ -1,0 +1,99 @@
+id: agent.flow.iterate
+version: 1.0.0
+description: >
+  Iterate over a collection of items, invoking a specified capability
+  or sub-pipeline for each element. Collects results into an output
+  array. Supports sequential and parallel execution modes.
+  For one-shot array transformations without capability invocation
+  use data.array.map.
+
+inputs:
+  items:
+    type: array
+    required: true
+    description: The collection of items to iterate over.
+
+  capability:
+    type: string
+    required: true
+    description: >
+      The capability id to invoke for each item (e.g.,
+      "text.content.summarize"). The current item is passed as the
+      capability's primary input.
+
+  input_mapping:
+    type: object
+    required: false
+    description: >
+      Mapping from capability input field names to expressions
+      referencing the current item (as 'item') and iteration context.
+      Example: {"text": "item.content", "context": "item.metadata"}
+
+  mode:
+    type: string
+    required: false
+    description: >
+      Execution mode: "sequential" (default) or "parallel".
+
+  max_concurrency:
+    type: number
+    required: false
+    description: >
+      Maximum parallel invocations when mode is "parallel". Default: 5.
+
+outputs:
+  results:
+    type: array
+    required: true
+    description: >
+      Array of results, one per input item, in the same order.
+
+  item_count:
+    type: number
+    required: true
+    description: Total items processed.
+
+  error_count:
+    type: number
+    required: true
+    description: Number of items that failed processing.
+
+  errors:
+    type: array
+    required: false
+    description: >
+      Error details for failed items, each with index and message.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: false
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    results:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [control-flow, loop, iteration, orchestration, batch]
+
+  examples:
+    - summary: "Summarize each document in a collection"
+      inputs:
+        items:
+          - {id: "doc1", content: "Long text about markets..."}
+          - {id: "doc2", content: "Long text about technology..."}
+        capability: "text.content.summarize"
+        input_mapping:
+          text: "item.content"
+        mode: "parallel"
+      outputs:
+        results:
+          - {text: "Markets summary..."}
+          - {text: "Technology summary..."}
+        item_count: 2
+        error_count: 0

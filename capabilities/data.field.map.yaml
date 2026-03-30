@@ -1,0 +1,75 @@
+id: data.field.map
+version: 1.0.0
+description: >
+  Rename, alias, or restructure fields in a record according to a
+  field mapping. Produces a new record with the remapped field names.
+  This is the canonical adapter for resolving field-name mismatches
+  between capability outputs and inputs at composition seams.
+  For deep structural transforms use data.record.transform.
+
+inputs:
+  record:
+    type: object
+    required: true
+    description: The source record whose fields will be remapped.
+
+  mapping:
+    type: object
+    required: true
+    description: >
+      Field mapping object where each key is the target field name and
+      each value is the source field path (dot-notation for nested).
+      Example: {"recipient": "user.email", "body": "summary"}
+
+  drop_unmapped:
+    type: boolean
+    required: false
+    description: >
+      If true, fields not listed in the mapping are dropped from the
+      output. If false (default), unmapped fields pass through unchanged.
+
+outputs:
+  record:
+    type: object
+    required: true
+    description: The record with remapped field names.
+
+  mapped_count:
+    type: number
+    required: true
+    description: Number of fields that were remapped.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    record:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [data, field, rename, alias, adapter, composition]
+
+  examples:
+    - summary: "Remap research output fields to model input fields"
+      inputs:
+        record:
+          items:
+            - {title: "Source A", content: "..."}
+          summary: "Research findings"
+        mapping:
+          context_items: "items"
+          instruction: "summary"
+        drop_unmapped: true
+      outputs:
+        record:
+          context_items:
+            - {title: "Source A", content: "..."}
+          instruction: "Research findings"
+        mapped_count: 2

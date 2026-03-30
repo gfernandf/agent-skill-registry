@@ -1,8 +1,8 @@
 # Agent Domain — Capability Reference
 
 > Domain: `agent`  
-> Capabilities: 5  
-> Last reviewed: 2026-03-24
+> Capabilities: 10  
+> Last reviewed: 2026-03-30
 
 ## Overview
 
@@ -31,6 +31,11 @@ the backbone of agentic workflows and skill composition.
 | `agent.plan.create` | experimental | no | no | pythoncall (scaffold_service) |
 | `agent.plan.generate` | experimental | no | no | pythoncall, OpenAI chat |
 | `agent.task.delegate` | experimental | no | yes | pythoncall |
+| `agent.flow.branch` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.flow.iterate` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.flow.wait` | experimental | no | yes | pythoncall |
+| `agent.flow.catch` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.input.collect` | experimental | no | no | pythoncall, OpenAI chat |
 
 ---
 
@@ -43,6 +48,11 @@ the backbone of agentic workflows and skill composition.
 | `agent.plan.create` | `python_agent_plan_create` — scaffold_service (LLM or template) | — | — |
 | `agent.plan.generate` | `python_agent_plan_generate` — 3-step stub plan | `openapi_agent_plan_generate_openai_chat` — gpt-4o-mini, temp 0.3 | — |
 | `agent.task.delegate` | `python_agent_delegate` — always accepts, returns delegation_id | — | — |
+| `agent.flow.branch` | `python_agent_flow_branch` — keyword match on condition | `openapi_agent_flow_branch_openai_chat` — gpt-4o-mini | — |
+| `agent.flow.iterate` | `python_agent_flow_iterate` — sequential loop | — | — |
+| `agent.flow.wait` | `python_agent_flow_wait` — immediate timeout stub | — | — |
+| `agent.flow.catch` | `python_agent_flow_catch` — returns default_value | `openapi_agent_flow_catch_openai_chat` — gpt-4o-mini | — |
+| `agent.input.collect` | `python_agent_input_collect` — echo fields as defaults | `openapi_agent_input_collect_openai_chat` — gpt-4o-mini | — |
 
 ### Default selection policy
 
@@ -86,3 +96,14 @@ the backbone of agentic workflows and skill composition.
 - **agent.option.generate vs eval.option.score**: `option.generate` creates
   options; `eval.option.score` evaluates and ranks them. They are complementary
   steps in decision workflows.
+- **agent.flow.branch vs agent.input.route**: `flow.branch` evaluates a local
+  condition and selects a labelled branch; `input.route` selects which external
+  agent or handler receives the request.
+- **agent.flow.iterate vs data.array.map**: `flow.iterate` invokes a full
+  capability per item (orchestration); `data.array.map` applies a lightweight
+  expression (data transform).
+- **agent.flow.catch vs policy.constraint.gate**: `flow.catch` handles runtime
+  errors (retry, default_value, escalate); `constraint.gate` blocks requests
+  that violate policy rules.
+- **agent.input.collect vs agent.input.route**: `input.collect` gathers structured
+  fields from a user; `input.route` decides where an already-formed request goes.

@@ -1,0 +1,83 @@
+id: data.record.join
+version: 1.0.0
+description: >
+  Join records from two sources by a shared key field, producing a
+  merged result set. Supports inner, left, right, and full join modes.
+  For comparing records without merging use integration.record.compare;
+  for reconciliation with discrepancy reporting use
+  integration.record.reconcile.
+
+inputs:
+  records_a:
+    type: array
+    required: true
+    description: First set of records (left side of join).
+
+  records_b:
+    type: array
+    required: true
+    description: Second set of records (right side of join).
+
+  key_field:
+    type: string
+    required: true
+    description: >
+      Field name used as the join key. Must exist in records from
+      both sources.
+
+  join_type:
+    type: string
+    required: false
+    description: >
+      Join mode: "inner" (only matched), "left" (all from A),
+      "right" (all from B), "full" (all from both). Default: "inner".
+
+outputs:
+  records:
+    type: array
+    required: true
+    description: The joined records with fields from both sources merged.
+
+  matched_count:
+    type: number
+    required: true
+    description: Number of records matched on the key field.
+
+  unmatched_count:
+    type: number
+    required: true
+    description: Number of records without a match (only relevant for non-inner joins).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    records:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [data, join, merge, records, relational]
+
+  examples:
+    - summary: "Inner join users with orders by user_id"
+      inputs:
+        records_a:
+          - {user_id: "u1", name: "Alice"}
+          - {user_id: "u2", name: "Bob"}
+        records_b:
+          - {user_id: "u1", total: 150}
+          - {user_id: "u3", total: 80}
+        key_field: "user_id"
+        join_type: "inner"
+      outputs:
+        records:
+          - {user_id: "u1", name: "Alice", total: 150}
+        matched_count: 1
+        unmatched_count: 2

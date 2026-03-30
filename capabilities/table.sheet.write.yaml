@@ -1,0 +1,81 @@
+id: table.sheet.write
+version: 1.0.0
+description: >
+  Write tabular data to a spreadsheet file (CSV, Excel, or similar
+  format). Accepts an array of row objects and optional headers.
+  For writing generic files use fs.file.write.
+
+inputs:
+  path:
+    type: string
+    required: true
+    description: Destination path for the spreadsheet file.
+
+  table:
+    type: array
+    required: true
+    description: >
+      Array of row objects to write. Each object's keys become columns.
+
+  headers:
+    type: array
+    required: false
+    description: >
+      Explicit column order. If omitted, keys from the first row
+      are used in natural order.
+
+  sheet_name:
+    type: string
+    required: false
+    description: >
+      Sheet or tab name for multi-sheet formats. Default: "Sheet1".
+
+outputs:
+  written:
+    type: boolean
+    required: true
+    description: Whether the file was successfully written.
+
+  row_count:
+    type: number
+    required: true
+    description: Number of data rows written.
+
+  path:
+    type: string
+    required: true
+    description: Actual path where the file was written.
+
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+
+safety:
+  trust_level: standard
+  requires_confirmation: false
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Entity
+  produces:
+    path:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [table, spreadsheet, write, csv, excel, export]
+
+  examples:
+    - summary: "Export analysis results to CSV"
+      inputs:
+        path: "/output/risk_summary.csv"
+        table:
+          - {risk: "Supply chain", score: 0.85, status: "mitigating"}
+          - {risk: "Regulatory", score: 0.72, status: "monitoring"}
+        headers: ["risk", "score", "status"]
+      outputs:
+        written: true
+        row_count: 2
+        path: "/output/risk_summary.csv"

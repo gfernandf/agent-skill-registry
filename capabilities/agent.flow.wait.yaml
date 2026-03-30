@@ -1,0 +1,81 @@
+id: agent.flow.wait
+version: 1.0.0
+description: >
+  Pause workflow execution until an external condition is met or a
+  timeout expires. Used for human-in-the-loop approvals, external
+  event arrival, or timed delays. Returns whether the condition was
+  satisfied or the wait timed out.
+
+inputs:
+  condition:
+    type: string
+    required: true
+    description: >
+      Description of the condition to wait for. May be a reference to
+      an external event type, an approval id, or a temporal expression
+      (e.g., "approval:REQ-42", "event:payment.received", "delay:30s").
+
+  timeout_seconds:
+    type: number
+    required: false
+    description: >
+      Maximum seconds to wait before timing out. Default: 3600 (1 hour).
+
+  poll_interval_seconds:
+    type: number
+    required: false
+    description: >
+      Seconds between condition checks for polled conditions. Default: 10.
+
+outputs:
+  resolved:
+    type: boolean
+    required: true
+    description: Whether the condition was met before timeout.
+
+  event:
+    type: object
+    required: false
+    description: >
+      The event payload that satisfied the condition, if any.
+
+  timed_out:
+    type: boolean
+    required: true
+    description: Whether the wait ended due to timeout.
+
+  elapsed_seconds:
+    type: number
+    required: true
+    description: Actual seconds elapsed during the wait.
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: act
+  consumes:
+    - Context
+  produces:
+    event:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [control-flow, wait, pause, async, human-in-the-loop]
+
+  examples:
+    - summary: "Wait for human approval before proceeding"
+      inputs:
+        condition: "approval:REQ-42"
+        timeout_seconds: 7200
+      outputs:
+        resolved: true
+        event:
+          approval_id: "REQ-42"
+          approver: "manager@company.com"
+          decision: "approved"
+        timed_out: false
+        elapsed_seconds: 340

@@ -1,0 +1,81 @@
+id: agent.input.collect
+version: 1.0.0
+description: >
+  Collect structured input from a user or external source by specifying
+  the required fields and their types. Generates appropriate prompts
+  or form definitions and validates the collected response. For routing
+  existing input use agent.input.route.
+
+inputs:
+  fields:
+    type: array
+    required: true
+    description: >
+      Field definitions for the data to collect. Each element has:
+      name (string), type (string — "string", "number", "boolean",
+      "object", "array"), required (boolean), description (string),
+      and optional default and options (for constrained choices).
+
+  instruction:
+    type: string
+    required: false
+    description: >
+      Additional instruction or context for the data collection
+      (e.g., "Ask the user to provide their project preferences").
+
+  context:
+    type: string
+    required: false
+    description: >
+      Background context that may help interpret or validate responses.
+
+outputs:
+  response:
+    type: object
+    required: true
+    description: >
+      The collected data as a structured object with field names as keys.
+
+  complete:
+    type: boolean
+    required: true
+    description: Whether all required fields were successfully collected.
+
+  missing_fields:
+    type: array
+    required: false
+    description: >
+      Names of required fields that were not provided.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: perceive
+  consumes:
+    - Context
+  produces:
+    response:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [agent, input, form, collection, user-interaction]
+
+  examples:
+    - summary: "Collect project configuration from user"
+      inputs:
+        fields:
+          - {name: "project_name", type: "string", required: true, description: "Name of the project"}
+          - {name: "priority", type: "string", required: true, description: "Priority level", options: ["low", "medium", "high"]}
+          - {name: "deadline", type: "string", required: false, description: "Target deadline in ISO 8601"}
+        instruction: "Collect basic project setup information"
+      outputs:
+        response:
+          project_name: "Q3 Risk Review"
+          priority: "high"
+          deadline: "2026-06-30T00:00:00Z"
+        complete: true
+        missing_fields: []

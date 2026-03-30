@@ -1,0 +1,73 @@
+id: message.content.format
+version: 1.0.0
+description: >
+  Format structured data into human-readable message text suitable for
+  notifications, emails, or reports. Accepts a data payload and an
+  optional formatting instruction, and produces formatted text in the
+  requested format (plain, markdown, or HTML). Bridges the gap between
+  structured capability outputs and text-consuming notification steps.
+
+inputs:
+  data:
+    type: object
+    required: true
+    description: >
+      The structured data to format into a message (e.g., alert details,
+      analysis results, SLA breach records).
+
+  instruction:
+    type: string
+    required: false
+    description: >
+      Optional directive guiding the formatting style or emphasis
+      (e.g., "highlight critical items", "use bullet points").
+
+  format:
+    type: string
+    required: false
+    description: >
+      Output format: "plain" (default), "markdown", or "html".
+
+outputs:
+  text:
+    type: string
+    required: true
+    description: The formatted message text.
+
+  format:
+    type: string
+    required: true
+    description: The format actually used for the output.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: synthesize
+  consumes:
+    - Entity
+    - Context
+  produces:
+    text:
+      type: Artifact
+
+metadata:
+  status: experimental
+  tags: [message, format, notification, bridge, text]
+
+  examples:
+    - summary: "Format SLA breach alerts into a notification message"
+      inputs:
+        data:
+          breached:
+            - {task_id: "T-101", sla: "4h response", elapsed: "6h"}
+            - {task_id: "T-205", sla: "24h resolution", elapsed: "30h"}
+          at_risk:
+            - {task_id: "T-310", sla: "4h response", remaining: "45m"}
+        instruction: "highlight breached items as urgent"
+        format: "markdown"
+      outputs:
+        text: "## SLA Alert\n\n**BREACHED:**\n- T-101: 4h response SLA — elapsed 6h\n- T-205: 24h resolution SLA — elapsed 30h\n\n**At Risk:**\n- T-310: 4h response — 45m remaining"
+        format: "markdown"

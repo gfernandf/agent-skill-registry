@@ -1,8 +1,8 @@
 # Text Domain — Capability Reference
 
 > Domain: `text`  
-> Capabilities: 13  
-> Last reviewed: 2026-03-24
+> Capabilities: 15  
+> Last reviewed: 2026-03-30
 
 ## Overview
 
@@ -28,6 +28,8 @@ low-level deterministic transformations to LLM-powered generation and analysis.
 |-----------|---------|:---:|--------|
 | `text.language.detect` | Detect the language of a text | No | experimental |
 | `text.content.classify` | Classify text into predefined categories | No | experimental |
+| `text.sentiment.analyze` | Polarity and emotion analysis | No | experimental |
+| `text.content.compare` | Semantic diff of two texts | No | experimental |
 
 ### Extraction
 
@@ -75,6 +77,8 @@ These clarify where one capability ends and the next begins:
 | **response.extract** vs **content.extract** | `response.extract` is LLM-driven Q&A; `content.extract` is deterministic HTML→text cleanup. |
 | **keyword.extract** vs **entity.extract** | `keyword.extract` finds topical terms; `entity.extract` finds proper nouns with type labels. |
 | **template** vs **generate** | `template` is deterministic variable substitution; `generate` is LLM-driven. |
+| **classify** vs **sentiment.analyze** | `classify` assigns arbitrary labels from a user-supplied set; `sentiment.analyze` evaluates polarity/emotion with a fixed output schema. |
+| **compare** vs **summarize** | `compare` produces a diff between two texts; `summarize` condenses a single text. |
 
 ---
 

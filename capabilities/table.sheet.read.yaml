@@ -1,0 +1,71 @@
+id: table.sheet.read
+version: 1.0.0
+description: >
+  Read data from a spreadsheet file (CSV, Excel, or similar tabular
+  format). Returns the table data as an array of row objects together
+  with column headers. For reading generic files use fs.file.read;
+  for reading PDFs use pdf.document.read.
+
+inputs:
+  path:
+    type: string
+    required: true
+    description: Path to the spreadsheet file.
+
+  sheet_name:
+    type: string
+    required: false
+    description: >
+      Name of the sheet or tab to read (for multi-sheet formats).
+      Default: first sheet.
+
+  range:
+    type: string
+    required: false
+    description: >
+      Cell range to read (e.g., "A1:D50"). Default: entire sheet.
+
+outputs:
+  table:
+    type: array
+    required: true
+    description: >
+      Array of row objects, each with column names as keys.
+
+  headers:
+    type: array
+    required: true
+    description: List of column header names in order.
+
+  row_count:
+    type: number
+    required: true
+    description: Number of data rows read (excluding header).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: perceive
+  consumes:
+    - Context
+  produces:
+    table:
+      type: Entity
+
+metadata:
+  status: experimental
+  tags: [table, spreadsheet, read, csv, excel, data]
+
+  examples:
+    - summary: "Read a CSV file into structured rows"
+      inputs:
+        path: "/data/sales_q3.csv"
+      outputs:
+        table:
+          - {region: "North", revenue: 150000, units: 320}
+          - {region: "South", revenue: 98000, units: 210}
+        headers: ["region", "revenue", "units"]
+        row_count: 2

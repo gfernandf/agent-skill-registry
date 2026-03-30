@@ -114,7 +114,14 @@
     "file": "Filesystem file or object",
     "entry": "Individual stored entry",
     "notification": "Alert or push notification",
-    "mail": "Email or mail item"
+    "mail": "Email or mail item",
+    "flow": "Execution flow or control path",
+    "array": "Ordered collection of elements",
+    "field": "Individual data field or attribute",
+    "sheet": "Spreadsheet document or tab",
+    "sentiment": "Emotional tone or sentiment signal",
+    "speaker": "Audio speaker or voice source",
+    "request": "HTTP or API request"
   },
 
   "verbs": {
@@ -186,6 +193,13 @@
     "cluster": "Group items by similarity or theme",
     "aggregate": "Compute aggregate statistics over a collection",
     "sort": "Order items by one or more keys",
-    "synthesize": "Produce an output artifact from structured input"
+    "synthesize": "Produce an output artifact from structured input",
+    "branch": "Select conditional execution path",
+    "iterate": "Repeat operation over collection elements",
+    "wait": "Pause execution pending external event or condition",
+    "catch": "Handle errors with fallback behavior",
+    "join": "Combine records from multiple sources by key",
+    "diarize": "Identify and separate speakers in audio content",
+    "collect": "Gather structured input from a source"
   }
 }

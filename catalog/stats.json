@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 122,
+    "capability_count": 141,
     "skill_count": 36,
     "domain_count": 27,
     "channel_count": 2
@@ -35,36 +35,36 @@
   },
   "capabilities": {
     "by_domain": {
-      "task": 15,
-      "text": 13,
+      "task": 16,
+      "text": 15,
       "integration": 12,
+      "agent": 10,
       "identity": 10,
+      "data": 8,
       "model": 8,
-      "agent": 5,
+      "web": 6,
       "ops": 5,
       "policy": 5,
-      "web": 5,
+      "table": 5,
       "code": 4,
-      "data": 4,
+      "image": 4,
       "memory": 4,
       "security": 4,
       "analysis": 3,
+      "audio": 3,
       "eval": 3,
       "fs": 3,
-      "image": 3,
-      "table": 3,
-      "audio": 2,
+      "message": 3,
+      "doc": 2,
       "email": 2,
-      "message": 2,
       "provenance": 2,
       "decision": 1,
-      "doc": 1,
       "pdf": 1,
       "research": 1,
       "video": 1
     },
     "by_status": {
-      "experimental": 109,
+      "experimental": 128,
       "stable": 7,
       "draft": 6
     },
@@ -251,13 +251,24 @@
       }
     ],
     "unused": [
+      "agent.flow.branch",
+      "agent.flow.catch",
+      "agent.flow.iterate",
+      "agent.flow.wait",
+      "agent.input.collect",
       "agent.plan.create",
       "agent.task.delegate",
+      "audio.speaker.diarize",
       "audio.speech.synthesize",
       "code.snippet.execute",
       "code.source.analyze",
       "code.source.format",
+      "data.array.map",
+      "data.field.map",
       "data.record.deduplicate",
+      "data.record.join",
+      "data.record.merge",
+      "doc.content.generate",
       "email.message.send",
       "fs.file.list",
       "fs.file.read",
@@ -273,6 +284,7 @@
       "identity.role.get",
       "identity.role.list",
       "image.content.extract",
+      "image.content.generate",
       "integration.connector.get",
       "integration.connector.list",
       "integration.connector.sync",
@@ -287,6 +299,7 @@
       "integration.record.upsert",
       "memory.record.store",
       "memory.vector.search",
+      "message.content.format",
       "message.notification.send",
       "message.priority.classify",
       "model.embedding.generate",
@@ -308,6 +321,8 @@
       "security.secret.detect",
       "table.column.aggregate",
       "table.row.sort",
+      "table.sheet.read",
+      "table.sheet.write",
       "task.approval.approve",
       "task.approval.reject",
       "task.assignee.assign",
@@ -318,15 +333,19 @@
       "task.case.search",
       "task.case.update",
       "task.event.acknowledge",
+      "task.event.schedule",
       "task.incident.create",
       "task.milestone.schedule",
       "task.priority.classify",
       "task.sla.monitor",
       "task.state.transition",
+      "text.content.compare",
       "text.content.generate",
       "text.content.template",
       "text.response.extract",
+      "text.sentiment.analyze",
       "video.frame.extract",
+      "web.request.send",
       "web.source.verify"
     ]
   },
@@ -337,7 +356,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 36,
-    "capabilities_with_nondefault_metadata": 122,
+    "capabilities_with_nondefault_metadata": 141,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -683,15 +702,19 @@
     "top_capability_tags": [
       {
         "id": "task",
-        "count": 16
+        "count": 17
       },
       {
         "id": "text",
-        "count": 14
+        "count": 17
       },
       {
         "id": "integration",
-        "count": 12
+        "count": 13
+      },
+      {
+        "id": "data",
+        "count": 10
       },
       {
         "id": "identity",
@@ -722,11 +745,27 @@
         "count": 6
       },
       {
+        "id": "generation",
+        "count": 6
+      },
+      {
         "id": "governance",
         "count": 6
       },
       {
-        "id": "data",
+        "id": "orchestration",
+        "count": 6
+      },
+      {
+        "id": "web",
+        "count": 6
+      },
+      {
+        "id": "analysis",
+        "count": 5
+      },
+      {
+        "id": "event",
         "count": 5
       },
       {
@@ -742,11 +781,15 @@
         "count": 5
       },
       {
-        "id": "web",
+        "id": "table",
         "count": 5
       },
       {
         "id": "code",
+        "count": 4
+      },
+      {
+        "id": "control-flow",
         "count": 4
       },
       {
@@ -762,11 +805,11 @@
         "count": 4
       },
       {
-        "id": "event",
+        "id": "image",
         "count": 4
       },
       {
-        "id": "generation",
+        "id": "input",
         "count": 4
       },
       {
@@ -794,6 +837,10 @@
         "count": 4
       },
       {
+        "id": "read",
+        "count": 4
+      },
+      {
         "id": "risk",
         "count": 4
       },
@@ -814,11 +861,11 @@
         "count": 3
       },
       {
-        "id": "analysis",
+        "id": "assignment",
         "count": 3
       },
       {
-        "id": "assignment",
+        "id": "audio",
         "count": 3
       },
       {
@@ -830,15 +877,11 @@
         "count": 3
       },
       {
+        "id": "document",
+        "count": 3
+      },
+      {
         "id": "filesystem",
-        "count": 3
-      },
-      {
-        "id": "image",
-        "count": 3
-      },
-      {
-        "id": "input",
         "count": 3
       },
       {
@@ -850,11 +893,11 @@
         "count": 3
       },
       {
-        "id": "messaging",
+        "id": "merge",
         "count": 3
       },
       {
-        "id": "orchestration",
+        "id": "messaging",
         "count": 3
       },
       {
@@ -870,10 +913,6 @@
         "count": 3
       },
       {
-        "id": "read",
-        "count": 3
-      },
-      {
         "id": "retrieval",
         "count": 3
       },
@@ -886,11 +925,15 @@
         "count": 3
       },
       {
+        "id": "similarity",
+        "count": 3
+      },
+      {
         "id": "storage",
         "count": 3
       },
       {
-        "id": "table",
+        "id": "transform",
         "count": 3
       },
       {
@@ -910,15 +953,23 @@
         "count": 2
       },
       {
-        "id": "audio",
-        "count": 2
-      },
-      {
         "id": "citation",
         "count": 2
       },
       {
         "id": "cognitive-unit",
+        "count": 2
+      },
+      {
+        "id": "comparison",
+        "count": 2
+      },
+      {
+        "id": "composition",
+        "count": 2
+      },
+      {
+        "id": "csv",
         "count": 2
       },
       {
@@ -934,10 +985,6 @@
         "count": 2
       },
       {
-        "id": "document",
-        "count": 2
-      },
-      {
         "id": "email",
         "count": 2
       },
@@ -950,11 +997,31 @@
         "count": 2
       },
       {
+        "id": "excel",
+        "count": 2
+      },
+      {
         "id": "gate",
         "count": 2
       },
       {
+        "id": "http",
+        "count": 2
+      },
+      {
         "id": "incident",
+        "count": 2
+      },
+      {
+        "id": "iteration",
+        "count": 2
+      },
+      {
+        "id": "message",
+        "count": 2
+      },
+      {
+        "id": "notification",
         "count": 2
       },
       {
@@ -978,6 +1045,10 @@
         "count": 2
       },
       {
+        "id": "records",
+        "count": 2
+      },
+      {
         "id": "routing",
         "count": 2
       },
@@ -986,11 +1057,15 @@
         "count": 2
       },
       {
+        "id": "scheduling",
+        "count": 2
+      },
+      {
         "id": "sending",
         "count": 2
       },
       {
-        "id": "similarity",
+        "id": "spreadsheet",
         "count": 2
       },
       {
@@ -1006,7 +1081,7 @@
         "count": 2
       },
       {
-        "id": "transform",
+        "id": "transcription",
         "count": 2
       },
       {
@@ -1026,11 +1101,27 @@
         "count": 2
       },
       {
+        "id": "write",
+        "count": 2
+      },
+      {
         "id": "access",
         "count": 1
       },
       {
         "id": "access-control",
+        "count": 1
+      },
+      {
+        "id": "adapter",
+        "count": 1
+      },
+      {
+        "id": "agent",
+        "count": 1
+      },
+      {
+        "id": "aggregate",
         "count": 1
       },
       {
@@ -1042,7 +1133,19 @@
         "count": 1
       },
       {
+        "id": "alias",
+        "count": 1
+      },
+      {
         "id": "anomaly",
+        "count": 1
+      },
+      {
+        "id": "api",
+        "count": 1
+      },
+      {
+        "id": "array",
         "count": 1
       },
       {
@@ -1050,11 +1153,31 @@
         "count": 1
       },
       {
+        "id": "async",
+        "count": 1
+      },
+      {
         "id": "audit",
         "count": 1
       },
       {
+        "id": "batch",
+        "count": 1
+      },
+      {
         "id": "bias",
+        "count": 1
+      },
+      {
+        "id": "branching",
+        "count": 1
+      },
+      {
+        "id": "bridge",
+        "count": 1
+      },
+      {
+        "id": "calendar",
         "count": 1
       },
       {
@@ -1074,11 +1197,15 @@
         "count": 1
       },
       {
-        "id": "comparison",
+        "id": "collection",
         "count": 1
       },
       {
         "id": "compliance",
+        "count": 1
+      },
+      {
+        "id": "conditional",
         "count": 1
       },
       {
@@ -1091,6 +1218,10 @@
       },
       {
         "id": "corpus",
+        "count": 1
+      },
+      {
+        "id": "creative",
         "count": 1
       },
       {
@@ -1114,7 +1245,23 @@
         "count": 1
       },
       {
+        "id": "diarization",
+        "count": 1
+      },
+      {
+        "id": "diff",
+        "count": 1
+      },
+      {
         "id": "document-processing",
+        "count": 1
+      },
+      {
+        "id": "emotion",
+        "count": 1
+      },
+      {
+        "id": "error-handling",
         "count": 1
       },
       {
@@ -1122,7 +1269,15 @@
         "count": 1
       },
       {
+        "id": "export",
+        "count": 1
+      },
+      {
         "id": "failure-modes",
+        "count": 1
+      },
+      {
+        "id": "fallback",
         "count": 1
       },
       {
@@ -1130,7 +1285,19 @@
         "count": 1
       },
       {
+        "id": "field",
+        "count": 1
+      },
+      {
         "id": "filtering",
+        "count": 1
+      },
+      {
+        "id": "form",
+        "count": 1
+      },
+      {
+        "id": "format",
         "count": 1
       },
       {
@@ -1146,7 +1313,7 @@
         "count": 1
       },
       {
-        "id": "http",
+        "id": "human-in-the-loop",
         "count": 1
       },
       {
@@ -1158,19 +1325,23 @@
         "count": 1
       },
       {
+        "id": "join",
+        "count": 1
+      },
+      {
+        "id": "loop",
+        "count": 1
+      },
+      {
+        "id": "map",
+        "count": 1
+      },
+      {
         "id": "matching",
         "count": 1
       },
       {
         "id": "media",
-        "count": 1
-      },
-      {
-        "id": "merge",
-        "count": 1
-      },
-      {
-        "id": "message",
         "count": 1
       },
       {
@@ -1191,10 +1362,6 @@
       },
       {
         "id": "normalization",
-        "count": 1
-      },
-      {
-        "id": "notification",
         "count": 1
       },
       {
@@ -1231,6 +1398,10 @@
       },
       {
         "id": "parsing",
+        "count": 1
+      },
+      {
+        "id": "pause",
         "count": 1
       },
       {
@@ -1282,11 +1453,35 @@
         "count": 1
       },
       {
+        "id": "relational",
+        "count": 1
+      },
+      {
+        "id": "reminder",
+        "count": 1
+      },
+      {
+        "id": "rename",
+        "count": 1
+      },
+      {
         "id": "rendering",
         "count": 1
       },
       {
+        "id": "report",
+        "count": 1
+      },
+      {
+        "id": "request",
+        "count": 1
+      },
+      {
         "id": "research",
+        "count": 1
+      },
+      {
+        "id": "resilience",
         "count": 1
       },
       {
@@ -1306,11 +1501,11 @@
         "count": 1
       },
       {
-        "id": "scheduling",
+        "id": "secret-detection",
         "count": 1
       },
       {
-        "id": "secret-detection",
+        "id": "sentiment",
         "count": 1
       },
       {
@@ -1323,6 +1518,10 @@
       },
       {
         "id": "sort",
+        "count": 1
+      },
+      {
+        "id": "speaker",
         "count": 1
       },
       {
@@ -1362,6 +1561,10 @@
         "count": 1
       },
       {
+        "id": "synthesis",
+        "count": 1
+      },
+      {
         "id": "text-extraction",
         "count": 1
       },
@@ -1370,11 +1573,11 @@
         "count": 1
       },
       {
-        "id": "toxicity",
+        "id": "tone",
         "count": 1
       },
       {
-        "id": "transcription",
+        "id": "toxicity",
         "count": 1
       },
       {
@@ -1402,11 +1605,27 @@
         "count": 1
       },
       {
+        "id": "user-interaction",
+        "count": 1
+      },
+      {
         "id": "video",
         "count": 1
       },
       {
-        "id": "write",
+        "id": "visual",
+        "count": 1
+      },
+      {
+        "id": "voice",
+        "count": 1
+      },
+      {
+        "id": "wait",
+        "count": 1
+      },
+      {
+        "id": "writing",
         "count": 1
       }
     ]

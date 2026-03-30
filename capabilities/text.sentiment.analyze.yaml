@@ -1,0 +1,80 @@
+id: text.sentiment.analyze
+version: 1.0.0
+description: >
+  Analyze the sentiment and emotional tone of text. Returns polarity
+  classification, numeric score, and optional dimensional breakdown.
+  For classifying text into custom categories use text.content.classify.
+
+inputs:
+  text:
+    type: string
+    required: true
+    description: The text to analyze for sentiment.
+
+  dimensions:
+    type: array
+    required: false
+    description: >
+      Sentiment dimensions to evaluate: "polarity", "emotion",
+      "intensity", "subjectivity". Default: ["polarity"].
+
+outputs:
+  sentiment:
+    type: string
+    required: true
+    description: >
+      Overall sentiment label: "positive", "negative", "neutral",
+      or "mixed".
+
+  score:
+    type: number
+    required: true
+    description: >
+      Sentiment polarity score from -1.0 (most negative) to
+      +1.0 (most positive), with 0.0 as neutral.
+
+  dimensions:
+    type: object
+    required: false
+    description: >
+      Per-dimension analysis when multiple dimensions are requested.
+      Each key is a dimension name with sub-fields for label and score.
+
+  rationale:
+    type: string
+    required: true
+    description: >
+      Brief explanation of the sentiment assessment with supporting
+      evidence from the text.
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+cognitive_hints:
+  role: analyze
+  consumes:
+    - Context
+  produces:
+    sentiment:
+      type: Entity
+    score:
+      type: Score
+
+metadata:
+  status: experimental
+  tags: [text, sentiment, analysis, emotion, tone]
+
+  examples:
+    - summary: "Analyze sentiment of customer feedback"
+      inputs:
+        text: "The new feature is amazing but the documentation is incomplete and confusing."
+        dimensions: ["polarity", "emotion"]
+      outputs:
+        sentiment: "mixed"
+        score: 0.15
+        dimensions:
+          polarity: {label: "mixed", score: 0.15}
+          emotion: {label: "frustrated-pleased", score: 0.3}
+        rationale: "Positive toward the feature ('amazing') but negative about documentation ('incomplete', 'confusing'). Net sentiment is slightly positive."

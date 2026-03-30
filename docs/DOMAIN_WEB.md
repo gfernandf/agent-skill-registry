@@ -4,7 +4,7 @@
 
 ---
 
-## Capabilities (5)
+## Capabilities (6)
 
 | ID | Status | Description | Binding | cognitive_hints |
 |---|---|---|---|---|
@@ -13,6 +13,7 @@
 | `web.source.search` | experimental | Search the web for sources matching a query | python | perceive → Evidence |
 | `web.source.verify` | experimental | Verify trust and integrity signals for a URL | python | evaluate → Evidence |
 | `web.source.normalize` | experimental | Normalize search results into corpus items | python | analyze → Evidence |
+| `web.request.send` | experimental | Generic HTTP request with safety blocks | python | interact → Artifact |
 
 ---
 
