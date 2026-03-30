@@ -9650,7 +9650,7 @@
       ]
     },
     "properties": {
-      "deterministic": true,
+      "deterministic": false,
       "side_effects": true,
       "idempotent": false
     },
@@ -11418,7 +11418,7 @@
       ]
     },
     "properties": {
-      "deterministic": true,
+      "deterministic": false,
       "side_effects": true,
       "idempotent": false
     },

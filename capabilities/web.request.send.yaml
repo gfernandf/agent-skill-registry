@@ -59,7 +59,7 @@ outputs:
     description: Whether the request returned a 2xx status code.
 
 properties:
-  deterministic: true
+  deterministic: false
   side_effects: true
   idempotent: false
 

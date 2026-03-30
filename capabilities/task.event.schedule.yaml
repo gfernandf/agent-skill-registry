@@ -58,7 +58,7 @@ outputs:
     description: The confirmed scheduled time in ISO 8601.
 
 properties:
-  deterministic: true
+  deterministic: false
   side_effects: true
   idempotent: false
 
