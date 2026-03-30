@@ -43,6 +43,12 @@ Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
 
 `_index.yaml` updated. Catalog regenerated (141 capabilities, 36 skills).
 
+### Fixed
+
+- `_index.yaml`: quoted multiline description of `decision.option.justify`
+  that broke YAML parsing at line 85 (unquoted second sentence treated as a
+  new mapping key).
+
 ## [0.1.0] — 2026-03-24
 
 ### Added
