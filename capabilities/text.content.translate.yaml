@@ -26,7 +26,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, translation]
   examples:
     - summary: "Translate text to another language"

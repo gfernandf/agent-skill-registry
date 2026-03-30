@@ -40,7 +40,7 @@ cognitive_hints:
       type: Artifact
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, transformation, style, llm]
 
   examples:

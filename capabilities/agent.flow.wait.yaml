@@ -63,7 +63,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [control-flow, wait, pause, async, human-in-the-loop]
 
   examples:

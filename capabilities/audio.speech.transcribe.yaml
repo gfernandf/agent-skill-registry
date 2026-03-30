@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [audio, speech, transcription, speech-to-text]
   examples:
     - summary: "Transcribe a short speech clip"

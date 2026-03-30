@@ -55,7 +55,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [data, merge, aggregate, records, composition]
 
   examples:

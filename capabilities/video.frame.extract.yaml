@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [video, media, extraction]
   examples:
     - summary: "Extract frames from a video"

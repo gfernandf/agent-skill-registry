@@ -37,7 +37,7 @@ safety:
   description: Approves a request that may trigger downstream actions.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, approval, workflow]
 
 

@@ -49,7 +49,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags:
     - data
     - transform

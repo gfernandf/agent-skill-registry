@@ -30,7 +30,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [operations, monitoring]
   examples:
     - summary: "Estimate cost for a plan"

@@ -70,7 +70,7 @@ cognitive_hints:
       type: Evidence
 
 metadata:
-  status: experimental
+  status: stable
   tags: [control-flow, branching, conditional, orchestration]
 
   examples:

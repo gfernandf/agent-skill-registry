@@ -45,7 +45,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: draft
+  status: stable
   tags: [model, quality, scoring, evaluation]
   examples:
     - summary: Score a generated summary on quality dimensions

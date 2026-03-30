@@ -21,8 +21,15 @@ outputs:
     type: object
     description: Raw bytes (if mode is binary).
 
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
 cognitive_hints:
   role: perceive
+  consumes:
+    - Context
   produces:
     content:
       type: Artifact
@@ -30,7 +37,7 @@ cognitive_hints:
       type: Artifact
 
 metadata:
-  status: experimental
+  status: stable
   tags: [filesystem, io, read, input]
   examples:
     - summary: "Read a text file"

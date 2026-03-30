@@ -75,7 +75,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, scheduling, calendar, event, reminder]
 
   examples:

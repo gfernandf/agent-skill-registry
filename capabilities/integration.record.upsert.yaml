@@ -33,7 +33,7 @@ safety:
   description: Creates or updates a record in a mock in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [integration, record, upsert]
 
 

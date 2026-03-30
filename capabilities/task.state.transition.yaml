@@ -41,7 +41,7 @@ safety:
   description: Transitions a task state in the in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, state, transition, workflow]
 
 

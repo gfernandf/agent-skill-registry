@@ -62,7 +62,7 @@ cognitive_hints:
       type: Summary
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, comparison, similarity, diff, analysis]
 
   examples:

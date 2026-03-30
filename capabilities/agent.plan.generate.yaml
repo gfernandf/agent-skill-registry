@@ -1,6 +1,6 @@
 id: agent.plan.generate
 version: 1.0.0
-status: experimental
+status: stable
 description: >
   Generate a structured execution plan for solving a task or objective.
   The plan contains ordered steps, each referencing a capability or action,
@@ -59,7 +59,7 @@ metadata:
           - action: "data.schema.validate"
             description: "Validate extracted price records"
 
-  status: experimental
+  status: stable
 
 cognitive_hints:
   role: synthesize

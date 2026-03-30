@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [image, vision, generation]
   examples:
     - summary: "Generate a caption for an image"

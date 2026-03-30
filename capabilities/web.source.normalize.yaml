@@ -45,7 +45,7 @@ cognitive_hints:
       merge: append
 
 metadata:
-  status: experimental
+  status: stable
   tags: [web, normalization, corpus, preprocessing]
   examples:
     - description: Normalize search results in quick mode

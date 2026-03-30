@@ -22,7 +22,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [code, developer-tools, extraction]
   examples:
     - summary: "Extract diff between two code versions"

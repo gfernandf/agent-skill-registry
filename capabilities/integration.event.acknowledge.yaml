@@ -37,7 +37,7 @@ safety:
   description: Acknowledges an event. Baseline is local-only.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [integration, event, acknowledgement]
 
 

@@ -47,7 +47,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [audio, diarization, speaker, transcription, voice]
 
   examples:

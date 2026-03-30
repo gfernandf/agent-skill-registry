@@ -37,7 +37,7 @@ safety:
   description: Stores a record in local in-memory namespace. No external side effects.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [memory, storage, record]
 
 

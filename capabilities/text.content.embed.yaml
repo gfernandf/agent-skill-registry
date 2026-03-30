@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, embedding, vector]
   examples:
     - summary: "Generate a vector embedding for text"

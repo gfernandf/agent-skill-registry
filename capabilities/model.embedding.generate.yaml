@@ -35,7 +35,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: draft
+  status: stable
   tags: [model, embedding, vector, similarity]
   examples:
     - summary: Embed a product description for semantic search

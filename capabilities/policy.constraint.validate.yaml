@@ -26,7 +26,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [policy, governance, validation]
   examples:
     - summary: "Validate payload against policy constraints"

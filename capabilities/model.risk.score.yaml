@@ -45,7 +45,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: draft
+  status: stable
   tags: [model, safety, risk, toxicity, bias, injection]
   examples:
     - summary: Assess risk of a model response

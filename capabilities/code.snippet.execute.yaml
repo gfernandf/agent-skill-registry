@@ -39,7 +39,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [code, developer-tools, execution, sandbox]
   examples:
     - summary: "Execute a Python expression"

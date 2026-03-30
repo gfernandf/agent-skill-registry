@@ -24,7 +24,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [web, extraction, html, text]
   examples:
     - description: Extract text from an HTML page

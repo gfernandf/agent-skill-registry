@@ -22,7 +22,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [table, data, filtering]
   examples:
     - summary: "Filter table rows by condition"

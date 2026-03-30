@@ -30,7 +30,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [provenance, citation, verification]
   examples:
     - summary: "Verify a claim against sources"

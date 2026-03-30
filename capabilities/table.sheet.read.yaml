@@ -56,7 +56,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [table, spreadsheet, read, csv, excel, data]
 
   examples:

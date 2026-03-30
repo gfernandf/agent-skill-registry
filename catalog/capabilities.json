@@ -51,7 +51,7 @@
         "orchestration"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Route workflow based on risk score",
@@ -165,7 +165,7 @@
         "orchestration"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Handle OCR failure with a default value",
@@ -275,7 +275,7 @@
         "batch"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Summarize each document in a collection",
@@ -381,7 +381,7 @@
         "human-in-the-loop"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Wait for human approval before proceeding",
@@ -467,7 +467,7 @@
         "user-interaction"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Collect project configuration from user",
@@ -569,7 +569,7 @@
         "agent-control"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "query": "Summarize this quarterly earnings report",
@@ -648,7 +648,7 @@
         "option-generation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "goal": "Choose a cloud provider for our ML training workloads",
@@ -729,7 +729,7 @@
         "developer-tools"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "intent_description": "Receive a PDF invoice, extract the text, classify if it is overdue, and store a summary in memory.\n",
@@ -744,6 +744,11 @@
           }
         }
       ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -801,7 +806,7 @@
         "workflow"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "objective": "Build a web scraper that extracts product prices",
@@ -890,7 +895,7 @@
         "agent-control"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "task": {
@@ -989,7 +994,7 @@
         "structuring"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Decompose cloud migration project by phases",
@@ -1093,7 +1098,7 @@
         "failure-modes"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract risks from a vendor-selection proposal",
@@ -1199,7 +1204,7 @@
         "structuring"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Cluster customer-feedback items into themes",
@@ -1302,7 +1307,7 @@
         "voice"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Diarize a meeting recording with two speakers",
@@ -1394,7 +1399,7 @@
         "speech-synthesis"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Synthesize a greeting in English",
@@ -1459,7 +1464,7 @@
         "speech-to-text"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Transcribe a short speech clip",
@@ -1520,7 +1525,7 @@
         "extraction"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract diff between two code versions",
@@ -1599,7 +1604,7 @@
         "sandbox"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Execute a Python expression",
@@ -1688,7 +1693,7 @@
         "quality"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Analyze a Python function for structural metrics",
@@ -1758,7 +1763,7 @@
         "formatting"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Format Python code",
@@ -1832,7 +1837,7 @@
         "iteration"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract names and normalize scores from a list",
@@ -1926,7 +1931,7 @@
         "composition"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Remap research output fields to model input fields",
@@ -2004,7 +2009,7 @@
         "parsing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Parse a JSON string",
@@ -2073,7 +2078,7 @@
         "deduplication"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Remove duplicate records by key",
@@ -2173,7 +2178,7 @@
         "relational"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Inner join users with orders by user_id",
@@ -2275,7 +2280,7 @@
         "composition"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Merge parallel analysis results into one record",
@@ -2375,7 +2380,7 @@
         "mapping"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Rename and project fields from user records",
@@ -2475,7 +2480,7 @@
         "validation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Validate data against a JSON schema",
@@ -2602,7 +2607,7 @@
         "recommendation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Justify a recommended option",
@@ -2698,7 +2703,7 @@
         "chunking"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Split a document into chunks",
@@ -2785,7 +2790,7 @@
         "synthesis"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate an executive briefing from analysis results",
@@ -2858,7 +2863,7 @@
         "input"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Read messages from an inbox",
@@ -2929,7 +2934,7 @@
         "sending"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Send an email message",
@@ -3018,7 +3023,7 @@
         "qualitative-analysis"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "options": [
@@ -3121,7 +3126,7 @@
         "scoring"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "options": [
@@ -3229,7 +3234,7 @@
         "output-validation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "output": {
@@ -3324,7 +3329,7 @@
         "discovery"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "List Python files in a project directory",
@@ -3398,7 +3403,7 @@
         "input"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Read a text file",
@@ -3413,8 +3418,16 @@
         }
       ]
     },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
     "cognitive_hints": {
       "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
       "produces": {
         "content": {
           "type": "Artifact"
@@ -3466,7 +3479,7 @@
         "side-effect"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Write a report to a text file",
@@ -3552,7 +3565,7 @@
         "matching"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Find the best assignee for a task",
@@ -3643,7 +3656,7 @@
         "access"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Justify an identity-related decision",
@@ -3726,7 +3739,7 @@
         "access-control"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Check whether a principal is allowed an action",
@@ -3792,7 +3805,7 @@
         "lookup"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve a specific permission definition",
@@ -3865,7 +3878,7 @@
         "listing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "List permissions for a principal",
@@ -3945,7 +3958,7 @@
         "audit"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Verify a principal holds a permission",
@@ -4025,7 +4038,7 @@
         "anomaly"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Score risk for an identity action",
@@ -4104,7 +4117,7 @@
         "assignment"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Assign a role to a principal",
@@ -4178,7 +4191,7 @@
         "lookup"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve a role definition",
@@ -4246,7 +4259,7 @@
         "listing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "List available roles",
@@ -4313,7 +4326,7 @@
         "generation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate a caption for an image",
@@ -4379,7 +4392,7 @@
         "classification"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify image content by labels",
@@ -4460,7 +4473,7 @@
         "document-processing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract text from a scanned invoice image",
@@ -4537,7 +4550,7 @@
         "visual"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate a diagram for a risk assessment report",
@@ -4601,7 +4614,7 @@
         "lookup"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve connector metadata",
@@ -4675,7 +4688,7 @@
         "listing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "List available connectors",
@@ -4755,7 +4768,7 @@
         "sync"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Trigger connector synchronization",
@@ -4838,7 +4851,7 @@
         "acknowledgement"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Acknowledge an integration event",
@@ -4914,7 +4927,7 @@
         "etl"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Apply field mapping to a record",
@@ -4992,7 +5005,7 @@
         "validation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Validate a field mapping definition",
@@ -5082,7 +5095,7 @@
         "reconciliation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Compare records across systems",
@@ -5171,7 +5184,7 @@
         "create"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Create a record in an external system",
@@ -5244,7 +5257,7 @@
         "delete"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Delete a record in an external system",
@@ -5331,7 +5344,7 @@
         "reconciliation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Reconcile records between two systems",
@@ -5426,7 +5439,7 @@
         "update"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Update a record in an external system",
@@ -5501,7 +5514,7 @@
         "upsert"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Create-or-update a record in an external system",
@@ -5578,7 +5591,7 @@
         "retrieval"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve a stored memory entry",
@@ -5643,7 +5656,7 @@
         "persistence"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Store a key-value memory entry",
@@ -5720,7 +5733,7 @@
         "record"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Store a structured record in a namespace",
@@ -5805,7 +5818,7 @@
         "similarity"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Search memory by semantic similarity",
@@ -5888,7 +5901,7 @@
         "text"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Format SLA breach alerts into a notification message",
@@ -5973,7 +5986,7 @@
         "sending"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Send a notification message",
@@ -6061,7 +6074,7 @@
         "triage"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify message priority",
@@ -6140,7 +6153,7 @@
         "similarity"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Embed a product description for semantic search",
@@ -6218,7 +6231,7 @@
         "routing"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify a model output as summary vs analysis",
@@ -6317,7 +6330,7 @@
         "llm"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate a risk assessment from meeting notes",
@@ -6412,7 +6425,7 @@
         "content-filter"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Remove PII from model output",
@@ -6503,7 +6516,7 @@
         "evaluation"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Score a generated summary on quality dimensions",
@@ -6586,7 +6599,7 @@
         "rendering"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Render a summarization prompt",
@@ -6673,7 +6686,7 @@
         "quality"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Validate a generated summary against source evidence",
@@ -6776,7 +6789,7 @@
         "injection"
       ],
       "category": null,
-      "status": "draft",
+      "status": "stable",
       "examples": [
         {
           "summary": "Assess risk of a model response",
@@ -6860,7 +6873,7 @@
         "monitoring"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Estimate cost for a plan",
@@ -6951,7 +6964,7 @@
         "incident"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Acknowledge an operational event",
@@ -7032,7 +7045,7 @@
         "alerting"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Monitor operational events against thresholds",
@@ -7194,7 +7207,7 @@
         "cognitive-unit"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "input": {
@@ -7304,7 +7317,7 @@
         "cognitive-unit"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "input": {
@@ -7382,7 +7395,7 @@
         "input"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Read text from a PDF document",
@@ -7398,11 +7411,19 @@
         }
       ]
     },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true
+    },
     "requires": [
       "fs.file.read"
     ],
     "cognitive_hints": {
       "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
       "produces": {
         "text": {
           "type": "Entity"
@@ -7410,10 +7431,7 @@
         "metadata": {
           "type": "Entity"
         }
-      },
-      "consumes": [
-        "Context"
-      ]
+      }
     }
   },
   {
@@ -7458,7 +7476,7 @@
         "governance"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Gate an action based on policy rules",
@@ -7541,7 +7559,7 @@
         "validation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Validate payload against policy constraints",
@@ -7630,7 +7648,7 @@
         "governance"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Justify a policy decision",
@@ -7718,7 +7736,7 @@
         "governance"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify risk level of an action",
@@ -7804,7 +7822,7 @@
         "governance"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Compute a numeric risk score for an action",
@@ -7884,7 +7902,7 @@
         "generation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate a citation from a source",
@@ -7959,7 +7977,7 @@
         "verification"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Verify a claim against sources",
@@ -8026,7 +8044,7 @@
         "retrieval"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve full content from source references",
@@ -8356,7 +8374,7 @@
         "statistics"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Compute average salary grouped by department",
@@ -8447,7 +8465,7 @@
         "filtering"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Filter table rows by condition",
@@ -8527,7 +8545,7 @@
         "ordering"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Sort employees by salary descending",
@@ -8638,7 +8656,7 @@
         "data"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Read a CSV file into structured rows",
@@ -8739,7 +8757,7 @@
         "export"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Export analysis results to CSV",
@@ -8833,7 +8851,7 @@
         "workflow"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Approve an approval request",
@@ -8914,7 +8932,7 @@
         "workflow"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Reject an approval request",
@@ -8989,7 +9007,7 @@
         "assignment"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Assign a task to a user",
@@ -9064,7 +9082,7 @@
         "close"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Close a case with a resolution",
@@ -9144,7 +9162,7 @@
         "create"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Create a new case",
@@ -9215,7 +9233,7 @@
         "lookup"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Retrieve a specific case",
@@ -9289,7 +9307,7 @@
         "listing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "List cases filtered by status",
@@ -9364,7 +9382,7 @@
         "search"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Search cases by keyword",
@@ -9434,7 +9452,7 @@
         "update"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Update a case's fields",
@@ -9508,7 +9526,7 @@
         "acknowledgement"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Acknowledge a task event",
@@ -9610,7 +9628,7 @@
         "reminder"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Schedule a weekly review meeting",
@@ -9698,7 +9716,7 @@
         "create"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Create a new incident",
@@ -9781,7 +9799,7 @@
         "project"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Schedule a project milestone",
@@ -9866,7 +9884,7 @@
         "triage"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify priority of a task",
@@ -9951,7 +9969,7 @@
         "compliance"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Monitor SLA compliance",
@@ -10050,7 +10068,7 @@
         "workflow"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Transition a task to a new state",
@@ -10133,7 +10151,7 @@
         "classification"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Classify text into categories",
@@ -10220,7 +10238,7 @@
         "analysis"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Compare two versions of an executive summary",
@@ -10298,7 +10316,7 @@
         "vector"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate a vector embedding for text",
@@ -10424,7 +10442,7 @@
         "llm"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Generate text from an instruction",
@@ -10559,7 +10577,7 @@
         "summarization"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Summarize a passage of text",
@@ -10571,6 +10589,11 @@
           }
         }
       ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -10677,7 +10700,7 @@
         "llm"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Transform text style or tone",
@@ -10744,7 +10767,7 @@
         "translation"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Translate text to another language",
@@ -10801,7 +10824,7 @@
         "extraction"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract named entities from text",
@@ -10866,7 +10889,7 @@
         "extraction"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract keywords from text",
@@ -10931,7 +10954,7 @@
         "detection"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Detect the language of a text",
@@ -11002,7 +11025,7 @@
         "llm"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract an answer from context",
@@ -11081,7 +11104,7 @@
         "tone"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Analyze sentiment of customer feedback",
@@ -11156,7 +11179,7 @@
         "extraction"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "Extract frames from a video",
@@ -11216,7 +11239,7 @@
         "text"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "description": "Extract text from an HTML page",
@@ -11270,7 +11293,7 @@
         "retrieval"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "description": "Fetch a news article",
@@ -11290,6 +11313,9 @@
     },
     "cognitive_hints": {
       "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
       "produces": {
         "content": {
           "type": "Artifact"
@@ -11360,7 +11386,7 @@
         "request"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "summary": "POST JSON to an external API",
@@ -11450,7 +11476,7 @@
         "preprocessing"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "description": "Normalize search results in quick mode",
@@ -11524,7 +11550,7 @@
         "discovery"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "description": "Search for machine learning resources",
@@ -11551,6 +11577,9 @@
     },
     "cognitive_hints": {
       "role": "perceive",
+      "consumes": [
+        "Context"
+      ],
       "produces": {
         "results": {
           "type": "Evidence",
@@ -11596,7 +11625,7 @@
         "security"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "examples": [
         {
           "description": "Verify a news source",

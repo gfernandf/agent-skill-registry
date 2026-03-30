@@ -29,7 +29,7 @@ safety:
   description: Updates a case in the in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, case, update]
 
 

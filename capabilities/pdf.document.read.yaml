@@ -18,7 +18,7 @@ outputs:
     type: object
 
 metadata:
-  status: experimental
+  status: stable
   tags: [pdf, document, read, input]
   examples:
     - summary: "Read text from a PDF document"
@@ -28,12 +28,17 @@ metadata:
         text: "Q3 revenue increased..."
         metadata: {pages: 5}
 
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
 cognitive_hints:
   role: perceive
+  consumes:
+    - Context
   produces:
     text:
       type: Entity
     metadata:
       type: Entity
-  consumes:
-  - Context

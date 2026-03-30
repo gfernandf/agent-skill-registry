@@ -29,7 +29,7 @@ safety:
   description: Deletes a record. Destructive operation.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [integration, record, delete]
 
 

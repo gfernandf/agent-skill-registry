@@ -26,7 +26,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [provenance, citation, generation]
   examples:
     - summary: "Generate a citation from a source"

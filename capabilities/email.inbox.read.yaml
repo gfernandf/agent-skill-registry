@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [email, messaging, read, input]
   examples:
     - summary: "Read messages from an inbox"

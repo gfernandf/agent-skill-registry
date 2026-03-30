@@ -35,7 +35,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: draft
+  status: stable
   tags: [model, safety, sanitize, pii, content-filter]
   examples:
     - summary: Remove PII from model output

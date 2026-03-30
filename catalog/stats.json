@@ -64,9 +64,7 @@
       "video": 1
     },
     "by_status": {
-      "experimental": 128,
-      "stable": 7,
-      "draft": 6
+      "stable": 141
     },
     "most_used": [
       {

@@ -31,7 +31,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, classification]
   examples:
     - summary: "Classify text into categories"

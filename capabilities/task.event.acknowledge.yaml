@@ -33,7 +33,7 @@ safety:
   description: Acknowledges a task event locally.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, event, acknowledgement]
 
 

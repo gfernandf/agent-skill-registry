@@ -32,7 +32,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [memory, vector, search, similarity]
 
 

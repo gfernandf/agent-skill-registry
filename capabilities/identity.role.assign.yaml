@@ -33,7 +33,7 @@ safety:
   description: Assigns a role which may grant new permissions to a principal.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [identity, role, assignment]
 
 

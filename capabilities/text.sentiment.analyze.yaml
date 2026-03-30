@@ -63,7 +63,7 @@ cognitive_hints:
       type: Score
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, sentiment, analysis, emotion, tone]
 
   examples:

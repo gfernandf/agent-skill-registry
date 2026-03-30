@@ -1,6 +1,6 @@
 id: agent.task.delegate
 version: 1.0.0
-status: experimental
+status: stable
 description: >
   Delegate a task to another agent or subsystem for execution. The caller
   provides a structured task description and a target agent identifier.
@@ -68,7 +68,7 @@ metadata:
       agent: summarizer
       expected_accepted: true
 
-  status: experimental
+  status: stable
 
 cognitive_hints:
   role: decide

@@ -40,7 +40,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: draft
+  status: stable
   tags: [model, classification, output-type, routing]
   examples:
     - summary: Classify a model output as summary vs analysis

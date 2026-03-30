@@ -37,7 +37,7 @@ safety:
   description: Rejects a request, blocking the associated workflow.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, approval, rejection, workflow]
 
 

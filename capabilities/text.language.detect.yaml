@@ -22,7 +22,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, detection]
   examples:
     - summary: "Detect the language of a text"

@@ -64,7 +64,7 @@ safety:
     - Content size is bounded by runtime limits
 
 metadata:
-  status: experimental
+  status: stable
   tags:
     - filesystem
     - write

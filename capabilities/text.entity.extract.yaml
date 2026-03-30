@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, extraction]
   examples:
     - summary: "Extract named entities from text"

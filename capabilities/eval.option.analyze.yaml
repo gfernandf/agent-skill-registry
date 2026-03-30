@@ -51,7 +51,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags:
     - decision-support
     - evaluation

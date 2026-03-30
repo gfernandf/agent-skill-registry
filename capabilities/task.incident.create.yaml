@@ -41,7 +41,7 @@ safety:
   description: Creates an incident in the in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, incident, create]
 
 

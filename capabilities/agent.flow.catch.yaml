@@ -83,7 +83,7 @@ cognitive_hints:
       type: Decision
 
 metadata:
-  status: experimental
+  status: stable
   tags: [control-flow, error-handling, fallback, resilience, orchestration]
 
   examples:

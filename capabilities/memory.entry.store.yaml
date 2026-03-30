@@ -28,7 +28,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [memory, storage, persistence]
   examples:
     - summary: "Store a key-value memory entry"

@@ -36,7 +36,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [identity, decision, justification, access]
 
 

@@ -50,7 +50,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [model, generation, structured-output, llm]
   examples:
     - summary: Generate a risk assessment from meeting notes

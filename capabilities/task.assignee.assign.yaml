@@ -33,7 +33,7 @@ safety:
   description: Assigns a task in the in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, assignment]
 
 

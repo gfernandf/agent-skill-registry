@@ -37,7 +37,7 @@ safety:
   description: Triggers a data sync that may create or update records in external systems.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [integration, connector, sync]
 
 

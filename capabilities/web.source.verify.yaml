@@ -33,7 +33,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [web, trust, verification, security]
   examples:
     - description: Verify a news source

@@ -68,7 +68,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [analysis, clustering, themes, structuring]
   examples:
     - summary: Cluster customer-feedback items into themes

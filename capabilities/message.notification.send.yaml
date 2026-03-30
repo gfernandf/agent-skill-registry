@@ -31,7 +31,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [messaging, notification, sending]
   examples:
     - summary: "Send a notification message"

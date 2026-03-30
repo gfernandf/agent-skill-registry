@@ -18,7 +18,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [data, processing, parsing]
   examples:
     - summary: "Parse a JSON string"

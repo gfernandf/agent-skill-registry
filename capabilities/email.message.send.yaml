@@ -46,7 +46,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [email, messaging, sending]
   examples:
     - summary: "Send an email message"

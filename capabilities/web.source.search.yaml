@@ -18,6 +18,8 @@ outputs:
 
 cognitive_hints:
   role: perceive
+  consumes:
+    - Context
   produces:
     results:
       type: Evidence
@@ -29,7 +31,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [web, search, discovery]
   examples:
     - description: Search for machine learning resources

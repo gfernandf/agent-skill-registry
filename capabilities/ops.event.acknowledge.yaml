@@ -37,7 +37,7 @@ safety:
   description: Acknowledges an operational event. Baseline is local-only with no external effects.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [ops, event, acknowledgement, incident]
 
 

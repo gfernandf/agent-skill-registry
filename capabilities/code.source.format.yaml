@@ -22,7 +22,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [code, developer-tools, formatting]
   examples:
     - summary: "Format Python code"

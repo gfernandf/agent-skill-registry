@@ -53,7 +53,7 @@ cognitive_hints:
       type: Entity
 
 metadata:
-  status: experimental
+  status: stable
   tags: [data, field, rename, alias, adapter, composition]
 
   examples:

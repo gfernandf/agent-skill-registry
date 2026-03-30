@@ -31,7 +31,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [research, retrieval]
   examples:
     - summary: "Retrieve full content from source references"

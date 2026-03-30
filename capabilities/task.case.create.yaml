@@ -37,7 +37,7 @@ safety:
   description: Creates a case in the in-memory store.
 
 metadata:
-  status: experimental
+  status: stable
   tags: [task, case, create]
 
 

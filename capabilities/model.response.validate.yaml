@@ -45,7 +45,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [model, validation, grounding, coherence, quality]
   examples:
     - summary: Validate a generated summary against source evidence

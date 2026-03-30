@@ -26,7 +26,7 @@ properties:
 
 
 metadata:
-  status: experimental
+  status: stable
   tags: [image, vision, classification]
   examples:
     - summary: "Classify image content by labels"

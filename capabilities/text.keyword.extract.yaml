@@ -20,7 +20,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, nlp, extraction]
   examples:
     - summary: "Extract keywords from text"

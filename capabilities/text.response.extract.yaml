@@ -45,7 +45,7 @@ cognitive_hints:
       type: Evidence
 
 metadata:
-  status: experimental
+  status: stable
   tags: [text, qa, extraction, llm]
 
   examples:

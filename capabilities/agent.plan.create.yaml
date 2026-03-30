@@ -42,6 +42,11 @@ outputs:
       List of validation error strings found in the generated output.
       Empty list means the YAML is valid.
 
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
 cognitive_hints:
   role: synthesize
   consumes:
@@ -53,7 +58,7 @@ cognitive_hints:
       type: Context
 
 metadata:
-  status: experimental
+  status: stable
   tags:
     - meta
     - scaffolding

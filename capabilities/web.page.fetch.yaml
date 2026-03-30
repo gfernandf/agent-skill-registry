@@ -16,6 +16,8 @@ outputs:
 
 cognitive_hints:
   role: perceive
+  consumes:
+    - Context
   produces:
     content:
       type: Artifact
@@ -26,7 +28,7 @@ properties:
   idempotent: true
 
 metadata:
-  status: experimental
+  status: stable
   tags: [web, fetch, http, retrieval]
   examples:
     - description: Fetch a news article

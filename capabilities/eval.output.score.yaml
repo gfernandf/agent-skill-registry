@@ -1,6 +1,6 @@
 id: eval.output.score
 version: 1.0.0
-status: experimental
+status: stable
 description: >
   Score the quality of an output artifact against an optional rubric. Evaluates
   coverage (completeness of fields), depth (structural complexity), and
@@ -74,7 +74,7 @@ metadata:
             weight: 1.5
       expected_score_range: [0.5, 1.0]
 
-  status: experimental
+  status: stable
 
 cognitive_hints:
   role: evaluate
