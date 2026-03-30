@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "updated_at_utc": "2026-03-29T13:32:56.520635Z",
+  "operation_counts": {
+    "discover": 2,
+    "list": 3,
+    "attach": 0,
+    "diagnostics": 0,
+    "reset_metrics": 0
+  },
+  "discovery_evidence_metrics": {
+    "hits": 0,
+    "misses": 0,
+    "reloads": 0,
+    "invalidations": 0
+  },
+  "attach_target_metrics": {
+    "formal_index": {
+      "hits": 0,
+      "misses": 0,
+      "reloads": 0,
+      "invalidations": 0
+    },
+    "runtime_audit": {
+      "hits": 0,
+      "misses": 0,
+      "reloads": 0,
+      "invalidations": 0
+    },
+    "task_registry": {
+      "hits": 0,
+      "misses": 0,
+      "reloads": 0,
+      "invalidations": 0
+    }
+  }
+}

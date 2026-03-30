@@ -81,8 +81,7 @@ capabilities:
 
   - id: decision.option.justify
     status: experimental
-    description: Select a final recommendation from evaluated options and produce a structured justification. Consumes qualitative analysis (from eval.option.analyze) and quantitative scores (from eval.option.score) to make an explicit, committed choice. Outputs the recommendation, justification narrative, failure modes, uncertainties, confidence assessment, and concrete next steps.
-This capability is the \"closing\" step — it resolves ambiguity into action. It must never hedge with \"it depends\" or \"consider both\".
+    description: "Select a final recommendation from evaluated options and produce a structured justification. Consumes qualitative analysis (from eval.option.analyze) and quantitative scores (from eval.option.score) to make an explicit, committed choice. Outputs the recommendation, justification narrative, failure modes, uncertainties, confidence assessment, and concrete next steps. This capability is the 'closing' step — it resolves ambiguity into action. It must never hedge with 'it depends' or 'consider both'."
 
 
   - id: doc.content.chunk
