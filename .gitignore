@@ -1,6 +1,26 @@
 # Local editor configuration
 .vscode/
+.idea/
 
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage & testing
+.coverage
+htmlcov/
+.pytest_cache/
