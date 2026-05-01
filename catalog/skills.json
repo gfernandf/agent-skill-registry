@@ -1293,6 +1293,311 @@
     }
   },
   {
+    "id": "code.change-approval-gate",
+    "version": "0.1.0",
+    "name": "Change Approval Gate",
+    "description": "Evaluate a software change (PR or release) against explicit policy rules and produce a structured, auditable decision: approve, block, or escalate.\nThis skill is NOT a semantic code reviewer. It is a bounded execution gate that: (1) summarizes what changed, (2) extracts risks and fragile assumptions, (3) classifies the overall risk level, (4) applies explicit policy constraints, (5) branches to a final decision based on gate outcome and risk level, and (6) justifies the decision with references to activated rules and evidence.\n\"Escalate\" is emitted when the gate passes but risk is classified critical — there is insufficient evidence to block outright, but the change should not proceed without human review. This three-outcome taxonomy prevents the false binary of approve-vs-block that masks uncertain evidence.\nThe decision is reproducible given the same inputs and policy_profile. Use the agent.trace sidecar (invocation: attach, target: run) to obtain a full decision graph and assumption inventory alongside any execution.\nTypical upstream: CI pipeline, PR webhook, release manager. Typical downstream: merge gate, deployment approval queue, human reviewer.\n",
+    "channel": "experimental",
+    "domain": "code",
+    "slug": "change-approval-gate",
+    "file": "skills/experimental/code/change-approval-gate/skill.yaml",
+    "inputs": {
+      "change_package": {
+        "type": "object",
+        "required": true,
+        "description": "Normalized representation of the change to evaluate. Required subfields: change_id, change_type, title, diff_text, target_environment, changed_files. Optional: author_summary, labels, test_evidence, rollback_plan, release_notes.\n"
+      },
+      "diff_text": {
+        "type": "string",
+        "required": true,
+        "description": "Unified diff or plain-text description of what changed. Must match change_package.diff_text. Provided as a flat input because the ORCA engine resolves only top-level input references.\n"
+      },
+      "author_summary": {
+        "type": "string",
+        "required": false,
+        "description": "Author's own description of intent and scope. Passed as context to the risk extraction step.\n"
+      },
+      "policy_gate": {
+        "type": "object",
+        "required": true,
+        "description": "Constraint gate definition from the policy profile. Subfields: rules.required_keys (array), rules.forbidden_keys (array), action (string).\n"
+      },
+      "policy_name": {
+        "type": "string",
+        "required": false,
+        "description": "Policy profile name, used in justification context."
+      }
+    },
+    "outputs": {
+      "decision": {
+        "type": "string",
+        "required": true,
+        "description": "Final gate decision: approve | block | escalate"
+      },
+      "change_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Technical summary of what changed in the diff or change description."
+      },
+      "executive_summary": {
+        "type": "string",
+        "required": true,
+        "description": "Short non-technical summary of the change and the decision reached. Intended for stakeholders who will not read the full rationale.\n"
+      },
+      "identified_risks": {
+        "type": "array",
+        "required": true,
+        "description": "Structured risks extracted from the change package, each with id, description, category, severity_hint, and related_assumptions.\n"
+      },
+      "risk_level": {
+        "type": "string",
+        "required": true,
+        "description": "Overall risk classification: low | medium | high | critical"
+      },
+      "violated_rules": {
+        "type": "array",
+        "required": true,
+        "description": "Policy rules that were violated. Empty array when decision is approve."
+      },
+      "required_followups": {
+        "type": "array",
+        "required": true,
+        "description": "Actionable steps required before the change can proceed. Derived from risk mitigation ideas and violated policy rules.\n"
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable justification of the decision, explicitly referencing which rules fired, which risks were found, and what evidence was missing.\n"
+      },
+      "confidence": {
+        "type": "number",
+        "required": false,
+        "description": "Confidence score for the decision (0.0 to 1.0)."
+      }
+    },
+    "steps": [
+      {
+        "id": "summarize_change",
+        "uses": "text.content.summarize",
+        "input": {
+          "text": "inputs.diff_text"
+        },
+        "output": {
+          "summary": "outputs.change_summary"
+        }
+      },
+      {
+        "id": "extract_risks",
+        "uses": "analysis.risk.extract",
+        "input": {
+          "target": "inputs.change_package",
+          "context": "inputs.author_summary",
+          "risk_scope": "technical"
+        },
+        "output": {
+          "risks": "outputs.identified_risks",
+          "assumptions": "vars.critical_assumptions",
+          "failure_modes": "vars.failure_modes",
+          "mitigation_ideas": "outputs.required_followups"
+        }
+      },
+      {
+        "id": "classify_risk",
+        "uses": "policy.risk.classify",
+        "input": {
+          "action": "inputs.change_package"
+        },
+        "output": {
+          "risk_level": "outputs.risk_level",
+          "factors": "vars.risk_factors",
+          "rationale": "vars.risk_rationale"
+        },
+        "config": {
+          "depends_on": [
+            "extract_risks"
+          ]
+        }
+      },
+      {
+        "id": "apply_policy_gate",
+        "uses": "policy.constraint.gate",
+        "input": {
+          "payload": "inputs.change_package",
+          "gate": "inputs.policy_gate"
+        },
+        "output": {
+          "decision": "vars.gate_decision",
+          "violations": "outputs.violated_rules",
+          "rationale": "vars.gate_rationale"
+        },
+        "config": {
+          "depends_on": [
+            "classify_risk"
+          ]
+        }
+      },
+      {
+        "id": "determine_decision",
+        "uses": "agent.flow.branch",
+        "input": {
+          "condition": "Select the correct outcome: \"block\" if gate_decision is block, \"escalate\" if gate_decision is pass and risk_level is critical, \"approve\" if gate_decision is pass and risk_level is not critical.\n",
+          "context": {
+            "gate_decision": "vars.gate_decision",
+            "risk_level": "outputs.risk_level"
+          },
+          "branches": [
+            {
+              "id": "approve",
+              "label": "Approve — gate passed and risk within accepted threshold",
+              "match_expression": "gate_decision == pass and risk_level != critical"
+            },
+            {
+              "id": "escalate",
+              "label": "Escalate — gate passed but risk classified as critical",
+              "match_expression": "gate_decision == pass and risk_level == critical"
+            },
+            {
+              "id": "block",
+              "label": "Block — policy violations detected",
+              "match_expression": "gate_decision == block"
+            }
+          ],
+          "default_branch": "escalate"
+        },
+        "output": {
+          "selected_branch": "outputs.decision",
+          "rationale": "vars.branch_rationale",
+          "confidence": "outputs.confidence"
+        },
+        "config": {
+          "depends_on": [
+            "apply_policy_gate"
+          ]
+        }
+      },
+      {
+        "id": "justify_decision",
+        "uses": "policy.decision.justify",
+        "input": {
+          "decision": "outputs.decision",
+          "rules": "outputs.violated_rules",
+          "context": "inputs.change_package"
+        },
+        "output": {
+          "justification": "outputs.rationale",
+          "applicable_rules": "vars.applicable_rules",
+          "confidence": "vars.justify_confidence"
+        },
+        "config": {
+          "depends_on": [
+            "determine_decision"
+          ]
+        }
+      },
+      {
+        "id": "summarize_executive",
+        "uses": "text.content.summarize",
+        "input": {
+          "text": "outputs.rationale"
+        },
+        "output": {
+          "summary": "outputs.executive_summary"
+        },
+        "config": {
+          "depends_on": [
+            "justify_decision"
+          ]
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "agent.flow.branch",
+      "analysis.risk.extract",
+      "policy.constraint.gate",
+      "policy.decision.justify",
+      "policy.risk.classify",
+      "text.content.summarize"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "code-review",
+        "change-management",
+        "policy-gate",
+        "risk-assessment",
+        "governance",
+        "approval-workflow",
+        "audit",
+        "traceability"
+      ],
+      "category": "code",
+      "status": "experimental",
+      "use_cases": [
+        "Gate a pull request before merge based on explicit, auditable policy rules",
+        "Evaluate a release candidate against environment compliance requirements",
+        "Produce a reproducible approval decision record for a software change",
+        "Demonstrate bounded structured agent execution vs opaque prompt-based review"
+      ],
+      "examples": [
+        {
+          "description": "Block a production PR missing a rollback plan",
+          "input": {
+            "change_package": {
+              "change_id": "pr-2042",
+              "change_type": "pr",
+              "title": "Migrate auth service to JWT tokens",
+              "diff_text": "--- a/src/auth/middleware.py\n+++ b/src/auth/middleware.py\n@@ -12,8 +12,12 @@\n-def validate_session(request):\n+def validate_jwt(request):\n",
+              "target_environment": "prod",
+              "changed_files": [
+                "src/auth/middleware.py"
+              ],
+              "labels": [
+                "security",
+                "breaking-change"
+              ]
+            },
+            "policy_profile": {
+              "name": "strict-prod",
+              "description": "Production gate — requires rollback plan and test evidence",
+              "gate": {
+                "rules": {
+                  "required_keys": [
+                    "rollback_plan",
+                    "test_evidence"
+                  ],
+                  "forbidden_keys": [
+                    "wip",
+                    "do-not-merge"
+                  ]
+                },
+                "action": "block"
+              },
+              "risk": {
+                "max_level": "medium",
+                "escalate_on_critical": true,
+                "categories": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ]
+              }
+            }
+          },
+          "output": {
+            "decision": "block",
+            "risk_level": "high",
+            "violated_rules": [
+              "Missing required field: rollback_plan",
+              "Missing required field: test_evidence"
+            ]
+          }
+        }
+      ],
+      "classification": null
+    }
+  },
+  {
     "id": "code.diff-summary",
     "version": "0.1.0",
     "name": "Diff Summary",

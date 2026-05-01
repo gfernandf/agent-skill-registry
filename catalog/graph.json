@@ -53,6 +53,17 @@
       ],
       "skills": []
     },
+    "code.change-approval-gate": {
+      "capabilities": [
+        "agent.flow.branch",
+        "analysis.risk.extract",
+        "policy.constraint.gate",
+        "policy.decision.justify",
+        "policy.risk.classify",
+        "text.content.summarize"
+      ],
+      "skills": []
+    },
     "code.diff-summary": {
       "capabilities": [
         "code.diff.extract",

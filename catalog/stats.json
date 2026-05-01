@@ -1,7 +1,7 @@
 {
   "summary": {
     "capability_count": 141,
-    "skill_count": 36,
+    "skill_count": 37,
     "domain_count": 27,
     "channel_count": 2
   },
@@ -14,8 +14,8 @@
       "pdf": 3,
       "research": 3,
       "agent": 2,
+      "code": 2,
       "audio": 1,
-      "code": 1,
       "data": 1,
       "decision": 1,
       "doc": 1,
@@ -28,9 +28,9 @@
     },
     "by_channel": {
       "official": 23,
-      "experimental": 13
+      "experimental": 14
     },
-    "average_steps": 2.97,
+    "average_steps": 3.08,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -69,7 +69,7 @@
     "most_used": [
       {
         "id": "text.content.summarize",
-        "count": 17
+        "count": 18
       },
       {
         "id": "eval.output.score",
@@ -90,6 +90,10 @@
       {
         "id": "text.content.embed",
         "count": 4
+      },
+      {
+        "id": "analysis.risk.extract",
+        "count": 3
       },
       {
         "id": "doc.content.chunk",
@@ -132,10 +136,6 @@
         "count": 2
       },
       {
-        "id": "analysis.risk.extract",
-        "count": 2
-      },
-      {
         "id": "eval.option.analyze",
         "count": 2
       },
@@ -162,6 +162,10 @@
       {
         "id": "web.source.search",
         "count": 2
+      },
+      {
+        "id": "agent.flow.branch",
+        "count": 1
       },
       {
         "id": "agent.option.generate",
@@ -220,6 +224,18 @@
         "count": 1
       },
       {
+        "id": "policy.constraint.gate",
+        "count": 1
+      },
+      {
+        "id": "policy.decision.justify",
+        "count": 1
+      },
+      {
+        "id": "policy.risk.classify",
+        "count": 1
+      },
+      {
         "id": "security.output.gate",
         "count": 1
       },
@@ -249,7 +265,6 @@
       }
     ],
     "unused": [
-      "agent.flow.branch",
       "agent.flow.catch",
       "agent.flow.iterate",
       "agent.flow.wait",
@@ -309,10 +324,7 @@
       "ops.budget.estimate",
       "ops.event.acknowledge",
       "ops.event.monitor",
-      "policy.constraint.gate",
       "policy.constraint.validate",
-      "policy.decision.justify",
-      "policy.risk.classify",
       "policy.risk.score",
       "provenance.citation.generate",
       "provenance.claim.verify",
@@ -348,12 +360,12 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 107,
+    "skill_to_capability_edges": 113,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 10
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 36,
+    "skills_with_nondefault_metadata": 37,
     "capabilities_with_nondefault_metadata": 141,
     "top_skill_tags": [
       {
@@ -477,6 +489,10 @@
         "count": 1
       },
       {
+        "id": "approval-workflow",
+        "count": 1
+      },
+      {
         "id": "assessment",
         "count": 1
       },
@@ -489,11 +505,23 @@
         "count": 1
       },
       {
+        "id": "audit",
+        "count": 1
+      },
+      {
         "id": "briefing",
         "count": 1
       },
       {
+        "id": "change-management",
+        "count": 1
+      },
+      {
         "id": "code",
+        "count": 1
+      },
+      {
+        "id": "code-review",
         "count": 1
       },
       {
@@ -569,6 +597,10 @@
         "count": 1
       },
       {
+        "id": "governance",
+        "count": 1
+      },
+      {
         "id": "grounding",
         "count": 1
       },
@@ -617,6 +649,10 @@
         "count": 1
       },
       {
+        "id": "policy-gate",
+        "count": 1
+      },
+      {
         "id": "preprocessing",
         "count": 1
       },
@@ -642,6 +678,10 @@
       },
       {
         "id": "risk-analysis",
+        "count": 1
+      },
+      {
+        "id": "risk-assessment",
         "count": 1
       },
       {
@@ -682,6 +722,10 @@
       },
       {
         "id": "trace",
+        "count": 1
+      },
+      {
+        "id": "traceability",
         "count": 1
       },
       {
