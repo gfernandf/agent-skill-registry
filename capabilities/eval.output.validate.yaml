@@ -1,0 +1,70 @@
+id: eval.output.validate
+version: 1.0.0
+status: experimental
+description: >
+  Evaluate whether a final output satisfies the explicit success and
+  acceptance criteria defined for the task. Each criterion is assessed
+  individually and the overall evaluation returns a pass/fail verdict with
+  per-criterion scores, a list of unmet criteria, and concrete improvement
+  suggestions for failed items.
+
+inputs:
+  final_output:
+    type: object
+    required: true
+    description: >
+      Output artefact to evaluate. May be a report, document, data
+      object, or any structured result produced by the execution pipeline.
+  success_criteria:
+    type: array
+    required: true
+    description: >
+      Array of measurable success criteria from agent.criteria.define.
+      Each item is a string describing a condition that must be met.
+  evidence:
+    type: object
+    required: false
+    description: >
+      Optional supporting evidence (sources, trace, intermediate outputs)
+      to help evaluate criterion satisfaction.
+
+outputs:
+  evaluation:
+    type: object
+    required: true
+    description: >
+      Evaluation result with: passed (boolean), score (number 0-1),
+      criteria_results (array of {criterion, met, score, rationale}),
+      failed_criteria (array of strings),
+      improvement_suggestions (array of strings).
+
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+
+metadata:
+  tags:
+    - evaluation
+    - criteria-validation
+    - output-quality
+    - agent-pipeline
+  examples:
+    - final_output:
+        user_response: "# EU Hydrogen Briefing\nRegulation (EU) 2021/..."
+      success_criteria:
+        - "Includes at least one EU regulatory reference"
+        - "All claims are supported by cited sources"
+      expected_evaluation:
+        passed: true
+        score: 0.9
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    evaluation:
+      type: Artifact
+  consumes:
+    - Artifact
+    - Criterion
+    - Evidence

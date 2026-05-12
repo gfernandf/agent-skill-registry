@@ -1,5 +1,30 @@
 {
   "skills": {
+    "agent.execute-from-plan": {
+      "capabilities": [
+        "agent.plan.execute"
+      ],
+      "skills": []
+    },
+    "agent.orchestrate-from-prompt": {
+      "capabilities": [
+        "agent.catalog.detect",
+        "agent.catalog.rank",
+        "agent.catalog.search",
+        "agent.criteria.define",
+        "agent.flow.branch",
+        "agent.goal.interpret",
+        "agent.plan.gate",
+        "agent.plan.map",
+        "agent.plan.reconcile",
+        "agent.plan.split",
+        "agent.plan.synthesize",
+        "agent.plan.validate",
+        "agent.request.normalize",
+        "agent.task.plan"
+      ],
+      "skills": []
+    },
     "agent.plan-and-route": {
       "capabilities": [
         "agent.input.route",

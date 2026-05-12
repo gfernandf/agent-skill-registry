@@ -1,7 +1,7 @@
 {
   "summary": {
-    "capability_count": 141,
-    "skill_count": 37,
+    "capability_count": 159,
+    "skill_count": 39,
     "domain_count": 27,
     "channel_count": 2
   },
@@ -9,11 +9,11 @@
     "by_domain": {
       "text": 5,
       "web": 5,
+      "agent": 4,
       "analysis": 4,
       "memory": 3,
       "pdf": 3,
       "research": 3,
-      "agent": 2,
       "code": 2,
       "audio": 1,
       "data": 1,
@@ -27,32 +27,32 @@
       "task": 1
     },
     "by_channel": {
-      "official": 23,
+      "official": 25,
       "experimental": 14
     },
-    "average_steps": 3.08,
+    "average_steps": 3.31,
     "with_skill_dependencies": 0
   },
   "capabilities": {
     "by_domain": {
+      "agent": 26,
       "task": 16,
       "text": 15,
       "integration": 12,
-      "agent": 10,
       "identity": 10,
       "data": 8,
       "model": 8,
+      "ops": 6,
       "web": 6,
-      "ops": 5,
       "policy": 5,
       "table": 5,
       "code": 4,
+      "eval": 4,
       "image": 4,
       "memory": 4,
       "security": 4,
       "analysis": 3,
       "audio": 3,
-      "eval": 3,
       "fs": 3,
       "message": 3,
       "doc": 2,
@@ -64,7 +64,8 @@
       "video": 1
     },
     "by_status": {
-      "stable": 141
+      "stable": 141,
+      "unspecified": 18
     },
     "most_used": [
       {
@@ -128,6 +129,10 @@
         "count": 3
       },
       {
+        "id": "agent.flow.branch",
+        "count": 2
+      },
+      {
         "id": "agent.input.route",
         "count": 2
       },
@@ -164,11 +169,63 @@
         "count": 2
       },
       {
-        "id": "agent.flow.branch",
+        "id": "agent.catalog.detect",
+        "count": 1
+      },
+      {
+        "id": "agent.catalog.rank",
+        "count": 1
+      },
+      {
+        "id": "agent.catalog.search",
+        "count": 1
+      },
+      {
+        "id": "agent.criteria.define",
+        "count": 1
+      },
+      {
+        "id": "agent.goal.interpret",
         "count": 1
       },
       {
         "id": "agent.option.generate",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.execute",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.gate",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.map",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.reconcile",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.split",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.synthesize",
+        "count": 1
+      },
+      {
+        "id": "agent.plan.validate",
+        "count": 1
+      },
+      {
+        "id": "agent.request.normalize",
+        "count": 1
+      },
+      {
+        "id": "agent.task.plan",
         "count": 1
       },
       {
@@ -269,6 +326,8 @@
       "agent.flow.iterate",
       "agent.flow.wait",
       "agent.input.collect",
+      "agent.output.generate",
+      "agent.output.synthesize",
       "agent.plan.create",
       "agent.task.delegate",
       "audio.speaker.diarize",
@@ -283,6 +342,7 @@
       "data.record.merge",
       "doc.content.generate",
       "email.message.send",
+      "eval.output.validate",
       "fs.file.list",
       "fs.file.read",
       "fs.file.write",
@@ -324,6 +384,7 @@
       "ops.budget.estimate",
       "ops.event.acknowledge",
       "ops.event.monitor",
+      "ops.trace.summarize",
       "policy.constraint.validate",
       "policy.risk.score",
       "provenance.citation.generate",
@@ -360,13 +421,13 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 113,
+    "skill_to_capability_edges": 128,
     "skill_to_skill_edges": 0,
-    "max_capabilities_per_skill": 10
+    "max_capabilities_per_skill": 14
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 37,
-    "capabilities_with_nondefault_metadata": 141,
+    "skills_with_nondefault_metadata": 39,
+    "capabilities_with_nondefault_metadata": 159,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -375,6 +436,10 @@
       {
         "id": "web",
         "count": 6
+      },
+      {
+        "id": "agent",
+        "count": 5
       },
       {
         "id": "fetch",
@@ -417,10 +482,6 @@
         "count": 4
       },
       {
-        "id": "agent",
-        "count": 3
-      },
-      {
         "id": "chunking",
         "count": 3
       },
@@ -434,6 +495,10 @@
       },
       {
         "id": "memory",
+        "count": 3
+      },
+      {
+        "id": "orchestration",
         "count": 3
       },
       {
@@ -461,6 +526,10 @@
         "count": 2
       },
       {
+        "id": "execution",
+        "count": 2
+      },
+      {
         "id": "fetching",
         "count": 2
       },
@@ -469,11 +538,19 @@
         "count": 2
       },
       {
+        "id": "mcp",
+        "count": 2
+      },
+      {
         "id": "multi-criteria",
         "count": 2
       },
       {
         "id": "multi-source",
+        "count": 2
+      },
+      {
+        "id": "planning",
         "count": 2
       },
       {
@@ -633,10 +710,6 @@
         "count": 1
       },
       {
-        "id": "orchestration",
-        "count": 1
-      },
-      {
         "id": "parsing",
         "count": 1
       },
@@ -645,7 +718,7 @@
         "count": 1
       },
       {
-        "id": "planning",
+        "id": "plan-runner",
         "count": 1
       },
       {
@@ -662,6 +735,10 @@
       },
       {
         "id": "processing",
+        "count": 1
+      },
+      {
+        "id": "prompt-to-workflow",
         "count": 1
       },
       {
@@ -743,6 +820,10 @@
     ],
     "top_capability_tags": [
       {
+        "id": "agent-pipeline",
+        "count": 18
+      },
+      {
         "id": "task",
         "count": 17
       },
@@ -759,11 +840,19 @@
         "count": 10
       },
       {
+        "id": "governance",
+        "count": 10
+      },
+      {
         "id": "identity",
         "count": 10
       },
       {
         "id": "model",
+        "count": 8
+      },
+      {
+        "id": "orchestration",
         "count": 8
       },
       {
@@ -791,11 +880,7 @@
         "count": 6
       },
       {
-        "id": "governance",
-        "count": 6
-      },
-      {
-        "id": "orchestration",
+        "id": "planning",
         "count": 6
       },
       {
@@ -804,6 +889,10 @@
       },
       {
         "id": "analysis",
+        "count": 5
+      },
+      {
+        "id": "evaluation",
         "count": 5
       },
       {
@@ -827,6 +916,10 @@
         "count": 5
       },
       {
+        "id": "validation",
+        "count": 5
+      },
+      {
         "id": "code",
         "count": 4
       },
@@ -840,10 +933,6 @@
       },
       {
         "id": "developer-tools",
-        "count": 4
-      },
-      {
-        "id": "evaluation",
         "count": 4
       },
       {
@@ -883,15 +972,15 @@
         "count": 4
       },
       {
+        "id": "retrieval",
+        "count": 4
+      },
+      {
         "id": "risk",
         "count": 4
       },
       {
         "id": "scoring",
-        "count": 4
-      },
-      {
-        "id": "validation",
         "count": 4
       },
       {
@@ -908,6 +997,10 @@
       },
       {
         "id": "audio",
+        "count": 3
+      },
+      {
+        "id": "catalog",
         "count": 3
       },
       {
@@ -943,6 +1036,10 @@
         "count": 3
       },
       {
+        "id": "ops",
+        "count": 3
+      },
+      {
         "id": "pii",
         "count": 3
       },
@@ -955,7 +1052,7 @@
         "count": 3
       },
       {
-        "id": "retrieval",
+        "id": "registry",
         "count": 3
       },
       {
@@ -972,6 +1069,10 @@
       },
       {
         "id": "storage",
+        "count": 3
+      },
+      {
+        "id": "trace",
         "count": 3
       },
       {
@@ -992,6 +1093,10 @@
       },
       {
         "id": "approval",
+        "count": 2
+      },
+      {
+        "id": "audit",
         "count": 2
       },
       {
@@ -1043,7 +1148,15 @@
         "count": 2
       },
       {
+        "id": "execution",
+        "count": 2
+      },
+      {
         "id": "gate",
+        "count": 2
+      },
+      {
+        "id": "goal-setting",
         "count": 2
       },
       {
@@ -1063,15 +1176,15 @@
         "count": 2
       },
       {
+        "id": "normalization",
+        "count": 2
+      },
+      {
         "id": "notification",
         "count": 2
       },
       {
-        "id": "ops",
-        "count": 2
-      },
-      {
-        "id": "planning",
+        "id": "policy-gate",
         "count": 2
       },
       {
@@ -1088,6 +1201,10 @@
       },
       {
         "id": "records",
+        "count": 2
+      },
+      {
+        "id": "reporting",
         "count": 2
       },
       {
@@ -1116,10 +1233,6 @@
       },
       {
         "id": "template",
-        "count": 2
-      },
-      {
-        "id": "trace",
         "count": 2
       },
       {
@@ -1199,7 +1312,7 @@
         "count": 1
       },
       {
-        "id": "audit",
+        "id": "authorization",
         "count": 1
       },
       {
@@ -1243,6 +1356,10 @@
         "count": 1
       },
       {
+        "id": "compilation",
+        "count": 1
+      },
+      {
         "id": "compliance",
         "count": 1
       },
@@ -1268,6 +1385,18 @@
       },
       {
         "id": "credential-leak",
+        "count": 1
+      },
+      {
+        "id": "criteria",
+        "count": 1
+      },
+      {
+        "id": "criteria-validation",
+        "count": 1
+      },
+      {
+        "id": "dag",
         "count": 1
       },
       {
@@ -1307,10 +1436,6 @@
         "count": 1
       },
       {
-        "id": "execution",
-        "count": 1
-      },
-      {
         "id": "export",
         "count": 1
       },
@@ -1347,6 +1472,10 @@
         "count": 1
       },
       {
+        "id": "gap-detection",
+        "count": 1
+      },
+      {
         "id": "grounding",
         "count": 1
       },
@@ -1363,6 +1492,14 @@
         "count": 1
       },
       {
+        "id": "input-binding",
+        "count": 1
+      },
+      {
+        "id": "intake",
+        "count": 1
+      },
+      {
         "id": "io",
         "count": 1
       },
@@ -1371,7 +1508,15 @@
         "count": 1
       },
       {
+        "id": "learning",
+        "count": 1
+      },
+      {
         "id": "loop",
+        "count": 1
+      },
+      {
+        "id": "macro-planning",
         "count": 1
       },
       {
@@ -1403,10 +1548,6 @@
         "count": 1
       },
       {
-        "id": "normalization",
-        "count": 1
-      },
-      {
         "id": "observability",
         "count": 1
       },
@@ -1428,6 +1569,14 @@
       },
       {
         "id": "output-control",
+        "count": 1
+      },
+      {
+        "id": "output-generation",
+        "count": 1
+      },
+      {
+        "id": "output-quality",
         "count": 1
       },
       {
@@ -1455,7 +1604,15 @@
         "count": 1
       },
       {
-        "id": "policy-gate",
+        "id": "plan-expansion",
+        "count": 1
+      },
+      {
+        "id": "plan-governance",
+        "count": 1
+      },
+      {
+        "id": "plan-repair",
         "count": 1
       },
       {
@@ -1476,6 +1633,10 @@
       },
       {
         "id": "quality-scoring",
+        "count": 1
+      },
+      {
+        "id": "ranking",
         "count": 1
       },
       {
@@ -1555,6 +1716,10 @@
         "count": 1
       },
       {
+        "id": "skill-synthesis",
+        "count": 1
+      },
+      {
         "id": "sla",
         "count": 1
       },
@@ -1580,6 +1745,10 @@
       },
       {
         "id": "state",
+        "count": 1
+      },
+      {
+        "id": "state-wiring",
         "count": 1
       },
       {

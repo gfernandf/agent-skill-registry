@@ -1,5 +1,5 @@
 id: research.generate-briefing
-version: 0.1.0
+version: 0.1.3
 name: Generate Research Briefing
 description: >
   Build a structured intelligence briefing from web sources. Searches the web
@@ -34,6 +34,13 @@ inputs:
     required: false
     description: >
       Maximum number of sources to process (default 8).
+
+  broad_query:
+    type: string
+    required: false
+    description: >
+      Optional broader search query used for a second acquisition pass when the
+      initial query is too narrow. If omitted, the primary query is reused.
 
   focus:
     type: string
@@ -110,7 +117,7 @@ steps:
   - id: search
     uses: web.source.search
     input:
-      query: inputs.query
+      query: inputs.broad_query
       limit: inputs.num_sources
     output:
       results: vars.search_results

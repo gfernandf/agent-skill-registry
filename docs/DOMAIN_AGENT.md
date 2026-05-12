@@ -1,8 +1,8 @@
 # Agent Domain — Capability Reference
 
 > Domain: `agent`  
-> Capabilities: 10  
-> Last reviewed: 2026-03-30
+> Capabilities: 24  
+> Last reviewed: 2026-05-08
 
 ## Overview
 
@@ -36,6 +36,22 @@ the backbone of agentic workflows and skill composition.
 | `agent.flow.wait` | experimental | no | yes | pythoncall |
 | `agent.flow.catch` | experimental | no | no | pythoncall, OpenAI chat |
 | `agent.input.collect` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.request.normalize` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.goal.interpret` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.criteria.define` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.catalog.search` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.catalog.rank` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.catalog.detect` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.task.plan` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.plan.split` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.plan.map` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.plan.validate` | experimental | yes | no | pythoncall, OpenAI chat |
+| `agent.plan.reconcile` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.plan.synthesize` | experimental | yes | no | pythoncall, OpenAI chat |
+| `agent.plan.gate` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.plan.run` | experimental | no | yes | pythoncall, OpenAI chat |
+| `agent.output.generate` | experimental | no | no | pythoncall, OpenAI chat |
+| `agent.output.synthesize` | experimental | no | no | pythoncall, OpenAI chat |
 
 ---
 
@@ -53,6 +69,22 @@ the backbone of agentic workflows and skill composition.
 | `agent.flow.wait` | `python_agent_flow_wait` — immediate timeout stub | — | — |
 | `agent.flow.catch` | `python_agent_flow_catch` — returns default_value | `openapi_agent_flow_catch_openai_chat` — gpt-4o-mini | — |
 | `agent.input.collect` | `python_agent_input_collect` — echo fields as defaults | `openapi_agent_input_collect_openai_chat` — gpt-4o-mini | — |
+| `agent.request.normalize` | `python_agent_request_normalize` — parse user message into structured object | `openapi_agent_request_normalize_openai_chat` — gpt-4o-mini, temp 0.3 | — |
+| `agent.goal.interpret` | `python_agent_goal_interpret` — convert normalized request to goal | `openapi_agent_goal_interpret_openai_chat` — gpt-4o-mini, temp 0.3 | — |
+| `agent.criteria.define` | `python_agent_criteria_define` — extract success/quality criteria | `openapi_agent_criteria_define_openai_chat` — gpt-4o-mini | — |
+| `agent.catalog.search` | `python_agent_catalog_search` — baseline: return fixed candidates | `openapi_agent_catalog_search_openai_chat` — gpt-4o-mini | — |
+| `agent.catalog.rank` | `python_agent_catalog_rank` — sort candidates by relevance score | `openapi_agent_catalog_rank_openai_chat` — gpt-4o-mini | — |
+| `agent.catalog.detect` | `python_agent_catalog_detect` — identify missing capabilities/skills | `openapi_agent_catalog_detect_openai_chat` — gpt-4o-mini | — |
+| `agent.task.plan` | `python_agent_task_plan` — generate 3-stage macro plan | `openapi_agent_task_plan_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.split` | `python_agent_plan_split` — expand stage into executable steps | `openapi_agent_plan_split_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.map` | `python_agent_plan_map` — bind steps to $state.* paths | `openapi_agent_plan_map_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.validate` | `python_agent_plan_validate` — structural correctness (deterministic) | `openapi_agent_plan_validate_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.reconcile` | `python_agent_plan_reconcile` — repair invalid plans | `openapi_agent_plan_reconcile_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.synthesize` | `python_agent_plan_synthesize` — compile plan into DAG (deterministic) | `openapi_agent_plan_synthesize_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.gate` | `python_agent_plan_gate` — authorization check before execution | `openapi_agent_plan_gate_openai_chat` — gpt-4o-mini | — |
+| `agent.plan.run` | `python_agent_plan_run` — execute compiled plan (stub: returns success) | `openapi_agent_plan_run_openai_chat` — gpt-4o-mini, temp 0.1 | — |
+| `agent.output.generate` | `python_agent_output_generate` — produce final user-facing report | `openapi_agent_output_generate_openai_chat` — gpt-4o-mini | — |
+| `agent.output.synthesize` | `python_agent_output_synthesize` — extract reusable skill from trace | `openapi_agent_output_synthesize_openai_chat` — gpt-4o-mini, temp 0.3 | — |
 
 ### Default selection policy
 

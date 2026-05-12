@@ -3,6 +3,44 @@
 All notable changes to **agent-skill-registry** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased] — 2026-05-08
+
+### Added
+
+#### Multipurpose agent orchestration pipeline — 18 new capabilities
+
+Complete unified pipeline for autonomous agent task execution: normalized
+request ingestion → goal interpretation → plan generation, validation, repair
+→ execution gating and orchestration → output synthesis and evaluation. All 18
+capabilities follow the canonical grammar and carry full contracts:
+
+- **agent.request.normalize** — Parse and normalize raw user requests.
+- **agent.goal.interpret** — Convert normalized request to structured goal.
+- **agent.criteria.define** — Extract success/quality/acceptance criteria.
+- **agent.catalog.\*** — Registry search, ranking, and gap detection:
+  - `agent.catalog.search` — Find relevant capabilities and skills.
+  - `agent.catalog.rank` — Rank candidates by relevance.
+  - `agent.catalog.detect` — Identify capability gaps.
+- **agent.task.plan** — Generate high-level macro plan.
+- **agent.plan.\*** — Plan expansion, validation, repair, synthesis, and execution:
+  - `agent.plan.split` — Expand plan stage into executable steps.
+  - `agent.plan.map` — Bind steps to CognitiveState paths.
+  - `agent.plan.validate` — Structural correctness validation (deterministic).
+  - `agent.plan.reconcile` — Repair invalid plans.
+  - `agent.plan.synthesize` — Compile plan into executable DAG (deterministic).
+  - `agent.plan.gate` — Authorization checks before execution.
+  - `agent.plan.run` — Execute compiled plan (with side_effects, safety constraints).
+- **agent.output.\*** — Output synthesis and reporting:
+  - `agent.output.generate` — Produce final user-facing report.
+  - `agent.output.synthesize` — Extract reusable skill from execution trace.
+- **eval.output.validate** — Validate final output against success criteria.
+- **ops.trace.summarize** — Summarize execution trace into compact report.
+
+All 18 have OpenAI + pythoncall bindings, integrated with existing MCP server.
+Vocabulary extended: 3 nouns + 2 verbs.
+
+---
+
 ## [0.2.0] — 2026-03-30
 
 ### Added

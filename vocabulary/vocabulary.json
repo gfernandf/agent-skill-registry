@@ -121,7 +121,10 @@
     "sheet": "Spreadsheet document or tab",
     "sentiment": "Emotional tone or sentiment signal",
     "speaker": "Audio speaker or voice source",
-    "request": "HTTP or API request"
+    "request": "HTTP or API request",
+    "goal": "Operational goal or objective derived from a user request",
+    "criteria": "Acceptance, quality, or success criteria for a task",
+    "catalog": "Registry catalog of capabilities and skills"
   },
 
   "verbs": {
@@ -200,6 +203,8 @@
     "catch": "Handle errors with fallback behavior",
     "join": "Combine records from multiple sources by key",
     "diarize": "Identify and separate speakers in audio content",
-    "collect": "Gather structured input from a source"
+    "collect": "Gather structured input from a source",
+    "interpret": "Infer operational meaning or intent from structured input",
+    "define": "Define structure, contract, or acceptance conditions for a task"
   }
 }

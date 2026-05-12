@@ -1,0 +1,84 @@
+id: agent.plan.execute
+version: 1.0.0
+status: experimental
+description: >
+  Execute a compiled ORCA plan DAG step by step, calling each referenced skill
+  via the embedded runtime and chaining outputs through CognitiveState bindings.
+  Returns a full execution result including per-step status, final state, and
+  any errors encountered. Only accepts compiled, gate-approved plans from
+  agent.plan.synthesize + agent.plan.gate. Requires explicit user confirmation
+  before execution begins (trust_level: elevated).
+
+inputs:
+  compiled_plan:
+    type: object
+    required: true
+    description: >
+      Compiled plan object (or JSON string) from agent.plan.synthesize containing
+      dag, execution_order, state_bindings, and registry_version.
+  initial_state:
+    type: object
+    required: false
+    description: >
+      Initial CognitiveState snapshot. When omitted an empty state is used.
+
+outputs:
+  execution_result:
+    type: object
+    required: true
+    description: >
+      Result object with: status (success|partial|failed), final_state (object),
+      step_results (array of {step_id, ref, status, outputs, error, duration_ms}),
+      total_duration_ms (number), final_output (object with the last successful step outputs).
+  failed_steps:
+    type: array
+    required: false
+    description: >
+      List of step ids that failed. Empty on full success.
+
+properties:
+  deterministic: false
+  side_effects: true
+  idempotent: false
+
+safety:
+  trust_level: elevated
+  requires_confirmation: true
+  allowed_targets:
+    - internal_only
+  scope_constraints:
+    - sandboxed_execution
+
+metadata:
+  tags:
+    - execution
+    - orchestration
+    - agent-pipeline
+  examples:
+    - compiled_plan:
+        execution_order: ["s1_step1"]
+        dag:
+          nodes:
+            - id: "s1_step1"
+              ref: "research.generate-briefing"
+              type: "skill"
+          edges: []
+        state_bindings:
+          s1_step1:
+            inputs:
+              query: "energy storage Europe 2026"
+              mode: "quick"
+              num_sources: 8
+            outputs:
+              summary: "$state.working.s1_step1_summary"
+      expected_execution_result:
+        status: "success"
+        step_results:
+          - step_id: "s1_step1"
+            status: "success"
+
+cognitive_hints:
+  role: act
+  produces:
+    execution_result:
+      type: Artifact

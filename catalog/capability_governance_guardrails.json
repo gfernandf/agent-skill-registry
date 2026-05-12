@@ -1,9 +1,9 @@
 {
   "summary": {
-    "capabilities_total": 141,
+    "capabilities_total": 160,
     "covered_domains": 27,
     "uncovered_domains": 0,
-    "semantic_family_alerts": 14,
+    "semantic_family_alerts": 15,
     "duplicate_description_alerts": 0,
     "metadata_issues": 0
   },
@@ -14,10 +14,25 @@
       "verb": "generate",
       "capability_ids": [
         "agent.option.generate",
+        "agent.output.generate",
         "agent.plan.generate"
       ],
       "noun_variants": [
         "option",
+        "output",
+        "plan"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "agent",
+      "verb": "synthesize",
+      "capability_ids": [
+        "agent.output.synthesize",
+        "agent.plan.synthesize"
+      ],
+      "noun_variants": [
+        "output",
         "plan"
       ],
       "recommendation": "review-for-canonical-operation"

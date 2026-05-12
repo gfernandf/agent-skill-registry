@@ -599,3 +599,77 @@ capabilities:
   - id: audio.speaker.diarize
     status: experimental
     description: Identify and separate speakers in a multi-speaker audio recording. Returns time-stamped segments with speaker identifiers.
+
+  # ── Multipurpose agent pipeline ──
+
+  - id: agent.request.normalize
+    status: experimental
+    description: Normalize a raw user request into a structured task object preserving intent, language, explicit constraints, urgency level, and any attached artifacts. First node in the multipurpose agent pipeline.
+
+  - id: agent.goal.interpret
+    status: experimental
+    description: Convert a normalized request into an explicit operational goal with deliverable type, success criteria, assumptions, constraints, and open questions that must be resolved before planning.
+
+  - id: agent.criteria.define
+    status: experimental
+    description: Define measurable success, quality, and acceptance criteria for an interpreted goal. Produces the evaluation contract used downstream by plan validation and output evaluation nodes.
+
+  - id: agent.catalog.search
+    status: experimental
+    description: Search the ORCA registry catalog for skills and capabilities relevant to an interpreted goal. Filters by domain and kind. Returns candidate items with relevance scores and reasoning.
+
+  - id: agent.catalog.rank
+    status: experimental
+    description: Rank a set of candidate registry items by relevance to the goal, considering composability, trust level, side effects, and expected utility. Returns ordered lists of skills and capabilities.
+
+  - id: agent.catalog.detect
+    status: experimental
+    description: Detect gaps in the ORCA registry relative to an interpreted goal. Returns missing capabilities and skills required to fully satisfy the goal but absent from the registry.
+
+  - id: agent.task.plan
+    status: experimental
+    description: Generate a high-level macro plan decomposing an interpreted goal into major stages without executing anything. Each stage has an objective, expected output, and an optional suggested skill reference.
+
+  - id: agent.plan.split
+    status: experimental
+    description: Expand one macro plan stage into concrete ORCA-executable steps, each referencing a specific capability or skill with purpose, expected inputs, outputs, and inter-step dependencies.
+
+  - id: agent.plan.map
+    status: experimental
+    description: Bind the inputs and outputs of expanded plan steps to explicit CognitiveState paths using dollar-prefixed references (e.g. $state.evidence.sources). Produces a fully wired step list ready for validation.
+
+  - id: agent.plan.validate
+    status: experimental
+    description: Validate that a proposed ORCA plan is structurally executable. Checks registry references, input availability, output declarations, DAG integrity, side-effect annotations, permission requirements, and absence of free-text execution steps.
+
+  - id: agent.plan.reconcile
+    status: experimental
+    description: Repair an invalid ORCA plan by replacing unresolvable references, inserting missing dependencies, binding unresolved inputs, or adding required policy gates. Produces a corrected plan and repair notes.
+
+  - id: agent.plan.synthesize
+    status: experimental
+    description: Compile a validated ORCA plan into an executable DAG with explicit node ordering, parallel execution groups, state bindings, policy gates, and scheduling hints. Output is consumed directly by the executor.
+
+  - id: agent.plan.gate
+    status: experimental
+    description: Determine whether a compiled plan can proceed under current permissions and policy constraints. Returns approval status, any blocked steps, and prompts for steps requiring explicit user authorization.
+
+  - id: agent.plan.execute
+    status: experimental
+    description: Execute a compiled, gate-approved ORCA plan DAG step by step using the embedded runtime. Calls each referenced skill, resolves $state.working.* bindings between steps, and returns full execution result with per-step status. Requires user confirmation (trust_level: elevated).
+
+  - id: agent.output.generate
+    status: experimental
+    description: Generate the final user-facing report from execution outputs, evaluation results, and trace summary. Includes what was done, what was produced, limitations, decisions, evidence references, errors, and suggested next steps.
+
+  - id: agent.output.synthesize
+    status: experimental
+    description: Convert a successful completed plan and its execution trace into a candidate reusable ORCA skill definition, capturing steps, inputs, outputs, and known constraints for registry contribution.
+
+  - id: eval.output.validate
+    status: experimental
+    description: Evaluate whether a final output satisfies the explicit success and acceptance criteria defined for the task. Returns a pass/fail verdict, per-criterion scores, failed criteria list, and improvement suggestions.
+
+  - id: ops.trace.summarize
+    status: experimental
+    description: Summarize an execution trace into a compact report of steps executed, decisions made, gates triggered, failures encountered, and overall outcome. Used by the reporter node and for post-execution audit.

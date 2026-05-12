@@ -1,8 +1,8 @@
 # Eval Domain — Capability Reference
 
 > Domain: `eval`  
-> Capabilities: 3  
-> Last reviewed: 2026-03-24
+> Capabilities: 4  
+> Last reviewed: 2026-05-08
 
 ## Overview
 
@@ -33,6 +33,7 @@ These capabilities are heavily consumed by decision-making skills
 | `eval.option.analyze` | experimental | no | Qualitative pros/cons/risks/assumptions per option |
 | `eval.option.score` | experimental | no | Multi-criteria weighted scoring with tradeoff analysis |
 | `eval.output.score` | experimental | no | General output quality scoring against rubric |
+| `eval.output.validate` | experimental | no | Validate final output against success criteria |
 
 ---
 
@@ -43,13 +44,15 @@ These capabilities are heavily consumed by decision-making skills
 | `eval.option.analyze` | `python_eval_option_analyze` — 1 pro/con/risk per option | `openapi_eval_option_analyze_openai_chat` — gpt-4o-mini, temp 0.2 | Deeper analysis with LLM |
 | `eval.option.score` | `python_eval_option_score` — field-fill heuristic scoring | `openapi_eval_option_score_openai_chat` — gpt-4o-mini, temp 0.1 | Real criteria evaluation with LLM |
 | `eval.output.score` | `python_eval_output_score` — coverage + depth heuristic | `openapi_eval_output_score_openai_chat` — gpt-4o-mini, temp 0.1 | Dimension-aware quality scoring |
+| `eval.output.validate` | `python_eval_output_validate` — baseline: assign 0.7 score per criterion | `openapi_eval_output_validate_openai_chat` — gpt-4o-mini, temp 0.1 | Per-criterion validation with LLM |
 
 ### Default selection policy
 
-All 3 default to OpenAI chat bindings, with pythoncall fallbacks:
+All 4 default to OpenAI chat bindings, with pythoncall fallbacks:
 - `eval.option.analyze` → `openapi_eval_option_analyze_openai_chat`
 - `eval.option.score` → `openapi_eval_option_score_openai_chat`
 - `eval.output.score` → `openapi_eval_output_score_openai_chat`
+- `eval.output.validate` → `openapi_eval_output_validate_openai_chat`
 
 ---
 

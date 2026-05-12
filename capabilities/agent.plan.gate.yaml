@@ -1,0 +1,69 @@
+id: agent.plan.gate
+version: 1.0.0
+status: experimental
+description: >
+  Determine whether a compiled plan can proceed under current permissions
+  and policy constraints. Checks each step against the user's permission
+  set and applicable policies. Returns an authorization result that is
+  either fully approved, denied, or requires explicit user confirmation
+  before execution can continue.
+
+inputs:
+  compiled_plan:
+    type: object
+    required: true
+    description: >
+      Compiled plan object from agent.plan.synthesize.
+  user_permissions:
+    type: object
+    required: false
+    description: >
+      Principal permission set. When omitted, a conservative deny policy
+      applies to all steps with side_effects: true.
+  policy_context:
+    type: object
+    required: false
+    description: >
+      Active policy profile including risk thresholds, banned operations,
+      and approval requirements.
+
+outputs:
+  authorization_result:
+    type: object
+    required: true
+    description: >
+      Result object with: status (approved|denied|requires_user_approval),
+      blocked_steps (array of {step_id, reason}),
+      approval_prompts (array of {step_id, prompt_text}),
+      risk_level (low|medium|high|critical).
+
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+
+metadata:
+  tags:
+    - governance
+    - authorization
+    - policy-gate
+    - agent-pipeline
+  examples:
+    - compiled_plan:
+        gates: ["s2_step3"]
+      user_permissions:
+        email.send: false
+      expected_authorization_result:
+        status: "requires_user_approval"
+        approval_prompts:
+          - step_id: "s2_step3"
+            prompt_text: "This step will send an email. Confirm to proceed."
+
+cognitive_hints:
+  role: evaluate
+  produces:
+    authorization_result:
+      type: Decision
+  consumes:
+    - Plan
+    - Context
