@@ -6,16 +6,20 @@ inputs:
   query:
     type: string
     required: true
+    description: Search query text.
   limit:
     type: number
     required: false
+    description: Maximum number of results to summarize. Defaults to 5 and is clamped to 1..20.
 outputs:
   results:
     type: array
     required: true
+    description: Ordered list of result items. Empty when no live results are available.
   summary:
     type: string
     required: true
+    description: Summary text generated from merged results. Empty when results is empty.
 steps:
 - id: search
   uses: web.source.search
@@ -37,6 +41,7 @@ steps:
   output:
     summary: outputs.summary
 metadata:
+  status: stable
   classification:
     role: procedure
     invocation: direct
@@ -56,8 +61,12 @@ metadata:
   - description: Search the web and summarize results
     input:
       query: latest advances in quantum computing 2026
-      max_results: 5
+      limit: 5
     output:
+      results:
+      - url: https://example.com/quantum-2026
+        title: Quantum 2026 Update
+        snippet: Recent advances include error-corrected qubits and hybrid algorithms.
+        content: Quantum 2026 Update. Recent advances include error-corrected qubits and hybrid algorithms.
       summary: Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum
         advantage demonstrations.
-      sources: 5

@@ -30,7 +30,7 @@
       "official": 25,
       "experimental": 14
     },
-    "average_steps": 3.31,
+    "average_steps": 3.33,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -309,6 +309,10 @@
         "count": 1
       },
       {
+        "id": "text.content.template",
+        "count": 1
+      },
+      {
         "id": "text.content.transform",
         "count": 1
       },
@@ -412,7 +416,6 @@
       "task.state.transition",
       "text.content.compare",
       "text.content.generate",
-      "text.content.template",
       "text.response.extract",
       "text.sentiment.analyze",
       "video.frame.extract",
@@ -421,7 +424,7 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 128,
+    "skill_to_capability_edges": 129,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 14
   },

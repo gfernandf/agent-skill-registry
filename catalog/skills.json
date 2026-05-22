@@ -2217,7 +2217,7 @@
         "validation"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "stable",
       "use_cases": [
         "Parse raw JSON data and validate against a schema",
         "Ensure incoming data conforms to expected structure",
@@ -2227,7 +2227,7 @@
         {
           "description": "Parse and validate a JSON payload",
           "input": {
-            "raw_data": "{\"name\": \"Alice\", \"age\": 30}",
+            "text": "{\"name\": \"Alice\", \"age\": 30}",
             "schema": {
               "type": "object",
               "required": [
@@ -2237,7 +2237,7 @@
             }
           },
           "output": {
-            "parsed": {
+            "data": {
               "name": "Alice",
               "age": 30
             },
@@ -2287,6 +2287,11 @@
         "type": "string",
         "required": false,
         "description": "Risk appetite: low | medium | high. Defaults to medium. Affects how uncertainty and downside scenarios are weighted throughout the pipeline.\n"
+      },
+      "option_constraint_mode": {
+        "type": "string",
+        "required": false,
+        "description": "Option entity preservation policy: strict | best_effort. When omitted, strict mode is auto-enabled if explicit options are provided.\n"
       }
     },
     "outputs": {
@@ -2299,6 +2304,21 @@
         "type": "array",
         "required": true,
         "description": "List of all options evaluated, including generated ones if applicable.\n"
+      },
+      "alternatives_evaluated": {
+        "type": "array",
+        "required": true,
+        "description": "Detailed evaluation per alternative with individual scores, pros, and cons. Each item: {option: string, score: 0.0-1.0, pros: [strings], cons: [strings]}. Enables downstream analysis of trade-offs per option.\n"
+      },
+      "decision_inputs": {
+        "type": "object",
+        "required": false,
+        "description": "Structured normalized inputs used for the decision (budget, team_size, market, competition, domain_experience, timeline_months, risk_tolerance, options_count). For explainability and auditability.\n"
+      },
+      "decision_matrix": {
+        "type": "array",
+        "required": false,
+        "description": "Concise per-option matrix: option, cost, risk, speed, strategic_fit, score. Designed for executive readability.\n"
       },
       "criteria_used": {
         "type": "array",
@@ -2340,10 +2360,20 @@
         "required": true,
         "description": "Recommended follow-up actions: validations, pilots, additional analysis, execution steps.\n"
       },
-      "decision_quality": {
+      "decision_quality_score": {
+        "type": "number",
+        "required": true,
+        "description": "Numeric quality score (0 to 100)."
+      },
+      "decision_quality_dimensions": {
         "type": "object",
         "required": true,
-        "description": "Self-assessment of the decision process: input_quality (0-1), criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1), quality_notes (string), assessment_passed (boolean).\n"
+        "description": "Per-dimension quality scores."
+      },
+      "decision_quality_level": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable quality level (poor/fair/good/excellent)."
       },
       "human_readable": {
         "type": "string",
@@ -2381,7 +2411,9 @@
         "input": {
           "options": "vars.generated_options",
           "context": "vars.merged_context",
-          "goal": "inputs.goal"
+          "goal": "inputs.goal",
+          "explicit_options": "inputs.options",
+          "option_constraint_mode": "inputs.option_constraint_mode"
         },
         "output": {
           "analyzed_options": "vars.analyzed_options",
@@ -2394,7 +2426,9 @@
         "input": {
           "options": "vars.generated_options",
           "goal": "inputs.goal",
-          "risk_tolerance": "inputs.risk_tolerance"
+          "risk_tolerance": "inputs.risk_tolerance",
+          "explicit_options": "inputs.options",
+          "option_constraint_mode": "inputs.option_constraint_mode"
         },
         "output": {
           "scored_options": "vars.scored_options",
@@ -2412,11 +2446,16 @@
           "tradeoffs": "outputs.tradeoffs",
           "goal": "inputs.goal",
           "constraints": "inputs.constraints",
-          "risk_tolerance": "inputs.risk_tolerance"
+          "risk_tolerance": "inputs.risk_tolerance",
+          "explicit_options": "inputs.options",
+          "option_constraint_mode": "inputs.option_constraint_mode"
         },
         "output": {
           "recommendation": "outputs.recommendation",
           "alternatives_considered": "outputs.alternatives_considered",
+          "alternatives_evaluated": "outputs.alternatives_evaluated",
+          "decision_inputs": "outputs.decision_inputs",
+          "decision_matrix": "outputs.decision_matrix",
           "confidence_score": "outputs.confidence_score",
           "confidence_level": "outputs.confidence_level",
           "uncertainties": "outputs.uncertainties",
@@ -2458,8 +2497,9 @@
           }
         },
         "output": {
-          "score": "outputs.decision_quality",
-          "dimensions": "vars.quality_dimensions"
+          "score": "outputs.decision_quality_score",
+          "dimensions": "outputs.decision_quality_dimensions",
+          "quality_level": "outputs.decision_quality_level"
         }
       }
     ],
@@ -4433,16 +4473,36 @@
         }
       },
       {
+        "id": "compose_final_input",
+        "uses": "text.content.template",
+        "config": {
+          "depends_on": [
+            "gate_output",
+            "summarize"
+          ]
+        },
+        "input": {
+          "template": "gate_allowed={{gate_allowed}}\nsummary={{summary}}",
+          "variables": {
+            "gate_allowed": "outputs.gate_allowed",
+            "summary": "vars.raw_summary"
+          }
+        },
+        "output": {
+          "text": "vars.finalize_payload"
+        }
+      },
+      {
         "id": "finalize",
         "uses": "text.content.transform",
         "config": {
           "depends_on": [
-            "gate_output"
+            "compose_final_input"
           ]
         },
         "input": {
-          "text": "vars.raw_summary",
-          "goal": "Return the text as-is if gate approved, otherwise return '[BLOCKED: output contained sensitive data]'"
+          "text": "vars.finalize_payload",
+          "goal": "safe_gate_finalize"
         },
         "output": {
           "text": "outputs.summary"
@@ -4454,6 +4514,7 @@
       "security.pii.detect",
       "security.pii.redact",
       "text.content.summarize",
+      "text.content.template",
       "text.content.transform"
     ],
     "uses_skills": [],
@@ -4466,7 +4527,7 @@
         "demo"
       ],
       "category": null,
-      "status": "experimental",
+      "status": "stable",
       "use_cases": [
         "Summarize customer support tickets without leaking PII",
         "Process medical records with automatic redaction",
@@ -4659,17 +4720,17 @@
       "objectives": {
         "type": "array",
         "required": false,
-        "description": "Explicit objectives extracted or inferred from the task. Each objective is a string stating what must be achieved.\n"
+        "description": "Explicit objectives extracted or inferred from the task. Each objective is a string stating what must be achieved. When no objective is extracted, this field should be an empty list.\n"
       },
       "constraints_extracted": {
         "type": "object",
         "required": false,
-        "description": "Structured constraints: explicit ones from input plus inferred ones. Fields may include budget, time, regulation, resources, scope.\n"
+        "description": "Structured constraints: explicit ones from input plus inferred ones. Fields may include budget, time, regulation, resources, scope. When no constraints are extracted, this field should be an empty object.\n"
       },
       "information_needed": {
         "type": "array",
         "required": false,
-        "description": "What information appears necessary to solve the task well. Each item describes a gap and optionally suggests how to fill it.\n"
+        "description": "What information appears necessary to solve the task well. Each item describes a gap and optionally suggests how to fill it. When no gaps are identified, this field should be an empty list.\n"
       },
       "recommended_approach": {
         "type": "string",
@@ -4677,9 +4738,9 @@
         "description": "Proposed general approach to tackle the task. Not a detailed plan — a directional strategy (e.g., \"decompose into market dimensions, then synthesize per dimension, then compare\").\n"
       },
       "suggested_next_skills": {
-        "type": "array",
+        "type": "string",
         "required": true,
-        "description": "Ordered list of skill IDs that should execute after framing. Each entry includes skill_id and a brief rationale.\n"
+        "description": "Suggested next skill route identifier selected by the router.\n"
       }
     },
     "steps": [
@@ -4782,25 +4843,29 @@
         {
           "description": "Frame a task for structured execution",
           "input": {
-            "goal": "Evaluate market entry for Southeast Asia",
-            "constraints": [
-              "budget < 500K",
-              "timeline < 6 months"
-            ]
+            "task": "Evaluate market entry for Southeast Asia",
+            "constraints": {
+              "budget": "< 500K",
+              "timeline": "< 6 months"
+            }
           },
           "output": {
-            "framed_task": {
-              "objective": "Market entry evaluation",
-              "scope": "Southeast Asia",
-              "constraints": [
-                "budget < 500K",
-                "timeline < 6 months"
-              ],
-              "success_criteria": [
-                "Viable market identified",
-                "Risk assessment complete"
-              ]
-            }
+            "problem_statement": "Evaluate market entry in Southeast Asia under budget and timeline constraints.",
+            "task_type": "decision",
+            "objectives": [
+              "Determine viability of expansion in target countries",
+              "Estimate required investment and expected ROI"
+            ],
+            "constraints_extracted": {
+              "budget": "< 500K",
+              "timeline": "< 6 months"
+            },
+            "information_needed": [
+              "Current market size and growth by country",
+              "Regulatory barriers and compliance requirements"
+            ],
+            "recommended_approach": "Compare top candidate markets, score feasibility by constraints, then recommend an entry strategy.",
+            "suggested_next_skills": "analysis.compare"
           }
         }
       ],
@@ -5738,21 +5803,25 @@
     "inputs": {
       "query": {
         "type": "string",
-        "required": true
+        "required": true,
+        "description": "Search query text."
       },
       "limit": {
         "type": "number",
-        "required": false
+        "required": false,
+        "description": "Maximum number of results to summarize. Defaults to 5 and is clamped to 1..20."
       }
     },
     "outputs": {
       "results": {
         "type": "array",
-        "required": true
+        "required": true,
+        "description": "Ordered list of result items. Empty when no live results are available."
       },
       "summary": {
         "type": "string",
-        "required": true
+        "required": true,
+        "description": "Summary text generated from merged results. Empty when results is empty."
       }
     },
     "steps": [
@@ -5804,7 +5873,7 @@
         "discovery"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "stable",
       "use_cases": [
         "Perform a web search and summarize the results",
         "Find and synthesize information from search results",
@@ -5815,11 +5884,18 @@
           "description": "Search the web and summarize results",
           "input": {
             "query": "latest advances in quantum computing 2026",
-            "max_results": 5
+            "limit": 5
           },
           "output": {
-            "summary": "Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum advantage demonstrations.",
-            "sources": 5
+            "results": [
+              {
+                "url": "https://example.com/quantum-2026",
+                "title": "Quantum 2026 Update",
+                "snippet": "Recent advances include error-corrected qubits and hybrid algorithms.",
+                "content": "Quantum 2026 Update. Recent advances include error-corrected qubits and hybrid algorithms."
+              }
+            ],
+            "summary": "Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum advantage demonstrations."
           }
         }
       ],

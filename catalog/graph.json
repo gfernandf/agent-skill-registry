@@ -226,6 +226,7 @@
         "security.pii.detect",
         "security.pii.redact",
         "text.content.summarize",
+        "text.content.template",
         "text.content.transform"
       ],
       "skills": []

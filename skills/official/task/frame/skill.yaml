@@ -58,21 +58,21 @@ outputs:
     type: array
     required: false
     description: 'Explicit objectives extracted or inferred from the task. Each objective is a string stating what must be
-      achieved.
+      achieved. When no objective is extracted, this field should be an empty list.
 
       '
   constraints_extracted:
     type: object
     required: false
     description: 'Structured constraints: explicit ones from input plus inferred ones. Fields may include budget, time, regulation,
-      resources, scope.
+      resources, scope. When no constraints are extracted, this field should be an empty object.
 
       '
   information_needed:
     type: array
     required: false
     description: 'What information appears necessary to solve the task well. Each item describes a gap and optionally suggests
-      how to fill it.
+      how to fill it. When no gaps are identified, this field should be an empty list.
 
       '
   recommended_approach:
@@ -83,9 +83,9 @@ outputs:
 
       '
   suggested_next_skills:
-    type: array
+    type: string
     required: true
-    description: 'Ordered list of skill IDs that should execute after framing. Each entry includes skill_id and a brief rationale.
+    description: 'Suggested next skill route identifier selected by the router.
 
       '
 steps:
@@ -158,17 +158,21 @@ metadata:
   examples:
   - description: Frame a task for structured execution
     input:
-      goal: Evaluate market entry for Southeast Asia
+      task: Evaluate market entry for Southeast Asia
       constraints:
-      - budget < 500K
-      - timeline < 6 months
+        budget: < 500K
+        timeline: < 6 months
     output:
-      framed_task:
-        objective: Market entry evaluation
-        scope: Southeast Asia
-        constraints:
-        - budget < 500K
-        - timeline < 6 months
-        success_criteria:
-        - Viable market identified
-        - Risk assessment complete
+      problem_statement: Evaluate market entry in Southeast Asia under budget and timeline constraints.
+      task_type: decision
+      objectives:
+      - Determine viability of expansion in target countries
+      - Estimate required investment and expected ROI
+      constraints_extracted:
+        budget: < 500K
+        timeline: < 6 months
+      information_needed:
+      - Current market size and growth by country
+      - Regulatory barriers and compliance requirements
+      recommended_approach: Compare top candidate markets, score feasibility by constraints, then recommend an entry strategy.
+      suggested_next_skills: analysis.compare

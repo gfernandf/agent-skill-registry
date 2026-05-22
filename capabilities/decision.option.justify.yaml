@@ -71,7 +71,13 @@ outputs:
     description: >
       Numeric confidence in the recommendation (0.0-1.0). Calibrated:
       0.0-0.3 low, 0.3-0.6 medium, 0.6-0.9 high, 0.9-1.0 very high.
-
+    alternatives_evaluated:
+      type: array
+      required: true
+      description: >
+        Detailed evaluation per alternative with individual scores, pros, and cons.
+        Each item: {option: string, score: 0.0-1.0, pros: [strings], cons: [strings]}.
+        Enables downstream analysis of trade-offs per option.
   confidence_level:
     type: string
     required: true

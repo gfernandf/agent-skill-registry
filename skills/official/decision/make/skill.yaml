@@ -1,5 +1,6 @@
 id: decision.make
 version: 0.1.0
+status: stable
 name: Make Decision
 description: >
   Take a problem, context, and available information and produce an explicit,
@@ -58,6 +59,13 @@ inputs:
       Risk appetite: low | medium | high. Defaults to medium. Affects how
       uncertainty and downside scenarios are weighted throughout the pipeline.
 
+  option_constraint_mode:
+    type: string
+    required: false
+    description: >
+      Option entity preservation policy: strict | best_effort. When omitted,
+      strict mode is auto-enabled if explicit options are provided.
+
 outputs:
   recommendation:
     type: string
@@ -71,6 +79,29 @@ outputs:
     required: true
     description: >
       List of all options evaluated, including generated ones if applicable.
+
+  alternatives_evaluated:
+    type: array
+    required: true
+    description: >
+      Detailed evaluation per alternative with individual scores, pros, and cons.
+      Each item: {option: string, score: 0.0-1.0, pros: [strings], cons: [strings]}.
+      Enables downstream analysis of trade-offs per option.
+
+  decision_inputs:
+    type: object
+    required: false
+    description: >
+      Structured normalized inputs used for the decision (budget, team_size,
+      market, competition, domain_experience, timeline_months, risk_tolerance,
+      options_count). For explainability and auditability.
+
+  decision_matrix:
+    type: array
+    required: false
+    description: >
+      Concise per-option matrix: option, cost, risk, speed, strategic_fit,
+      score. Designed for executive readability.
 
   criteria_used:
     type: array
@@ -124,13 +155,20 @@ outputs:
       Recommended follow-up actions: validations, pilots, additional analysis,
       execution steps.
 
-  decision_quality:
+  decision_quality_score:
+    type: number
+    required: true
+    description: Numeric quality score (0 to 100).
+
+  decision_quality_dimensions:
     type: object
     required: true
-    description: >
-      Self-assessment of the decision process: input_quality (0-1),
-      criteria_coverage (0-1), analysis_consistency (0-1), overall_score (0-1),
-      quality_notes (string), assessment_passed (boolean).
+    description: Per-dimension quality scores.
+
+  decision_quality_level:
+    type: string
+    required: true
+    description: Human-readable quality level (poor/fair/good/excellent).
 
   human_readable:
     type: string
@@ -152,8 +190,8 @@ steps:
       text: vars.merged_context
 
   # ── Step 1: Generate options ──────────────────────────────────────────────
-  # If the user provided explicit options, this step normalizes and enriches
-  # them. If not, it generates 2-4 plausible alternatives from goal + context.
+  # Generate baseline alternatives. When explicit options are provided,
+  # downstream eval/justify steps enforce strict preservation of those entities.
   - id: generate_options
     uses: agent.option.generate
     input:
@@ -173,6 +211,8 @@ steps:
       options: vars.generated_options
       context: vars.merged_context
       goal: inputs.goal
+      explicit_options: inputs.options
+      option_constraint_mode: inputs.option_constraint_mode
     output:
       analyzed_options: vars.analyzed_options
       analysis_notes: vars.analysis_notes
@@ -186,6 +226,8 @@ steps:
       options: vars.generated_options
       goal: inputs.goal
       risk_tolerance: inputs.risk_tolerance
+      explicit_options: inputs.options
+      option_constraint_mode: inputs.option_constraint_mode
     output:
       scored_options: vars.scored_options
       criteria_used: outputs.criteria_used
@@ -205,9 +247,14 @@ steps:
       goal: inputs.goal
       constraints: inputs.constraints
       risk_tolerance: inputs.risk_tolerance
+      explicit_options: inputs.options
+      option_constraint_mode: inputs.option_constraint_mode
     output:
       recommendation: outputs.recommendation
       alternatives_considered: outputs.alternatives_considered
+      alternatives_evaluated: outputs.alternatives_evaluated
+      decision_inputs: outputs.decision_inputs
+      decision_matrix: outputs.decision_matrix
       confidence_score: outputs.confidence_score
       confidence_level: outputs.confidence_level
       uncertainties: outputs.uncertainties
@@ -251,8 +298,10 @@ steps:
               and actionable, not generic boilerplate?
             weight: 0.20
     output:
-      score: outputs.decision_quality
-      dimensions: vars.quality_dimensions
+      # Map binding response fields to outputs
+      score: outputs.decision_quality_score
+      dimensions: outputs.decision_quality_dimensions
+      quality_level: outputs.decision_quality_level
 
 metadata:
   tags:

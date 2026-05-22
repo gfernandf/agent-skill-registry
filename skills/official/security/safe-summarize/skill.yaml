@@ -74,13 +74,25 @@ steps:
       allowed: outputs.gate_allowed
       reasons: vars.gate_reasons
 
+  - id: compose_final_input
+    uses: text.content.template
+    config:
+      depends_on: [gate_output, summarize]
+    input:
+      template: "gate_allowed={{gate_allowed}}\nsummary={{summary}}"
+      variables:
+        gate_allowed: outputs.gate_allowed
+        summary: vars.raw_summary
+    output:
+      text: vars.finalize_payload
+
   - id: finalize
     uses: text.content.transform
     config:
-      depends_on: [gate_output]
+      depends_on: [compose_final_input]
     input:
-      text: vars.raw_summary
-      goal: "Return the text as-is if gate approved, otherwise return '[BLOCKED: output contained sensitive data]'"
+      text: vars.finalize_payload
+      goal: safe_gate_finalize
     output:
       text: outputs.summary
 
@@ -89,7 +101,7 @@ metadata:
     role: procedure
     invocation: direct
     effect_mode: enrich
-  status: experimental
+  status: stable
   tags:
     - security
     - pii

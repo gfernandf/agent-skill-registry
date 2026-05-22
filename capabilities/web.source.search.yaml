@@ -43,3 +43,4 @@ metadata:
           - url: "https://example.com/ml-tutorial"
             title: "ML Tutorial"
             snippet: "An introduction to machine learning."
+            content: "ML Tutorial. An introduction to machine learning."

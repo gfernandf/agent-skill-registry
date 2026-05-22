@@ -291,8 +291,25 @@ EXAMPLES: dict[str, list[dict]] = {
     }],
     "task.frame": [{
         "description": "Frame a task for structured execution",
-        "input": {"goal": "Evaluate market entry for Southeast Asia", "constraints": ["budget < 500K", "timeline < 6 months"]},
-        "output": {"framed_task": {"objective": "Market entry evaluation", "scope": "Southeast Asia", "constraints": ["budget < 500K", "timeline < 6 months"], "success_criteria": ["Viable market identified", "Risk assessment complete"]}},
+        "input": {
+            "task": "Evaluate market entry for Southeast Asia",
+            "constraints": {"budget": "< 500K", "timeline": "< 6 months"},
+        },
+        "output": {
+            "problem_statement": "Evaluate market entry in Southeast Asia under budget and timeline constraints.",
+            "task_type": "decision",
+            "objectives": [
+                "Determine viability of expansion in target countries",
+                "Estimate required investment and expected ROI",
+            ],
+            "constraints_extracted": {"budget": "< 500K", "timeline": "< 6 months"},
+            "information_needed": [
+                "Current market size and growth by country",
+                "Regulatory barriers and compliance requirements",
+            ],
+            "recommended_approach": "Compare top candidate markets, score feasibility by constraints, then recommend an entry strategy.",
+            "suggested_next_skills": "analysis.compare",
+        },
     }],
     "text.detect-language-and-classify": [{
         "description": "Detect language and classify text",
@@ -341,8 +358,18 @@ EXAMPLES: dict[str, list[dict]] = {
     }],
     "web.search-summary": [{
         "description": "Search the web and summarize results",
-        "input": {"query": "latest advances in quantum computing 2026", "max_results": 5},
-        "output": {"summary": "Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum advantage demonstrations.", "sources": 5},
+        "input": {"query": "latest advances in quantum computing 2026", "limit": 5},
+        "output": {
+            "results": [
+                {
+                    "url": "https://example.com/quantum-2026",
+                    "title": "Quantum 2026 Update",
+                    "snippet": "Recent advances include error-corrected qubits and hybrid algorithms.",
+                    "content": "Quantum 2026 Update. Recent advances include error-corrected qubits and hybrid algorithms.",
+                }
+            ],
+            "summary": "Recent advances include error-corrected qubits, hybrid quantum-classical algorithms, and first commercial quantum advantage demonstrations.",
+        },
     }],
 }
 
