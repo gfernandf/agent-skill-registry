@@ -1,7 +1,6 @@
 id: policy.decision.justify
 version: 1.0.0
 description: Justify a policy decision by linking it to applicable rules and evidence.
-
 inputs:
   decision:
     type: string
@@ -15,7 +14,6 @@ inputs:
     type: object
     required: false
     description: Additional context or evidence for the justification.
-
 outputs:
   justification:
     type: string
@@ -29,26 +27,31 @@ outputs:
     type: number
     required: true
     description: Confidence score for the justification (0.0 to 1.0).
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
-  tags: [policy, decision, justification, governance]
-
-
+  tags:
+  - policy
+  - decision
+  - justification
+  - governance
   examples:
-    - summary: "Justify a policy decision"
-      inputs:
-        decision: "approved"
-        rules: [{id: "R1", outcome: "approved"}]
-      outputs:
-        justification: "Approved per rule R1."
-        applicable_rules: ["R1"]
-
+  - summary: Justify a policy decision
+    inputs:
+      decision: approved
+      rules:
+      - id: R1
+        outcome: approved
+    outputs:
+      justification: Approved per rule R1.
+      applicable_rules:
+      - R1
+  layer: governance
 cognitive_hints:
   role: decide
   produces:

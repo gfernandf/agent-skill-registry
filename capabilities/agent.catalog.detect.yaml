@@ -1,62 +1,66 @@
 id: agent.catalog.detect
 version: 1.0.0
 status: experimental
-description: >
-  Detect gaps in the ORCA registry relative to an interpreted goal and
-  its candidate items. Returns missing capabilities and skills required
-  to fully satisfy the goal but absent from the current registry, with
-  a suggested specification for each gap item.
+description: 'Detect gaps in the ORCA registry relative to an interpreted goal and
+  its candidate items. Returns missing capabilities and skills required to fully satisfy
+  the goal but absent from the current registry, with a suggested specification for
+  each gap item.
 
+  '
 inputs:
   interpreted_goal:
     type: object
     required: true
-    description: >
-      Interpreted goal object from agent.goal.interpret.
+    description: 'Interpreted goal object from agent.goal.interpret.
+
+      '
   candidate_items:
     type: array
     required: true
-    description: >
-      Candidate registry items already matched by agent.catalog.search.
+    description: 'Candidate registry items already matched by agent.catalog.search.
 
+      '
 outputs:
   missing_capabilities:
     type: array
     required: true
-    description: >
-      Capabilities needed to satisfy the goal that are not present in
-      the registry. Each item has: name (string), reason (string),
-      suggested_spec (object with description, inputs, outputs).
+    description: 'Capabilities needed to satisfy the goal that are not present in
+      the registry. Each item has: name (string), reason (string), suggested_spec
+      (object with description, inputs, outputs).
+
+      '
   missing_skills:
     type: array
     required: true
-    description: >
-      Skills needed to satisfy the goal that are not present in
-      the registry. Each item has the same structure as missing_capabilities.
+    description: 'Skills needed to satisfy the goal that are not present in the registry.
+      Each item has the same structure as missing_capabilities.
+
+      '
   gap_severity:
     type: string
     required: false
-    description: >
-      Overall severity of the detected gaps: none | minor | blocking.
+    description: 'Overall severity of the detected gaps: none | minor | blocking.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   tags:
-    - registry
-    - catalog
-    - gap-detection
-    - governance
-    - agent-pipeline
+  - registry
+  - catalog
+  - gap-detection
+  - governance
+  - agent-pipeline
   examples:
-    - interpreted_goal:
-        objective: "Execute and monitor a data ETL pipeline"
-      candidate_items: []
-      expected_gap_severity: "blocking"
-
+  - interpreted_goal:
+      objective: Execute and monitor a data ETL pipeline
+    candidate_items: []
+    expected_gap_severity: blocking
+  layer: cognitive
 cognitive_hints:
   role: evaluate
   produces:
@@ -67,5 +71,5 @@ cognitive_hints:
     gap_severity:
       type: Score
   consumes:
-    - Artifact
-    - Option
+  - Artifact
+  - Option

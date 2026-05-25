@@ -1,7 +1,8 @@
 id: task.incident.create
 version: 1.0.0
-description: Create a new incident ticket with severity and affected system information.
-
+description: Create an incident ticket with severity and affected system context for
+  outage or service-disruption workflows. For generic non-incident ticketing, use
+  task.case.create.
 inputs:
   title:
     type: string
@@ -19,7 +20,6 @@ inputs:
     type: string
     required: false
     description: Detailed incident description.
-
 outputs:
   incident_id:
     type: string
@@ -29,32 +29,32 @@ outputs:
     type: boolean
     required: true
     description: Whether the incident was created.
-
 properties:
   deterministic: false
   side_effects: true
   idempotent: false
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: standard
   requires_confirmation: false
   description: Creates an incident in the in-memory store.
-
 metadata:
   status: stable
-  tags: [task, incident, create]
-
-
+  tags:
+  - task
+  - incident
+  - create
   examples:
-    - summary: "Create a new incident"
-      inputs:
-        title: "API 503 errors"
-        severity: "high"
-        affected_system: "api-gateway"
-      outputs:
-        incident_id: "INC-1"
-        created: true
-
+  - summary: Create a new incident
+    inputs:
+      title: API 503 errors
+      severity: high
+      affected_system: api-gateway
+    outputs:
+      incident_id: INC-1
+      created: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:

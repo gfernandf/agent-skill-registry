@@ -1,7 +1,6 @@
 id: integration.mapping.transform
 version: 1.0.0
 description: Apply a field mapping to transform a source record into a target schema.
-
 inputs:
   record:
     type: object
@@ -11,7 +10,6 @@ inputs:
     type: object
     required: true
     description: Mapping rules with rename, select, and defaults directives.
-
 outputs:
   transformed:
     type: object
@@ -21,25 +19,31 @@ outputs:
     type: array
     required: true
     description: Source fields that were not included in the mapping.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, mapping, transform, etl]
-
-
+  tags:
+  - integration
+  - mapping
+  - transform
+  - etl
   examples:
-    - summary: "Apply field mapping to a record"
-      inputs:
-        record: {first_name: "Alice"}
-        mapping: {rename: {first_name: "name"}}
-      outputs:
-        record: {name: "Alice"}
-
+  - summary: Apply field mapping to a record
+    inputs:
+      record:
+        first_name: Alice
+      mapping:
+        rename:
+          first_name: name
+    outputs:
+      record:
+        name: Alice
+  layer: operational
 cognitive_hints:
   role: act
   produces:

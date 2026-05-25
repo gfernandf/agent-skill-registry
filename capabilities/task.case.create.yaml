@@ -1,7 +1,7 @@
 id: task.case.create
 version: 1.0.0
-description: Create a new case or ticket.
-
+description: Create a generic case or service ticket for operational tracking. For
+  incident response records with severity and affected system context, use task.incident.create.
 inputs:
   title:
     type: string
@@ -15,7 +15,6 @@ inputs:
     type: string
     required: false
     description: Priority level (low, medium, high, critical).
-
 outputs:
   case_id:
     type: string
@@ -25,31 +24,31 @@ outputs:
     type: boolean
     required: true
     description: Whether the case was created.
-
 properties:
   deterministic: false
   side_effects: true
   idempotent: false
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: standard
   requires_confirmation: false
   description: Creates a case in the in-memory store.
-
 metadata:
   status: stable
-  tags: [task, case, create]
-
-
+  tags:
+  - task
+  - case
+  - create
   examples:
-    - summary: "Create a new case"
-      inputs:
-        title: "Bug in login page"
-        priority: "high"
-      outputs:
-        case_id: "CASE-1"
-        created: true
-
+  - summary: Create a new case
+    inputs:
+      title: Bug in login page
+      priority: high
+    outputs:
+      case_id: CASE-1
+      created: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:

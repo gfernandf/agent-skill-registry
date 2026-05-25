@@ -23,20 +23,26 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
-  tags: [policy, governance, validation]
+  tags:
+  - policy
+  - governance
+  - validation
   examples:
-    - summary: "Validate payload against policy constraints"
-      inputs:
-        payload: {title: "Report"}
-        constraint: {required_keys: ["title"]}
-      outputs:
-        valid: true
-        violations: []
-
+  - summary: Validate payload against policy constraints
+    inputs:
+      payload:
+        title: Report
+      constraint:
+        required_keys:
+        - title
+    outputs:
+      valid: true
+      violations: []
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

@@ -1,7 +1,6 @@
 id: task.approval.reject
 version: 1.0.0
 description: Reject a pending approval request with a reason.
-
 inputs:
   approval_id:
     type: string
@@ -15,7 +14,6 @@ inputs:
     type: string
     required: true
     description: Reason for rejection.
-
 outputs:
   rejected:
     type: boolean
@@ -25,31 +23,32 @@ outputs:
     type: string
     required: true
     description: ISO-8601 timestamp.
-
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: elevated
   requires_confirmation: true
   description: Rejects a request, blocking the associated workflow.
-
 metadata:
   status: stable
-  tags: [task, approval, rejection, workflow]
-
-
+  tags:
+  - task
+  - approval
+  - rejection
+  - workflow
   examples:
-    - summary: "Reject an approval request"
-      inputs:
-        approval_id: "apr-002"
-        rejector: "manager-2"
-        reason: "Missing justification"
-      outputs:
-        rejected: true
-
+  - summary: Reject an approval request
+    inputs:
+      approval_id: apr-002
+      rejector: manager-2
+      reason: Missing justification
+    outputs:
+      rejected: true
+  layer: operational
 cognitive_hints:
   role: decide
   produces:

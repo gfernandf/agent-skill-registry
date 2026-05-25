@@ -23,19 +23,26 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [data, processing, validation]
+  tags:
+  - data
+  - processing
+  - validation
   examples:
-    - summary: "Validate data against a JSON schema"
-      inputs:
-        data: {name: "John"}
-        schema: {type: "object", required: ["name"]}
-      outputs:
-        valid: true
-
+  - summary: Validate data against a JSON schema
+    inputs:
+      data:
+        name: John
+      schema:
+        type: object
+        required:
+        - name
+    outputs:
+      valid: true
+  layer: operational
 cognitive_hints:
   role: evaluate
   produces:

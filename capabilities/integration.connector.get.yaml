@@ -1,13 +1,11 @@
 id: integration.connector.get
 version: 1.0.0
 description: Retrieve metadata for a specific connector by identifier.
-
 inputs:
   connector_id:
     type: string
     required: true
     description: Unique identifier of the connector.
-
 outputs:
   connector:
     type: object
@@ -17,25 +15,29 @@ outputs:
     type: boolean
     required: true
     description: Whether the connector was found.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, connector, lookup]
-
-
+  tags:
+  - integration
+  - connector
+  - lookup
   examples:
-    - summary: "Retrieve connector metadata"
-      inputs:
-        connector_id: "crm-rest"
-      outputs:
-        connector: {id: "crm-rest", type: "rest", status: "active"}
-        found: true
-
+  - summary: Retrieve connector metadata
+    inputs:
+      connector_id: crm-rest
+    outputs:
+      connector:
+        id: crm-rest
+        type: rest
+        status: active
+      found: true
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

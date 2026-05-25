@@ -1,13 +1,13 @@
 id: ops.trace.analyze
 version: 1.0.0
-description: >
-  Analyze incremental execution traces as a cognitive interpretation unit.
-  This capability reconstructs the agent's reasoning path from runtime events,
-  infers assumptions, identifies plausible alternatives, estimates confidence,
-  and returns structured views such as decision graphs. It is intended to be
-  called repeatedly during execution (update mode) and once at run closure
-  (finalize mode), without coupling to any specific model provider.
+description: 'Analyze incremental execution traces as a cognitive interpretation unit.
+  This capability reconstructs the agent''s reasoning path from runtime events, infers
+  assumptions, identifies plausible alternatives, estimates confidence, and returns
+  structured views such as decision graphs. It is intended to be called repeatedly
+  during execution (update mode) and once at run closure (finalize mode), without
+  coupling to any specific model provider.
 
+  '
 inputs:
   goal:
     type: string
@@ -40,13 +40,13 @@ inputs:
   output_views:
     type: array
     required: false
-    description: Optional list of requested views such as decision_graph, assumptions, and summary.
-
+    description: Optional list of requested views such as decision_graph, assumptions,
+      and summary.
   thresholds:
     type: object
     required: false
-    description: Optional thresholds for risk and alert evaluation during trace analysis. Supported keys include max_duration_ms and max_errors.
-
+    description: Optional thresholds for risk and alert evaluation during trace analysis.
+      Supported keys include max_duration_ms and max_errors.
 outputs:
   trace_session_id:
     type: string
@@ -88,12 +88,11 @@ outputs:
     type: string
     required: false
     description: Human-readable summary of the current trace analysis.
-
 cognitive_hints:
   role: reflect
   consumes:
-    - Context
-    - Evidence
+  - Context
+  - Evidence
   produces:
     updated_trace_state:
       type: Context
@@ -109,36 +108,36 @@ cognitive_hints:
       type: Risk
     summary:
       type: Summary
-
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
   tags:
-    - trace
-    - observability
-    - reasoning
-    - cognitive-unit
+  - trace
+  - observability
+  - reasoning
+  - cognitive-unit
   use_cases:
-    - Live analysis of an ongoing agent run to keep an auditable reasoning state.
-    - Final synthesis of a completed run into assumptions, alternatives, and summary.
-    - Explainability export for third-party review and governance workflows.
+  - Live analysis of an ongoing agent run to keep an auditable reasoning state.
+  - Final synthesis of a completed run into assumptions, alternatives, and summary.
+  - Explainability export for third-party review and governance workflows.
   examples:
-    - input:
-        goal: "Assess market expansion feasibility"
-        state_mode: "inline"
-        mode: "update"
-        events:
-          - type: "step_completed"
-            timestamp: "2026-03-15T10:00:00Z"
-            step_id: "search_market_data"
-      output:
-        confidence: 0.71
-        assumptions:
-          - "Primary source is representative for target market"
-        risk_candidates:
-          - "decision_without_evidence"
-
+  - input:
+      goal: Assess market expansion feasibility
+      state_mode: inline
+      mode: update
+      events:
+      - type: step_completed
+        timestamp: '2026-03-15T10:00:00Z'
+        step_id: search_market_data
+    output:
+      confidence: 0.71
+      assumptions:
+      - Primary source is representative for target market
+      risk_candidates:
+      - decision_without_evidence
+  layer: cognitive

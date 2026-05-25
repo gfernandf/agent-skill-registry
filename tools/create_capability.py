@@ -49,6 +49,8 @@ def render_capability_yaml(capability_id: str) -> str:
         f"  deterministic: true\n"
         f"  side_effects: false\n"
         f"  idempotent: true\n"
+        f"  state_access: none\n"
+        f"  audit_level: standard\n"
     )
 
 

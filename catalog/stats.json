@@ -64,8 +64,9 @@
       "video": 1
     },
     "by_status": {
-      "stable": 141,
-      "unspecified": 18
+      "stable": 140,
+      "unspecified": 18,
+      "deprecated": 1
     },
     "most_used": [
       {
@@ -1339,6 +1340,10 @@
         "count": 1
       },
       {
+        "id": "canonical",
+        "count": 1
+      },
+      {
         "id": "chunking",
         "count": 1
       },
@@ -1512,6 +1517,10 @@
       },
       {
         "id": "learning",
+        "count": 1
+      },
+      {
+        "id": "legacy",
         "count": 1
       },
       {

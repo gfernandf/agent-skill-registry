@@ -1,7 +1,7 @@
 id: identity.decision.justify
 version: 1.0.0
-description: Justify an identity or access-related decision by referencing policies and evidence.
-
+description: Justify an identity or access-related decision by referencing policies
+  and evidence.
 inputs:
   decision:
     type: string
@@ -15,7 +15,6 @@ inputs:
     type: array
     required: false
     description: Policies considered in making the decision.
-
 outputs:
   justification:
     type: string
@@ -28,28 +27,31 @@ outputs:
   confidence:
     type: number
     required: true
-    description: Confidence in the justification (0.0–1.0).
-
+    description: "Confidence in the justification (0.0\u20131.0)."
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
-  tags: [identity, decision, justification, access]
-
-
+  tags:
+  - identity
+  - decision
+  - justification
+  - access
   examples:
-    - summary: "Justify an identity-related decision"
-      inputs:
-        decision: "granted"
-        subject: {id: "alice"}
-        policies: []
-      outputs:
-        justification: "Access granted based on role."
-        confidence: 0.9
-
+  - summary: Justify an identity-related decision
+    inputs:
+      decision: granted
+      subject:
+        id: alice
+      policies: []
+    outputs:
+      justification: Access granted based on role.
+      confidence: 0.9
+  layer: governance
 cognitive_hints:
   role: decide
   produces:

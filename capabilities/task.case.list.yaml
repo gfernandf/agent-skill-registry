@@ -1,7 +1,6 @@
 id: task.case.list
 version: 1.0.0
 description: List cases, optionally filtered by status or assignee.
-
 inputs:
   status_filter:
     type: string
@@ -11,7 +10,6 @@ inputs:
     type: string
     required: false
     description: Filter by assignee identifier.
-
 outputs:
   cases:
     type: array
@@ -21,25 +19,28 @@ outputs:
     type: number
     required: true
     description: Total cases returned.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [task, case, listing]
-
-
+  tags:
+  - task
+  - case
+  - listing
   examples:
-    - summary: "List cases filtered by status"
-      inputs:
-        status_filter: "open"
-      outputs:
-        cases: [{id: "CASE-1", state: "open"}]
-        total: 1
-
+  - summary: List cases filtered by status
+    inputs:
+      status_filter: open
+    outputs:
+      cases:
+      - id: CASE-1
+        state: open
+      total: 1
+  layer: cognitive
 cognitive_hints:
   role: perceive
   produces:

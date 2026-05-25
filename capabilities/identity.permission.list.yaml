@@ -1,7 +1,6 @@
 id: identity.permission.list
 version: 1.0.0
 description: List permissions granted to a principal, optionally filtered by resource.
-
 inputs:
   principal_id:
     type: string
@@ -11,7 +10,6 @@ inputs:
     type: string
     required: false
     description: Optional resource prefix to filter permissions.
-
 outputs:
   permissions:
     type: array
@@ -21,25 +19,27 @@ outputs:
     type: number
     required: true
     description: Total number of permissions returned.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
-  tags: [identity, permission, listing]
-
-
+  tags:
+  - identity
+  - permission
+  - listing
   examples:
-    - summary: "List permissions for a principal"
-      inputs:
-        principal_id: "alice"
-      outputs:
-        permissions: [{id: "resource:read"}]
-        total: 1
-
+  - summary: List permissions for a principal
+    inputs:
+      principal_id: alice
+    outputs:
+      permissions:
+      - id: resource:read
+      total: 1
+  layer: governance
 cognitive_hints:
   role: perceive
   produces:

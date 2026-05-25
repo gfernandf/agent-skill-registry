@@ -1,7 +1,6 @@
 id: identity.permission.gate
 version: 1.0.0
 description: Gate an action by checking whether a principal holds the required permission.
-
 inputs:
   principal_id:
     type: string
@@ -15,7 +14,6 @@ inputs:
     type: object
     required: false
     description: Additional context such as resource metadata or environment.
-
 outputs:
   allowed:
     type: boolean
@@ -25,26 +23,28 @@ outputs:
     type: string
     required: true
     description: Explanation for the gate decision.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
-  tags: [identity, permission, gate, access-control]
-
-
+  tags:
+  - identity
+  - permission
+  - gate
+  - access-control
   examples:
-    - summary: "Check whether a principal is allowed an action"
-      inputs:
-        principal_id: "alice"
-        permission: "resource:read"
-      outputs:
-        allowed: true
-        reason: "Permission granted via admin role."
-
+  - summary: Check whether a principal is allowed an action
+    inputs:
+      principal_id: alice
+      permission: resource:read
+    outputs:
+      allowed: true
+      reason: Permission granted via admin role.
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

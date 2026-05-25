@@ -1,7 +1,6 @@
 id: task.case.close
 version: 1.0.0
 description: Close a case or ticket with a resolution.
-
 inputs:
   case_id:
     type: string
@@ -11,7 +10,6 @@ inputs:
     type: string
     required: false
     description: Resolution description.
-
 outputs:
   closed:
     type: boolean
@@ -21,30 +19,30 @@ outputs:
     type: string
     required: true
     description: ISO-8601 timestamp.
-
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: standard
   requires_confirmation: false
   description: Closes a case in the in-memory store.
-
 metadata:
   status: stable
-  tags: [task, case, close]
-
-
+  tags:
+  - task
+  - case
+  - close
   examples:
-    - summary: "Close a case with a resolution"
-      inputs:
-        case_id: "CASE-1"
-        resolution: "Fixed in v2.1"
-      outputs:
-        closed: true
-
+  - summary: Close a case with a resolution
+    inputs:
+      case_id: CASE-1
+      resolution: Fixed in v2.1
+    outputs:
+      closed: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:

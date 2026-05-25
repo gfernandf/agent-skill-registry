@@ -1,61 +1,64 @@
 id: agent.goal.interpret
 version: 1.0.0
 status: experimental
-description: >
-  Convert a normalized user request into an explicit operational goal.
-  Defines what the task must produce, what success looks like, what
-  assumptions are being made, what constraints apply, and what open
-  questions must be resolved before planning can begin.
+description: 'Convert a normalized user request into an explicit operational goal.
+  Defines what the task must produce, what success looks like, what assumptions are
+  being made, what constraints apply, and what open questions must be resolved before
+  planning can begin.
 
+  '
 inputs:
   normalized_request:
     type: object
     required: true
-    description: >
-      Structured request object produced by agent.request.normalize.
+    description: 'Structured request object produced by agent.request.normalize.
+
+      '
   context:
     type: object
     required: false
-    description: >
-      Additional conversation context, user history, or prior session data.
+    description: 'Additional conversation context, user history, or prior session
+      data.
 
+      '
 outputs:
   interpreted_goal:
     type: object
     required: true
-    description: >
-      Operational goal object with fields: objective (string),
-      deliverable_type (string), success_criteria (array of strings),
-      constraints (array of strings), assumptions (array of strings),
-      open_questions (array of strings).
+    description: 'Operational goal object with fields: objective (string), deliverable_type
+      (string), success_criteria (array of strings), constraints (array of strings),
+      assumptions (array of strings), open_questions (array of strings).
+
+      '
   requires_clarification:
     type: boolean
     required: false
-    description: >
-      True when open_questions are present and must be answered before
+    description: 'True when open_questions are present and must be answered before
       planning can proceed safely.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   tags:
-    - goal-setting
-    - planning
-    - agent-pipeline
+  - goal-setting
+  - planning
+  - agent-pipeline
   examples:
-    - normalized_request:
-        detected_intent: "research_and_synthesize"
-        raw_request: "Make me a briefing on EU green hydrogen regulation"
-      expected_interpreted_goal:
-        objective: "Create a sourced briefing on current EU green hydrogen regulation"
-        deliverable_type: "structured_briefing"
-        success_criteria:
-          - "Includes regulatory framework"
-          - "Cites sources"
-
+  - normalized_request:
+      detected_intent: research_and_synthesize
+      raw_request: Make me a briefing on EU green hydrogen regulation
+    expected_interpreted_goal:
+      objective: Create a sourced briefing on current EU green hydrogen regulation
+      deliverable_type: structured_briefing
+      success_criteria:
+      - Includes regulatory framework
+      - Cites sources
+  layer: cognitive
 cognitive_hints:
   role: synthesize
   produces:
@@ -64,5 +67,5 @@ cognitive_hints:
     requires_clarification:
       type: Evidence
   consumes:
-    - Artifact
-    - Context
+  - Artifact
+  - Context

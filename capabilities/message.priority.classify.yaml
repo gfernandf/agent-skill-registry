@@ -1,7 +1,6 @@
 id: message.priority.classify
 version: 1.0.0
 description: Classify the priority of a message based on content, sender, and context.
-
 inputs:
   message:
     type: string
@@ -15,12 +14,11 @@ inputs:
     type: object
     required: false
     description: Additional context such as channel or thread metadata.
-
 outputs:
   priority:
     type: string
     required: true
-    description: "Classified priority level: critical, high, medium, or low."
+    description: 'Classified priority level: critical, high, medium, or low.'
   confidence:
     type: number
     required: true
@@ -29,25 +27,27 @@ outputs:
     type: string
     required: true
     description: Explanation of the classification.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [message, priority, classification, triage]
-
-
+  tags:
+  - message
+  - priority
+  - classification
+  - triage
   examples:
-    - summary: "Classify message priority"
-      inputs:
-        message: "URGENT: production outage on API gateway"
-      outputs:
-        priority: "critical"
-        confidence: 0.95
-
+  - summary: Classify message priority
+    inputs:
+      message: 'URGENT: production outage on API gateway'
+    outputs:
+      priority: critical
+      confidence: 0.95
+  layer: operational
 cognitive_hints:
   role: analyze
   produces:

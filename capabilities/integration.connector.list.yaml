@@ -1,7 +1,6 @@
 id: integration.connector.list
 version: 1.0.0
 description: List available connectors, optionally filtered by type or status.
-
 inputs:
   type_filter:
     type: string
@@ -11,7 +10,6 @@ inputs:
     type: string
     required: false
     description: Filter by status (e.g. active, inactive).
-
 outputs:
   connectors:
     type: array
@@ -21,25 +19,28 @@ outputs:
     type: number
     required: true
     description: Total connectors returned.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, connector, listing]
-
-
+  tags:
+  - integration
+  - connector
+  - listing
   examples:
-    - summary: "List available connectors"
-      inputs:
-        status_filter: "active"
-      outputs:
-        connectors: [{id: "crm-rest", status: "active"}]
-        total: 1
-
+  - summary: List available connectors
+    inputs:
+      status_filter: active
+    outputs:
+      connectors:
+      - id: crm-rest
+        status: active
+      total: 1
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

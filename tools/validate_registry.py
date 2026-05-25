@@ -118,6 +118,10 @@ def validate_capability_id_against_vocab(
 
 
 ALLOWED_STATUS = {"stable", "experimental", "draft", "deprecated", "unspecified"}
+ALLOWED_CAPABILITY_LAYERS = {"cognitive", "orchestration", "operational", "governance"}
+
+ALLOWED_STATE_ACCESS = {"none", "read", "write", "read_write"}
+ALLOWED_AUDIT_LEVEL = {"basic", "standard", "strict"}
 
 ALLOWED_ROLES = {"procedure", "utility", "sidecar"}
 ALLOWED_INVOCATIONS = {"direct", "attach", "both"}
@@ -201,6 +205,8 @@ def validate_metadata_block(
     skill_mode: bool = False,
 ) -> None:
     if metadata is None:
+        if not skill_mode:
+            errors.append(f"{path}: metadata is required for capabilities")
         return
 
     if not isinstance(metadata, dict):
@@ -227,6 +233,13 @@ def validate_metadata_block(
     examples = metadata.get("examples")
     if examples is not None and not isinstance(examples, list):
         errors.append(f"{path}: metadata.examples must be a list")
+
+    if not skill_mode:
+        layer = metadata.get("layer")
+        if not isinstance(layer, str) or layer not in ALLOWED_CAPABILITY_LAYERS:
+            errors.append(
+                f"{path}: metadata.layer must be one of {sorted(ALLOWED_CAPABILITY_LAYERS)}"
+            )
 
     if skill_mode:
         use_cases = metadata.get("use_cases")
@@ -542,6 +555,23 @@ def validate_capability_structure(
     )
 
     enforce_safety_for_side_effects(data, path, errors)
+
+    props = data.get("properties")
+    if not isinstance(props, dict):
+        errors.append(f"{path}: properties must be a mapping")
+        return
+
+    state_access = props.get("state_access")
+    if not isinstance(state_access, str) or state_access not in ALLOWED_STATE_ACCESS:
+        errors.append(
+            f"{path}: properties.state_access must be one of {sorted(ALLOWED_STATE_ACCESS)}"
+        )
+
+    audit_level = props.get("audit_level")
+    if not isinstance(audit_level, str) or audit_level not in ALLOWED_AUDIT_LEVEL:
+        errors.append(
+            f"{path}: properties.audit_level must be one of {sorted(ALLOWED_AUDIT_LEVEL)}"
+        )
 
 
 def validate_capability_semantics(

@@ -1,7 +1,6 @@
 id: policy.risk.score
 version: 1.0.0
 description: Compute a numeric risk score for an action across policy dimensions.
-
 inputs:
   action:
     type: object
@@ -11,7 +10,6 @@ inputs:
     type: array
     required: false
     description: Risk dimensions to evaluate (e.g. data_exposure, reversibility, blast_radius).
-
 outputs:
   risk_score:
     type: number
@@ -25,25 +23,31 @@ outputs:
     type: boolean
     required: true
     description: Whether the action is within acceptable risk thresholds.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
-  tags: [policy, risk, scoring, governance]
-
-
+  tags:
+  - policy
+  - risk
+  - scoring
+  - governance
   examples:
-    - summary: "Compute a numeric risk score for an action"
-      inputs:
-        action: {type: "data_export", involves_pii: true}
-      outputs:
-        risk_score: 0.7
-        breakdown: {pii: 0.3, external: 0.2}
-
+  - summary: Compute a numeric risk score for an action
+    inputs:
+      action:
+        type: data_export
+        involves_pii: true
+    outputs:
+      risk_score: 0.7
+      breakdown:
+        pii: 0.3
+        external: 0.2
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

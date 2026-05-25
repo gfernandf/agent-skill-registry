@@ -1,7 +1,6 @@
 id: integration.record.compare
 version: 1.0.0
 description: Compare records from two systems and report differences.
-
 inputs:
   record_a:
     type: object
@@ -15,7 +14,6 @@ inputs:
     type: array
     required: false
     description: Fields to use as identity keys. Defaults to all shared fields.
-
 outputs:
   match:
     type: boolean
@@ -28,28 +26,38 @@ outputs:
   similarity:
     type: number
     required: true
-    description: Similarity ratio (0.0–1.0).
-
+    description: "Similarity ratio (0.0\u20131.0)."
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, record, comparison, reconciliation]
-
-
+  tags:
+  - integration
+  - record
+  - comparison
+  - reconciliation
   examples:
-    - summary: "Compare records across systems"
-      inputs:
-        record_a: {id: "1", name: "Alice"}
-        record_b: {id: "1", name: "Alicia"}
-        key_fields: ["id"]
-      outputs:
-        match: true
-        discrepancies: [{field: "name", a: "Alice", b: "Alicia"}]
-
+  - summary: Compare records across systems
+    inputs:
+      record_a:
+        id: '1'
+        name: Alice
+      record_b:
+        id: '1'
+        name: Alicia
+      key_fields:
+      - id
+    outputs:
+      match: true
+      discrepancies:
+      - field: name
+        a: Alice
+        b: Alicia
+  layer: operational
 cognitive_hints:
   role: analyze
   produces:

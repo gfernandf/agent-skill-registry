@@ -1,7 +1,7 @@
 id: identity.risk.score
 version: 1.0.0
-description: Score the identity risk of a principal based on behaviour, role scope, and anomaly indicators.
-
+description: Score the identity risk of a principal based on behaviour, role scope,
+  and anomaly indicators.
 inputs:
   principal_id:
     type: string
@@ -11,7 +11,6 @@ inputs:
     type: object
     required: false
     description: Behavioural signals such as login_failures, unusual_hours, geo_anomaly.
-
 outputs:
   risk_score:
     type: number
@@ -25,27 +24,31 @@ outputs:
     type: boolean
     required: true
     description: Whether the risk is below the acceptable threshold.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
-  tags: [identity, risk, scoring, anomaly]
-
-
+  tags:
+  - identity
+  - risk
+  - scoring
+  - anomaly
   examples:
-    - summary: "Score risk for an identity action"
-      inputs:
-        principal_id: "alice"
-        signals: {login_failures: 5}
-      outputs:
-        risk_score: 0.3
-        factors: ["high_login_failures"]
-        safe: true
-
+  - summary: Score risk for an identity action
+    inputs:
+      principal_id: alice
+      signals:
+        login_failures: 5
+    outputs:
+      risk_score: 0.3
+      factors:
+      - high_login_failures
+      safe: true
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

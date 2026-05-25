@@ -76,7 +76,24 @@
         "Chain research, analysis, and synthesis skills in DAG order with real data.",
         "Return structured execution results for downstream reporting."
       ],
-      "examples": [],
+      "examples": [
+        {
+          "description": "Execute a compiled plan and return final output plus step-level status",
+          "input": {
+            "compiled_plan_json": "{\"dag\": {\"nodes\": []}, \"execution_order\": [], \"state_bindings\": {}, \"registry_version\": \"v1\"}",
+            "initial_state": {}
+          },
+          "output": {
+            "execution_result": {
+              "status": "success",
+              "step_results": [],
+              "final_state": {},
+              "final_output": null
+            },
+            "failed_steps": []
+          }
+        }
+      ],
       "classification": {
         "role": "procedure",
         "invocation": "direct",
@@ -2052,7 +2069,11 @@
           }
         }
       ],
-      "classification": null
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
     }
   },
   {

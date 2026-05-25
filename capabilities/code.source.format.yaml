@@ -19,22 +19,22 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [code, developer-tools, formatting]
+  tags:
+  - code
+  - developer-tools
+  - formatting
   examples:
-    - summary: "Format Python code"
-      inputs:
-        code: "def foo( x,y ):
-  return x+y"
-        language: "python"
-      outputs:
-        code: "def foo(x, y):
-    return x + y
-"
-
+  - summary: Format Python code
+    inputs:
+      code: 'def foo( x,y ): return x+y'
+      language: python
+    outputs:
+      code: 'def foo(x, y): return x + y '
+  layer: operational
 cognitive_hints:
   role: analyze
   produces:

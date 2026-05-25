@@ -19,17 +19,18 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
   tags:
-    - security
-    - pii
-    - detection
+  - security
+  - pii
+  - detection
   examples:
-    - text: "Email me at john.doe@example.com or call +1 650 555 1234"
-      expected_contains_pii: true
-
+  - text: Email me at john.doe@example.com or call +1 650 555 1234
+    expected_contains_pii: true
+  layer: governance
 cognitive_hints:
   role: act
   produces:

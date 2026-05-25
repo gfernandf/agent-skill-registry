@@ -19,19 +19,22 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [text, nlp, detection]
+  tags:
+  - text
+  - nlp
+  - detection
   examples:
-    - summary: "Detect the language of a text"
-      inputs:
-        text: "Bonjour le monde"
-      outputs:
-        language: "fr"
-        confidence: 0.98
-
+  - summary: Detect the language of a text
+    inputs:
+      text: Bonjour le monde
+    outputs:
+      language: fr
+      confidence: 0.98
+  layer: cognitive
 cognitive_hints:
   role: act
   produces:

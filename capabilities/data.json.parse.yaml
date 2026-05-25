@@ -15,18 +15,23 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [data, processing, parsing]
+  tags:
+  - data
+  - processing
+  - parsing
   examples:
-    - summary: "Parse a JSON string"
-      inputs:
-        text: "{\"name\": \"John\", \"age\": 30}"
-      outputs:
-        data: {name: "John", age: 30}
-
+  - summary: Parse a JSON string
+    inputs:
+      text: '{"name": "John", "age": 30}'
+    outputs:
+      data:
+        name: John
+        age: 30
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

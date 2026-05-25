@@ -1,49 +1,49 @@
 id: fs.file.read
 version: 1.0.0
 description: Read content from a filesystem path.
-
 inputs:
   path:
     type: string
     required: true
-
   mode:
     type: string
     required: false
-    description: "text | binary (implementation-defined)."
-
+    description: text | binary (implementation-defined).
 outputs:
   content:
     type: string
     description: Content read as text (if mode is text or default).
-
   bytes:
     type: object
     description: Raw bytes (if mode is binary).
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 cognitive_hints:
   role: perceive
   consumes:
-    - Context
+  - Context
   produces:
     content:
       type: Artifact
     bytes:
       type: Artifact
-
 metadata:
   status: stable
-  tags: [filesystem, io, read, input]
+  tags:
+  - filesystem
+  - io
+  - read
+  - input
   examples:
-    - summary: "Read a text file"
-      inputs:
-        path: "data/report.txt"
-        mode: "text"
-      outputs:
-        content: "Report contents here..."
-        size: 1234
+  - summary: Read a text file
+    inputs:
+      path: data/report.txt
+      mode: text
+    outputs:
+      content: Report contents here...
+      size: 1234
+  layer: operational

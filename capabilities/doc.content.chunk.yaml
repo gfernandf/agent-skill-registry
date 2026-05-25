@@ -23,19 +23,24 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [document, processing, chunking]
+  tags:
+  - document
+  - processing
+  - chunking
   examples:
-    - summary: "Split a document into chunks"
-      inputs:
-        text: "A long document..."
-        chunk_size: 500
-      outputs:
-        chunks: ["A long doc...", "ument continued..."]
-
+  - summary: Split a document into chunks
+    inputs:
+      text: A long document...
+      chunk_size: 500
+    outputs:
+      chunks:
+      - A long doc...
+      - ument continued...
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

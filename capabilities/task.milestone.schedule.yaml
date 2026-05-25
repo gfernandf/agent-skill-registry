@@ -1,7 +1,6 @@
 id: task.milestone.schedule
 version: 1.0.0
 description: Schedule a project milestone with a target date and deliverables.
-
 inputs:
   milestone_name:
     type: string
@@ -15,7 +14,6 @@ inputs:
     type: array
     required: false
     description: List of deliverable descriptions.
-
 outputs:
   milestone_id:
     type: string
@@ -25,32 +23,34 @@ outputs:
     type: boolean
     required: true
     description: Whether the milestone was scheduled.
-
 properties:
   deterministic: false
   side_effects: true
   idempotent: true
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: standard
   requires_confirmation: false
   description: Schedules a milestone in the in-memory store.
-
 metadata:
   status: stable
-  tags: [task, milestone, scheduling, project]
-
-
+  tags:
+  - task
+  - milestone
+  - scheduling
+  - project
   examples:
-    - summary: "Schedule a project milestone"
-      inputs:
-        milestone_name: "Beta Release"
-        target_date: "2026-03-15"
-        deliverables: ["feature-x"]
-      outputs:
-        milestone_id: "MS-1"
-        scheduled: true
-
+  - summary: Schedule a project milestone
+    inputs:
+      milestone_name: Beta Release
+      target_date: '2026-03-15'
+      deliverables:
+      - feature-x
+    outputs:
+      milestone_id: MS-1
+      scheduled: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:

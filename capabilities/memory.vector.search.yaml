@@ -1,7 +1,6 @@
 id: memory.vector.search
 version: 1.0.0
 description: Search memory records by vector similarity against a query embedding.
-
 inputs:
   query:
     type: string
@@ -15,7 +14,6 @@ inputs:
     type: number
     required: false
     description: Maximum number of results to return. Defaults to 5.
-
 outputs:
   results:
     type: array
@@ -25,25 +23,30 @@ outputs:
     type: number
     required: true
     description: Total number of records searched.
-
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [memory, vector, search, similarity]
-
-
+  tags:
+  - memory
+  - vector
+  - search
+  - similarity
   examples:
-    - summary: "Search memory by semantic similarity"
-      inputs:
-        query: "deployment strategy"
-        top_k: 3
-      outputs:
-        results: [{id: "r1", score: 0.89, content: "Use blue-green deployment."}]
-
+  - summary: Search memory by semantic similarity
+    inputs:
+      query: deployment strategy
+      top_k: 3
+    outputs:
+      results:
+      - id: r1
+        score: 0.89
+        content: Use blue-green deployment.
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

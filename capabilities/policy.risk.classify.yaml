@@ -1,7 +1,6 @@
 id: policy.risk.classify
 version: 1.0.0
 description: Classify the risk level of an action or payload according to policy categories.
-
 inputs:
   action:
     type: object
@@ -11,7 +10,6 @@ inputs:
     type: array
     required: false
     description: Risk categories to evaluate. Defaults to [low, medium, high, critical].
-
 outputs:
   risk_level:
     type: string
@@ -25,25 +23,31 @@ outputs:
     type: string
     required: true
     description: Explanation of the classification.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: strict
 metadata:
   status: stable
-  tags: [policy, risk, classification, governance]
-
-
+  tags:
+  - policy
+  - risk
+  - classification
+  - governance
   examples:
-    - summary: "Classify risk level of an action"
-      inputs:
-        action: {type: "deploy", destructive: false, external: true}
-      outputs:
-        risk_level: "medium"
-        factors: ["external"]
-
+  - summary: Classify risk level of an action
+    inputs:
+      action:
+        type: deploy
+        destructive: false
+        external: true
+    outputs:
+      risk_level: medium
+      factors:
+      - external
+  layer: governance
 cognitive_hints:
   role: analyze
   produces:

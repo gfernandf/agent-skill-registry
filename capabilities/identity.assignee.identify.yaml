@@ -1,7 +1,7 @@
 id: identity.assignee.identify
 version: 1.0.0
-description: Identify the most appropriate assignee for a task based on skills, availability, and workload.
-
+description: Identify the most appropriate assignee for a task based on skills, availability,
+  and workload.
 inputs:
   task:
     type: object
@@ -11,7 +11,6 @@ inputs:
     type: array
     required: false
     description: Optional candidate list. If omitted, searches all known principals.
-
 outputs:
   assignee:
     type: object
@@ -25,24 +24,31 @@ outputs:
     type: string
     required: true
     description: Explanation of the selection.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
-  tags: [identity, assignment, task, matching]
-
-
+  tags:
+  - identity
+  - assignment
+  - task
+  - matching
   examples:
-    - summary: "Find the best assignee for a task"
-      inputs:
-        task: {type: "code_review", required_skills: ["python"]}
-      outputs:
-        assignee: {id: "alice", match_score: 0.7}
-
+  - summary: Find the best assignee for a task
+    inputs:
+      task:
+        type: code_review
+        required_skills:
+        - python
+    outputs:
+      assignee:
+        id: alice
+        match_score: 0.7
+  layer: governance
 cognitive_hints:
   role: act
   produces:

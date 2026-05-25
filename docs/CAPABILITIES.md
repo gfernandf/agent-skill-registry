@@ -128,6 +128,8 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
+  state_access: none
+  audit_level: standard
 ```
 
 ---
@@ -214,11 +216,70 @@ outputs:
 
 ---
 
+# Metadata And Classification
+
+## metadata (Required)
+
+Capabilities must include a `metadata` block for discovery and governance.
+
+Required fields in `metadata`:
+
+- `layer` in `{cognitive, orchestration, operational, governance}`
+
+Additional fields remain as before (`tags`, `category`, `status`, `examples`).
+
+### Layer values
+
+- `cognitive`: inference, evaluation, synthesis, decision semantics
+- `orchestration`: planning, routing, flow control, coordination
+- `operational`: tool execution, IO, transport, transformation
+- `governance`: policy, security, identity, permission control
+
+### Tie-break policy (when ambiguous)
+
+1. Governance wins over all other layers.
+2. Explicit orchestration families (`agent.plan.*`, `agent.flow.*`, etc.) default to orchestration.
+3. Cognitive role hints (`analyze`, `evaluate`, `decide`, `synthesize`, `reflect`, `perceive`) can override orchestration defaults.
+4. Side-effecting capabilities default to operational unless governance/orchestration rules apply.
+5. If still ambiguous, prefer operational as conservative fallback.
+
+---
+
 # Optional Fields
 
-## metadata (Optional)
+## properties.state_access (Required)
 
-Capabilities may optionally include a `metadata` block used for discovery, categorization, and documentation.
+Declares whether the capability accesses mutable execution or external state.
+
+Allowed values:
+
+- `none` - does not read or write mutable state
+- `read` - reads mutable state only
+- `write` - writes mutable state only
+- `read_write` - both reads and writes mutable state
+
+This field is used for capability profiling and governance checks.
+
+---
+
+## properties.audit_level (Required)
+
+Declares the minimum audit strictness required when this capability is executed.
+
+Allowed values:
+
+- `basic` - minimal execution logging
+- `standard` - structured execution trace expected
+- `strict` - full traceability and high-assurance audit controls
+
+Audit level does not change functional output semantics. It defines governance
+and observability expectations for execution.
+
+---
+
+## metadata (Additional optional members)
+
+Capabilities may include additional metadata members used for discovery, categorization, and documentation.
 
 Example:
 

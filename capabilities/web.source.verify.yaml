@@ -26,19 +26,24 @@ cognitive_hints:
       type: Evidence
     reason:
       type: Evidence
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [web, trust, verification, security]
+  tags:
+  - web
+  - trust
+  - verification
+  - security
   examples:
-    - description: Verify a news source
-      inputs:
-        url: "https://example.com/news"
-      outputs:
-        trusted: true
-        reason: "Public HTTPS source with valid domain."
+  - description: Verify a news source
+    inputs:
+      url: https://example.com/news
+    outputs:
+      trusted: true
+      reason: Public HTTPS source with valid domain.
+  layer: operational

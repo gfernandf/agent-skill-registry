@@ -15,18 +15,23 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [video, media, extraction]
+  tags:
+  - video
+  - media
+  - extraction
   examples:
-    - summary: "Extract frames from a video"
-      inputs:
-        video: "(binary video data)"
-      outputs:
-        frames: ["(frame 1 data)", "(frame 2 data)"]
-
+  - summary: Extract frames from a video
+    inputs:
+      video: (binary video data)
+    outputs:
+      frames:
+      - (frame 1 data)
+      - (frame 2 data)
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

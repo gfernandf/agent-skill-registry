@@ -23,34 +23,35 @@ outputs:
     type: string
     required: false
     description: Standard error.
-
 safety:
   trust_level: privileged
   data_classification: internal
   reversible: false
   requires_confirmation: true
   scope_constraints:
-    - sandboxed_execution
-
+  - sandboxed_execution
 properties:
   deterministic: false
   side_effects: true
   idempotent: true
-
-
+  state_access: write
+  audit_level: strict
 metadata:
   status: stable
-  tags: [code, developer-tools, execution, sandbox]
+  tags:
+  - code
+  - developer-tools
+  - execution
+  - sandbox
   examples:
-    - summary: "Execute a Python expression"
-      inputs:
-        code: "print(2 + 3)"
-        language: "python"
-      outputs:
-        stdout: "5
-"
-        exit_code: 0
-
+  - summary: Execute a Python expression
+    inputs:
+      code: print(2 + 3)
+      language: python
+    outputs:
+      stdout: '5 '
+      exit_code: 0
+  layer: operational
 cognitive_hints:
   role: act
   produces:

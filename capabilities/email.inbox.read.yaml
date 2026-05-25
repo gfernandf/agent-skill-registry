@@ -15,18 +15,24 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [email, messaging, read, input]
+  tags:
+  - email
+  - messaging
+  - read
+  - input
   examples:
-    - summary: "Read messages from an inbox"
-      inputs:
-        mailbox: "inbox"
-      outputs:
-        messages: [{from: "alice@example.com", subject: "Meeting notes"}]
-
+  - summary: Read messages from an inbox
+    inputs:
+      mailbox: inbox
+    outputs:
+      messages:
+      - from: alice@example.com
+        subject: Meeting notes
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

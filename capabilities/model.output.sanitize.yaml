@@ -1,49 +1,53 @@
 id: model.output.sanitize
 version: 1.0.0
-description: Sanitize a model-generated output by removing or masking harmful content, PII, prompt leakage, and disallowed patterns.
-
+description: Sanitize a model-generated output by removing or masking harmful content,
+  PII, prompt leakage, and disallowed patterns.
 inputs:
   output:
     type: object
     required: true
     description: The model-generated output to sanitize.
-
   policy:
     type: object
     required: false
-    description: "Sanitization policy with toggles such as remove_pii, remove_harmful, remove_prompt_leakage. Defaults to all enabled."
-
+    description: Sanitization policy with toggles such as remove_pii, remove_harmful,
+      remove_prompt_leakage. Defaults to all enabled.
 outputs:
   sanitized_output:
     type: object
     required: true
     description: The sanitized output with disallowed content removed or masked.
-
   removals:
     type: array
     required: false
     description: List of removal actions taken, each with field, pattern, and action.
-
   clean:
     type: boolean
     required: true
     description: Whether the output required no sanitization (true = already clean).
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: standard
 metadata:
   status: stable
-  tags: [model, safety, sanitize, pii, content-filter]
+  tags:
+  - model
+  - safety
+  - sanitize
+  - pii
+  - content-filter
   examples:
-    - summary: Remove PII from model output
-      inputs:
-        output: {"text": "Contact john@example.com for details."}
-        policy: {"remove_pii": true, "remove_harmful": true}
-
-
+  - summary: Remove PII from model output
+    inputs:
+      output:
+        text: Contact john@example.com for details.
+      policy:
+        remove_pii: true
+        remove_harmful: true
+  layer: cognitive
 cognitive_hints:
   role: act
   produces:

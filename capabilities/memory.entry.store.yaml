@@ -1,6 +1,9 @@
 id: memory.entry.store
 version: 1.0.0
-description: Store content in a memory system.
+description: 'Legacy memory write alias. Prefer memory.record.store for canonical
+  structured memory writes.
+
+  '
 inputs:
   key:
     type: string
@@ -15,29 +18,33 @@ outputs:
     type: boolean
     required: true
     description: Whether storage succeeded.
-
 safety:
   trust_level: standard
   data_classification: internal
   reversible: true
-
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
-
+  state_access: write
+  audit_level: strict
 metadata:
-  status: stable
-  tags: [memory, storage, persistence]
+  status: deprecated
+  deprecation_date: '2026-05-25'
+  sunset_date: '2026-09-01'
+  tags:
+  - memory
+  - storage
+  - persistence
+  - legacy
   examples:
-    - summary: "Store a key-value memory entry"
-      inputs:
-        key: "user_preference"
-        value: "dark_mode"
-      outputs:
-        stored: true
-
+  - summary: Store a key-value memory entry
+    inputs:
+      key: user_preference
+      value: dark_mode
+    outputs:
+      stored: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:
@@ -45,3 +52,4 @@ cognitive_hints:
       type: Entity
   consumes:
   - Entity
+replacement: memory.record.store

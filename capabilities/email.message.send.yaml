@@ -19,41 +19,42 @@ outputs:
     type: boolean
     required: true
     description: Whether sending succeeded.
-
 cognitive_hints:
   role: act
   consumes:
-    - Message
+  - Message
   produces:
     sent:
       type: Artifact
-
 safety:
   trust_level: elevated
   data_classification: pii
   reversible: false
   requires_confirmation: true
   allowed_targets:
-    - internal_only
+  - internal_only
   mandatory_pre_gates:
-    - capability: security.pii.detect
-      on_fail: block
-
+  - capability: security.pii.detect
+    on_fail: block
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
-
+  state_access: write
+  audit_level: strict
 metadata:
   status: stable
-  tags: [email, messaging, sending]
+  tags:
+  - email
+  - messaging
+  - sending
   examples:
-    - summary: "Send an email message"
-      inputs:
-        to: "bob@example.com"
-        subject: "Follow-up"
-        body: "Please review the proposal."
-      outputs:
-        sent: true
-        message_id: "msg-001"
+  - summary: Send an email message
+    inputs:
+      to: bob@example.com
+      subject: Follow-up
+      body: Please review the proposal.
+    outputs:
+      sent: true
+      message_id: msg-001
+  layer: operational

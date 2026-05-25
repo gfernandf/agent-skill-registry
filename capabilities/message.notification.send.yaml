@@ -15,33 +15,34 @@ outputs:
     type: boolean
     required: true
     description: Whether sending succeeded.
-
 safety:
   trust_level: elevated
   data_classification: internal
   reversible: false
   requires_confirmation: true
   allowed_targets:
-    - internal_only
-
+  - internal_only
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
-
+  state_access: write
+  audit_level: strict
 metadata:
   status: stable
-  tags: [messaging, notification, sending]
+  tags:
+  - messaging
+  - notification
+  - sending
   examples:
-    - summary: "Send a notification message"
-      inputs:
-        message: "Build succeeded"
-        recipient: "ops-channel"
-      outputs:
-        sent: true
-        message_id: "notif-001"
-
+  - summary: Send a notification message
+    inputs:
+      message: Build succeeded
+      recipient: ops-channel
+    outputs:
+      sent: true
+      message_id: notif-001
+  layer: operational
 cognitive_hints:
   role: act
   produces:

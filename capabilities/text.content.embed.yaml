@@ -15,18 +15,25 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: standard
 metadata:
   status: stable
-  tags: [text, nlp, embedding, vector]
+  tags:
+  - text
+  - nlp
+  - embedding
+  - vector
   examples:
-    - summary: "Generate a vector embedding for text"
-      inputs:
-        text: "This is a test sentence."
-      outputs:
-        vector: [0.01, -0.03, 0.12]
-
+  - summary: Generate a vector embedding for text
+    inputs:
+      text: This is a test sentence.
+    outputs:
+      vector:
+      - 0.01
+      - -0.03
+      - 0.12
+  layer: cognitive
 cognitive_hints:
   role: act
   produces:

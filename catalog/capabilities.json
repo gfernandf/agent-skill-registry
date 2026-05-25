@@ -56,7 +56,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -141,7 +143,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -221,7 +225,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -292,7 +298,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -398,7 +406,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -508,7 +518,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -627,7 +639,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -718,7 +732,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -789,7 +805,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -902,7 +920,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -973,7 +993,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -1053,7 +1075,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1135,7 +1159,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1208,7 +1234,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1292,7 +1320,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1390,7 +1420,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -1474,7 +1506,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -1556,7 +1590,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1636,7 +1672,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1732,7 +1770,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1820,7 +1860,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -1916,7 +1958,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -2003,7 +2047,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -2069,7 +2115,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -2147,7 +2195,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -2245,7 +2295,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -2347,7 +2399,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -2450,7 +2504,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -2576,7 +2632,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -2669,7 +2727,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -2748,7 +2808,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -2805,7 +2867,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -2873,7 +2937,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -2947,7 +3013,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3040,7 +3108,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -3105,7 +3175,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -3198,7 +3270,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3294,7 +3368,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3353,7 +3429,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -3436,7 +3514,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3548,7 +3628,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3654,7 +3736,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3755,7 +3839,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -3829,7 +3915,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -3960,7 +4048,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -4053,7 +4143,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -4151,7 +4243,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -4214,7 +4308,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -4283,7 +4379,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -4381,7 +4479,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -4494,7 +4594,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -4597,7 +4699,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -4675,7 +4779,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -4761,7 +4867,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -4824,7 +4932,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -4901,7 +5011,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -4992,7 +5104,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -5080,7 +5194,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -5160,7 +5276,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -5228,7 +5346,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -5302,7 +5422,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -5379,7 +5501,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -5464,7 +5588,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -5541,7 +5667,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -5614,7 +5742,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -5686,7 +5816,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -5706,7 +5838,7 @@
   {
     "id": "image.caption.generate",
     "version": "1.0.0",
-    "description": "Generate a caption for an image.",
+    "description": "Generate a natural-language caption from an existing image input. Does not generate new images; for prompt-to-image generation use image.content.generate.",
     "file": "capabilities/image.caption.generate.yaml",
     "inputs": {
       "image": {
@@ -5745,7 +5877,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -5817,7 +5951,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -5894,7 +6030,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -5914,7 +6052,7 @@
   {
     "id": "image.content.generate",
     "version": "1.0.0",
-    "description": "Generate an image from a textual description or prompt. Supports style directives and size configuration. For image classification use image.content.classify; for extracting text from images use image.content.extract.\n",
+    "description": "Generate an image from a textual description or prompt. Supports style directives and size configuration. For image captioning from existing images use image.caption.generate; for image classification use image.content.classify; for extracting text from images use image.content.extract.\n",
     "file": "capabilities/image.content.generate.yaml",
     "inputs": {
       "prompt": {
@@ -5972,7 +6110,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -6038,7 +6178,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -6113,7 +6255,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -6188,7 +6332,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6271,7 +6417,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6355,7 +6503,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6434,7 +6584,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -6531,7 +6683,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -6607,7 +6761,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6677,7 +6833,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6783,7 +6941,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -6862,7 +7022,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -6941,7 +7103,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -7011,7 +7175,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -7031,7 +7197,7 @@
   {
     "id": "memory.entry.store",
     "version": "1.0.0",
-    "description": "Store content in a memory system.",
+    "description": "Legacy memory write alias. Prefer memory.record.store for canonical structured memory writes.\n",
     "file": "capabilities/memory.entry.store.yaml",
     "inputs": {
       "key": {
@@ -7056,10 +7222,11 @@
       "tags": [
         "memory",
         "storage",
-        "persistence"
+        "persistence",
+        "legacy"
       ],
       "category": null,
-      "status": "stable",
+      "status": "deprecated",
       "examples": [
         {
           "summary": "Store a key-value memory entry",
@@ -7076,8 +7243,11 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
+    "replacement": "memory.record.store",
     "cognitive_hints": {
       "role": "act",
       "produces": {
@@ -7098,7 +7268,7 @@
   {
     "id": "memory.record.store",
     "version": "1.0.0",
-    "description": "Store a structured record in memory with namespace isolation and optional TTL.",
+    "description": "Store a structured record in memory with namespace isolation and optional TTL. Canonical capability for memory write operations.\n",
     "file": "capabilities/memory.record.store.yaml",
     "inputs": {
       "namespace": {
@@ -7133,7 +7303,8 @@
       "tags": [
         "memory",
         "storage",
-        "record"
+        "record",
+        "canonical"
       ],
       "category": null,
       "status": "stable",
@@ -7157,7 +7328,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -7244,7 +7417,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -7343,7 +7518,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -7407,7 +7584,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -7494,7 +7673,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -7570,7 +7751,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -7656,7 +7839,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -7765,7 +7950,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -7847,7 +8034,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -7940,7 +8129,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -8019,7 +8210,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -8115,7 +8308,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -8213,7 +8408,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -8305,7 +8502,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -8384,7 +8583,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -8478,7 +8679,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -8640,7 +8843,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "reflect",
@@ -8748,7 +8953,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -8827,7 +9034,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -8887,7 +9096,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "requires": [
       "fs.file.read"
@@ -8975,7 +9186,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -9056,7 +9269,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -9146,7 +9361,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -9232,7 +9449,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -9318,7 +9537,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -9395,7 +9616,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -9472,7 +9695,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -9545,7 +9770,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -9612,7 +9839,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "evaluate",
@@ -9671,7 +9900,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -9730,7 +9961,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -9789,7 +10022,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -9893,7 +10128,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -9973,7 +10210,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10066,7 +10305,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10162,7 +10403,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -10265,7 +10508,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10341,7 +10586,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -10423,7 +10670,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "decide",
@@ -10497,7 +10746,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10572,7 +10823,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10597,7 +10850,7 @@
   {
     "id": "task.case.create",
     "version": "1.0.0",
-    "description": "Create a new case or ticket.",
+    "description": "Create a generic case or service ticket for operational tracking. For incident response records with severity and affected system context, use task.incident.create.",
     "file": "capabilities/task.case.create.yaml",
     "inputs": {
       "title": {
@@ -10653,7 +10906,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -10727,7 +10982,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -10802,7 +11059,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -10877,7 +11136,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -10944,7 +11205,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11016,7 +11279,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11125,7 +11390,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11146,7 +11413,7 @@
   {
     "id": "task.incident.create",
     "version": "1.0.0",
-    "description": "Create a new incident ticket with severity and affected system information.",
+    "description": "Create an incident ticket with severity and affected system context for outage or service-disruption workflows. For generic non-incident ticketing, use task.case.create.",
     "file": "capabilities/task.incident.create.yaml",
     "inputs": {
       "title": {
@@ -11208,7 +11475,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11293,7 +11562,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11380,7 +11651,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -11474,7 +11747,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -11560,7 +11835,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": true,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11646,7 +11923,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -11745,7 +12024,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -11809,7 +12090,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -11826,7 +12109,7 @@
   {
     "id": "text.content.extract",
     "version": "1.0.0",
-    "description": "Extract relevant text content from an input text block.",
+    "description": "Extract relevant text spans or cleaned plain content from an input text block. Not intended for named entities, keyword lists, or question answering.",
     "file": "capabilities/text.content.extract.yaml",
     "inputs": {
       "text": {
@@ -11865,7 +12148,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -11931,7 +12216,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -12006,7 +12293,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -12066,7 +12355,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -12127,7 +12418,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -12190,7 +12483,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "synthesize",
@@ -12257,7 +12552,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -12274,7 +12571,7 @@
   {
     "id": "text.entity.extract",
     "version": "1.0.0",
-    "description": "Extract named entities from a text block.",
+    "description": "Extract named entities (for example people, organizations, locations) from a text block. Not intended for generic keyword extraction or context-grounded question answering.",
     "file": "capabilities/text.entity.extract.yaml",
     "inputs": {
       "text": {
@@ -12322,7 +12619,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -12339,7 +12638,7 @@
   {
     "id": "text.keyword.extract",
     "version": "1.0.0",
-    "description": "Extract keywords from a text block.",
+    "description": "Extract salient keywords or keyphrases from a text block. Not intended for typed entity recognition or context-grounded question answering.",
     "file": "capabilities/text.keyword.extract.yaml",
     "inputs": {
       "text": {
@@ -12382,7 +12681,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -12444,7 +12745,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "act",
@@ -12464,7 +12767,7 @@
   {
     "id": "text.response.extract",
     "version": "1.0.0",
-    "description": "Extract an answer to a question from a context passage.  The response must be grounded in the provided context — the capability should not fabricate information beyond what the context contains.  For open-ended text production use text.content.generate; for condensing a passage use text.content.summarize.\n",
+    "description": "Extract an answer to a question from a context passage. The response must be grounded in the provided context and should not fabricate information beyond what the context contains. For open-ended text production use text.content.generate; for condensing a passage use text.content.summarize; for entity and keyword extraction use text.entity.extract and text.keyword.extract.\n",
     "file": "capabilities/text.response.extract.yaml",
     "inputs": {
       "question": {
@@ -12507,7 +12810,7 @@
             "context": "Python is a high-level programming language."
           },
           "outputs": {
-            "text": "A high-level programming language."
+            "answer": "A high-level programming language."
           }
         }
       ]
@@ -12515,7 +12818,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -12609,7 +12914,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "standard"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -12671,7 +12978,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -12728,7 +13037,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -12782,7 +13093,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -12893,7 +13206,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": true,
-      "idempotent": false
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
     },
     "cognitive_hints": {
       "role": "act",
@@ -12980,7 +13295,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "analyze",
@@ -13047,7 +13364,9 @@
     "properties": {
       "deterministic": false,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "perceive",
@@ -13116,7 +13435,9 @@
     "properties": {
       "deterministic": true,
       "side_effects": false,
-      "idempotent": true
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "basic"
     },
     "cognitive_hints": {
       "role": "evaluate",

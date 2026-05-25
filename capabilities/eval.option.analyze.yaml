@@ -1,72 +1,73 @@
 id: eval.option.analyze
 version: 1.0.0
-description: >
-  Perform qualitative analysis of each option in a decision set. For every
-  option, identify pros, cons, risks, and underlying assumptions. Does NOT
-  assign numeric scores — that is the responsibility of eval.option.score.
-  This capability produces the structured qualitative evidence that scoring
-  and justification steps consume downstream.
-
+description: "Perform qualitative analysis of each option in a decision set. For every\
+  \ option, identify pros, cons, risks, and underlying assumptions. Does NOT assign\
+  \ numeric scores \u2014 that is the responsibility of eval.option.score. This capability\
+  \ produces the structured qualitative evidence that scoring and justification steps\
+  \ consume downstream.\n"
 inputs:
   options:
     type: array
     required: true
-    description: >
-      List of options to analyze. Each option should have at minimum: id, label,
-      description. May include key_attributes from agent.option.generate.
+    description: 'List of options to analyze. Each option should have at minimum:
+      id, label, description. May include key_attributes from agent.option.generate.
 
+      '
   context:
     type: string
     required: false
-    description: >
-      Background information, prior analysis, or domain knowledge relevant to
-      the analysis. Grounds the pros/cons in evidence rather than speculation.
+    description: 'Background information, prior analysis, or domain knowledge relevant
+      to the analysis. Grounds the pros/cons in evidence rather than speculation.
 
+      '
   goal:
     type: string
     required: true
-    description: >
-      The decision goal that frames which pros, cons, and risks matter.
+    description: 'The decision goal that frames which pros, cons, and risks matter.
 
+      '
 outputs:
   analyzed_options:
     type: array
     required: true
-    description: >
-      Options enriched with qualitative analysis. Each entry includes: option_id,
-      pros (array of strings), cons (array of strings), risks (array of objects
-      with description and severity), assumptions (array of strings — premises
-      that must hold for this option to work as expected).
-
+    description: "Options enriched with qualitative analysis. Each entry includes:\
+      \ option_id, pros (array of strings), cons (array of strings), risks (array\
+      \ of objects with description and severity), assumptions (array of strings \u2014\
+      \ premises that must hold for this option to work as expected).\n"
   analysis_notes:
     type: string
     required: false
-    description: >
-      Brief note on methodology, gaps in available evidence, or caveats
+    description: 'Brief note on methodology, gaps in available evidence, or caveats
       about the analysis.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
   tags:
-    - decision-support
-    - evaluation
-    - qualitative-analysis
+  - decision-support
+  - evaluation
+  - qualitative-analysis
   examples:
-    - options:
-        - id: opt-cloud-a
-          label: "AWS"
-          description: "Migrate to AWS with managed Kubernetes"
-        - id: opt-cloud-b
-          label: "GCP"
-          description: "Migrate to GCP with serverless focus"
-      goal: "Choose a cloud provider for ML training workloads"
-      expected_fields: [pros, cons, risks, assumptions]
-
+  - options:
+    - id: opt-cloud-a
+      label: AWS
+      description: Migrate to AWS with managed Kubernetes
+    - id: opt-cloud-b
+      label: GCP
+      description: Migrate to GCP with serverless focus
+    goal: Choose a cloud provider for ML training workloads
+    expected_fields:
+    - pros
+    - cons
+    - risks
+    - assumptions
+  layer: cognitive
 cognitive_hints:
   role: analyze
   produces:

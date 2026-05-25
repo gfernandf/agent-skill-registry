@@ -1,69 +1,71 @@
 id: agent.plan.split
 version: 1.0.0
 status: experimental
-description: >
-  Expand one macro plan stage into concrete ORCA-executable steps. Each
-  step references a specific capability or skill by registry ID, specifies
-  its purpose, expected inputs and outputs, and declares inter-step
-  dependencies. Output is a flat list of typed steps ready for input
-  binding and validation.
+description: 'Expand one macro plan stage into concrete ORCA-executable steps. Each
+  step references a specific capability or skill by registry ID, specifies its purpose,
+  expected inputs and outputs, and declares inter-step dependencies. Output is a flat
+  list of typed steps ready for input binding and validation.
 
+  '
 inputs:
   macro_stage:
     type: object
     required: true
-    description: >
-      Single stage object from agent.task.plan macro_plan.stages.
+    description: 'Single stage object from agent.task.plan macro_plan.stages.
+
+      '
   candidate_skills:
     type: array
     required: false
-    description: >
-      Ranked skill candidates available for step assignment.
+    description: 'Ranked skill candidates available for step assignment.
+
+      '
   candidate_capabilities:
     type: array
     required: false
-    description: >
-      Ranked capability candidates available for step assignment.
+    description: 'Ranked capability candidates available for step assignment.
+
+      '
   current_state:
     type: object
     required: false
-    description: >
-      Current CognitiveState snapshot, used to infer which inputs are
+    description: 'Current CognitiveState snapshot, used to infer which inputs are
       already available from prior steps.
 
+      '
 outputs:
   expanded_steps:
     type: array
     required: true
-    description: >
-      Array of concrete step objects, each with: id (string),
-      type (skill|capability), ref (string), purpose (string),
-      inputs (object with placeholder paths), outputs (object),
-      depends_on (array of step ids).
+    description: 'Array of concrete step objects, each with: id (string), type (skill|capability),
+      ref (string), purpose (string), inputs (object with placeholder paths), outputs
+      (object), depends_on (array of step ids).
+
+      '
   step_count:
     type: number
     required: false
     description: Number of steps produced for this stage.
-
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: standard
 metadata:
   tags:
-    - planning
-    - plan-expansion
-    - agent-pipeline
+  - planning
+  - plan-expansion
+  - agent-pipeline
   examples:
-    - macro_stage:
-        id: "s1"
-        objective: "Search and retrieve relevant regulatory sources"
-      expected_expanded_steps:
-        - id: "s1_step1"
-          ref: "web.source.search"
-          type: "capability"
-
+  - macro_stage:
+      id: s1
+      objective: Search and retrieve relevant regulatory sources
+    expected_expanded_steps:
+    - id: s1_step1
+      ref: web.source.search
+      type: capability
+  layer: cognitive
 cognitive_hints:
   role: synthesize
   produces:
@@ -72,5 +74,5 @@ cognitive_hints:
     step_count:
       type: Score
   consumes:
-    - Plan
-    - Option
+  - Plan
+  - Option

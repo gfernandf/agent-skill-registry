@@ -1,38 +1,40 @@
 id: web.page.fetch
 version: 1.0.0
 description: Fetch content from a web URL.
-
 inputs:
   url:
     type: string
     required: true
     description: URL to retrieve.
-
 outputs:
   content:
     type: string
     required: true
     description: Retrieved web page content.
-
 cognitive_hints:
   role: perceive
   consumes:
-    - Context
+  - Context
   produces:
     content:
       type: Artifact
-
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [web, fetch, http, retrieval]
+  tags:
+  - web
+  - fetch
+  - http
+  - retrieval
   examples:
-    - description: Fetch a news article
-      inputs:
-        url: "https://example.com/article/123"
-      outputs:
-        content: "<html><body><h1>Example Article</h1>...</body></html>"
+  - description: Fetch a news article
+    inputs:
+      url: https://example.com/article/123
+    outputs:
+      content: <html><body><h1>Example Article</h1>...</body></html>
+  layer: operational

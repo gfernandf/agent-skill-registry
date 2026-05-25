@@ -19,19 +19,25 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [code, developer-tools, extraction]
+  tags:
+  - code
+  - developer-tools
+  - extraction
   examples:
-    - summary: "Extract diff between two code versions"
-      inputs:
-        code_a: "x = 5"
-        code_b: "x = 10"
-      outputs:
-        changes: [{type: "modified", before: "x = 5", after: "x = 10"}]
-
+  - summary: Extract diff between two code versions
+    inputs:
+      code_a: x = 5
+      code_b: x = 10
+    outputs:
+      changes:
+      - type: modified
+        before: x = 5
+        after: x = 10
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

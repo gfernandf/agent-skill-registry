@@ -23,21 +23,22 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
   tags:
-    - security
-    - policy-gate
-    - output-control
+  - security
+  - policy-gate
+  - output-control
   examples:
-    - output:
-        text: "Contact john@acme.com for details"
-      policy:
-        block_pii: true
-        block_secrets: false
-      expected_allowed: false
-
+  - output:
+      text: Contact john@acme.com for details
+    policy:
+      block_pii: true
+      block_secrets: false
+    expected_allowed: false
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

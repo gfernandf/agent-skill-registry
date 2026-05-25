@@ -1,7 +1,6 @@
 id: identity.role.assign
 version: 1.0.0
 description: Assign a role to a principal.
-
 inputs:
   principal_id:
     type: string
@@ -11,7 +10,6 @@ inputs:
     type: string
     required: true
     description: Identifier of the role to assign.
-
 outputs:
   assigned:
     type: boolean
@@ -21,31 +19,33 @@ outputs:
     type: array
     required: false
     description: Permissions now effective through this role.
-
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: elevated
   requires_confirmation: true
   description: Assigns a role which may grant new permissions to a principal.
-
 metadata:
   status: stable
-  tags: [identity, role, assignment]
-
-
+  tags:
+  - identity
+  - role
+  - assignment
   examples:
-    - summary: "Assign a role to a principal"
-      inputs:
-        principal_id: "alice"
-        role_id: "editor"
-      outputs:
-        assigned: true
-        effective_permissions: ["resource:read", "resource:write"]
-
+  - summary: Assign a role to a principal
+    inputs:
+      principal_id: alice
+      role_id: editor
+    outputs:
+      assigned: true
+      effective_permissions:
+      - resource:read
+      - resource:write
+  layer: governance
 cognitive_hints:
   role: act
   produces:

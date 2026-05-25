@@ -19,28 +19,37 @@ outputs:
     type: integer
     required: false
     description: Number of removed duplicates.
-
 cognitive_hints:
   role: act
   consumes:
-    - Entity
+  - Entity
   produces:
     records:
       type: Entity
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [data, processing, deduplication]
+  tags:
+  - data
+  - processing
+  - deduplication
   examples:
-    - summary: "Remove duplicate records by key"
-      inputs:
-        records: [{id: 1, name: "Alice"}, {id: 1, name: "Alice"}]
-        key_fields: ["id"]
-      outputs:
-        records: [{id: 1, name: "Alice"}]
+  - summary: Remove duplicate records by key
+    inputs:
+      records:
+      - id: 1
+        name: Alice
+      - id: 1
+        name: Alice
+      key_fields:
+      - id
+    outputs:
+      records:
+      - id: 1
+        name: Alice
+  layer: operational

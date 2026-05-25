@@ -1,61 +1,64 @@
 id: agent.catalog.rank
 version: 1.0.0
 status: experimental
-description: >
-  Rank a set of candidate registry items by relevance to the interpreted
-  goal, considering composability, trust level (stable > experimental >
-  draft), side effects, and expected utility. Returns separate ordered
-  lists of skills and capabilities for the planner to consume.
+description: 'Rank a set of candidate registry items by relevance to the interpreted
+  goal, considering composability, trust level (stable > experimental > draft), side
+  effects, and expected utility. Returns separate ordered lists of skills and capabilities
+  for the planner to consume.
 
+  '
 inputs:
   candidate_items:
     type: array
     required: true
-    description: >
-      Array of candidate registry items produced by agent.catalog.search.
+    description: 'Array of candidate registry items produced by agent.catalog.search.
+
+      '
   interpreted_goal:
     type: object
     required: true
-    description: >
-      Interpreted goal object for relevance context.
+    description: 'Interpreted goal object for relevance context.
 
+      '
 outputs:
   ranked_skills:
     type: array
     required: true
-    description: >
-      Ordered list of skill candidates, each with rank, ref, score,
-      and rationale.
+    description: 'Ordered list of skill candidates, each with rank, ref, score, and
+      rationale.
+
+      '
   ranked_capabilities:
     type: array
     required: true
-    description: >
-      Ordered list of capability candidates, each with rank, ref, score,
+    description: 'Ordered list of capability candidates, each with rank, ref, score,
       and rationale.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: standard
 metadata:
   tags:
-    - registry
-    - catalog
-    - ranking
-    - agent-pipeline
+  - registry
+  - catalog
+  - ranking
+  - agent-pipeline
   examples:
-    - candidate_items:
-        - ref: "research.generate-briefing"
-          type: "skill"
-          relevance_score: 0.92
-        - ref: "text.content.summarize"
-          type: "capability"
-          relevance_score: 0.78
-      expected_ranked_skills:
-        - rank: 1
-          ref: "research.generate-briefing"
-
+  - candidate_items:
+    - ref: research.generate-briefing
+      type: skill
+      relevance_score: 0.92
+    - ref: text.content.summarize
+      type: capability
+      relevance_score: 0.78
+    expected_ranked_skills:
+    - rank: 1
+      ref: research.generate-briefing
+  layer: cognitive
 cognitive_hints:
   role: evaluate
   produces:
@@ -64,5 +67,5 @@ cognitive_hints:
     ranked_capabilities:
       type: Option
   consumes:
-    - Option
-    - Artifact
+  - Option
+  - Artifact

@@ -1,6 +1,7 @@
 id: image.caption.generate
 version: 1.0.0
-description: Generate a caption for an image.
+description: Generate a natural-language caption from an existing image input. Does
+  not generate new images; for prompt-to-image generation use image.content.generate.
 inputs:
   image:
     type: string
@@ -15,18 +16,21 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [image, vision, generation]
+  tags:
+  - image
+  - vision
+  - generation
   examples:
-    - summary: "Generate a caption for an image"
-      inputs:
-        image: "(binary image data)"
-      outputs:
-        caption: "A sunset over the mountains."
-
+  - summary: Generate a caption for an image
+    inputs:
+      image: (binary image data)
+    outputs:
+      caption: A sunset over the mountains.
+  layer: operational
 cognitive_hints:
   role: synthesize
   produces:

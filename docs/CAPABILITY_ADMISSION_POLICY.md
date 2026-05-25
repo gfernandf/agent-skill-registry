@@ -46,6 +46,46 @@ Required gates before merge:
 3. `tools/capability_governance_guardrails.py` report reviewed
 4. compatibility impact is documented (see `docs/CAPABILITY_COMPATIBILITY_POLICY.md`)
 
+Additionally, every capability must declare execution governance properties:
+
+- `properties.state_access` in `{none, read, write, read_write}`
+- `properties.audit_level` in `{basic, standard, strict}`
+- `metadata.layer` in `{cognitive, orchestration, operational, governance}`
+
+These fields are mandatory for catalog profiling and runtime governance.
+
+### Layer tie-break policy
+
+When a capability appears semantically ambiguous, classify in this precedence:
+
+1. governance
+2. orchestration
+3. cognitive
+4. operational
+
+Additional tie-break rules:
+
+- Policy/security/identity capabilities are governance by default.
+- `agent.plan.*`, `agent.flow.*`, `agent.input.*`, `agent.request.*`, `agent.catalog.*`, `agent.task.*` are orchestration by default.
+- Cognitive role hints (`analyze`, `evaluate`, `decide`, `synthesize`, `reflect`, `perceive`) can override orchestration default to cognitive.
+- Side-effecting capabilities default to operational unless governance/orchestration rules apply.
+
+### Phase 1 baseline policy (current)
+
+To keep catalog behavior consistent during the first governance pass:
+
+- All `text.*` capabilities use `properties.audit_level: standard`
+- The following capabilities also use `properties.audit_level: standard`:
+	- `code.diff.extract`
+	- `code.source.analyze`
+	- `data.schema.validate`
+	- `doc.content.generate`
+- Pure adapter/utility capabilities remain `basic` unless side effects,
+	safety, or policy requirements justify higher audit strictness.
+
+This baseline is intentionally conservative and can be revised in subsequent
+governance phases based on empirical audit and evaluation evidence.
+
 ## Rejection Heuristics
 
 Reject when any condition holds:

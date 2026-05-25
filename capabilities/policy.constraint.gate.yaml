@@ -1,7 +1,7 @@
 id: policy.constraint.gate
 version: 1.0.0
-description: Evaluate a payload against a policy gate and return a pass/block decision with rationale.
-
+description: Evaluate a payload against a policy gate and return a pass/block decision
+  with rationale.
 inputs:
   payload:
     type: object
@@ -10,13 +10,13 @@ inputs:
   gate:
     type: object
     required: true
-    description: Gate definition with rules (required_keys, forbidden_keys, max_size) and action (block or warn).
-
+    description: Gate definition with rules (required_keys, forbidden_keys, max_size)
+      and action (block or warn).
 outputs:
   decision:
     type: string
     required: true
-    description: "Gate decision: pass or block."
+    description: 'Gate decision: pass or block.'
   violations:
     type: array
     required: true
@@ -25,25 +25,32 @@ outputs:
     type: string
     required: true
     description: Human-readable justification for the decision.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
-  tags: [policy, gate, constraint, governance]
-
-
+  tags:
+  - policy
+  - gate
+  - constraint
+  - governance
   examples:
-    - summary: "Gate an action based on policy rules"
-      inputs:
-        payload: {title: "Report"}
-        gate: {rules: {required_keys: ["title"]}, action: "block"}
-      outputs:
-        allowed: true
-
+  - summary: Gate an action based on policy rules
+    inputs:
+      payload:
+        title: Report
+      gate:
+        rules:
+          required_keys:
+          - title
+        action: block
+    outputs:
+      allowed: true
+  layer: governance
 cognitive_hints:
   role: evaluate
   produces:

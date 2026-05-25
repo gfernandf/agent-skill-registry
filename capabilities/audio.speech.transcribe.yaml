@@ -15,18 +15,22 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [audio, speech, transcription, speech-to-text]
+  tags:
+  - audio
+  - speech
+  - transcription
+  - speech-to-text
   examples:
-    - summary: "Transcribe a short speech clip"
-      inputs:
-        audio: "(binary audio data)"
-      outputs:
-        text: "Hello, welcome to the meeting."
-
+  - summary: Transcribe a short speech clip
+    inputs:
+      audio: (binary audio data)
+    outputs:
+      text: Hello, welcome to the meeting.
+  layer: operational
 cognitive_hints:
   role: perceive
   produces:

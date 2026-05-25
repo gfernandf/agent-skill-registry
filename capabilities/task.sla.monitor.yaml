@@ -1,7 +1,6 @@
 id: task.sla.monitor
 version: 1.0.0
 description: Monitor SLA compliance for a set of tasks and raise alerts for breaches.
-
 inputs:
   tasks:
     type: array
@@ -11,7 +10,6 @@ inputs:
     type: object
     required: true
     description: SLA rules mapping priority to max_resolution_hours.
-
 outputs:
   compliant:
     type: array
@@ -25,27 +23,35 @@ outputs:
     type: array
     required: true
     description: Tasks approaching SLA breach (within 80% of limit).
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [task, sla, monitoring, compliance]
-
-
+  tags:
+  - task
+  - sla
+  - monitoring
+  - compliance
   examples:
-    - summary: "Monitor SLA compliance"
-      inputs:
-        tasks: [{id: "CASE-1", priority: "high", state: "open"}]
-        sla_rules: [{priority: "high", max_resolution_hours: 4}]
-      outputs:
-        compliant: []
-        breached: ["CASE-1"]
-        at_risk: []
-
+  - summary: Monitor SLA compliance
+    inputs:
+      tasks:
+      - id: CASE-1
+        priority: high
+        state: open
+      sla_rules:
+      - priority: high
+        max_resolution_hours: 4
+    outputs:
+      compliant: []
+      breached:
+      - CASE-1
+      at_risk: []
+  layer: cognitive
 cognitive_hints:
   role: perceive
   produces:

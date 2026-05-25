@@ -1,65 +1,69 @@
 id: agent.catalog.search
 version: 1.0.0
 status: experimental
-description: >
-  Search the ORCA registry catalog for skills and capabilities relevant to
-  an interpreted goal. Applies optional domain and kind filters. Returns
-  candidate items with relevance scores and a brief rationale for each
-  match. Used to pre-select registry items for the planner rather than
-  exposing the full catalog at planning time.
+description: 'Search the ORCA registry catalog for skills and capabilities relevant
+  to an interpreted goal. Applies optional domain and kind filters. Returns candidate
+  items with relevance scores and a brief rationale for each match. Used to pre-select
+  registry items for the planner rather than exposing the full catalog at planning
+  time.
 
+  '
 inputs:
   goal:
     type: object
     required: true
-    description: >
-      Interpreted goal object from agent.goal.interpret.
+    description: 'Interpreted goal object from agent.goal.interpret.
+
+      '
   registry:
     type: object
     required: false
-    description: >
-      Snapshot of the ORCA catalog. When omitted the runtime loads the
+    description: 'Snapshot of the ORCA catalog. When omitted the runtime loads the
       current local catalog automatically.
+
+      '
   filters:
     type: object
     required: false
-    description: >
-      Optional filter object with fields: domains (array of strings),
+    description: 'Optional filter object with fields: domains (array of strings),
       kinds (array: skill|capability), max_results (number).
 
+      '
 outputs:
   candidate_items:
     type: array
     required: true
-    description: >
-      Array of candidate registry items, each with: ref (string),
-      type (skill|capability), relevance_score (0-1), reason (string).
+    description: 'Array of candidate registry items, each with: ref (string), type
+      (skill|capability), relevance_score (0-1), reason (string).
+
+      '
   total_matched:
     type: number
     required: false
-    description: >
-      Total number of items matched before applying max_results limit.
+    description: 'Total number of items matched before applying max_results limit.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   tags:
-    - registry
-    - catalog
-    - retrieval
-    - agent-pipeline
+  - registry
+  - catalog
+  - retrieval
+  - agent-pipeline
   examples:
-    - goal:
-        objective: "Create a sourced briefing on EU green hydrogen regulation"
-        deliverable_type: "structured_briefing"
-      expected_candidate_items:
-        - ref: "research.generate-briefing"
-          type: "skill"
-          relevance_score: 0.92
-
+  - goal:
+      objective: Create a sourced briefing on EU green hydrogen regulation
+      deliverable_type: structured_briefing
+    expected_candidate_items:
+    - ref: research.generate-briefing
+      type: skill
+      relevance_score: 0.92
+  layer: cognitive
 cognitive_hints:
   role: perceive
   produces:
@@ -68,5 +72,5 @@ cognitive_hints:
     total_matched:
       type: Score
   consumes:
-    - Artifact
-    - Context
+  - Artifact
+  - Context

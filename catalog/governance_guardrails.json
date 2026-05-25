@@ -1,28 +1,13 @@
 {
   "summary": {
     "skills_total": 39,
-    "skills_with_metadata_issues": 2,
+    "skills_with_metadata_issues": 0,
     "overlap_alerts": 0,
     "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
     "min_shared_capabilities": 2
   },
-  "skills_with_metadata_issues": [
-    {
-      "skill_id": "agent.execute-from-plan",
-      "channel": "official",
-      "issues": [
-        "missing_examples"
-      ]
-    },
-    {
-      "skill_id": "code.change-approval-gate",
-      "channel": "experimental",
-      "issues": [
-        "missing_classification"
-      ]
-    }
-  ],
+  "skills_with_metadata_issues": [],
   "overlap_alerts": [],
   "unknown_capability_references": {},
   "policy_hints": {

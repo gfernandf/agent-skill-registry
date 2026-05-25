@@ -214,6 +214,10 @@ steps:
 
 metadata:
   status: experimental
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich
   tags:
     - code-review
     - change-management
@@ -266,8 +270,3 @@ metadata:
         violated_rules:
           - "Missing required field: rollback_plan"
           - "Missing required field: test_evidence"
-
-classification:
-  role: procedure
-  invocation: direct
-  effect_mode: enrich

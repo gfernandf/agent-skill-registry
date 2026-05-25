@@ -19,17 +19,18 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: strict
 metadata:
   status: stable
   tags:
-    - security
-    - pii
-    - redaction
+  - security
+  - pii
+  - redaction
   examples:
-    - text: "Contact john.doe@example.com for the report"
-      expected_redacted_text: "Contact REDACTED_EMAIL for the report"
-
+  - text: Contact john.doe@example.com for the report
+    expected_redacted_text: Contact REDACTED_EMAIL for the report
+  layer: governance
 cognitive_hints:
   role: act
   produces:

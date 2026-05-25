@@ -27,20 +27,24 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [provenance, citation, verification]
+  tags:
+  - provenance
+  - citation
+  - verification
   examples:
-    - summary: "Verify a claim against sources"
-      inputs:
-        claim: "Revenue grew 15%"
-        sources: [{text: "Revenue grew 15% in Q3."}]
-      outputs:
-        supported: true
-        confidence: 0.95
-
+  - summary: Verify a claim against sources
+    inputs:
+      claim: Revenue grew 15%
+      sources:
+      - text: Revenue grew 15% in Q3.
+    outputs:
+      supported: true
+      confidence: 0.95
+  layer: cognitive
 cognitive_hints:
   role: evaluate
   produces:

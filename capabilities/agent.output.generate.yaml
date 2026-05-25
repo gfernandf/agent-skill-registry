@@ -1,74 +1,79 @@
 id: agent.output.generate
 version: 1.0.0
 status: experimental
-description: >
-  Generate the final user-facing report from execution outputs, evaluation
-  results, and trace summary. The report describes what was done, what was
-  produced, what could not be done and why, key decisions made, evidence
-  and source references, errors encountered, and suggested next steps.
-  Sanitizes sensitive content before surfacing to the user.
+description: 'Generate the final user-facing report from execution outputs, evaluation
+  results, and trace summary. The report describes what was done, what was produced,
+  what could not be done and why, key decisions made, evidence and source references,
+  errors encountered, and suggested next steps. Sanitizes sensitive content before
+  surfacing to the user.
 
+  '
 inputs:
   interpreted_goal:
     type: object
     required: true
-    description: >
-      Operational goal object from agent.goal.interpret, used to frame
+    description: 'Operational goal object from agent.goal.interpret, used to frame
       the report in terms of the original objective.
+
+      '
   execution_result:
     type: object
     required: true
-    description: >
-      Execution result from agent.plan.execute.
+    description: 'Execution result from agent.plan.execute.
+
+      '
   evaluation:
     type: object
     required: false
-    description: >
-      Evaluation result from eval.output.validate. When provided, the
+    description: 'Evaluation result from eval.output.validate. When provided, the
       report includes pass/fail verdict and unmet criteria.
+
+      '
   trace_summary:
     type: object
     required: false
-    description: >
-      Trace summary from ops.trace.summarize for the decisions and
-      gates section of the report.
+    description: 'Trace summary from ops.trace.summarize for the decisions and gates
+      section of the report.
 
+      '
 outputs:
   report:
     type: object
     required: true
-    description: >
-      Report object with: user_response (string, markdown),
-      artifacts (array of {name, type, content|ref}),
-      limitations (array of strings),
-      next_steps (array of strings),
-      evidence (array of citation objects).
+    description: 'Report object with: user_response (string, markdown), artifacts
+      (array of {name, type, content|ref}), limitations (array of strings), next_steps
+      (array of strings), evidence (array of citation objects).
+
+      '
   report_status:
     type: string
     required: false
-    description: >
-      Overall task outcome as visible to the user:
-      success | partial | failed | requires_followup.
+    description: 'Overall task outcome as visible to the user: success | partial |
+      failed | requires_followup.
 
+      '
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: standard
 metadata:
   tags:
-    - reporting
-    - output-generation
-    - agent-pipeline
+  - reporting
+  - output-generation
+  - agent-pipeline
   examples:
-    - interpreted_goal:
-        objective: "Create a sourced briefing on EU green hydrogen regulation"
-      execution_result:
-        status: "success"
-      expected_report:
-        user_response: "# EU Green Hydrogen Regulation Briefing\n..."
-        report_status: "success"
+  - interpreted_goal:
+      objective: Create a sourced briefing on EU green hydrogen regulation
+    execution_result:
+      status: success
+    expected_report:
+      user_response: '# EU Green Hydrogen Regulation Briefing
 
+        ...'
+      report_status: success
+  layer: cognitive
 cognitive_hints:
   role: synthesize
   produces:
@@ -77,5 +82,5 @@ cognitive_hints:
     report_status:
       type: Evidence
   consumes:
-    - Artifact
-    - Context
+  - Artifact
+  - Context

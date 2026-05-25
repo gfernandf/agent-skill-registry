@@ -1,36 +1,35 @@
 id: agent.plan.synthesize
 version: 1.0.0
 status: experimental
-description: >
-  Compile a validated ORCA plan into an executable DAG. Resolves the
-  final execution order, identifies steps that can run in parallel,
-  emits state binding contracts, and inserts policy gate checkpoints.
-  The compiled DAG is the only artefact the executor is allowed to
-  consume — no improvised execution from raw plan objects is permitted.
-
+description: "Compile a validated ORCA plan into an executable DAG. Resolves the final\
+  \ execution order, identifies steps that can run in parallel, emits state binding\
+  \ contracts, and inserts policy gate checkpoints. The compiled DAG is the only artefact\
+  \ the executor is allowed to consume \u2014 no improvised execution from raw plan\
+  \ objects is permitted.\n"
 inputs:
   validated_plan:
     type: object
     required: true
-    description: >
-      Plan object that has passed agent.plan.validate (status: passed).
+    description: 'Plan object that has passed agent.plan.validate (status: passed).
+
+      '
   runtime_config:
     type: object
     required: false
-    description: >
-      Runtime configuration hints: parallelism_limit (number),
-      timeout_seconds (number), fail_fast (boolean).
+    description: 'Runtime configuration hints: parallelism_limit (number), timeout_seconds
+      (number), fail_fast (boolean).
 
+      '
 outputs:
   compiled_plan:
     type: object
     required: true
-    description: >
-      Compiled execution artefact with fields: dag (object with nodes
-      and edges), execution_order (array of step ids),
-      parallel_groups (array of arrays of step ids),
-      gates (array of gate step ids), state_bindings (object),
-      registry_version (string), plan_hash (string).
+    description: 'Compiled execution artefact with fields: dag (object with nodes
+      and edges), execution_order (array of step ids), parallel_groups (array of arrays
+      of step ids), gates (array of gate step ids), state_bindings (object), registry_version
+      (string), plan_hash (string).
+
+      '
   step_count:
     type: number
     required: false
@@ -38,32 +37,37 @@ outputs:
   compiled_plan_json:
     type: string
     required: false
-    description: JSON string representation of compiled_plan for systems that require text payloads.
-
+    description: JSON string representation of compiled_plan for systems that require
+      text payloads.
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: standard
 metadata:
   tags:
-    - orchestration
-    - compilation
-    - dag
-    - agent-pipeline
+  - orchestration
+  - compilation
+  - dag
+  - agent-pipeline
   examples:
-    - validated_plan:
-        bound_steps:
-          - id: "s1_step1"
-            ref: "web.source.search"
-            depends_on: []
-          - id: "s1_step2"
-            ref: "text.content.summarize"
-            depends_on: ["s1_step1"]
-      expected_compiled_plan:
-        execution_order: ["s1_step1", "s1_step2"]
-        parallel_groups: [["s1_step1"]]
-
+  - validated_plan:
+      bound_steps:
+      - id: s1_step1
+        ref: web.source.search
+        depends_on: []
+      - id: s1_step2
+        ref: text.content.summarize
+        depends_on:
+        - s1_step1
+    expected_compiled_plan:
+      execution_order:
+      - s1_step1
+      - s1_step2
+      parallel_groups:
+      - - s1_step1
+  layer: cognitive
 cognitive_hints:
   role: synthesize
   produces:
@@ -74,5 +78,5 @@ cognitive_hints:
     step_count:
       type: Score
   consumes:
-    - Plan
-    - Context
+  - Plan
+  - Context

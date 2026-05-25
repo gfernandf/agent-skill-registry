@@ -1,7 +1,6 @@
 id: integration.record.reconcile
 version: 1.0.0
 description: Reconcile records between two systems and report discrepancies.
-
 inputs:
   records_a:
     type: array
@@ -15,7 +14,6 @@ inputs:
     type: string
     required: true
     description: Field name to use as the record identity key.
-
 outputs:
   matched:
     type: array
@@ -33,28 +31,33 @@ outputs:
     type: array
     required: true
     description: Records present in both but with field-level differences.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: none
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, record, reconciliation]
-
-
+  tags:
+  - integration
+  - record
+  - reconciliation
   examples:
-    - summary: "Reconcile records between two systems"
-      inputs:
-        records_a: [{id: "1"}]
-        records_b: [{id: "2"}]
-        key_field: "id"
-      outputs:
-        matched: []
-        only_a: [{id: "1"}]
-        only_b: [{id: "2"}]
-
+  - summary: Reconcile records between two systems
+    inputs:
+      records_a:
+      - id: '1'
+      records_b:
+      - id: '2'
+      key_field: id
+    outputs:
+      matched: []
+      only_a:
+      - id: '1'
+      only_b:
+      - id: '2'
+  layer: operational
 cognitive_hints:
   role: analyze
   produces:

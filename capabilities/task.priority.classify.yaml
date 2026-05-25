@@ -1,7 +1,6 @@
 id: task.priority.classify
 version: 1.0.0
 description: Classify the priority of a task based on its attributes and context.
-
 inputs:
   task:
     type: object
@@ -11,40 +10,44 @@ inputs:
     type: object
     required: false
     description: Contextual information such as SLA tier or impacted users.
-
 outputs:
   priority:
     type: string
     required: true
-    description: "Classified priority: critical, high, medium, or low."
+    description: 'Classified priority: critical, high, medium, or low.'
   confidence:
     type: number
     required: true
-    description: Confidence score (0.0–1.0).
+    description: "Confidence score (0.0\u20131.0)."
   rationale:
     type: string
     required: true
     description: Explanation of the classification.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: standard
 metadata:
   status: stable
-  tags: [task, priority, classification, triage]
-
-
+  tags:
+  - task
+  - priority
+  - classification
+  - triage
   examples:
-    - summary: "Classify priority of a task"
-      inputs:
-        task: {title: "DB running out of disk", type: "incident"}
-        context: {environment: "production"}
-      outputs:
-        priority: "critical"
-        confidence: 0.9
-
+  - summary: Classify priority of a task
+    inputs:
+      task:
+        title: DB running out of disk
+        type: incident
+      context:
+        environment: production
+    outputs:
+      priority: critical
+      confidence: 0.9
+  layer: cognitive
 cognitive_hints:
   role: analyze
   produces:

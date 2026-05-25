@@ -15,32 +15,35 @@ outputs:
     type: array
     required: true
     description: Search results.
-
 cognitive_hints:
   role: perceive
   consumes:
-    - Context
+  - Context
   produces:
     results:
       type: Evidence
       merge: append
-
 properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [web, search, discovery]
+  tags:
+  - web
+  - search
+  - discovery
   examples:
-    - description: Search for machine learning resources
-      inputs:
-        query: "machine learning tutorials"
-        limit: 5
-      outputs:
-        results:
-          - url: "https://example.com/ml-tutorial"
-            title: "ML Tutorial"
-            snippet: "An introduction to machine learning."
-            content: "ML Tutorial. An introduction to machine learning."
+  - description: Search for machine learning resources
+    inputs:
+      query: machine learning tutorials
+      limit: 5
+    outputs:
+      results:
+      - url: https://example.com/ml-tutorial
+        title: ML Tutorial
+        snippet: An introduction to machine learning.
+        content: ML Tutorial. An introduction to machine learning.
+  layer: operational

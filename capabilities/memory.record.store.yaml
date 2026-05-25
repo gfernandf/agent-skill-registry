@@ -1,7 +1,9 @@
 id: memory.record.store
 version: 1.0.0
-description: Store a structured record in memory with namespace isolation and optional TTL.
+description: 'Store a structured record in memory with namespace isolation and optional
+  TTL. Canonical capability for memory write operations.
 
+  '
 inputs:
   namespace:
     type: string
@@ -15,7 +17,6 @@ inputs:
     type: number
     required: false
     description: Optional time-to-live in seconds. Omit for no expiration.
-
 outputs:
   stored:
     type: boolean
@@ -25,31 +26,34 @@ outputs:
     type: string
     required: true
     description: The id of the stored record.
-
 properties:
   deterministic: true
   side_effects: true
   idempotent: true
-
+  state_access: write
+  audit_level: strict
 safety:
   trust_level: standard
   requires_confirmation: false
   description: Stores a record in local in-memory namespace. No external side effects.
-
 metadata:
   status: stable
-  tags: [memory, storage, record]
-
-
+  tags:
+  - memory
+  - storage
+  - record
+  - canonical
   examples:
-    - summary: "Store a structured record in a namespace"
-      inputs:
-        namespace: "session"
-        record: {id: "r1", content: "Context data"}
-      outputs:
-        stored: true
-        record_id: "r1"
-
+  - summary: Store a structured record in a namespace
+    inputs:
+      namespace: session
+      record:
+        id: r1
+        content: Context data
+    outputs:
+      stored: true
+      record_id: r1
+  layer: operational
 cognitive_hints:
   role: act
   produces:

@@ -23,20 +23,26 @@ properties:
   deterministic: false
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [image, vision, classification]
+  tags:
+  - image
+  - vision
+  - classification
   examples:
-    - summary: "Classify image content by labels"
-      inputs:
-        image: "(binary image data)"
-        labels: ["cat", "dog", "bird"]
-      outputs:
-        label: "cat"
-        confidence: 0.92
-
+  - summary: Classify image content by labels
+    inputs:
+      image: (binary image data)
+      labels:
+      - cat
+      - dog
+      - bird
+    outputs:
+      label: cat
+      confidence: 0.92
+  layer: operational
 cognitive_hints:
   role: analyze
   produces:

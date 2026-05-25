@@ -1,7 +1,6 @@
 id: integration.mapping.validate
 version: 1.0.0
 description: Validate a field mapping definition for completeness and consistency.
-
 inputs:
   mapping:
     type: object
@@ -11,7 +10,6 @@ inputs:
     type: object
     required: false
     description: Optional source schema to check field references against.
-
 outputs:
   valid:
     type: boolean
@@ -21,26 +19,31 @@ outputs:
     type: array
     required: true
     description: Validation issues found.
-
 properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [integration, mapping, validation]
-
-
+  tags:
+  - integration
+  - mapping
+  - validation
   examples:
-    - summary: "Validate a field mapping definition"
-      inputs:
-        mapping: {rename: {first_name: "name"}}
-        source_schema: {fields: ["first_name"]}
-      outputs:
-        valid: true
-        warnings: []
-
+  - summary: Validate a field mapping definition
+    inputs:
+      mapping:
+        rename:
+          first_name: name
+      source_schema:
+        fields:
+        - first_name
+    outputs:
+      valid: true
+      warnings: []
+  layer: operational
 cognitive_hints:
   role: evaluate
   produces:

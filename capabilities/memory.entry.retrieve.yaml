@@ -19,19 +19,22 @@ properties:
   deterministic: true
   side_effects: false
   idempotent: true
-
-
+  state_access: read
+  audit_level: basic
 metadata:
   status: stable
-  tags: [memory, storage, retrieval]
+  tags:
+  - memory
+  - storage
+  - retrieval
   examples:
-    - summary: "Retrieve a stored memory entry"
-      inputs:
-        key: "user_preference"
-      outputs:
-        value: "dark_mode"
-        found: true
-
+  - summary: Retrieve a stored memory entry
+    inputs:
+      key: user_preference
+    outputs:
+      value: dark_mode
+      found: true
+  layer: operational
 cognitive_hints:
   role: act
   produces:
