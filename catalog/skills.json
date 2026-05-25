@@ -222,7 +222,7 @@
     "steps": [
       {
         "id": "normalize_request",
-        "uses": "agent.request.normalize",
+        "uses": "reasoning.request.normalize",
         "input": {
           "user_message": "inputs.prompt",
           "context": "inputs.context"
@@ -234,7 +234,7 @@
       },
       {
         "id": "interpret_goal",
-        "uses": "agent.goal.interpret",
+        "uses": "reasoning.goal.interpret",
         "input": {
           "normalized_request": "vars.normalized_request",
           "context": "inputs.context"
@@ -246,7 +246,7 @@
       },
       {
         "id": "classify_complexity",
-        "uses": "agent.flow.branch",
+        "uses": "decision.flow.branch",
         "input": {
           "condition": "The user goal requires sequencing multiple operations, depends on intermediate outputs from one step to another, or involves conditional branching within the workflow.\n",
           "context": {
@@ -274,7 +274,7 @@
       },
       {
         "id": "search_catalog",
-        "uses": "agent.catalog.search",
+        "uses": "perception.catalog.search",
         "input": {
           "goal": "vars.interpreted_goal",
           "registry": "inputs.registry",
@@ -287,7 +287,7 @@
       },
       {
         "id": "rank_catalog",
-        "uses": "agent.catalog.rank",
+        "uses": "evaluation.catalog.rank",
         "input": {
           "candidate_items": "outputs.candidate_items",
           "interpreted_goal": "vars.interpreted_goal"
@@ -299,7 +299,7 @@
       },
       {
         "id": "define_criteria",
-        "uses": "agent.criteria.define",
+        "uses": "reasoning.criteria.define",
         "input": {
           "interpreted_goal": "vars.interpreted_goal"
         },
@@ -311,7 +311,7 @@
       },
       {
         "id": "detect_catalog_gaps",
-        "uses": "agent.catalog.detect",
+        "uses": "evaluation.catalog.detect",
         "input": {
           "interpreted_goal": "vars.interpreted_goal",
           "candidate_items": "outputs.candidate_items"
@@ -324,7 +324,7 @@
       },
       {
         "id": "create_macro_plan",
-        "uses": "agent.task.plan",
+        "uses": "reasoning.task.plan",
         "input": {
           "interpreted_goal": "vars.interpreted_goal",
           "candidate_skills": "outputs.ranked_skills",
@@ -338,7 +338,7 @@
       },
       {
         "id": "split_plan",
-        "uses": "agent.plan.split",
+        "uses": "reasoning.plan.split",
         "input": {
           "macro_stage": "vars.macro_plan",
           "candidate_skills": "outputs.ranked_skills",
@@ -352,7 +352,7 @@
       },
       {
         "id": "map_plan_inputs",
-        "uses": "agent.plan.map",
+        "uses": "reasoning.plan.map",
         "input": {
           "expanded_steps": "vars.expanded_steps",
           "state_schema": "inputs.state_schema"
@@ -364,7 +364,7 @@
       },
       {
         "id": "validate_plan",
-        "uses": "agent.plan.validate",
+        "uses": "evaluation.plan.validate",
         "input": {
           "expanded_plan": {
             "bound_steps": "vars.bound_steps"
@@ -378,7 +378,7 @@
       },
       {
         "id": "reconcile_plan",
-        "uses": "agent.plan.reconcile",
+        "uses": "reasoning.plan.reconcile",
         "input": {
           "invalid_plan": {
             "bound_steps": "vars.bound_steps"
@@ -394,7 +394,7 @@
       },
       {
         "id": "synthesize_plan",
-        "uses": "agent.plan.synthesize",
+        "uses": "reasoning.plan.synthesize",
         "input": {
           "validated_plan": "vars.repaired_plan",
           "runtime_config": "inputs.runtime_config"
@@ -407,7 +407,7 @@
       },
       {
         "id": "gate_plan",
-        "uses": "agent.plan.gate",
+        "uses": "evaluation.plan.gate",
         "input": {
           "compiled_plan": "outputs.compiled_plan",
           "user_permissions": "inputs.user_permissions",
@@ -419,20 +419,20 @@
       }
     ],
     "uses_capabilities": [
-      "agent.catalog.detect",
-      "agent.catalog.rank",
-      "agent.catalog.search",
-      "agent.criteria.define",
-      "agent.flow.branch",
-      "agent.goal.interpret",
-      "agent.plan.gate",
-      "agent.plan.map",
-      "agent.plan.reconcile",
-      "agent.plan.split",
-      "agent.plan.synthesize",
-      "agent.plan.validate",
-      "agent.request.normalize",
-      "agent.task.plan"
+      "decision.flow.branch",
+      "evaluation.catalog.detect",
+      "evaluation.catalog.rank",
+      "evaluation.plan.gate",
+      "evaluation.plan.validate",
+      "perception.catalog.search",
+      "reasoning.criteria.define",
+      "reasoning.goal.interpret",
+      "reasoning.plan.map",
+      "reasoning.plan.reconcile",
+      "reasoning.plan.split",
+      "reasoning.plan.synthesize",
+      "reasoning.request.normalize",
+      "reasoning.task.plan"
     ],
     "uses_skills": [],
     "metadata": {
@@ -502,7 +502,7 @@
     "steps": [
       {
         "id": "generate_plan",
-        "uses": "agent.plan.generate",
+        "uses": "reasoning.plan.generate",
         "input": {
           "objective": "inputs.objective"
         },
@@ -512,7 +512,7 @@
       },
       {
         "id": "route_plan",
-        "uses": "agent.input.route",
+        "uses": "decision.input.route",
         "input": {
           "query": "inputs.objective"
         },
@@ -522,8 +522,8 @@
       }
     ],
     "uses_capabilities": [
-      "agent.input.route",
-      "agent.plan.generate"
+      "decision.input.route",
+      "reasoning.plan.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -558,7 +558,7 @@
               },
               {
                 "step": 2,
-                "capability": "text.content.summarize"
+                "capability": "reasoning.content.summarize"
               }
             ]
           }
@@ -714,7 +714,7 @@
       },
       {
         "id": "analyze_trace",
-        "uses": "ops.trace.analyze",
+        "uses": "evidence.trace.analyze",
         "input": {
           "goal": "inputs.goal",
           "context": "inputs.context",
@@ -746,7 +746,7 @@
       },
       {
         "id": "monitor_trace",
-        "uses": "ops.trace.monitor",
+        "uses": "evidence.trace.monitor",
         "input": {
           "trace": "outputs.updated_trace_state",
           "thresholds": "inputs.thresholds"
@@ -764,8 +764,8 @@
     ],
     "uses_capabilities": [
       "data.schema.validate",
-      "ops.trace.analyze",
-      "ops.trace.monitor"
+      "evidence.trace.analyze",
+      "evidence.trace.monitor"
     ],
     "uses_skills": [],
     "metadata": {
@@ -818,7 +818,7 @@
     "id": "analysis.compare",
     "version": "0.1.0",
     "name": "Compare Options",
-    "description": "Compare alternatives, options, scenarios, or proposals in a structured and explicit way. Produces qualitative analysis (pros, cons, risks, assumptions) and quantitative scoring (multi-criteria) with a comparative summary and trade-offs.\nThis skill is the \"compare without deciding\" counterpart to decision.make. Use it when you need a transparent comparison artifact that a human or another skill will consume — without forcing a final recommendation.\nPipeline: (1) qualitative analysis per option, (2) multi-criteria scoring with comparative summary and trade-offs, (3) quality gate on the comparison.\nTypical upstream: agent.option.generate, task.frame, or direct user input. Typical downstream: decision.make, human review, or analysis.risk-assess.\n",
+    "description": "Compare alternatives, options, scenarios, or proposals in a structured and explicit way. Produces qualitative analysis (pros, cons, risks, assumptions) and quantitative scoring (multi-criteria) with a comparative summary and trade-offs.\nThis skill is the \"compare without deciding\" counterpart to decision.make. Use it when you need a transparent comparison artifact that a human or another skill will consume — without forcing a final recommendation.\nPipeline: (1) qualitative analysis per option, (2) multi-criteria scoring with comparative summary and trade-offs, (3) quality gate on the comparison.\nTypical upstream: reasoning.option.generate, task.frame, or direct user input. Typical downstream: decision.make, human review, or analysis.risk-assess.\n",
     "channel": "experimental",
     "domain": "analysis",
     "slug": "compare",
@@ -885,7 +885,7 @@
     "steps": [
       {
         "id": "analyze_options",
-        "uses": "eval.option.analyze",
+        "uses": "reasoning.option.analyze",
         "input": {
           "options": "inputs.options",
           "context": "inputs.context",
@@ -897,7 +897,7 @@
       },
       {
         "id": "score_options",
-        "uses": "eval.option.score",
+        "uses": "evaluation.option.score",
         "input": {
           "options": "inputs.options",
           "criteria": "inputs.criteria",
@@ -912,7 +912,7 @@
       },
       {
         "id": "assess_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": {
             "analyzed_options": "outputs.analyzed_options",
@@ -947,9 +947,9 @@
       }
     ],
     "uses_capabilities": [
-      "eval.option.analyze",
-      "eval.option.score",
-      "eval.output.score"
+      "evaluation.option.score",
+      "evaluation.output.score",
+      "reasoning.option.analyze"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1062,7 +1062,7 @@
     "steps": [
       {
         "id": "select_strategy",
-        "uses": "text.content.classify",
+        "uses": "reasoning.content.classify",
         "input": {
           "text": "inputs.problem",
           "labels": [
@@ -1082,7 +1082,7 @@
       },
       {
         "id": "split_problem",
-        "uses": "analysis.problem.split",
+        "uses": "reasoning.problem.split",
         "input": {
           "problem": "inputs.problem",
           "strategy": "outputs.decomposition_strategy",
@@ -1096,7 +1096,7 @@
       },
       {
         "id": "assess_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": {
             "components": "outputs.components",
@@ -1131,9 +1131,9 @@
       }
     ],
     "uses_capabilities": [
-      "analysis.problem.split",
-      "eval.output.score",
-      "text.content.classify"
+      "evaluation.output.score",
+      "reasoning.content.classify",
+      "reasoning.problem.split"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1179,7 +1179,7 @@
     "id": "analysis.risk-assess",
     "version": "0.1.0",
     "name": "Assess Risks",
-    "description": "Identify risks, fragile assumptions, and failure modes associated with a target artifact (decision, plan, analysis, proposal, draft). Introduces adversarial thinking to counter the implicit optimism of LLM-generated outputs.\nPipeline: (1) extract risks, assumptions, failure modes, and mitigations, (2) classify risks by category, (3) quality gate on the risk analysis.\nTypical upstream: decision.make, analysis.synthesize, agent.plan.generate, or any skill producing an artifact that needs stress-testing. Typical downstream: decision.make (risk-informed), eval.validate, human review.\n",
+    "description": "Identify risks, fragile assumptions, and failure modes associated with a target artifact (decision, plan, analysis, proposal, draft). Introduces adversarial thinking to counter the implicit optimism of LLM-generated outputs.\nPipeline: (1) extract risks, assumptions, failure modes, and mitigations, (2) classify risks by category, (3) quality gate on the risk analysis.\nTypical upstream: decision.make, analysis.synthesize, reasoning.plan.generate, or any skill producing an artifact that needs stress-testing. Typical downstream: decision.make (risk-informed), eval.validate, human review.\n",
     "channel": "experimental",
     "domain": "analysis",
     "slug": "risk-assess",
@@ -1241,7 +1241,7 @@
     "steps": [
       {
         "id": "extract_risks",
-        "uses": "analysis.risk.extract",
+        "uses": "reasoning.risk.extract",
         "input": {
           "target": "inputs.target",
           "context": "inputs.context",
@@ -1272,7 +1272,7 @@
       },
       {
         "id": "assess_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": {
             "risks": "outputs.identified_risks",
@@ -1307,9 +1307,9 @@
       }
     ],
     "uses_capabilities": [
-      "analysis.risk.extract",
       "data.record.transform",
-      "eval.output.score"
+      "evaluation.output.score",
+      "reasoning.risk.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1458,7 +1458,7 @@
       },
       {
         "id": "synthesize",
-        "uses": "model.output.generate",
+        "uses": "reasoning.output.generate",
         "input": {
           "instruction": "You are a research synthesis engine. You receive a collection of source items (already resolved to text) plus optional anchors in the constraints object: topic, goal, focus. Produce the complete synthesis in one pass.\nHeuristics: - Elevate a claim to key_point if it appears across multiple items or is\n  clearly central to the topic.\n- Elevate a singular but important differential signal to insight. - Mark a tension when two items push in opposite directions on the same\n  theme. Include topic, position_a, position_b.\n- Mark an uncertainty when a claim is weakly supported or a relevant area\n  is absent from the corpus.\n- Suggest next_steps aligned to goal if provided, otherwise suggest\n  generally useful follow-ups.\n- source_coverage: count total_items and processed_items from the input,\n  compute coverage_ratio, flag dominant_subset_warning if a small subset\n  dominates, list item_type_distribution.\n- human_readable: a narrative prose version (3-8 paragraphs depending on\n  detail level) suitable for direct human consumption.\n- synthesis_quality: self-assess with confidence_score =\n  0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped [0, 1].\n  Set assessment_passed = true if confidence_score >= 0.4 and\n  coverage_ratio >= 0.5.\n\nRules: - Do not fabricate claims not traceable to the source items. - Do not repeat the full source text in the output. - Respect the detail level for depth of each field. - If topic is not provided, infer the dominant topic from the corpus.\n",
           "context_items": "vars.resolved_items",
@@ -1593,7 +1593,7 @@
       }
     ],
     "uses_capabilities": [
-      "model.output.generate",
+      "reasoning.output.generate",
       "research.source.retrieve"
     ],
     "uses_skills": [],
@@ -1719,7 +1719,7 @@
       },
       {
         "id": "summarize_transcript",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.transcript"
         },
@@ -1730,7 +1730,7 @@
     ],
     "uses_capabilities": [
       "audio.speech.transcribe",
-      "text.content.summarize"
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -1853,7 +1853,7 @@
     "steps": [
       {
         "id": "summarize_change",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "inputs.diff_text"
         },
@@ -1863,7 +1863,7 @@
       },
       {
         "id": "extract_risks",
-        "uses": "analysis.risk.extract",
+        "uses": "reasoning.risk.extract",
         "input": {
           "target": "inputs.change_package",
           "context": "inputs.author_summary",
@@ -1913,7 +1913,7 @@
       },
       {
         "id": "determine_decision",
-        "uses": "agent.flow.branch",
+        "uses": "decision.flow.branch",
         "input": {
           "condition": "Select the correct outcome: \"block\" if gate_decision is block, \"escalate\" if gate_decision is pass and risk_level is critical, \"approve\" if gate_decision is pass and risk_level is not critical.\n",
           "context": {
@@ -1971,7 +1971,7 @@
       },
       {
         "id": "summarize_executive",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.rationale"
         },
@@ -1986,12 +1986,12 @@
       }
     ],
     "uses_capabilities": [
-      "agent.flow.branch",
-      "analysis.risk.extract",
+      "decision.flow.branch",
       "policy.constraint.gate",
       "policy.decision.justify",
       "policy.risk.classify",
-      "text.content.summarize"
+      "reasoning.content.summarize",
+      "reasoning.risk.extract"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2119,7 +2119,7 @@
       },
       {
         "id": "summarize_diff",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.diff"
         },
@@ -2130,7 +2130,7 @@
     ],
     "uses_capabilities": [
       "code.diff.extract",
-      "text.content.summarize"
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2278,7 +2278,7 @@
     "id": "decision.make",
     "version": "0.1.0",
     "name": "Make Decision",
-    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) qualitative analysis of pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative scoring, (4) select recommendation with structured justification, failure modes, and next steps, (5) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call. Zero uses of model.output.generate — every step is a dedicated, named capability.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
+    "description": "Take a problem, context, and available information and produce an explicit, structured, justified decision under uncertainty. Closes the gap between \"analysis\" and \"actionable decision\".\nPipeline: (1) generate options if not provided, (2) qualitative analysis of pros, cons, risks, and assumptions per option, (3) multi-criteria quantitative scoring, (4) select recommendation with structured justification, failure modes, and next steps, (5) self-assess decision quality.\nDesigned to be observable at each step. Each intermediate result is inspectable via agent.trace. Favors a slower, transparent pipeline over a single opaque LLM call. Zero uses of reasoning.output.generate — every step is a dedicated, named capability.\nTypical upstream: analysis.synthesize output as context_items. Typical downstream: task planning, human review, or execution.\n",
     "channel": "official",
     "domain": "decision",
     "slug": "make",
@@ -2405,7 +2405,7 @@
     "steps": [
       {
         "id": "merge_context",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": "inputs.context_items"
         },
@@ -2415,7 +2415,7 @@
       },
       {
         "id": "generate_options",
-        "uses": "agent.option.generate",
+        "uses": "reasoning.option.generate",
         "input": {
           "goal": "inputs.goal",
           "context": "vars.merged_context",
@@ -2428,7 +2428,7 @@
       },
       {
         "id": "analyze_options",
-        "uses": "eval.option.analyze",
+        "uses": "reasoning.option.analyze",
         "input": {
           "options": "vars.generated_options",
           "context": "vars.merged_context",
@@ -2443,7 +2443,7 @@
       },
       {
         "id": "evaluate_options",
-        "uses": "eval.option.score",
+        "uses": "evaluation.option.score",
         "input": {
           "options": "vars.generated_options",
           "goal": "inputs.goal",
@@ -2487,7 +2487,7 @@
       },
       {
         "id": "assess_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": {
             "recommendation": "outputs.recommendation",
@@ -2525,12 +2525,12 @@
       }
     ],
     "uses_capabilities": [
-      "agent.option.generate",
       "decision.option.justify",
-      "eval.option.analyze",
-      "eval.option.score",
-      "eval.output.score",
-      "text.content.merge"
+      "evaluation.option.score",
+      "evaluation.output.score",
+      "reasoning.content.merge",
+      "reasoning.option.analyze",
+      "reasoning.option.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2620,7 +2620,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.content.embed",
+        "uses": "reasoning.content.embed",
         "input": {
           "text": "inputs.text"
         },
@@ -2631,7 +2631,7 @@
     ],
     "uses_capabilities": [
       "doc.content.chunk",
-      "text.content.embed"
+      "reasoning.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2714,7 +2714,7 @@
       },
       {
         "id": "merge_messages",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": "outputs.messages"
         },
@@ -2724,7 +2724,7 @@
       },
       {
         "id": "summarize_messages",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.merged_text"
         },
@@ -2735,8 +2735,8 @@
     ],
     "uses_capabilities": [
       "email.inbox.read",
-      "text.content.merge",
-      "text.content.summarize"
+      "reasoning.content.merge",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2875,7 +2875,7 @@
       },
       {
         "id": "check_consistency",
-        "uses": "model.response.validate",
+        "uses": "evaluation.response.validate",
         "input": {
           "output": "inputs.artifact",
           "validation_policy": {
@@ -2895,7 +2895,7 @@
       },
       {
         "id": "score_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": "inputs.artifact",
           "rubric": "inputs.quality_rules"
@@ -2908,8 +2908,8 @@
     ],
     "uses_capabilities": [
       "data.schema.validate",
-      "eval.output.score",
-      "model.response.validate"
+      "evaluation.output.score",
+      "evaluation.response.validate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3096,7 +3096,7 @@
       },
       {
         "id": "merge_value",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": [
             "outputs.value"
@@ -3108,7 +3108,7 @@
       },
       {
         "id": "summarize_value",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.value_text"
         },
@@ -3119,8 +3119,8 @@
     ],
     "uses_capabilities": [
       "memory.entry.retrieve",
-      "text.content.merge",
-      "text.content.summarize"
+      "reasoning.content.merge",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3189,7 +3189,7 @@
     "steps": [
       {
         "id": "embed_text",
-        "uses": "text.content.embed",
+        "uses": "reasoning.content.embed",
         "input": {
           "text": "inputs.text"
         },
@@ -3214,7 +3214,7 @@
     ],
     "uses_capabilities": [
       "memory.entry.store",
-      "text.content.embed"
+      "reasoning.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3288,7 +3288,7 @@
     "steps": [
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -3313,7 +3313,7 @@
     ],
     "uses_capabilities": [
       "memory.entry.store",
-      "text.content.summarize"
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3413,7 +3413,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.content.embed",
+        "uses": "reasoning.content.embed",
         "input": {
           "text": "outputs.text"
         },
@@ -3425,7 +3425,7 @@
     "uses_capabilities": [
       "doc.content.chunk",
       "pdf.document.read",
-      "text.content.embed"
+      "reasoning.content.embed"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3513,7 +3513,7 @@
       },
       {
         "id": "extract_keywords",
-        "uses": "text.keyword.extract",
+        "uses": "perception.keyword.extract",
         "input": {
           "text": "outputs.text"
         },
@@ -3523,7 +3523,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -3534,8 +3534,8 @@
     ],
     "uses_capabilities": [
       "pdf.document.read",
-      "text.content.summarize",
-      "text.keyword.extract"
+      "perception.keyword.extract",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3618,7 +3618,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -3629,7 +3629,7 @@
     ],
     "uses_capabilities": [
       "pdf.document.read",
-      "text.content.summarize"
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3670,7 +3670,7 @@
     "id": "research.generate-briefing",
     "version": "0.1.3",
     "name": "Generate Research Briefing",
-    "description": "Build a structured intelligence briefing from web sources. Searches the web for a given query, normalizes results into corpus format, optionally fetches full page content (deep mode), extracts keywords and entities, summarizes the corpus, clusters information into thematic groups, and assesses risks.\nPipeline: 8 steps, 0 model.output.generate calls. All analysis is performed by dedicated capabilities with stable contracts. Steps 5a-5c run in parallel.\nModes:\n  quick (default) — works with search result snippets, lower latency.\n  deep — fetches full page content via research.source.retrieve, richer output.\n",
+    "description": "Build a structured intelligence briefing from web sources. Searches the web for a given query, normalizes results into corpus format, optionally fetches full page content (deep mode), extracts keywords and entities, summarizes the corpus, clusters information into thematic groups, and assesses risks.\nPipeline: 8 steps, 0 reasoning.output.generate calls. All analysis is performed by dedicated capabilities with stable contracts. Steps 5a-5c run in parallel.\nModes:\n  quick (default) — works with search result snippets, lower latency.\n  deep — fetches full page content via research.source.retrieve, richer output.\n",
     "channel": "experimental",
     "domain": "research",
     "slug": "generate-briefing",
@@ -3794,7 +3794,7 @@
       },
       {
         "id": "merge_text",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": "outputs.sources"
         },
@@ -3805,7 +3805,7 @@
       },
       {
         "id": "extract_keywords",
-        "uses": "text.keyword.extract",
+        "uses": "perception.keyword.extract",
         "depends_on": [],
         "input": {
           "text": "vars.corpus_text"
@@ -3816,7 +3816,7 @@
       },
       {
         "id": "extract_entities",
-        "uses": "text.entity.extract",
+        "uses": "perception.entity.extract",
         "depends_on": [],
         "input": {
           "text": "vars.corpus_text"
@@ -3827,7 +3827,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "depends_on": [],
         "input": {
           "text": "vars.corpus_text"
@@ -3838,7 +3838,7 @@
       },
       {
         "id": "cluster",
-        "uses": "analysis.theme.cluster",
+        "uses": "reasoning.theme.cluster",
         "input": {
           "items": "outputs.sources",
           "hint_labels": "inputs.theme_hints",
@@ -3850,7 +3850,7 @@
       },
       {
         "id": "extract_risks",
-        "uses": "analysis.risk.extract",
+        "uses": "reasoning.risk.extract",
         "input": {
           "target": {
             "clusters": "outputs.clusters",
@@ -3869,7 +3869,7 @@
       },
       {
         "id": "assess_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": {
             "summary": "outputs.summary",
@@ -3905,14 +3905,14 @@
       }
     ],
     "uses_capabilities": [
-      "analysis.risk.extract",
-      "analysis.theme.cluster",
-      "eval.output.score",
+      "evaluation.output.score",
+      "perception.entity.extract",
+      "perception.keyword.extract",
+      "reasoning.content.merge",
+      "reasoning.content.summarize",
+      "reasoning.risk.extract",
+      "reasoning.theme.cluster",
       "research.source.retrieve",
-      "text.content.merge",
-      "text.content.summarize",
-      "text.entity.extract",
-      "text.keyword.extract",
       "web.source.normalize",
       "web.source.search"
     ],
@@ -4043,7 +4043,7 @@
       },
       {
         "id": "assemble_normalized",
-        "uses": "model.output.generate",
+        "uses": "reasoning.output.generate",
         "input": {
           "instruction": "Return one object with exactly two top-level fields: normalized_items and normalization_stats. normalized_items must be an array where each item includes: id, content, type (inferred from input if not provided, defaulting to raw_text), language, chunks, source, title, and any retained metadata. normalization_stats must include: total_input, extracted_count, chunked_count, deduplicated_count, and language_distribution. Do not rename these fields, omit them, or wrap them under any additional structure.\n",
           "context_items": "vars.resolved_items",
@@ -4074,7 +4074,7 @@
       }
     ],
     "uses_capabilities": [
-      "model.output.generate",
+      "reasoning.output.generate",
       "research.source.retrieve"
     ],
     "uses_skills": [],
@@ -4211,7 +4211,7 @@
       },
       {
         "id": "score_synthesis_quality",
-        "uses": "eval.output.score",
+        "uses": "evaluation.output.score",
         "input": {
           "output": "inputs.synthesis_object",
           "rubric": {
@@ -4242,7 +4242,7 @@
       },
       {
         "id": "validate_grounding",
-        "uses": "model.response.validate",
+        "uses": "evaluation.response.validate",
         "input": {
           "output": "inputs.synthesis_object",
           "validation_policy": {
@@ -4262,7 +4262,7 @@
       },
       {
         "id": "compute_quality_metrics",
-        "uses": "model.output.generate",
+        "uses": "reasoning.output.generate",
         "input": {
           "instruction": "Using the provided context bundle, compute the final synthesis_quality block. The context includes synthesis_object, findings_by_item, normalized_items, quality_profile, eval_score, eval_dimensions, grounding_valid, grounding_issues, confidence_adjustment, and grounding_rationale. Compute: coverage_ratio (items with at least one finding used in synthesis divided by total normalized items), evidence_strength (average across all findings_by_item claim evidence_strength mapped to 0=weak, 0.5=moderate, 1=strong), tension_density (number of items with conflicting claims on the same theme divided by total items, capped at 1), uncertainty_load (items with uncertainty_signals divided by total items). confidence_score = 0.35 * coverage_ratio + 0.35 * evidence_strength\n  - 0.15 * tension_density - 0.15 * uncertainty_load, clamped to [0, 1].\nApply confidence_adjustment from grounding validation if provided. Write quality_notes explaining the score in 1-3 sentences. Apply quality_profile thresholds: standard requires confidence_score >= 0.4 and coverage_ratio >= 0.5; strict requires confidence_score >= 0.6 and coverage_ratio >= 0.7. Emit quality_warnings for any dimension below threshold. Set assessment_passed accordingly. Return exactly three top-level fields: synthesis_quality, quality_warnings, and assessment_passed.\n",
           "context_items": [
@@ -4336,9 +4336,9 @@
     ],
     "uses_capabilities": [
       "data.schema.validate",
-      "eval.output.score",
-      "model.output.generate",
-      "model.response.validate"
+      "evaluation.output.score",
+      "evaluation.response.validate",
+      "reasoning.output.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -4456,7 +4456,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "config": {
           "depends_on": [
             "redact_pii"
@@ -4495,7 +4495,7 @@
       },
       {
         "id": "compose_final_input",
-        "uses": "text.content.template",
+        "uses": "reasoning.content.template",
         "config": {
           "depends_on": [
             "gate_output",
@@ -4515,7 +4515,7 @@
       },
       {
         "id": "finalize",
-        "uses": "text.content.transform",
+        "uses": "reasoning.content.transform",
         "config": {
           "depends_on": [
             "compose_final_input"
@@ -4531,12 +4531,12 @@
       }
     ],
     "uses_capabilities": [
+      "reasoning.content.summarize",
+      "reasoning.content.template",
+      "reasoning.content.transform",
       "security.output.gate",
       "security.pii.detect",
-      "security.pii.redact",
-      "text.content.summarize",
-      "text.content.template",
-      "text.content.transform"
+      "security.pii.redact"
     ],
     "uses_skills": [],
     "metadata": {
@@ -4618,7 +4618,7 @@
       },
       {
         "id": "merge_rows",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": "outputs.table"
         },
@@ -4628,7 +4628,7 @@
       },
       {
         "id": "summarize_table",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.merged_rows"
         },
@@ -4638,9 +4638,9 @@
       }
     ],
     "uses_capabilities": [
-      "table.row.filter",
-      "text.content.merge",
-      "text.content.summarize"
+      "reasoning.content.merge",
+      "reasoning.content.summarize",
+      "table.row.filter"
     ],
     "uses_skills": [],
     "metadata": {
@@ -4767,7 +4767,7 @@
     "steps": [
       {
         "id": "classify_task",
-        "uses": "text.content.classify",
+        "uses": "reasoning.content.classify",
         "input": {
           "text": "inputs.task",
           "labels": [
@@ -4788,7 +4788,7 @@
       },
       {
         "id": "extract_structure",
-        "uses": "text.content.extract",
+        "uses": "perception.content.extract",
         "input": {
           "text": "inputs.task",
           "extraction_schema": {
@@ -4818,7 +4818,7 @@
       },
       {
         "id": "propose_approach",
-        "uses": "agent.plan.generate",
+        "uses": "reasoning.plan.generate",
         "input": {
           "objective": "outputs.problem_statement",
           "context": "inputs.context"
@@ -4829,7 +4829,7 @@
       },
       {
         "id": "suggest_skills",
-        "uses": "agent.input.route",
+        "uses": "decision.input.route",
         "input": {
           "query": "inputs.task"
         },
@@ -4839,10 +4839,10 @@
       }
     ],
     "uses_capabilities": [
-      "agent.input.route",
-      "agent.plan.generate",
-      "text.content.classify",
-      "text.content.extract"
+      "decision.input.route",
+      "perception.content.extract",
+      "reasoning.content.classify",
+      "reasoning.plan.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -4933,7 +4933,7 @@
     "steps": [
       {
         "id": "detect_language",
-        "uses": "text.language.detect",
+        "uses": "reasoning.language.detect",
         "input": {
           "text": "inputs.text"
         },
@@ -4943,7 +4943,7 @@
       },
       {
         "id": "classify",
-        "uses": "text.content.classify",
+        "uses": "reasoning.content.classify",
         "input": {
           "text": "inputs.text",
           "labels": "inputs.labels"
@@ -4955,8 +4955,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.classify",
-      "text.language.detect"
+      "reasoning.content.classify",
+      "reasoning.language.detect"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5024,7 +5024,7 @@
     "steps": [
       {
         "id": "extract_entities",
-        "uses": "text.entity.extract",
+        "uses": "perception.entity.extract",
         "input": {
           "text": "inputs.text"
         },
@@ -5034,7 +5034,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -5044,8 +5044,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.summarize",
-      "text.entity.extract"
+      "perception.entity.extract",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5126,7 +5126,7 @@
     "steps": [
       {
         "id": "extract_text",
-        "uses": "text.content.extract",
+        "uses": "perception.content.extract",
         "input": {
           "text": "inputs.text"
         },
@@ -5136,7 +5136,7 @@
       },
       {
         "id": "extract_keywords",
-        "uses": "text.keyword.extract",
+        "uses": "perception.keyword.extract",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -5146,7 +5146,7 @@
       },
       {
         "id": "summarize_text",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -5156,9 +5156,9 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.extract",
-      "text.content.summarize",
-      "text.keyword.extract"
+      "perception.content.extract",
+      "perception.keyword.extract",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5227,7 +5227,7 @@
     "steps": [
       {
         "id": "detect_language",
-        "uses": "text.language.detect",
+        "uses": "reasoning.language.detect",
         "input": {
           "text": "inputs.text"
         },
@@ -5237,7 +5237,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "inputs.text"
         },
@@ -5247,8 +5247,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.summarize",
-      "text.language.detect"
+      "reasoning.content.summarize",
+      "reasoning.language.detect"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5317,7 +5317,7 @@
     "steps": [
       {
         "id": "translate",
-        "uses": "text.content.translate",
+        "uses": "reasoning.content.translate",
         "input": {
           "text": "inputs.text",
           "target_language": "inputs.target_language"
@@ -5328,7 +5328,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.translation"
         },
@@ -5338,8 +5338,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.summarize",
-      "text.content.translate"
+      "reasoning.content.summarize",
+      "reasoning.content.translate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5438,7 +5438,7 @@
       },
       {
         "id": "classify",
-        "uses": "text.content.classify",
+        "uses": "reasoning.content.classify",
         "input": {
           "text": "outputs.text",
           "labels": "inputs.labels"
@@ -5450,7 +5450,7 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.classify",
+      "reasoning.content.classify",
       "web.page.extract",
       "web.page.fetch"
     ],
@@ -5529,7 +5529,7 @@
       },
       {
         "id": "extract_text",
-        "uses": "text.content.extract",
+        "uses": "perception.content.extract",
         "input": {
           "text": "vars.page_content"
         },
@@ -5539,7 +5539,7 @@
       },
       {
         "id": "summarize_text",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.cleaned_text"
         },
@@ -5549,8 +5549,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.extract",
-      "text.content.summarize",
+      "perception.content.extract",
+      "reasoning.content.summarize",
       "web.page.fetch"
     ],
     "uses_skills": [],
@@ -5665,7 +5665,7 @@
       },
       {
         "id": "embed",
-        "uses": "text.content.embed",
+        "uses": "reasoning.content.embed",
         "input": {
           "text": "outputs.text"
         },
@@ -5676,7 +5676,7 @@
     ],
     "uses_capabilities": [
       "doc.content.chunk",
-      "text.content.embed",
+      "reasoning.content.embed",
       "web.page.extract",
       "web.page.fetch"
     ],
@@ -5762,7 +5762,7 @@
       },
       {
         "id": "summarize",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "outputs.text"
         },
@@ -5772,7 +5772,7 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.summarize",
+      "reasoning.content.summarize",
       "web.page.extract"
     ],
     "uses_skills": [],
@@ -5859,7 +5859,7 @@
       },
       {
         "id": "merge_results",
-        "uses": "text.content.merge",
+        "uses": "reasoning.content.merge",
         "input": {
           "items": "outputs.results"
         },
@@ -5869,7 +5869,7 @@
       },
       {
         "id": "summarize_results",
-        "uses": "text.content.summarize",
+        "uses": "reasoning.content.summarize",
         "input": {
           "text": "vars.merged_results"
         },
@@ -5879,8 +5879,8 @@
       }
     ],
     "uses_capabilities": [
-      "text.content.merge",
-      "text.content.summarize",
+      "reasoning.content.merge",
+      "reasoning.content.summarize",
       "web.source.search"
     ],
     "uses_skills": [],

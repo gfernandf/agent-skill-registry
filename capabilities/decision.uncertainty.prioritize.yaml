@@ -1,0 +1,71 @@
+id: decision.uncertainty.prioritize
+version: 1.0.0
+description: >
+  Prioritize scored uncertainties into a decision-ready order, highlighting which
+  unknowns must be resolved first and which can be deferred.
+inputs:
+  scored_uncertainties:
+    type: array
+    required: true
+    description: Scored uncertainty items, typically from evaluation.uncertainty.score.
+  risk_tolerance:
+    type: string
+    required: false
+    description: Risk appetite one of low | medium | high.
+  capacity_limit:
+    type: number
+    required: false
+    description: Optional max number of uncertainties to address in the current cycle.
+outputs:
+  prioritized_uncertainties:
+    type: array
+    required: true
+    description: Ordered uncertainty list with rank and prioritization rationale.
+  next_actions:
+    type: array
+    required: false
+    description: Recommended next actions to reduce top-ranked uncertainties.
+  prioritization_summary:
+    type: string
+    required: false
+    description: Summary of why the selected ordering is appropriate.
+cognitive_hints:
+  role: decide
+  consumes:
+  - Score
+  - Uncertainty
+  produces:
+    prioritized_uncertainties:
+      type: Decision
+    next_actions:
+      type: Message
+    prioritization_summary:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - uncertainty
+  - prioritization
+  examples:
+  - summary: Prioritize uncertainty backlog for weekly planning
+    inputs:
+      scored_uncertainties:
+      - uncertainty_id: u1
+        overall_score: 0.86
+      - uncertainty_id: u2
+        overall_score: 0.52
+      capacity_limit: 1
+    outputs:
+      prioritized_uncertainties:
+      - uncertainty_id: u1
+        rank: 1
+      next_actions:
+      - Run targeted user interviews for segment B demand validation.
+  layer: cognitive

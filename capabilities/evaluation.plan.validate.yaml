@@ -1,0 +1,76 @@
+id: evaluation.plan.validate
+version: 1.0.0
+status: experimental
+description: 'Validate that a proposed ORCA plan is structurally executable. Performs
+  deterministic checks including: registry reference resolution, required input availability,
+  output declaration completeness, DAG cycle detection, dependency existence, side-effect
+  annotation, permission requirement declaration, risk gate presence on high-impact
+  steps, and absence of free-text execution steps. Returns a validation report with
+  errors, warnings, and a repairable flag.
+
+  '
+inputs:
+  expanded_plan:
+    type: object
+    required: true
+    description: 'Plan object containing bound_steps from reasoning.plan.map plus metadata
+      such as goal_ref and strategy.
+
+      '
+  registry:
+    type: object
+    required: false
+    description: 'Registry snapshot for resolving capability and skill references.
+      When omitted the runtime uses the current local registry.
+
+      '
+  state_schema:
+    type: object
+    required: false
+    description: 'CognitiveState schema to verify that input/output paths exist.
+
+      '
+outputs:
+  validation_result:
+    type: object
+    required: true
+    description: 'Result object with: status (passed|failed), errors (array of {step_id,
+      check, message}), warnings (array of same structure), repairable (boolean),
+      check_count (number).
+
+      '
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  tags:
+  - governance
+  - validation
+  - plan-governance
+  - agent-pipeline
+  examples:
+  - expanded_plan:
+      bound_steps:
+      - id: s1_step1
+        ref: web.source.search
+        inputs:
+          query: $state.intake.normalized_request.raw_request
+        outputs:
+          results: $state.working.search_results
+        depends_on: []
+    expected_validation_result:
+      status: passed
+      errors: []
+      repairable: false
+  layer: cognitive
+cognitive_hints:
+  role: evaluate
+  produces:
+    validation_result:
+      type: Artifact
+  consumes:
+  - Plan
+  - Context

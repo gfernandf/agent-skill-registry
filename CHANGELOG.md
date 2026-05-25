@@ -14,27 +14,27 @@ request ingestion → goal interpretation → plan generation, validation, repai
 → execution gating and orchestration → output synthesis and evaluation. All 18
 capabilities follow the canonical grammar and carry full contracts:
 
-- **agent.request.normalize** — Parse and normalize raw user requests.
-- **agent.goal.interpret** — Convert normalized request to structured goal.
-- **agent.criteria.define** — Extract success/quality/acceptance criteria.
+- **reasoning.request.normalize** — Parse and normalize raw user requests.
+- **reasoning.goal.interpret** — Convert normalized request to structured goal.
+- **reasoning.criteria.define** — Extract success/quality/acceptance criteria.
 - **agent.catalog.\*** — Registry search, ranking, and gap detection:
-  - `agent.catalog.search` — Find relevant capabilities and skills.
-  - `agent.catalog.rank` — Rank candidates by relevance.
-  - `agent.catalog.detect` — Identify capability gaps.
-- **agent.task.plan** — Generate high-level macro plan.
+  - `perception.catalog.search` — Find relevant capabilities and skills.
+  - `evaluation.catalog.rank` — Rank candidates by relevance.
+  - `evaluation.catalog.detect` — Identify capability gaps.
+- **reasoning.task.plan** — Generate high-level macro plan.
 - **agent.plan.\*** — Plan expansion, validation, repair, synthesis, and execution:
-  - `agent.plan.split` — Expand plan stage into executable steps.
-  - `agent.plan.map` — Bind steps to CognitiveState paths.
-  - `agent.plan.validate` — Structural correctness validation (deterministic).
-  - `agent.plan.reconcile` — Repair invalid plans.
-  - `agent.plan.synthesize` — Compile plan into executable DAG (deterministic).
-  - `agent.plan.gate` — Authorization checks before execution.
+  - `reasoning.plan.split` — Expand plan stage into executable steps.
+  - `reasoning.plan.map` — Bind steps to CognitiveState paths.
+  - `evaluation.plan.validate` — Structural correctness validation (deterministic).
+  - `reasoning.plan.reconcile` — Repair invalid plans.
+  - `reasoning.plan.synthesize` — Compile plan into executable DAG (deterministic).
+  - `evaluation.plan.gate` — Authorization checks before execution.
   - `agent.plan.run` — Execute compiled plan (with side_effects, safety constraints).
 - **agent.output.\*** — Output synthesis and reporting:
-  - `agent.output.generate` — Produce final user-facing report.
-  - `agent.output.synthesize` — Extract reusable skill from execution trace.
-- **eval.output.validate** — Validate final output against success criteria.
-- **ops.trace.summarize** — Summarize execution trace into compact report.
+  - `reasoning.output.generate` — Produce final user-facing report.
+  - `reasoning.output.synthesize` — Extract reusable skill from execution trace.
+- **evaluation.output.validate** — Validate final output against success criteria.
+- **evidence.trace.summarize** — Summarize execution trace into compact report.
 
 All 18 have OpenAI + pythoncall bindings, integrated with existing MCP server.
 Vocabulary extended: 3 nouns + 2 verbs.
@@ -54,11 +54,11 @@ follow the canonical grammar (`domain.noun.verb`), carry full I/O contracts,
 fallback).
 
 - **agent.flow.\*** — Control-flow primitives:
-  - `agent.flow.branch` — conditional branch selection.
+  - `decision.flow.branch` — conditional branch selection.
   - `agent.flow.iterate` — loop over a collection invoking a capability per item.
   - `agent.flow.wait` — pause execution until condition or timeout.
-  - `agent.flow.catch` — error handling with fallback strategies.
-- **agent.input.collect** — structured multi-field form collection.
+  - `decision.flow.catch` — error handling with fallback strategies.
+- **perception.input.collect** — structured multi-field form collection.
 - **data.\*** — Structural data transforms:
   - `data.array.map` — map/transform each element of an array.
   - `data.field.map` — rename/alias fields in a record.
@@ -69,8 +69,8 @@ fallback).
 - **web.request.send** — generic HTTP request with safety blocks.
 - **task.event.schedule** — schedule future/recurring events.
 - **text.\*** — Coverage additions:
-  - `text.content.compare` — semantic diff of two texts.
-  - `text.sentiment.analyze` — polarity and emotion analysis.
+  - `reasoning.content.compare` — semantic diff of two texts.
+  - `reasoning.sentiment.analyze` — polarity and emotion analysis.
 - **audio.speaker.diarize** — multi-speaker segmentation.
 - **image.content.generate** — text-to-image generation.
 - **table.sheet.read** / **table.sheet.write** — CSV/Excel I/O.
@@ -100,13 +100,13 @@ Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
 
 #### text.* domain review
 - **3 new capabilities**:
-  - `text.content.generate` — produce new text from instruction + context.
-  - `text.content.transform` — rewrite text applying a style/tone directive.
-  - `text.response.extract` — answer a question from a context passage.
+  - `reasoning.content.generate` — produce new text from instruction + context.
+  - `reasoning.content.transform` — rewrite text applying a style/tone directive.
+  - `reasoning.response.extract` — answer a question from a context passage.
 - **3 capabilities stabilized** (`status: stable`):
-  - `text.content.template`
-  - `text.content.extract`
-  - `text.content.merge`
+  - `reasoning.content.template`
+  - `perception.content.extract`
+  - `reasoning.content.merge`
 - `docs/DOMAIN_TEXT.md`: full domain reference with boundary definitions,
   binding matrix, and skill inventory.
 - `_index.yaml` updated with all new entries and status changes.
@@ -120,12 +120,12 @@ Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
 
 #### model.* domain implementation
 - **6 capabilities fleshed out** (from draft stubs to full contracts):
-  - `model.embedding.generate` — produce vector embedding from text.
-  - `model.output.classify` — classify output into a label set.
-  - `model.output.score` — score output quality on multiple axes.
-  - `model.output.sanitize` — strip PII/harmful/leaked content.
-  - `model.prompt.template` — interpolate variables into a prompt template.
-  - `model.risk.score` — score content risk (toxicity, bias, injection).
+  - `reasoning.embedding.generate` — produce vector embedding from text.
+  - `reasoning.output.classify` — classify output into a label set.
+  - `evaluation.output.score` — score output quality on multiple axes.
+  - `reasoning.output.sanitize` — strip PII/harmful/leaked content.
+  - `reasoning.prompt.template` — interpolate variables into a prompt template.
+  - `evaluation.risk.score` — score content risk (toxicity, bias, injection).
 - All 6 promoted to `experimental` status.
 - `tags` and `examples` metadata added to all 8 model.* capabilities.
 - `docs/DOMAIN_MODEL.md`: full domain reference with capability inventory,
@@ -135,9 +135,9 @@ Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
 
 #### agent.* domain review
 - **3 capabilities fleshed out** (from draft stubs to full contracts):
-  - `agent.input.route` — route requests to appropriate handler/agent.
-  - `agent.plan.generate` — generate structured execution plans.
-  - `agent.task.delegate` — delegate tasks with safety controls.
+  - `decision.input.route` — route requests to appropriate handler/agent.
+  - `reasoning.plan.generate` — generate structured execution plans.
+  - `decision.task.delegate` — delegate tasks with safety controls.
 - All 3 promoted from `draft` to `experimental`.
 - `tags` and `examples` metadata added to all 5 agent.* capabilities.
 - `docs/DOMAIN_AGENT.md`: full domain reference with capability inventory,
@@ -153,11 +153,11 @@ Vocabulary updated: 7 new nouns (`flow`, `array`, `field`, `sheet`,
 - Catalog regenerated.
 
 #### eval.* domain review
-- `eval.output.score` fleshed out from draft stub to full contract with
+- `evaluation.output.score` fleshed out from draft stub to full contract with
   rubric dimensions, context input, and quality_level output.
-- `eval.output.score` promoted from `draft` to `experimental`.
+- `evaluation.output.score` promoted from `draft` to `experimental`.
 - `tags` and `examples` metadata added to all 3 eval.* capabilities.
 - `docs/DOMAIN_EVAL.md`: full domain reference with decision pipeline
   integration, skill consumption map, boundary definitions.
-- `_index.yaml` updated with eval.output.score status and description.
+- `_index.yaml` updated with evaluation.output.score status and description.
 - Catalog regenerated.

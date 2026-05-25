@@ -32,8 +32,8 @@ LLM workflows.
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `model.output.generate` | Generate structured output from instruction + context + JSON schema | No | experimental |
-| `model.embedding.generate` | Generate vector embeddings for a text input | Yes* | draft |
+| `reasoning.output.generate` | Generate structured output from instruction + context + JSON schema | No | experimental |
+| `reasoning.embedding.generate` | Generate vector embeddings for a text input | Yes* | draft |
 
 *Deterministic with the same model and input; baseline uses hash-based pseudo-embedding.
 
@@ -41,22 +41,22 @@ LLM workflows.
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `model.output.classify` | Classify output into candidate categories | No | draft |
-| `model.output.score` | Score output on quality dimensions (relevance, fluency, etc.) | No | draft |
-| `model.response.validate` | Validate output for coherence, grounding, and completeness | No | experimental |
+| `reasoning.output.classify` | Classify output into candidate categories | No | draft |
+| `evaluation.output.score` | Score output on quality dimensions (relevance, fluency, etc.) | No | draft |
+| `evaluation.response.validate` | Validate output for coherence, grounding, and completeness | No | experimental |
 
 ### Safety
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `model.output.sanitize` | Remove PII, harmful content, and prompt leakage | Yes | draft |
-| `model.risk.score` | Assess risk across toxicity, bias, hallucination, prompt injection | No | draft |
+| `reasoning.output.sanitize` | Remove PII, harmful content, and prompt leakage | Yes | draft |
+| `evaluation.risk.score` | Assess risk across toxicity, bias, hallucination, prompt injection | No | draft |
 
 ### Prompt engineering
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `model.prompt.template` | Render prompt from template + variable bindings | Yes | draft |
+| `reasoning.prompt.template` | Render prompt from template + variable bindings | Yes | draft |
 
 ---
 
@@ -64,14 +64,14 @@ LLM workflows.
 
 | Capability | Python baseline | OpenAI binding | Default with key | Default without key |
 |-----------|:-:|:-:|---|---|
-| `model.output.generate` | — (mock) | gpt-4o-mini | openapi | openapi (mock) |
-| `model.response.validate` | structural check | gpt-4o-mini | openapi | pythoncall |
-| `model.embedding.generate` | hash-based 128d | text-embedding-3-small | openapi | pythoncall |
-| `model.output.classify` | keyword/struct heuristic | gpt-4o-mini | openapi | pythoncall |
-| `model.output.score` | structural scoring | gpt-4o-mini | openapi | pythoncall |
-| `model.output.sanitize` | regex PII/harmful/leakage | — | pythoncall | pythoncall |
-| `model.prompt.template` | `${var}` substitution | — | pythoncall | pythoncall |
-| `model.risk.score` | pattern-based detection | gpt-4o-mini | openapi | pythoncall |
+| `reasoning.output.generate` | — (mock) | gpt-4o-mini | openapi | openapi (mock) |
+| `evaluation.response.validate` | structural check | gpt-4o-mini | openapi | pythoncall |
+| `reasoning.embedding.generate` | hash-based 128d | text-embedding-3-small | openapi | pythoncall |
+| `reasoning.output.classify` | keyword/struct heuristic | gpt-4o-mini | openapi | pythoncall |
+| `evaluation.output.score` | structural scoring | gpt-4o-mini | openapi | pythoncall |
+| `reasoning.output.sanitize` | regex PII/harmful/leakage | — | pythoncall | pythoncall |
+| `reasoning.prompt.template` | `${var}` substitution | — | pythoncall | pythoncall |
+| `evaluation.risk.score` | pattern-based detection | gpt-4o-mini | openapi | pythoncall |
 
 The environment-aware binding resolver (`OPENAI_API_KEY` detection) applies
 to all LLM-dependent capabilities.  See [BINDING_SELECTION.md](../docs/BINDING_SELECTION.md)
@@ -83,32 +83,32 @@ in agent-skills for details.
 
 ### Full quality (deterministic — no LLM needed)
 
-- **`model.output.sanitize`** — Regex-based deep sanitizer. Recursively walks
+- **`reasoning.output.sanitize`** — Regex-based deep sanitizer. Recursively walks
   nested objects/arrays. Detects email, phone, SSN, credit card, API keys,
   prompt leakage patterns. Good production baseline.
 
-- **`model.prompt.template`** — `${variable}` substitution with unresolved
+- **`reasoning.prompt.template`** — `${variable}` substitution with unresolved
   placeholder tracking. Handles nested dot notation (`${user.name}`).
 
 ### Functional (heuristic — LLM improves quality)
 
-- **`model.embedding.generate`** — Hash-based pseudo-embedding. Produces
+- **`reasoning.embedding.generate`** — Hash-based pseudo-embedding. Produces
   deterministic normalized float vectors. Useful for pipeline testing but
   not for real semantic similarity. Use OpenAI for production.
 
-- **`model.output.classify`** — Keyword frequency + structural heuristics.
+- **`reasoning.output.classify`** — Keyword frequency + structural heuristics.
   Inspects field names (`code`, `summary`, `error`, `list`) for structural
   hints. Works for obvious cases; LLM needed for subtle classification.
 
-- **`model.output.score`** — Word overlap for relevance, sentence length for
+- **`evaluation.output.score`** — Word overlap for relevance, sentence length for
   fluency, length ratio for completeness, reference overlap for faithfulness.
   Rough but functional. LLM provides nuanced evaluation.
 
-- **`model.response.validate`** — Checks output is non-empty dict, flags
+- **`evaluation.response.validate`** — Checks output is non-empty dict, flags
   null/empty fields. Does not check semantic coherence — LLM required for
   real validation.
 
-- **`model.risk.score`** — Pattern-based detection for toxicity (harmful
+- **`evaluation.risk.score`** — Pattern-based detection for toxicity (harmful
   keywords), bias (sweeping generalizations), hallucination (novel words vs
   context), prompt injection (known markers like `ignore previous instructions`).
   Catches obvious cases. LLM-based scoring is significantly more reliable.
@@ -119,10 +119,10 @@ in agent-skills for details.
 
 | Skill | Capabilities used | Purpose |
 |-------|------------------|---------|
-| `analysis.synthesize` | `model.output.generate` | Single-call synthesis of multi-source evidence |
-| `research.quality-assess` | `model.response.validate`, `model.output.generate` | Quality metrics and grounding validation |
-| `research.normalize-corpus` | `model.output.generate` | Corpus normalization to structured items |
-| `eval.validate` | `model.response.validate` | Consistency checking of artifacts |
+| `analysis.synthesize` | `reasoning.output.generate` | Single-call synthesis of multi-source evidence |
+| `research.quality-assess` | `evaluation.response.validate`, `reasoning.output.generate` | Quality metrics and grounding validation |
+| `research.normalize-corpus` | `reasoning.output.generate` | Corpus normalization to structured items |
+| `eval.validate` | `evaluation.response.validate` | Consistency checking of artifacts |
 
 ---
 
@@ -130,10 +130,10 @@ in agent-skills for details.
 
 | If you need to... | Use | Not |
 |-------------------|-----|-----|
-| Generate structured output from instruction + schema | `model.output.generate` | `text.content.generate` (unstructured text) |
-| Embed text for similarity | `model.embedding.generate` | `text.content.embed` (same underlying model, different contract layer) |
-| Classify text into labels | `text.content.classify` | `model.output.classify` (for model outputs specifically) |
-| Remove PII from text | `security.pii.redact` | `model.output.sanitize` (for model outputs, also covers leakage) |
-| Score a model's output quality | `model.output.score` | `eval.output.score` (higher-level evaluation) |
-| Check if output is safe | `model.risk.score` | `security.output.gate` (binary gate, not scoring) |
-| Render a prompt template | `model.prompt.template` | `text.content.template` (generic `{{var}}` templates) |
+| Generate structured output from instruction + schema | `reasoning.output.generate` | `reasoning.content.generate` (unstructured text) |
+| Embed text for similarity | `reasoning.embedding.generate` | `reasoning.content.embed` (same underlying model, different contract layer) |
+| Classify text into labels | `reasoning.content.classify` | `reasoning.output.classify` (for model outputs specifically) |
+| Remove PII from text | `security.pii.redact` | `reasoning.output.sanitize` (for model outputs, also covers leakage) |
+| Score a model's output quality | `evaluation.output.score` | `evaluation.output.score` (higher-level evaluation) |
+| Check if output is safe | `evaluation.risk.score` | `security.output.gate` (binary gate, not scoring) |
+| Render a prompt template | `reasoning.prompt.template` | `reasoning.content.template` (generic `{{var}}` templates) |

@@ -24,13 +24,13 @@ steps:
   output:
     text: outputs.text
 - id: extract_keywords
-  uses: text.keyword.extract
+  uses: perception.keyword.extract
   input:
     text: outputs.text
   output:
     keywords: outputs.keywords
 - id: summarize
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: outputs.text
   output:

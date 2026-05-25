@@ -1,0 +1,50 @@
+id: reasoning.assumption.extract
+version: 1.0.0
+description: Extract explicit and implicit assumptions from an artifact and context.
+inputs:
+  target:
+    type: object
+    required: true
+    description: Artifact to inspect for assumptions.
+  context:
+    type: string
+    required: false
+    description: Optional background context.
+outputs:
+  assumptions:
+    type: array
+    required: true
+    description: Assumptions with id, statement, scope, and fragility_hint.
+  extraction_notes:
+    type: string
+    required: false
+    description: Method notes and caveats.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Artifact
+  - Context
+  produces:
+    assumptions:
+      type: Hypothesis
+    extraction_notes:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - assumption
+  - analysis
+  - reasoning
+  examples:
+  - summary: Extract assumptions from rollout plan
+    inputs:
+      target:
+        type: plan
+        text: Assumes legal review completes in 2 weeks
+  layer: cognitive

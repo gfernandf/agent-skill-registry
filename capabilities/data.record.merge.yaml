@@ -3,7 +3,7 @@ version: 1.0.0
 description: 'Deep-merge multiple structured records into a single unified record.
   Supports configurable conflict resolution strategies. Useful for aggregating partial
   results from parallel workflow steps into a single coherent output. For text concatenation
-  use text.content.merge; for key-based record joining use data.record.join.
+  use reasoning.content.merge; for key-based record joining use data.record.join.
 
   '
 inputs:

@@ -15,9 +15,9 @@ A capability represents a **single functional operation** that can be reused acr
 Examples include:
 
 ```
-text.content.summarize
-text.content.classify
-text.keyword.extract
+reasoning.content.summarize
+reasoning.content.classify
+perception.keyword.extract
 web.page.fetch
 data.json.parse
 fs.file.read
@@ -48,11 +48,11 @@ domain.noun.verb
 Examples:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 fs.file.read
 web.page.fetch
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 web.page.fetch
 ```
 
@@ -91,8 +91,8 @@ capabilities/<capability-id>.yaml
 Examples:
 
 ```
-capabilities/text.content.summarize.yaml
-capabilities/text.keyword.extract.yaml
+capabilities/reasoning.content.summarize.yaml
+capabilities/perception.keyword.extract.yaml
 capabilities/data.json.parse.yaml
 capabilities/web.page.fetch.yaml
 ```
@@ -108,7 +108,7 @@ A capability file is written in YAML and follows a defined structure.
 Example:
 
 ```yaml
-id: text.content.summarize
+id: reasoning.content.summarize
 version: 1.0.0
 description: Produce a concise summary of text content.
 
@@ -145,9 +145,9 @@ Must follow the allowed identifier structure and vocabulary rules.
 Example:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 ```
 
 ---
@@ -234,6 +234,23 @@ Additional fields remain as before (`tags`, `category`, `status`, `examples`).
 - `orchestration`: planning, routing, flow control, coordination
 - `operational`: tool execution, IO, transport, transformation
 - `governance`: policy, security, identity, permission control
+
+### Canonical cognitive domains
+
+For capabilities classified as `layer: cognitive`, the **capability ID domain**
+(first segment) must be one of:
+
+- `perception`: structures raw or semi-structured input into cognitive signals such as content, entities, keywords, and language
+- `memory`: retrieves, stores, updates, compresses, and reconciles contextual state so cognition can reuse relevant prior information
+- `reasoning`: interprets goals, decomposes problems, extracts assumptions and constraints, generates options and plans, transforms content, and synthesizes outputs
+- `evidence`: verifies claims, assesses sources, detects conflicts, identifies evidence gaps, and generates citations or trace summaries
+- `evaluation`: scores, validates, compares, gates, and diagnoses cognitive artifacts such as assumptions, constraints, hypotheses, options, plans, outputs, responses, risks, and uncertainties
+- `decision`: selects cognitive strategies and options, routes inputs, prioritizes uncertainty, and justifies selected options
+
+"ORCA decomposes cognition into reusable capabilities. Instead of treating
+reasoning as an opaque prompt-to-output behavior, ORCA exposes perception,
+memory, reasoning, evidence handling, evaluation, and decision-making as
+composable, inspectable, and reusable cognitive primitives."
 
 ### Tie-break policy (when ambiguous)
 
@@ -669,7 +686,7 @@ A capability should perform **one clear operation**.
 Good example:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 ```
 
 Poor example:
@@ -693,7 +710,7 @@ Example:
 Prefer:
 
 ```
-text.content.classify
+reasoning.content.classify
 ```
 
 Over:
@@ -729,7 +746,7 @@ Capabilities are invoked from skills.
 Example step in a skill:
 
 ```
-uses: text.content.summarize
+uses: reasoning.content.summarize
 ```
 
 Skills may also compose other skills:

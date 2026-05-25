@@ -14,7 +14,7 @@ inputs:
   capability:
     type: string
     required: true
-    description: 'The capability id to invoke for each item (e.g., "text.content.summarize").
+    description: 'The capability id to invoke for each item (e.g., "reasoning.content.summarize").
       The current item is passed as the capability''s primary input.
 
       '
@@ -88,7 +88,7 @@ metadata:
         content: Long text about markets...
       - id: doc2
         content: Long text about technology...
-      capability: text.content.summarize
+      capability: reasoning.content.summarize
       input_mapping:
         text: item.content
       mode: parallel

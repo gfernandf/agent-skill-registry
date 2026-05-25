@@ -102,11 +102,11 @@ Typical flows:
 
 | Skill ID | Channel | Steps | Capabilities used |
 |---|---|---|---|
-| `web.fetch-summary` | official | 3 | web.page.fetch → text.content.extract → text.content.summarize |
-| `web.fetch-classify` | official | 3 | web.page.fetch → web.page.extract → text.content.classify |
-| `web.page-summary` | official | 2 | web.page.extract → text.content.summarize |
-| `web.search-summary` | official | 2 | web.source.search → text.content.summarize |
-| `web.page-chunk-and-embed` | experimental | 4 | web.page.fetch → web.page.extract → doc.content.chunk → text.content.embed |
+| `web.fetch-summary` | official | 3 | web.page.fetch → perception.content.extract → reasoning.content.summarize |
+| `web.fetch-classify` | official | 3 | web.page.fetch → web.page.extract → reasoning.content.classify |
+| `web.page-summary` | official | 2 | web.page.extract → reasoning.content.summarize |
+| `web.search-summary` | official | 2 | web.source.search → reasoning.content.summarize |
+| `web.page-chunk-and-embed` | experimental | 4 | web.page.fetch → web.page.extract → doc.content.chunk → reasoning.content.embed |
 
 ---
 

@@ -1,0 +1,46 @@
+id: evidence.conflict.detect
+version: 1.0.0
+description: Detect contradictions and tension between evidence items or claims.
+inputs:
+  evidence_items:
+    type: array
+    required: true
+    description: Evidence items to compare for conflict.
+  claims:
+    type: array
+    required: false
+    description: Optional claims linked to evidence items.
+outputs:
+  conflicts:
+    type: array
+    required: true
+    description: Detected conflicts with involved item ids and conflict rationale.
+  conflict_severity:
+    type: string
+    required: false
+    description: Overall severity low|medium|high.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Evidence
+  - Context
+  produces:
+    conflicts:
+      type: Evidence
+    conflict_severity:
+      type: Score
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - evidence
+  - conflict
+  - detection
+  examples:
+  - summary: Detect contradictions across quarterly KPI reports
+  layer: cognitive

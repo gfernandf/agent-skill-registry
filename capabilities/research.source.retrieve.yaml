@@ -3,7 +3,7 @@ version: 1.0.0
 description: 'Resolve source_ref fields in a list of corpus items to actual text content.
   Handles pdf_path, fs_path, url, and raw_text source types. Items that already have
   content are passed through unchanged. The resolved items are suitable for passing
-  to model.output.generate or further analysis steps.
+  to reasoning.output.generate or further analysis steps.
 
   '
 inputs:

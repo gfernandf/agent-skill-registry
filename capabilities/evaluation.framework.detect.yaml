@@ -1,0 +1,72 @@
+id: evaluation.framework.detect
+version: 1.0.0
+status: experimental
+description: Detect the most suitable evaluation framework for a given artifact, objective,
+  and context.
+inputs:
+  interpreted_goal:
+    type: object
+    required: true
+    description: 'Interpreted goal object from reasoning.goal.interpret.
+
+      '
+  candidate_items:
+    type: array
+    required: true
+    description: 'Candidate registry items already matched by perception.catalog.search.
+
+      '
+outputs:
+  missing_capabilities:
+    type: array
+    required: true
+    description: 'Capabilities needed to satisfy the goal that are not present in
+      the registry. Each item has: name (string), reason (string), suggested_spec
+      (object with description, inputs, outputs).
+
+      '
+  missing_skills:
+    type: array
+    required: true
+    description: 'Skills needed to satisfy the goal that are not present in the registry.
+      Each item has the same structure as missing_capabilities.
+
+      '
+  gap_severity:
+    type: string
+    required: false
+    description: 'Overall severity of the detected gaps: none | minor | blocking.
+
+      '
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  tags:
+  - registry
+  - catalog
+  - gap-detection
+  - governance
+  - agent-pipeline
+  examples:
+  - interpreted_goal:
+      objective: Execute and monitor a data ETL pipeline
+    candidate_items: []
+    expected_gap_severity: blocking
+  layer: cognitive
+  status: experimental
+cognitive_hints:
+  role: evaluate
+  produces:
+    missing_capabilities:
+      type: Risk
+    missing_skills:
+      type: Risk
+    gap_severity:
+      type: Score
+  consumes:
+  - Artifact
+  - Option

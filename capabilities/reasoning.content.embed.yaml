@@ -1,0 +1,46 @@
+id: reasoning.content.embed
+version: 1.0.0
+description: Generate vector embeddings from text.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Input text.
+outputs:
+  embedding:
+    type: array
+    required: true
+    description: Generated embedding vector.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  status: deprecated
+  tags:
+  - text
+  - nlp
+  - embedding
+  - vector
+  examples:
+  - summary: Generate a vector embedding for text
+    inputs:
+      text: This is a test sentence.
+    outputs:
+      vector:
+      - 0.01
+      - -0.03
+      - 0.12
+  layer: cognitive
+  deprecation_date: '2026-05-25'
+  sunset_date: '2026-09-30'
+cognitive_hints:
+  role: act
+  produces:
+    embedding:
+      type: Artifact
+  consumes:
+  - Context
+replacement: reasoning.embedding.generate

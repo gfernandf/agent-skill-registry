@@ -1,0 +1,40 @@
+id: perception.content.extract
+version: 1.0.0
+description: Extract relevant text spans or cleaned plain content from an input text
+  block. Not intended for named entities, keyword lists, or question answering.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Source text to process.
+outputs:
+  text:
+    type: string
+    required: true
+    description: Extracted or cleaned text content.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: stable
+  tags:
+  - text
+  - extraction
+  - preprocessing
+  examples:
+  - summary: Extract clean text from HTML
+    inputs:
+      text: <html><body><h1>Title</h1><p>Content.</p></body></html>
+    outputs:
+      text: Title Content.
+  layer: cognitive
+cognitive_hints:
+  role: perceive
+  produces:
+    text:
+      type: Entity
+  consumes:
+  - Context

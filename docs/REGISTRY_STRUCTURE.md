@@ -54,8 +54,8 @@ Each capability is stored as an individual YAML file.
 Example:
 
 ```
-capabilities/text.content.summarize.yaml
-capabilities/text.keyword.extract.yaml
+capabilities/reasoning.content.summarize.yaml
+capabilities/perception.keyword.extract.yaml
 capabilities/data.json.parse.yaml
 ```
 
@@ -71,8 +71,8 @@ domain.noun.verb
 Examples:
 
 ```
-text.content.summarize
-text.keyword.extract
+reasoning.content.summarize
+perception.keyword.extract
 web.page.fetch
 data.json.parse
 ```
@@ -113,7 +113,7 @@ via the `uses` field.
 Example step:
 
 ```
-uses: text.content.summarize
+uses: reasoning.content.summarize
 ```
 
 or

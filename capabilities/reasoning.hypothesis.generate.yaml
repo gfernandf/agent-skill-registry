@@ -1,0 +1,74 @@
+id: reasoning.hypothesis.generate
+version: 1.0.0
+description: >
+  Generate explicit, testable hypotheses from a target artifact and its context.
+  Each hypothesis includes rationale and a confidence hint so downstream evaluation
+  can assess support and counter-evidence transparently.
+inputs:
+  target:
+    type: object
+    required: true
+    description: Artifact to analyze, such as a plan, decision draft, report, or synthesis.
+  context:
+    type: string
+    required: false
+    description: Optional background context that constrains hypothesis generation.
+  max_hypotheses:
+    type: number
+    required: false
+    description: Maximum number of hypotheses to produce. Defaults to 5.
+  generation_mode:
+    type: string
+    required: false
+    description: Mode for hypothesis style, one of broad | conservative | adversarial.
+outputs:
+  hypotheses:
+    type: array
+    required: true
+    description: >
+      List of generated hypotheses. Each entry includes id, statement,
+      rationale, and confidence_hint (low | medium | high).
+  generation_notes:
+    type: string
+    required: false
+    description: Notes about assumptions, caveats, or missing information during generation.
+cognitive_hints:
+  role: synthesize
+  consumes:
+  - Artifact
+  - Context
+  produces:
+    hypotheses:
+      type: Hypothesis
+    generation_notes:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - hypothesis
+  - generation
+  examples:
+  - summary: Generate hypotheses from an incident postmortem draft
+    inputs:
+      target:
+        type: postmortem
+        title: Payment latency incident
+        body: Latency increased after cache policy update.
+      generation_mode: adversarial
+      max_hypotheses: 3
+    outputs:
+      hypotheses:
+      - id: h1
+        statement: Cache key cardinality exploded after policy rollout.
+        confidence_hint: high
+      - id: h2
+        statement: Downstream dependency saturation amplified latency spikes.
+        confidence_hint: medium
+  layer: cognitive

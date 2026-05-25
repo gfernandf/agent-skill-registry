@@ -62,7 +62,7 @@ outputs:
 
 steps:
   - id: render
-    uses: text.content.template
+    uses: reasoning.content.template
     input:
       template: "Hello {{name}}"
       variables:
@@ -473,7 +473,7 @@ steps:
     config:
       depends_on: []          # no dependencies — runs in parallel with fetch_a
   - id: combine
-    uses: text.content.template
+    uses: reasoning.content.template
     config:
       depends_on: [fetch_a, fetch_b]  # waits for both
 ```
@@ -489,7 +489,7 @@ Reference to the capability or skill executed by the step.
 Examples:
 
 ```
-uses: text.content.template
+uses: reasoning.content.template
 uses: pdf.document.read
 ```
 
@@ -625,7 +625,7 @@ Example:
 
 ```yaml
 - id: collect_risks
-  uses: analysis.risk.extract
+  uses: reasoning.risk.extract
   config:
     merge_strategy: append
   input:

@@ -1,0 +1,43 @@
+id: perception.keyword.extract
+version: 1.0.0
+description: Extract salient keywords or keyphrases from a text block. Not intended
+  for typed entity recognition or context-grounded question answering.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Source text to analyze.
+outputs:
+  keywords:
+    type: array
+    required: true
+    description: Extracted keywords.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: stable
+  tags:
+  - text
+  - nlp
+  - extraction
+  examples:
+  - summary: Extract keywords from text
+    inputs:
+      text: Python is great for machine learning and data science.
+    outputs:
+      keywords:
+      - Python
+      - machine learning
+      - data science
+  layer: cognitive
+cognitive_hints:
+  role: perceive
+  produces:
+    keywords:
+      type: Entity
+  consumes:
+  - Context

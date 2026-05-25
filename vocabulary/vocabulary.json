@@ -6,7 +6,6 @@
       "domain.noun.verb"
     ]
   },
-
   "domains": {
     "text": "Natural language text processing",
     "web": "Web resources and pages",
@@ -34,9 +33,12 @@
     "ops": "Operational monitoring and cost controls",
     "research": "Research synthesis and analytical findings processing",
     "analysis": "Structured analysis, synthesis, and interpretation of information from multiple sources",
-    "decision": "Structured decision-making under criteria and uncertainty"
+    "decision": "Structured decision-making under criteria and uncertainty",
+    "perception": "Perception",
+    "reasoning": "Reasoning",
+    "evaluation": "Evaluation",
+    "evidence": "Evidence"
   },
-
   "nouns": {
     "json": "JSON data structure",
     "csv": "CSV data format",
@@ -124,9 +126,17 @@
     "request": "HTTP or API request",
     "goal": "Operational goal or objective derived from a user request",
     "criteria": "Acceptance, quality, or success criteria for a task",
-    "catalog": "Registry catalog of capabilities and skills"
+    "catalog": "Registry catalog of capabilities and skills",
+    "framework": "Structured evaluation framework or assessment lens",
+    "assumption": "Implicit or explicit premise used in reasoning",
+    "hypothesis": "Candidate explanatory statement to test against evidence",
+    "uncertainty": "Known unknown, ambiguity, or information gap",
+    "context": "Structured contextual memory for ongoing reasoning",
+    "failure": "Observed or potential failure condition",
+    "conflict": "Contradiction between claims, evidence, or constraints",
+    "gap": "Missing evidence, coverage, or required information",
+    "strategy": "High-level approach for solving a task"
   },
-
   "verbs": {
     "read": "Read data from a source",
     "write": "Write data to a destination",
@@ -205,6 +215,13 @@
     "diarize": "Identify and separate speakers in audio content",
     "collect": "Gather structured input from a source",
     "interpret": "Infer operational meaning or intent from structured input",
-    "define": "Define structure, contract, or acceptance conditions for a task"
+    "define": "Define structure, contract, or acceptance conditions for a task",
+    "evaluate": "Assess quality, support, or fitness against criteria",
+    "prioritize": "Order items by importance, urgency, or expected impact",
+    "assess": "Assess quality, credibility, or fitness",
+    "select": "Choose one option or strategy from alternatives",
+    "decompose": "Break a problem, task, or plan into coherent sub-parts",
+    "compress": "Reduce representation size while preserving salient information",
+    "structure": "Organize semi-structured input into a consistent cognitive representation"
   }
 }

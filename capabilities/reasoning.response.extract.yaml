@@ -1,0 +1,57 @@
+id: reasoning.response.extract
+version: 1.0.0
+description: "Extract an answer to a question from a context passage. The response\
+  \ must be grounded in the provided context and should not fabricate information\
+  \ beyond what the context contains. For open-ended text production use reasoning.content.generate;\
+  \ for condensing a passage use reasoning.content.summarize; for entity and keyword\
+  \ extraction use perception.entity.extract and perception.keyword.extract.\n"
+inputs:
+  question:
+    type: string
+    required: true
+    description: The question to answer.
+  context:
+    type: string
+    required: true
+    description: 'The reference passage that contains the information needed to answer
+      the question.
+
+      '
+outputs:
+  answer:
+    type: string
+    required: true
+    description: The answer derived from the context.
+  confidence:
+    type: number
+    required: false
+    description: "Confidence score (0.0\u20131.0) that the answer is supported by\
+      \ the context."
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Context
+  produces:
+    answer:
+      type: Evidence
+metadata:
+  status: stable
+  tags:
+  - text
+  - qa
+  - extraction
+  - llm
+  examples:
+  - summary: Extract an answer from context
+    inputs:
+      question: What is Python?
+      context: Python is a high-level programming language.
+    outputs:
+      answer: A high-level programming language.
+  layer: cognitive

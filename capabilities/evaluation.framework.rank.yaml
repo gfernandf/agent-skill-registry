@@ -1,0 +1,68 @@
+id: evaluation.framework.rank
+version: 1.0.0
+status: experimental
+description: Rank candidate evaluation frameworks by fitness against task criteria
+  and constraints.
+inputs:
+  candidate_items:
+    type: array
+    required: true
+    description: 'Array of candidate registry items produced by perception.catalog.search.
+
+      '
+  interpreted_goal:
+    type: object
+    required: true
+    description: 'Interpreted goal object for relevance context.
+
+      '
+outputs:
+  ranked_skills:
+    type: array
+    required: true
+    description: 'Ordered list of skill candidates, each with rank, ref, score, and
+      rationale.
+
+      '
+  ranked_capabilities:
+    type: array
+    required: true
+    description: 'Ordered list of capability candidates, each with rank, ref, score,
+      and rationale.
+
+      '
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  tags:
+  - registry
+  - catalog
+  - ranking
+  - agent-pipeline
+  examples:
+  - candidate_items:
+    - ref: research.generate-briefing
+      type: skill
+      relevance_score: 0.92
+    - ref: reasoning.content.summarize
+      type: capability
+      relevance_score: 0.78
+    expected_ranked_skills:
+    - rank: 1
+      ref: research.generate-briefing
+  layer: cognitive
+  status: experimental
+cognitive_hints:
+  role: evaluate
+  produces:
+    ranked_skills:
+      type: Option
+    ranked_capabilities:
+      type: Option
+  consumes:
+  - Option
+  - Artifact

@@ -335,7 +335,7 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"event_id": "evt-001", "handler": "on-call-bot"},
         "outputs": {"acknowledged": True},
     },
-    "ops.event.monitor": {
+    "perception.event.monitor": {
         "summary": "Monitor operational events against thresholds",
         "inputs": {"events": [{"type": "error", "severity": "critical"}], "thresholds": {"max_error_count": 0}},
         "outputs": {"status": "alert", "alerts": [{"rule": "max_error_count", "actual": 1}]},
@@ -370,12 +370,12 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"action": {"type": "data_export", "involves_pii": True}},
         "outputs": {"risk_score": 0.7, "breakdown": {"pii": 0.3, "external": 0.2}},
     },
-    "provenance.citation.generate": {
+    "evidence.citation.generate": {
         "summary": "Generate a citation from a source",
         "inputs": {"source": {"url": "https://example.com/article", "title": "Example"}, "excerpt": "Key fact"},
         "outputs": {"citation": "Example. Retrieved from https://example.com/article"},
     },
-    "provenance.claim.verify": {
+    "evidence.claim.verify": {
         "summary": "Verify a claim against sources",
         "inputs": {"claim": "Revenue grew 15%", "sources": [{"text": "Revenue grew 15% in Q3."}]},
         "outputs": {"supported": True, "confidence": 0.95},
@@ -415,17 +415,17 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"title": "Bug in login page", "priority": "high"},
         "outputs": {"case_id": "CASE-1", "created": True},
     },
-    "task.case.get": {
+    "perception.case.get": {
         "summary": "Retrieve a specific case",
         "inputs": {"case_id": "CASE-1"},
         "outputs": {"case": {"id": "CASE-1", "title": "Bug in login page", "state": "open"}, "found": True},
     },
-    "task.case.list": {
+    "perception.case.list": {
         "summary": "List cases filtered by status",
         "inputs": {"status_filter": "open"},
         "outputs": {"cases": [{"id": "CASE-1", "state": "open"}], "total": 1},
     },
-    "task.case.search": {
+    "perception.case.search": {
         "summary": "Search cases by keyword",
         "inputs": {"query": "login"},
         "outputs": {"results": [{"id": "CASE-1", "title": "Bug in login page"}], "total": 1},
@@ -450,12 +450,12 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"milestone_name": "Beta Release", "target_date": "2026-03-15", "deliverables": ["feature-x"]},
         "outputs": {"milestone_id": "MS-1", "scheduled": True},
     },
-    "task.priority.classify": {
+    "reasoning.priority.classify": {
         "summary": "Classify priority of a task",
         "inputs": {"task": {"title": "DB running out of disk", "type": "incident"}, "context": {"environment": "production"}},
         "outputs": {"priority": "critical", "confidence": 0.9},
     },
-    "task.sla.monitor": {
+    "perception.sla.monitor": {
         "summary": "Monitor SLA compliance",
         "inputs": {"tasks": [{"id": "CASE-1", "priority": "high", "state": "open"}], "sla_rules": [{"priority": "high", "max_resolution_hours": 4}]},
         "outputs": {"compliant": [], "breached": ["CASE-1"], "at_risk": []},
@@ -465,67 +465,67 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"task_id": "CASE-1", "target_state": "in_progress"},
         "outputs": {"transitioned": True, "previous_state": "open", "current_state": "in_progress"},
     },
-    "text.content.classify": {
+    "reasoning.content.classify": {
         "summary": "Classify text into categories",
         "inputs": {"text": "I love this product!", "labels": ["positive", "negative", "neutral"]},
         "outputs": {"label": "positive", "confidence": 0.95},
     },
-    "text.content.embed": {
+    "reasoning.content.embed": {
         "summary": "Generate a vector embedding for text",
         "inputs": {"text": "This is a test sentence."},
         "outputs": {"vector": [0.01, -0.03, 0.12]},
     },
-    "text.content.extract": {
+    "perception.content.extract": {
         "summary": "Extract clean text from HTML",
         "inputs": {"text": "<html><body><h1>Title</h1><p>Content.</p></body></html>"},
         "outputs": {"text": "Title\nContent."},
     },
-    "text.content.generate": {
+    "reasoning.content.generate": {
         "summary": "Generate text from an instruction",
         "inputs": {"instruction": "Write a one-sentence description of Python."},
         "outputs": {"text": "Python is a versatile, high-level programming language."},
     },
-    "text.content.merge": {
+    "reasoning.content.merge": {
         "summary": "Merge text items into a single block",
         "inputs": {"items": ["Hello", "World"]},
         "outputs": {"text": "Hello\n\nWorld"},
     },
-    "text.content.summarize": {
+    "reasoning.content.summarize": {
         "summary": "Summarize a passage of text",
         "inputs": {"text": "Machine learning is a subset of AI that enables systems to learn from data..."},
         "outputs": {"summary": "ML lets systems learn from data without explicit programming."},
     },
-    "text.content.template": {
+    "reasoning.content.template": {
         "summary": "Render a template with variables",
         "inputs": {"template": "Hello {{name}}, welcome to {{place}}!", "variables": {"name": "Alice", "place": "HQ"}},
         "outputs": {"text": "Hello Alice, welcome to HQ!"},
     },
-    "text.content.transform": {
+    "reasoning.content.transform": {
         "summary": "Transform text style or tone",
         "inputs": {"text": "The system is operational.", "goal": "simplify for non-technical audience"},
         "outputs": {"text": "Everything is working normally."},
     },
-    "text.content.translate": {
+    "reasoning.content.translate": {
         "summary": "Translate text to another language",
         "inputs": {"text": "Hello world", "target_language": "es"},
         "outputs": {"text": "Hola mundo"},
     },
-    "text.entity.extract": {
+    "perception.entity.extract": {
         "summary": "Extract named entities from text",
         "inputs": {"text": "John Smith works at Google in Mountain View."},
         "outputs": {"entities": [{"text": "John Smith", "type": "PERSON"}, {"text": "Google", "type": "ORG"}]},
     },
-    "text.keyword.extract": {
+    "perception.keyword.extract": {
         "summary": "Extract keywords from text",
         "inputs": {"text": "Python is great for machine learning and data science."},
         "outputs": {"keywords": ["Python", "machine learning", "data science"]},
     },
-    "text.language.detect": {
+    "reasoning.language.detect": {
         "summary": "Detect the language of a text",
         "inputs": {"text": "Bonjour le monde"},
         "outputs": {"language": "fr", "confidence": 0.98},
     },
-    "text.response.extract": {
+    "reasoning.response.extract": {
         "summary": "Extract an answer from context",
         "inputs": {"question": "What is Python?", "context": "Python is a high-level programming language."},
         "outputs": {"text": "A high-level programming language."},

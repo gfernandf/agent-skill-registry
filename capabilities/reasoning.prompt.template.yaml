@@ -1,0 +1,59 @@
+id: reasoning.prompt.template
+version: 1.0.0
+description: Render a model prompt from a named or inline template and a set of variable
+  bindings.
+inputs:
+  template:
+    type: string
+    required: true
+    description: Prompt template string with ${variable} placeholders.
+  variables:
+    type: object
+    required: true
+    description: Key-value mapping of variable names to their values.
+  format:
+    type: string
+    required: false
+    description: 'Output format hint: plain | chat_messages. Defaults to plain.'
+outputs:
+  prompt:
+    type: string
+    required: true
+    description: The fully rendered prompt string.
+  unresolved:
+    type: array
+    required: false
+    description: List of placeholder names that could not be resolved from variables.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  status: stable
+  tags:
+  - model
+  - prompt
+  - template
+  - rendering
+  examples:
+  - summary: Render a summarization prompt
+    inputs:
+      template: 'Summarize the following text about ${topic}:
+
+
+        ${text}'
+      variables:
+        topic: climate change
+        text: Global temperatures rose 1.2C...
+  layer: orchestration
+cognitive_hints:
+  role: act
+  produces:
+    prompt:
+      type: Entity
+    unresolved:
+      type: Entity
+  consumes:
+  - Context

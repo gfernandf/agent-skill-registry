@@ -1,0 +1,47 @@
+id: reasoning.constraint.reconcile
+version: 1.0.0
+description: Reconcile conflicting constraints and produce a coherent constraint set
+  with trade-offs.
+inputs:
+  constraints:
+    type: array
+    required: true
+    description: Constraint set to reconcile.
+  policy:
+    type: object
+    required: false
+    description: Optional prioritization policy.
+outputs:
+  reconciled_constraints:
+    type: array
+    required: true
+    description: Conflict-resolved constraints with precedence.
+  tradeoffs:
+    type: array
+    required: false
+    description: Trade-offs introduced by reconciliation.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Criterion
+  - Context
+  produces:
+    reconciled_constraints:
+      type: Criterion
+    tradeoffs:
+      type: Tradeoff
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - constraint
+  - reconcile
+  - reasoning
+  examples:
+  - summary: Reconcile speed vs compliance constraints
+  layer: cognitive

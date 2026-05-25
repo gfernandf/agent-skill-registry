@@ -1,0 +1,58 @@
+id: decision.strategy.select
+version: 1.0.0
+description: Select the most appropriate reasoning or execution strategy under current
+  constraints and evidence.
+inputs:
+  strategies:
+    type: array
+    required: true
+    description: Candidate strategies with pros/cons and prerequisites.
+  constraints:
+    type: array
+    required: false
+    description: Applicable constraints for strategy selection.
+  objective:
+    type: string
+    required: true
+    description: Decision objective the strategy must support.
+outputs:
+  selected_strategy:
+    type: object
+    required: true
+    description: Chosen strategy with identifier and rationale.
+  rejected_strategies:
+    type: array
+    required: false
+    description: Rejected strategies and rejection rationale.
+  selection_confidence:
+    type: number
+    required: false
+    description: Confidence score 0.0-1.0 for strategy choice.
+cognitive_hints:
+  role: decide
+  consumes:
+  - Option
+  - Criterion
+  - Context
+  produces:
+    selected_strategy:
+      type: Decision
+    rejected_strategies:
+      type: Evidence
+    selection_confidence:
+      type: Score
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - decision
+  - strategy
+  - selection
+  examples:
+  - summary: Select deep-research strategy under tight deadline
+  layer: cognitive

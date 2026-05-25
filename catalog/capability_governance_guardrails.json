@@ -1,42 +1,20 @@
 {
   "summary": {
-    "capabilities_total": 159,
-    "covered_domains": 27,
-    "uncovered_domains": 0,
-    "semantic_family_alerts": 15,
+    "capabilities_total": 190,
+    "covered_domains": 26,
+    "uncovered_domains": 5,
+    "semantic_family_alerts": 28,
     "duplicate_description_alerts": 0,
     "metadata_issues": 0
   },
-  "uncovered_domains": [],
+  "uncovered_domains": [
+    "analysis",
+    "eval",
+    "model",
+    "provenance",
+    "text"
+  ],
   "semantic_family_alerts": [
-    {
-      "domain": "agent",
-      "verb": "generate",
-      "capability_ids": [
-        "agent.option.generate",
-        "agent.output.generate",
-        "agent.plan.generate"
-      ],
-      "noun_variants": [
-        "option",
-        "output",
-        "plan"
-      ],
-      "recommendation": "review-for-canonical-operation"
-    },
-    {
-      "domain": "agent",
-      "verb": "synthesize",
-      "capability_ids": [
-        "agent.output.synthesize",
-        "agent.plan.synthesize"
-      ],
-      "noun_variants": [
-        "output",
-        "plan"
-      ],
-      "recommendation": "review-for-canonical-operation"
-    },
     {
       "domain": "data",
       "verb": "map",
@@ -51,15 +29,92 @@
       "recommendation": "review-for-canonical-operation"
     },
     {
-      "domain": "eval",
-      "verb": "score",
+      "domain": "decision",
+      "verb": "select",
       "capability_ids": [
-        "eval.option.score",
-        "eval.output.score"
+        "decision.option.select",
+        "decision.strategy.select"
       ],
       "noun_variants": [
         "option",
-        "output"
+        "strategy"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "evaluation",
+      "verb": "detect",
+      "capability_ids": [
+        "evaluation.catalog.detect",
+        "evaluation.framework.detect"
+      ],
+      "noun_variants": [
+        "catalog",
+        "framework"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "evaluation",
+      "verb": "rank",
+      "capability_ids": [
+        "evaluation.catalog.rank",
+        "evaluation.framework.rank"
+      ],
+      "noun_variants": [
+        "catalog",
+        "framework"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "evaluation",
+      "verb": "score",
+      "capability_ids": [
+        "evaluation.option.score",
+        "evaluation.output.score",
+        "evaluation.response.score",
+        "evaluation.risk.score",
+        "evaluation.uncertainty.score"
+      ],
+      "noun_variants": [
+        "option",
+        "output",
+        "response",
+        "risk",
+        "uncertainty"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "evaluation",
+      "verb": "validate",
+      "capability_ids": [
+        "evaluation.assumption.validate",
+        "evaluation.constraint.validate",
+        "evaluation.output.validate",
+        "evaluation.plan.validate",
+        "evaluation.response.validate"
+      ],
+      "noun_variants": [
+        "assumption",
+        "constraint",
+        "output",
+        "plan",
+        "response"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "evidence",
+      "verb": "detect",
+      "capability_ids": [
+        "evidence.conflict.detect",
+        "evidence.gap.detect"
+      ],
+      "noun_variants": [
+        "conflict",
+        "gap"
       ],
       "recommendation": "review-for-canonical-operation"
     },
@@ -104,53 +159,220 @@
     },
     {
       "domain": "memory",
+      "verb": "retrieve",
+      "capability_ids": [
+        "memory.context.retrieve",
+        "memory.entry.retrieve"
+      ],
+      "noun_variants": [
+        "context",
+        "entry"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "memory",
       "verb": "store",
       "capability_ids": [
+        "memory.context.store",
         "memory.entry.store",
         "memory.record.store"
       ],
       "noun_variants": [
+        "context",
         "entry",
         "record"
       ],
       "recommendation": "review-for-canonical-operation"
     },
     {
-      "domain": "model",
-      "verb": "generate",
+      "domain": "perception",
+      "verb": "extract",
       "capability_ids": [
-        "model.embedding.generate",
-        "model.output.generate"
+        "perception.content.extract",
+        "perception.entity.extract",
+        "perception.keyword.extract"
       ],
       "noun_variants": [
-        "embedding",
-        "output"
+        "content",
+        "entity",
+        "keyword"
       ],
       "recommendation": "review-for-canonical-operation"
     },
     {
-      "domain": "model",
-      "verb": "score",
-      "capability_ids": [
-        "model.output.score",
-        "model.risk.score"
-      ],
-      "noun_variants": [
-        "output",
-        "risk"
-      ],
-      "recommendation": "review-for-canonical-operation"
-    },
-    {
-      "domain": "ops",
+      "domain": "perception",
       "verb": "monitor",
       "capability_ids": [
-        "ops.event.monitor",
-        "ops.trace.monitor"
+        "perception.event.monitor",
+        "perception.sla.monitor"
       ],
       "noun_variants": [
         "event",
-        "trace"
+        "sla"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "perception",
+      "verb": "search",
+      "capability_ids": [
+        "perception.case.search",
+        "perception.catalog.search"
+      ],
+      "noun_variants": [
+        "case",
+        "catalog"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "analyze",
+      "capability_ids": [
+        "reasoning.option.analyze",
+        "reasoning.sentiment.analyze"
+      ],
+      "noun_variants": [
+        "option",
+        "sentiment"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "classify",
+      "capability_ids": [
+        "reasoning.content.classify",
+        "reasoning.output.classify",
+        "reasoning.priority.classify"
+      ],
+      "noun_variants": [
+        "content",
+        "output",
+        "priority"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "decompose",
+      "capability_ids": [
+        "reasoning.plan.decompose",
+        "reasoning.problem.decompose",
+        "reasoning.task.decompose"
+      ],
+      "noun_variants": [
+        "plan",
+        "problem",
+        "task"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "extract",
+      "capability_ids": [
+        "reasoning.assumption.extract",
+        "reasoning.constraint.extract",
+        "reasoning.response.extract",
+        "reasoning.risk.extract",
+        "reasoning.uncertainty.extract"
+      ],
+      "noun_variants": [
+        "assumption",
+        "constraint",
+        "response",
+        "risk",
+        "uncertainty"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "generate",
+      "capability_ids": [
+        "reasoning.content.generate",
+        "reasoning.embedding.generate",
+        "reasoning.hypothesis.generate",
+        "reasoning.option.generate",
+        "reasoning.output.generate",
+        "reasoning.plan.generate",
+        "reasoning.response.generate"
+      ],
+      "noun_variants": [
+        "content",
+        "embedding",
+        "hypothesis",
+        "option",
+        "output",
+        "plan",
+        "response"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "normalize",
+      "capability_ids": [
+        "reasoning.output.normalize",
+        "reasoning.request.normalize"
+      ],
+      "noun_variants": [
+        "output",
+        "request"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "reconcile",
+      "capability_ids": [
+        "reasoning.constraint.reconcile",
+        "reasoning.plan.reconcile"
+      ],
+      "noun_variants": [
+        "constraint",
+        "plan"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "split",
+      "capability_ids": [
+        "reasoning.plan.split",
+        "reasoning.problem.split"
+      ],
+      "noun_variants": [
+        "plan",
+        "problem"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "synthesize",
+      "capability_ids": [
+        "reasoning.output.synthesize",
+        "reasoning.plan.synthesize"
+      ],
+      "noun_variants": [
+        "output",
+        "plan"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "reasoning",
+      "verb": "template",
+      "capability_ids": [
+        "reasoning.content.template",
+        "reasoning.prompt.template"
+      ],
+      "noun_variants": [
+        "content",
+        "prompt"
       ],
       "recommendation": "review-for-canonical-operation"
     },
@@ -190,23 +412,6 @@
       "noun_variants": [
         "event",
         "milestone"
-      ],
-      "recommendation": "review-for-canonical-operation"
-    },
-    {
-      "domain": "text",
-      "verb": "extract",
-      "capability_ids": [
-        "text.content.extract",
-        "text.entity.extract",
-        "text.keyword.extract",
-        "text.response.extract"
-      ],
-      "noun_variants": [
-        "content",
-        "entity",
-        "keyword",
-        "response"
       ],
       "recommendation": "review-for-canonical-operation"
     }

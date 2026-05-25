@@ -187,7 +187,7 @@ EXAMPLES: dict[str, list[dict]] = {
     "agent.plan-and-route": [{
         "description": "Route a user question to the right capability",
         "input": {"goal": "Summarize this PDF for me", "context": {"file": "report.pdf"}},
-        "output": {"plan": [{"step": 1, "capability": "pdf.document.read"}, {"step": 2, "capability": "text.content.summarize"}]},
+        "output": {"plan": [{"step": 1, "capability": "pdf.document.read"}, {"step": 2, "capability": "reasoning.content.summarize"}]},
     }],
     "agent.trace": [{
         "description": "Analyze execution trace with risk monitoring",

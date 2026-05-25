@@ -26,41 +26,41 @@ low-level deterministic transformations to LLM-powered generation and analysis.
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `text.language.detect` | Detect the language of a text | No | experimental |
-| `text.content.classify` | Classify text into predefined categories | No | experimental |
-| `text.sentiment.analyze` | Polarity and emotion analysis | No | experimental |
-| `text.content.compare` | Semantic diff of two texts | No | experimental |
+| `reasoning.language.detect` | Detect the language of a text | No | experimental |
+| `reasoning.content.classify` | Classify text into predefined categories | No | experimental |
+| `reasoning.sentiment.analyze` | Polarity and emotion analysis | No | experimental |
+| `reasoning.content.compare` | Semantic diff of two texts | No | experimental |
 
 ### Extraction
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `text.keyword.extract` | Extract keywords from text | Yes | experimental |
-| `text.entity.extract` | Extract named entities (people, orgs, places) | No | experimental |
-| `text.content.extract` | Extract clean text from HTML/documents | Yes | **stable** |
-| `text.response.extract` | Answer a question from a context passage (extractive QA) | No | experimental |
+| `perception.keyword.extract` | Extract keywords from text | Yes | experimental |
+| `perception.entity.extract` | Extract named entities (people, orgs, places) | No | experimental |
+| `perception.content.extract` | Extract clean text from HTML/documents | Yes | **stable** |
+| `reasoning.response.extract` | Answer a question from a context passage (extractive QA) | No | experimental |
 
 ### Generation
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `text.content.generate` | Produce new text from instruction + optional context | No | experimental |
-| `text.content.summarize` | Condense text preserving key ideas | No | experimental |
-| `text.content.translate` | Translate text between languages | No | experimental |
-| `text.content.transform` | Rewrite text applying a style/tone directive | No | experimental |
+| `reasoning.content.generate` | Produce new text from instruction + optional context | No | experimental |
+| `reasoning.content.summarize` | Condense text preserving key ideas | No | experimental |
+| `reasoning.content.translate` | Translate text between languages | No | experimental |
+| `reasoning.content.transform` | Rewrite text applying a style/tone directive | No | experimental |
 
 ### Composition (deterministic)
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `text.content.template` | Render `{{var}}` templates with variables | Yes | **stable** |
-| `text.content.merge` | Concatenate text items with configurable separator | Yes | **stable** |
+| `reasoning.content.template` | Render `{{var}}` templates with variables | Yes | **stable** |
+| `reasoning.content.merge` | Concatenate text items with configurable separator | Yes | **stable** |
 
 ### Vectorization
 
 | Capability | Purpose | Deterministic | Status |
 |-----------|---------|:---:|--------|
-| `text.content.embed` | Generate vector embeddings from text | No | experimental |
+| `reasoning.content.embed` | Generate vector embeddings from text | No | experimental |
 
 ---
 
@@ -89,19 +89,19 @@ quality) and optionally an OpenAI binding (production quality).
 
 | Capability | Python baseline | OpenAI binding |
 |-----------|:-:|:-:|
-| `text.language.detect` | yes | yes |
-| `text.keyword.extract` | yes | yes |
-| `text.entity.extract` | yes | yes |
-| `text.content.classify` | yes | yes |
-| `text.content.embed` | yes | yes |
-| `text.content.extract` | yes | — |
-| `text.content.summarize` | yes | yes |
-| `text.content.translate` | yes | yes |
-| `text.content.generate` | yes | yes |
-| `text.content.transform` | yes | yes |
-| `text.response.extract` | yes | yes |
-| `text.content.template` | yes | — |
-| `text.content.merge` | yes | — |
+| `reasoning.language.detect` | yes | yes |
+| `perception.keyword.extract` | yes | yes |
+| `perception.entity.extract` | yes | yes |
+| `reasoning.content.classify` | yes | yes |
+| `reasoning.content.embed` | yes | yes |
+| `perception.content.extract` | yes | — |
+| `reasoning.content.summarize` | yes | yes |
+| `reasoning.content.translate` | yes | yes |
+| `reasoning.content.generate` | yes | yes |
+| `reasoning.content.transform` | yes | yes |
+| `reasoning.response.extract` | yes | yes |
+| `reasoning.content.template` | yes | — |
+| `reasoning.content.merge` | yes | — |
 
 Deterministic capabilities (template, merge, extract) do not need an LLM
 binding — the Python baseline *is* the production implementation.

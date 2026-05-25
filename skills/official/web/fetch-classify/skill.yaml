@@ -36,7 +36,7 @@ steps:
   output:
     text: outputs.text
 - id: classify
-  uses: text.content.classify
+  uses: reasoning.content.classify
   input:
     text: outputs.text
     labels: inputs.labels

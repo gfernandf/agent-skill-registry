@@ -2,7 +2,7 @@ id: task.event.schedule
 version: 1.0.0
 description: 'Schedule a future event, reminder, or recurring timer. Creates a scheduled
   entry with a target time and optional recurrence pattern. For milestone scheduling
-  use task.milestone.schedule; for SLA monitoring use task.sla.monitor.
+  use task.milestone.schedule; for SLA monitoring use perception.sla.monitor.
 
   '
 inputs:

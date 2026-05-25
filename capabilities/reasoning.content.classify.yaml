@@ -1,0 +1,54 @@
+id: reasoning.content.classify
+version: 1.0.0
+description: Classify a text into one or more predefined categories.
+inputs:
+  text:
+    type: string
+    required: true
+    description: Text to classify.
+  labels:
+    type: array
+    required: false
+    description: Optional list of candidate labels.
+outputs:
+  label:
+    type: string
+    required: true
+    description: Predicted label for the text.
+  confidence:
+    type: number
+    required: false
+    description: Confidence score for the classification.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: stable
+  tags:
+  - text
+  - nlp
+  - classification
+  examples:
+  - summary: Classify text into categories
+    inputs:
+      text: I love this product!
+      labels:
+      - positive
+      - negative
+      - neutral
+    outputs:
+      label: positive
+      confidence: 0.95
+  layer: cognitive
+cognitive_hints:
+  role: analyze
+  produces:
+    label:
+      type: Artifact
+    confidence:
+      type: Score
+  consumes:
+  - Context

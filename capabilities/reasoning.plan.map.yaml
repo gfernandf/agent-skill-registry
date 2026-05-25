@@ -1,0 +1,72 @@
+id: reasoning.plan.map
+version: 1.0.0
+status: experimental
+description: 'Bind the inputs and outputs of expanded plan steps to explicit CognitiveState
+  paths using dollar-prefixed path references such as $state.working.summary. Resolves
+  which step outputs feed which step inputs. Produces a fully wired step list where
+  every input and output has an unambiguous state path, eliminating implicit data
+  flow.
+
+  '
+inputs:
+  expanded_steps:
+    type: array
+    required: true
+    description: 'Array of expanded step objects from reasoning.plan.split.
+
+      '
+  state_schema:
+    type: object
+    required: false
+    description: 'CognitiveState schema defining available paths and their types.
+      Used to validate that proposed bindings resolve to declared fields.
+
+      '
+outputs:
+  bound_steps:
+    type: array
+    required: true
+    description: 'Array of step objects identical to expanded_steps but with all input
+      and output fields replaced by $state.* path references.
+
+      '
+  unresolved_bindings:
+    type: array
+    required: false
+    description: 'Step ids and field names where a binding could not be resolved.
+      Non-empty means the plan is not fully wired and requires repair.
+
+      '
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  tags:
+  - planning
+  - input-binding
+  - state-wiring
+  - agent-pipeline
+  examples:
+  - expanded_steps:
+    - id: s1_step1
+      ref: web.source.search
+      inputs:
+        query: EU green hydrogen regulation
+    expected_bound_steps:
+    - id: s1_step1
+      inputs:
+        query: $state.intake.normalized_request.raw_request
+  layer: cognitive
+cognitive_hints:
+  role: synthesize
+  produces:
+    bound_steps:
+      type: Plan
+    unresolved_bindings:
+      type: Risk
+  consumes:
+  - Plan
+  - Context

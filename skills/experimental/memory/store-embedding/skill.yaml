@@ -18,7 +18,7 @@ outputs:
     required: true
 steps:
 - id: embed_text
-  uses: text.content.embed
+  uses: reasoning.content.embed
   input:
     text: inputs.text
   output:

@@ -29,13 +29,13 @@ steps:
   output:
     results: outputs.results
 - id: merge_results
-  uses: text.content.merge
+  uses: reasoning.content.merge
   input:
     items: outputs.results
   output:
     text: vars.merged_results
 - id: summarize_results
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: vars.merged_results
   output:

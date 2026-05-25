@@ -1,0 +1,69 @@
+id: reasoning.uncertainty.extract
+version: 1.0.0
+description: >
+  Extract explicit uncertainties, unknowns, and ambiguity points from a target
+  artifact. Produces a structured uncertainty inventory and optional clarification
+  questions for downstream planning.
+inputs:
+  target:
+    type: object
+    required: true
+    description: Artifact to inspect for uncertainty signals.
+  context:
+    type: string
+    required: false
+    description: Optional domain context to improve uncertainty extraction.
+outputs:
+  uncertainties:
+    type: array
+    required: true
+    description: >
+      Extracted uncertainties with fields id, description, category,
+      impact_area, and severity_hint (low | medium | high).
+  clarification_questions:
+    type: array
+    required: false
+    description: Questions that would reduce uncertainty if answered.
+  extraction_notes:
+    type: string
+    required: false
+    description: Notes on scope limits and potential blind spots.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Artifact
+  - Context
+  produces:
+    uncertainties:
+      type: Uncertainty
+    clarification_questions:
+      type: Message
+    extraction_notes:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - uncertainty
+  - extraction
+  examples:
+  - summary: Extract uncertainty points from launch plan
+    inputs:
+      target:
+        type: launch_plan
+        title: EU expansion launch
+        body: Timeline assumes legal review in two weeks.
+    outputs:
+      uncertainties:
+      - id: u1
+        description: Legal review duration variance is unknown.
+        severity_hint: high
+      clarification_questions:
+      - What is the historical review cycle time for comparable launches?
+  layer: cognitive

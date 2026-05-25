@@ -51,7 +51,7 @@ steps:
       redacted_text: vars.clean_text
 
   - id: summarize
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
     config:
       depends_on: [redact_pii]
     input:
@@ -75,7 +75,7 @@ steps:
       reasons: vars.gate_reasons
 
   - id: compose_final_input
-    uses: text.content.template
+    uses: reasoning.content.template
     config:
       depends_on: [gate_output, summarize]
     input:
@@ -87,7 +87,7 @@ steps:
       text: vars.finalize_payload
 
   - id: finalize
-    uses: text.content.transform
+    uses: reasoning.content.transform
     config:
       depends_on: [compose_final_input]
     input:

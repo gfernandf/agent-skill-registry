@@ -52,6 +52,25 @@ Additionally, every capability must declare execution governance properties:
 - `properties.audit_level` in `{basic, standard, strict}`
 - `metadata.layer` in `{cognitive, orchestration, operational, governance}`
 
+For `metadata.layer: cognitive`, taxonomy is encoded in the capability id domain.
+The first segment of the id must be one of:
+
+- `perception`
+- `reasoning`
+- `evaluation`
+- `decision`
+- `evidence`
+- `memory`
+
+Domain intent for cognitive layer:
+
+- `perception`: structures raw or semi-structured input into cognitive signals
+- `memory`: stores, retrieves, updates, compresses, and reconciles context state
+- `reasoning`: interprets goals, decomposes problems, and generates cognitive artifacts
+- `evidence`: verifies claims, assesses sources, detects conflicts and gaps
+- `evaluation`: scores, validates, compares, gates, and diagnoses artifacts including assumptions, constraints, hypotheses, options, plans, outputs, responses, risks, and uncertainties
+- `decision`: routes inputs, prioritizes uncertainty, selects strategies and options, and justifies selected options
+
 These fields are mandatory for catalog profiling and runtime governance.
 
 ### Layer tie-break policy

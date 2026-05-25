@@ -1,0 +1,46 @@
+id: evidence.source.assess
+version: 1.0.0
+description: Assess source credibility, relevance, and recency for evidence quality.
+inputs:
+  sources:
+    type: array
+    required: true
+    description: Sources to assess.
+  criteria:
+    type: array
+    required: false
+    description: Optional assessment criteria and weights.
+outputs:
+  source_scores:
+    type: array
+    required: true
+    description: Scores per source with credibility, relevance, and recency dimensions.
+  assessment_summary:
+    type: string
+    required: false
+    description: Overall source quality summary.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Evidence
+  - Criterion
+  produces:
+    source_scores:
+      type: Score
+    assessment_summary:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - evidence
+  - source
+  - assessment
+  examples:
+  - summary: Assess reliability of three market reports
+  layer: cognitive

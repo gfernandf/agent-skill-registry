@@ -115,7 +115,7 @@ steps:
     valid: outputs.validation_passed
     errors: vars.structure_errors
 - id: check_consistency
-  uses: model.response.validate
+  uses: evaluation.response.validate
   input:
     output: inputs.artifact
     validation_policy:
@@ -129,7 +129,7 @@ steps:
     issues: outputs.consistency_issues
     rationale: outputs.validation_summary
 - id: score_quality
-  uses: eval.output.score
+  uses: evaluation.output.score
   input:
     output: inputs.artifact
     rubric: inputs.quality_rules

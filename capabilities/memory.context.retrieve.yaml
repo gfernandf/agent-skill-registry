@@ -1,0 +1,54 @@
+id: memory.context.retrieve
+version: 1.0.0
+description: >
+  Retrieve previously stored cognitive context by context_id to ground ongoing
+  reasoning and decision steps.
+inputs:
+  context_id:
+    type: string
+    required: true
+    description: Identifier of the context record to retrieve.
+outputs:
+  context:
+    type: object
+    required: false
+    description: Retrieved context payload when found.
+  found:
+    type: boolean
+    required: true
+    description: Whether the context record exists.
+  freshness_hint:
+    type: string
+    required: false
+    description: Optional freshness note such as fresh | stale | expired.
+cognitive_hints:
+  role: perceive
+  consumes:
+  - Entity
+  produces:
+    context:
+      type: Context
+    found:
+      type: Evidence
+    freshness_hint:
+      type: Evidence
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - memory
+  - context
+  - retrieval
+  examples:
+  - summary: Retrieve context for decision follow-up
+    inputs:
+      context_id: project-eu-launch
+    outputs:
+      found: true
+      freshness_hint: fresh
+  layer: cognitive

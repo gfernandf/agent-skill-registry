@@ -1,0 +1,70 @@
+id: reasoning.output.synthesize
+version: 1.0.0
+status: experimental
+description: 'Convert a successfully completed ORCA plan and its execution trace into
+  a candidate reusable ORCA skill definition. Captures the step sequence, input/output
+  contracts, known constraints, and observed execution characteristics. The generated
+  candidate skill spec can be reviewed and contributed to the registry for future
+  reuse.
+
+  '
+inputs:
+  successful_plan:
+    type: object
+    required: true
+    description: 'Compiled plan that completed with execution_result.status success.
+
+      '
+  execution_trace:
+    type: object
+    required: true
+    description: 'Execution trace or result from agent.plan.execute containing per-step
+      outputs, durations, and state snapshots.
+
+      '
+outputs:
+  candidate_skill:
+    type: object
+    required: true
+    description: 'Candidate skill spec object with: name (string), description (string),
+      version (string, always 0.1.0), steps (array), inputs (object), outputs (object),
+      tags (array), notes (array of caveats).
+
+      '
+  confidence:
+    type: number
+    required: false
+    description: '0-1 confidence score for the candidate skill being genuinely reusable
+      as-is, based on execution stability and step generality.
+
+      '
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  tags:
+  - learning
+  - skill-synthesis
+  - agent-pipeline
+  examples:
+  - successful_plan:
+      execution_order:
+      - s1_step1
+      - s1_step2
+    expected_candidate_skill:
+      name: research.synthesize-briefing
+      version: 0.1.0
+  layer: cognitive
+cognitive_hints:
+  role: synthesize
+  produces:
+    candidate_skill:
+      type: Artifact
+    confidence:
+      type: Score
+  consumes:
+  - Plan
+  - Artifact

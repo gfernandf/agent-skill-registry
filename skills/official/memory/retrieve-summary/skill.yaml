@@ -25,14 +25,14 @@ steps:
     value: outputs.value
     found: outputs.found
 - id: merge_value
-  uses: text.content.merge
+  uses: reasoning.content.merge
   input:
     items:
       - outputs.value
   output:
     text: vars.value_text
 - id: summarize_value
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: vars.value_text
   output:

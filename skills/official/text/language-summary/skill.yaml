@@ -15,13 +15,13 @@ outputs:
     required: true
 steps:
 - id: detect_language
-  uses: text.language.detect
+  uses: reasoning.language.detect
   input:
     text: inputs.text
   output:
     language: outputs.language
 - id: summarize
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: inputs.text
   output:

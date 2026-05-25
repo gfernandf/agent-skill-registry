@@ -21,7 +21,7 @@ steps:
   output:
     text: outputs.text
 - id: summarize
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: outputs.text
   output:

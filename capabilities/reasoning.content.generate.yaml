@@ -1,0 +1,56 @@
+id: reasoning.content.generate
+version: 1.0.0
+description: 'Generate new text from an instruction and optional context. Use when
+  the goal is to produce original content (drafts, descriptions, paragraphs, emails,
+  explanations) rather than transforming existing text. For condensing existing text
+  use reasoning.content.summarize; for modifying style/tone of existing text use text.content.rewrite.
+
+  '
+inputs:
+  instruction:
+    type: string
+    required: true
+    description: "What to generate \u2014 the directive that guides content production\
+      \ (e.g. \"Write a product description for \u2026\").\n"
+  context:
+    type: string
+    required: false
+    description: 'Optional background information the generator can draw from. Not
+      the text to transform (use rewrite/summarize for that).
+
+      '
+  max_length:
+    type: integer
+    required: false
+    description: Soft upper bound on output length in characters.
+outputs:
+  text:
+    type: string
+    required: true
+    description: The generated text.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+cognitive_hints:
+  role: synthesize
+  consumes:
+  - Context
+  produces:
+    text:
+      type: Artifact
+metadata:
+  status: stable
+  tags:
+  - text
+  - generation
+  - llm
+  examples:
+  - summary: Generate text from an instruction
+    inputs:
+      instruction: Write a one-sentence description of Python.
+    outputs:
+      text: Python is a versatile, high-level programming language.
+  layer: cognitive

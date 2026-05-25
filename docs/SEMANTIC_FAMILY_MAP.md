@@ -61,4 +61,4 @@ Changes should be coordinated with:
 - candidate-merge: none
 - notes:
   - `analysis.synthesize` v0.2.0 uses fast path (2 steps, 1 LLM call)
-  - both skills depend on `research.source.retrieve` and `model.output.generate`
+  - both skills depend on `research.source.retrieve` and `reasoning.output.generate`

@@ -1,0 +1,53 @@
+id: evaluation.failure.analyze
+version: 1.0.0
+description: Analyze failure events, classify root causes, and estimate recurrence
+  risk.
+inputs:
+  failure:
+    type: object
+    required: true
+    description: Failure event payload.
+  context:
+    type: string
+    required: false
+    description: Optional context around system state and timeline.
+outputs:
+  root_causes:
+    type: array
+    required: true
+    description: Candidate root causes with confidence.
+  failure_class:
+    type: string
+    required: true
+    description: Failure class label.
+  recurrence_risk:
+    type: number
+    required: false
+    description: Estimated recurrence risk 0.0-1.0.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Context
+  - Risk
+  produces:
+    root_causes:
+      type: Evidence
+    failure_class:
+      type: Entity
+    recurrence_risk:
+      type: Score
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - failure
+  - evaluation
+  - diagnostics
+  examples:
+  - summary: Analyze failed deployment rollback
+  layer: cognitive

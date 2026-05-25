@@ -8,65 +8,65 @@
     },
     "agent.orchestrate-from-prompt": {
       "capabilities": [
-        "agent.catalog.detect",
-        "agent.catalog.rank",
-        "agent.catalog.search",
-        "agent.criteria.define",
-        "agent.flow.branch",
-        "agent.goal.interpret",
-        "agent.plan.gate",
-        "agent.plan.map",
-        "agent.plan.reconcile",
-        "agent.plan.split",
-        "agent.plan.synthesize",
-        "agent.plan.validate",
-        "agent.request.normalize",
-        "agent.task.plan"
+        "decision.flow.branch",
+        "evaluation.catalog.detect",
+        "evaluation.catalog.rank",
+        "evaluation.plan.gate",
+        "evaluation.plan.validate",
+        "perception.catalog.search",
+        "reasoning.criteria.define",
+        "reasoning.goal.interpret",
+        "reasoning.plan.map",
+        "reasoning.plan.reconcile",
+        "reasoning.plan.split",
+        "reasoning.plan.synthesize",
+        "reasoning.request.normalize",
+        "reasoning.task.plan"
       ],
       "skills": []
     },
     "agent.plan-and-route": {
       "capabilities": [
-        "agent.input.route",
-        "agent.plan.generate"
+        "decision.input.route",
+        "reasoning.plan.generate"
       ],
       "skills": []
     },
     "agent.trace": {
       "capabilities": [
         "data.schema.validate",
-        "ops.trace.analyze",
-        "ops.trace.monitor"
+        "evidence.trace.analyze",
+        "evidence.trace.monitor"
       ],
       "skills": []
     },
     "analysis.compare": {
       "capabilities": [
-        "eval.option.analyze",
-        "eval.option.score",
-        "eval.output.score"
+        "evaluation.option.score",
+        "evaluation.output.score",
+        "reasoning.option.analyze"
       ],
       "skills": []
     },
     "analysis.decompose": {
       "capabilities": [
-        "analysis.problem.split",
-        "eval.output.score",
-        "text.content.classify"
+        "evaluation.output.score",
+        "reasoning.content.classify",
+        "reasoning.problem.split"
       ],
       "skills": []
     },
     "analysis.risk-assess": {
       "capabilities": [
-        "analysis.risk.extract",
         "data.record.transform",
-        "eval.output.score"
+        "evaluation.output.score",
+        "reasoning.risk.extract"
       ],
       "skills": []
     },
     "analysis.synthesize": {
       "capabilities": [
-        "model.output.generate",
+        "reasoning.output.generate",
         "research.source.retrieve"
       ],
       "skills": []
@@ -74,25 +74,25 @@
     "audio.transcribe-summary": {
       "capabilities": [
         "audio.speech.transcribe",
-        "text.content.summarize"
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "code.change-approval-gate": {
       "capabilities": [
-        "agent.flow.branch",
-        "analysis.risk.extract",
+        "decision.flow.branch",
         "policy.constraint.gate",
         "policy.decision.justify",
         "policy.risk.classify",
-        "text.content.summarize"
+        "reasoning.content.summarize",
+        "reasoning.risk.extract"
       ],
       "skills": []
     },
     "code.diff-summary": {
       "capabilities": [
         "code.diff.extract",
-        "text.content.summarize"
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
@@ -105,35 +105,35 @@
     },
     "decision.make": {
       "capabilities": [
-        "agent.option.generate",
         "decision.option.justify",
-        "eval.option.analyze",
-        "eval.option.score",
-        "eval.output.score",
-        "text.content.merge"
+        "evaluation.option.score",
+        "evaluation.output.score",
+        "reasoning.content.merge",
+        "reasoning.option.analyze",
+        "reasoning.option.generate"
       ],
       "skills": []
     },
     "doc.chunk-and-embed": {
       "capabilities": [
         "doc.content.chunk",
-        "text.content.embed"
+        "reasoning.content.embed"
       ],
       "skills": []
     },
     "email.read-summary": {
       "capabilities": [
         "email.inbox.read",
-        "text.content.merge",
-        "text.content.summarize"
+        "reasoning.content.merge",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "eval.validate": {
       "capabilities": [
         "data.schema.validate",
-        "eval.output.score",
-        "model.response.validate"
+        "evaluation.output.score",
+        "evaluation.response.validate"
       ],
       "skills": []
     },
@@ -147,22 +147,22 @@
     "memory.retrieve-summary": {
       "capabilities": [
         "memory.entry.retrieve",
-        "text.content.merge",
-        "text.content.summarize"
+        "reasoning.content.merge",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "memory.store-embedding": {
       "capabilities": [
         "memory.entry.store",
-        "text.content.embed"
+        "reasoning.content.embed"
       ],
       "skills": []
     },
     "memory.store-summary": {
       "capabilities": [
         "memory.entry.store",
-        "text.content.summarize"
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
@@ -170,35 +170,35 @@
       "capabilities": [
         "doc.content.chunk",
         "pdf.document.read",
-        "text.content.embed"
+        "reasoning.content.embed"
       ],
       "skills": []
     },
     "pdf.read-keyword-summary": {
       "capabilities": [
         "pdf.document.read",
-        "text.content.summarize",
-        "text.keyword.extract"
+        "perception.keyword.extract",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "pdf.read-summary": {
       "capabilities": [
         "pdf.document.read",
-        "text.content.summarize"
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "research.generate-briefing": {
       "capabilities": [
-        "analysis.risk.extract",
-        "analysis.theme.cluster",
-        "eval.output.score",
+        "evaluation.output.score",
+        "perception.entity.extract",
+        "perception.keyword.extract",
+        "reasoning.content.merge",
+        "reasoning.content.summarize",
+        "reasoning.risk.extract",
+        "reasoning.theme.cluster",
         "research.source.retrieve",
-        "text.content.merge",
-        "text.content.summarize",
-        "text.entity.extract",
-        "text.keyword.extract",
         "web.source.normalize",
         "web.source.search"
       ],
@@ -206,7 +206,7 @@
     },
     "research.normalize-corpus": {
       "capabilities": [
-        "model.output.generate",
+        "reasoning.output.generate",
         "research.source.retrieve"
       ],
       "skills": []
@@ -214,79 +214,79 @@
     "research.quality-assess": {
       "capabilities": [
         "data.schema.validate",
-        "eval.output.score",
-        "model.output.generate",
-        "model.response.validate"
+        "evaluation.output.score",
+        "evaluation.response.validate",
+        "reasoning.output.generate"
       ],
       "skills": []
     },
     "security.safe-summarize": {
       "capabilities": [
+        "reasoning.content.summarize",
+        "reasoning.content.template",
+        "reasoning.content.transform",
         "security.output.gate",
         "security.pii.detect",
-        "security.pii.redact",
-        "text.content.summarize",
-        "text.content.template",
-        "text.content.transform"
+        "security.pii.redact"
       ],
       "skills": []
     },
     "table.filter-summary": {
       "capabilities": [
-        "table.row.filter",
-        "text.content.merge",
-        "text.content.summarize"
+        "reasoning.content.merge",
+        "reasoning.content.summarize",
+        "table.row.filter"
       ],
       "skills": []
     },
     "task.frame": {
       "capabilities": [
-        "agent.input.route",
-        "agent.plan.generate",
-        "text.content.classify",
-        "text.content.extract"
+        "decision.input.route",
+        "perception.content.extract",
+        "reasoning.content.classify",
+        "reasoning.plan.generate"
       ],
       "skills": []
     },
     "text.detect-language-and-classify": {
       "capabilities": [
-        "text.content.classify",
-        "text.language.detect"
+        "reasoning.content.classify",
+        "reasoning.language.detect"
       ],
       "skills": []
     },
     "text.entity-summary": {
       "capabilities": [
-        "text.content.summarize",
-        "text.entity.extract"
+        "perception.entity.extract",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "text.keyword-summary": {
       "capabilities": [
-        "text.content.extract",
-        "text.content.summarize",
-        "text.keyword.extract"
+        "perception.content.extract",
+        "perception.keyword.extract",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
     "text.language-summary": {
       "capabilities": [
-        "text.content.summarize",
-        "text.language.detect"
+        "reasoning.content.summarize",
+        "reasoning.language.detect"
       ],
       "skills": []
     },
     "text.translate-summary": {
       "capabilities": [
-        "text.content.summarize",
-        "text.content.translate"
+        "reasoning.content.summarize",
+        "reasoning.content.translate"
       ],
       "skills": []
     },
     "web.fetch-classify": {
       "capabilities": [
-        "text.content.classify",
+        "reasoning.content.classify",
         "web.page.extract",
         "web.page.fetch"
       ],
@@ -294,8 +294,8 @@
     },
     "web.fetch-summary": {
       "capabilities": [
-        "text.content.extract",
-        "text.content.summarize",
+        "perception.content.extract",
+        "reasoning.content.summarize",
         "web.page.fetch"
       ],
       "skills": []
@@ -303,7 +303,7 @@
     "web.page-chunk-and-embed": {
       "capabilities": [
         "doc.content.chunk",
-        "text.content.embed",
+        "reasoning.content.embed",
         "web.page.extract",
         "web.page.fetch"
       ],
@@ -311,15 +311,15 @@
     },
     "web.page-summary": {
       "capabilities": [
-        "text.content.summarize",
+        "reasoning.content.summarize",
         "web.page.extract"
       ],
       "skills": []
     },
     "web.search-summary": {
       "capabilities": [
-        "text.content.merge",
-        "text.content.summarize",
+        "reasoning.content.merge",
+        "reasoning.content.summarize",
         "web.source.search"
       ],
       "skills": []

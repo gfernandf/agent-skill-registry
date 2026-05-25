@@ -1,0 +1,55 @@
+id: memory.context.update
+version: 1.0.0
+description: Update an existing context record with partial or full changes.
+inputs:
+  context_id:
+    type: string
+    required: true
+    description: Identifier of context record.
+  patch:
+    type: object
+    required: true
+    description: Partial update payload.
+  merge_strategy:
+    type: string
+    required: false
+    description: Merge strategy replace|deep_merge; defaults deep_merge.
+outputs:
+  updated:
+    type: boolean
+    required: true
+    description: Whether update succeeded.
+  context_id:
+    type: string
+    required: true
+    description: Updated context id.
+cognitive_hints:
+  role: act
+  consumes:
+  - Context
+  produces:
+    updated:
+      type: Evidence
+    context_id:
+      type: Entity
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+  state_access: write
+  audit_level: strict
+safety:
+  trust_level: standard
+  data_classification: internal
+  reversible: true
+  requires_confirmation: false
+  description: Updates bounded context memory records.
+metadata:
+  status: experimental
+  tags:
+  - memory
+  - context
+  - update
+  examples:
+  - summary: Update context assumptions after new evidence
+  layer: cognitive

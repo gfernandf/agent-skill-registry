@@ -4,8 +4,8 @@ status: experimental
 description: 'Execute a compiled ORCA plan DAG step by step, calling each referenced
   skill via the embedded runtime and chaining outputs through CognitiveState bindings.
   Returns a full execution result including per-step status, final state, and any
-  errors encountered. Only accepts compiled, gate-approved plans from agent.plan.synthesize
-  + agent.plan.gate. Requires explicit user confirmation before execution begins (trust_level:
+  errors encountered. Only accepts compiled, gate-approved plans from reasoning.plan.synthesize
+  + evaluation.plan.gate. Requires explicit user confirmation before execution begins (trust_level:
   elevated).
 
   '
@@ -13,7 +13,7 @@ inputs:
   compiled_plan:
     type: object
     required: true
-    description: 'Compiled plan object (or JSON string) from agent.plan.synthesize
+    description: 'Compiled plan object (or JSON string) from reasoning.plan.synthesize
       containing dag, execution_order, state_bindings, and registry_version.
 
       '

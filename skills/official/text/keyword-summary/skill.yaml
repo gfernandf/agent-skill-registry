@@ -15,19 +15,19 @@ outputs:
     required: true
 steps:
 - id: extract_text
-  uses: text.content.extract
+  uses: perception.content.extract
   input:
     text: inputs.text
   output:
     text: vars.cleaned_text
 - id: extract_keywords
-  uses: text.keyword.extract
+  uses: perception.keyword.extract
   input:
     text: vars.cleaned_text
   output:
     keywords: outputs.keywords
 - id: summarize_text
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: vars.cleaned_text
   output:

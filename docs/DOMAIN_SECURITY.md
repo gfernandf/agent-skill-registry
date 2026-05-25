@@ -98,9 +98,9 @@ The runtime `SafetyGateRunner` supports four failure modes:
 - **security.pii.detect vs security.pii.redact**: `detect` returns findings
   metadata (boolean + array); `redact` returns transformed text with PII
   replaced. Use `detect` for gating decisions, `redact` for output sanitization.
-- **security.output.gate vs model.risk.score**: `output.gate` is a
-  deterministic policy check (PII/secrets); `model.risk.score` scores broader
+- **security.output.gate vs evaluation.risk.score**: `output.gate` is a
+  deterministic policy check (PII/secrets); `evaluation.risk.score` scores broader
   content risk (toxicity, bias, injection) using heuristics or LLM.
-- **security.pii.redact vs model.output.sanitize**: `pii.redact` handles
-  structured PII patterns; `model.output.sanitize` handles broader harmful
+- **security.pii.redact vs reasoning.output.sanitize**: `pii.redact` handles
+  structured PII patterns; `reasoning.output.sanitize` handles broader harmful
   content, data leakage, and deep recursive sanitization.

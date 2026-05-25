@@ -14,7 +14,7 @@ description: >
 
   Designed to be observable at each step. Each intermediate result is inspectable
   via agent.trace. Favors a slower, transparent pipeline over a single opaque
-  LLM call. Zero uses of model.output.generate — every step is a dedicated,
+  LLM call. Zero uses of reasoning.output.generate — every step is a dedicated,
   named capability.
 
   Typical upstream: analysis.synthesize output as context_items.
@@ -183,7 +183,7 @@ steps:
   # Convert the context_items array into a single text block for capabilities
   # that expect string context.
   - id: merge_context
-    uses: text.content.merge
+    uses: reasoning.content.merge
     input:
       items: inputs.context_items
     output:
@@ -193,7 +193,7 @@ steps:
   # Generate baseline alternatives. When explicit options are provided,
   # downstream eval/justify steps enforce strict preservation of those entities.
   - id: generate_options
-    uses: agent.option.generate
+    uses: reasoning.option.generate
     input:
       goal: inputs.goal
       context: vars.merged_context
@@ -206,7 +206,7 @@ steps:
   # For each option, identify pros, cons, risks, and assumptions. No scoring
   # here — pure qualitative evidence gathering.
   - id: analyze_options
-    uses: eval.option.analyze
+    uses: reasoning.option.analyze
     input:
       options: vars.generated_options
       context: vars.merged_context
@@ -221,7 +221,7 @@ steps:
   # Multi-criteria scoring. Criteria are inferred from goal/context if not
   # explicit. Each option gets per-criterion scores, strengths, weaknesses.
   - id: evaluate_options
-    uses: eval.option.score
+    uses: evaluation.option.score
     input:
       options: vars.generated_options
       goal: inputs.goal
@@ -267,7 +267,7 @@ steps:
   # the decision content. Catches low-input, inconsistent, or poorly
   # justified decisions.
   - id: assess_quality
-    uses: eval.output.score
+    uses: evaluation.output.score
     input:
       output:
         recommendation: outputs.recommendation

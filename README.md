@@ -71,7 +71,7 @@ They define a **contract** describing what an operation does, including:
 
 Examples:
 
-text.content.summarize\
+reasoning.content.summarize\
 web.page.fetch\
 pdf.document.read\
 audio.speech.transcribe\
@@ -101,7 +101,7 @@ web.fetch-summary
 
 Workflow:
 
-web.page.fetch → web.page.extract → text.content.summarize
+web.page.fetch → web.page.extract → reasoning.content.summarize
 
 Skills allow building reusable agent behavior without writing imperative
 code.
@@ -140,7 +140,7 @@ domain.noun.verb
 
 Examples:
 
-text.keyword.extract\
+perception.keyword.extract\
 image.caption.generate\
 data.schema.validate\
 code.diff.extract
@@ -173,7 +173,7 @@ steps:
 -   id: extract uses: web.page.extract input: content: vars.page output:
     text: vars.text
 
--   id: summarize uses: text.content.summarize input: text: vars.text output:
+-   id: summarize uses: reasoning.content.summarize input: text: vars.text output:
     summary: outputs.summary
 
 Execution semantics:

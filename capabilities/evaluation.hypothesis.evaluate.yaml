@@ -1,0 +1,84 @@
+id: evaluation.hypothesis.evaluate
+version: 1.0.0
+description: >
+  Evaluate candidate hypotheses against available evidence and explicit criteria.
+  Produces support and contradiction scores per hypothesis plus a structured
+  status that can be consumed by comparison and decision steps.
+inputs:
+  hypotheses:
+    type: array
+    required: true
+    description: Hypotheses to evaluate, typically from reasoning.hypothesis.generate.
+  evidence:
+    type: array
+    required: false
+    description: Supporting or conflicting evidence items used during evaluation.
+  criteria:
+    type: array
+    required: false
+    description: Optional evaluation criteria and weights for scoring.
+outputs:
+  evaluated_hypotheses:
+    type: array
+    required: true
+    description: >
+      Evaluation results per hypothesis with fields hypothesis_id,
+      support_score (0-1), contradiction_score (0-1), and status
+      (supported | mixed | weak | rejected).
+  evaluation_summary:
+    type: string
+    required: true
+    description: Summary of strongest and weakest hypotheses and key reasoning signals.
+  evidence_gaps:
+    type: array
+    required: false
+    description: Missing evidence needed to raise confidence in unresolved hypotheses.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Hypothesis
+  - Evidence
+  - Criterion
+  produces:
+    evaluated_hypotheses:
+      type: Score
+    evaluation_summary:
+      type: Summary
+    evidence_gaps:
+      type: Uncertainty
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - hypothesis
+  - evaluation
+  examples:
+  - summary: Evaluate two hypotheses with mixed evidence
+    inputs:
+      hypotheses:
+      - id: h1
+        statement: Regression is caused by cache stampede.
+      - id: h2
+        statement: Regression is caused by database index drift.
+      evidence:
+      - id: e1
+        text: Cache miss ratio jumped from 5% to 42%.
+      - id: e2
+        text: Query plans remained stable.
+    outputs:
+      evaluated_hypotheses:
+      - hypothesis_id: h1
+        support_score: 0.84
+        contradiction_score: 0.18
+        status: supported
+      - hypothesis_id: h2
+        support_score: 0.21
+        contradiction_score: 0.72
+        status: rejected
+  layer: cognitive

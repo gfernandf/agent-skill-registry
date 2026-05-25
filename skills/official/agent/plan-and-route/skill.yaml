@@ -15,13 +15,13 @@ outputs:
     required: true
 steps:
 - id: generate_plan
-  uses: agent.plan.generate
+  uses: reasoning.plan.generate
   input:
     objective: inputs.objective
   output:
     plan: outputs.plan
 - id: route_plan
-  uses: agent.input.route
+  uses: decision.input.route
   input:
     query: inputs.objective
   output:
@@ -52,4 +52,4 @@ metadata:
       - step: 1
         capability: pdf.document.read
       - step: 2
-        capability: text.content.summarize
+        capability: reasoning.content.summarize

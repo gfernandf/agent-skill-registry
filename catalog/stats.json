@@ -1,8 +1,8 @@
 {
   "summary": {
-    "capability_count": 159,
+    "capability_count": 190,
     "skill_count": 39,
-    "domain_count": 27,
+    "domain_count": 29,
     "channel_count": 2
   },
   "skills": {
@@ -35,50 +35,50 @@
   },
   "capabilities": {
     "by_domain": {
-      "agent": 26,
-      "task": 16,
-      "text": 15,
+      "reasoning": 44,
+      "evaluation": 18,
       "integration": 12,
+      "perception": 12,
+      "task": 11,
       "identity": 10,
+      "memory": 10,
       "data": 8,
-      "model": 8,
-      "ops": 6,
+      "decision": 8,
+      "evidence": 8,
       "web": 6,
       "policy": 5,
       "table": 5,
       "code": 4,
-      "eval": 4,
       "image": 4,
-      "memory": 4,
       "security": 4,
-      "analysis": 3,
+      "agent": 3,
       "audio": 3,
       "fs": 3,
       "message": 3,
       "doc": 2,
       "email": 2,
-      "provenance": 2,
-      "decision": 1,
+      "ops": 2,
       "pdf": 1,
       "research": 1,
       "video": 1
     },
     "by_status": {
-      "stable": 140,
-      "unspecified": 18,
-      "deprecated": 1
+      "stable": 133,
+      "experimental": 30,
+      "unspecified": 14,
+      "deprecated": 13
     },
     "most_used": [
       {
-        "id": "text.content.summarize",
+        "id": "reasoning.content.summarize",
         "count": 18
       },
       {
-        "id": "eval.output.score",
+        "id": "evaluation.output.score",
         "count": 7
       },
       {
-        "id": "text.content.merge",
+        "id": "reasoning.content.merge",
         "count": 6
       },
       {
@@ -86,23 +86,15 @@
         "count": 4
       },
       {
-        "id": "text.content.classify",
+        "id": "reasoning.content.classify",
         "count": 4
       },
       {
-        "id": "text.content.embed",
+        "id": "reasoning.content.embed",
         "count": 4
-      },
-      {
-        "id": "analysis.risk.extract",
-        "count": 3
       },
       {
         "id": "doc.content.chunk",
-        "count": 3
-      },
-      {
-        "id": "model.output.generate",
         "count": 3
       },
       {
@@ -110,15 +102,23 @@
         "count": 3
       },
       {
+        "id": "perception.content.extract",
+        "count": 3
+      },
+      {
+        "id": "perception.keyword.extract",
+        "count": 3
+      },
+      {
+        "id": "reasoning.output.generate",
+        "count": 3
+      },
+      {
+        "id": "reasoning.risk.extract",
+        "count": 3
+      },
+      {
         "id": "research.source.retrieve",
-        "count": 3
-      },
-      {
-        "id": "text.content.extract",
-        "count": 3
-      },
-      {
-        "id": "text.keyword.extract",
         "count": 3
       },
       {
@@ -130,23 +130,19 @@
         "count": 3
       },
       {
-        "id": "agent.flow.branch",
+        "id": "decision.flow.branch",
         "count": 2
       },
       {
-        "id": "agent.input.route",
+        "id": "decision.input.route",
         "count": 2
       },
       {
-        "id": "agent.plan.generate",
+        "id": "evaluation.option.score",
         "count": 2
       },
       {
-        "id": "eval.option.analyze",
-        "count": 2
-      },
-      {
-        "id": "eval.option.score",
+        "id": "evaluation.response.validate",
         "count": 2
       },
       {
@@ -154,15 +150,19 @@
         "count": 2
       },
       {
-        "id": "model.response.validate",
+        "id": "perception.entity.extract",
         "count": 2
       },
       {
-        "id": "text.entity.extract",
+        "id": "reasoning.language.detect",
         "count": 2
       },
       {
-        "id": "text.language.detect",
+        "id": "reasoning.option.analyze",
+        "count": 2
+      },
+      {
+        "id": "reasoning.plan.generate",
         "count": 2
       },
       {
@@ -170,71 +170,7 @@
         "count": 2
       },
       {
-        "id": "agent.catalog.detect",
-        "count": 1
-      },
-      {
-        "id": "agent.catalog.rank",
-        "count": 1
-      },
-      {
-        "id": "agent.catalog.search",
-        "count": 1
-      },
-      {
-        "id": "agent.criteria.define",
-        "count": 1
-      },
-      {
-        "id": "agent.goal.interpret",
-        "count": 1
-      },
-      {
-        "id": "agent.option.generate",
-        "count": 1
-      },
-      {
         "id": "agent.plan.execute",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.gate",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.map",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.reconcile",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.split",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.synthesize",
-        "count": 1
-      },
-      {
-        "id": "agent.plan.validate",
-        "count": 1
-      },
-      {
-        "id": "agent.request.normalize",
-        "count": 1
-      },
-      {
-        "id": "agent.task.plan",
-        "count": 1
-      },
-      {
-        "id": "analysis.problem.split",
-        "count": 1
-      },
-      {
-        "id": "analysis.theme.cluster",
         "count": 1
       },
       {
@@ -262,6 +198,30 @@
         "count": 1
       },
       {
+        "id": "evaluation.catalog.detect",
+        "count": 1
+      },
+      {
+        "id": "evaluation.catalog.rank",
+        "count": 1
+      },
+      {
+        "id": "evaluation.plan.gate",
+        "count": 1
+      },
+      {
+        "id": "evaluation.plan.validate",
+        "count": 1
+      },
+      {
+        "id": "evidence.trace.analyze",
+        "count": 1
+      },
+      {
+        "id": "evidence.trace.monitor",
+        "count": 1
+      },
+      {
         "id": "image.caption.generate",
         "count": 1
       },
@@ -274,11 +234,7 @@
         "count": 1
       },
       {
-        "id": "ops.trace.analyze",
-        "count": 1
-      },
-      {
-        "id": "ops.trace.monitor",
+        "id": "perception.catalog.search",
         "count": 1
       },
       {
@@ -291,6 +247,62 @@
       },
       {
         "id": "policy.risk.classify",
+        "count": 1
+      },
+      {
+        "id": "reasoning.content.template",
+        "count": 1
+      },
+      {
+        "id": "reasoning.content.transform",
+        "count": 1
+      },
+      {
+        "id": "reasoning.content.translate",
+        "count": 1
+      },
+      {
+        "id": "reasoning.criteria.define",
+        "count": 1
+      },
+      {
+        "id": "reasoning.goal.interpret",
+        "count": 1
+      },
+      {
+        "id": "reasoning.option.generate",
+        "count": 1
+      },
+      {
+        "id": "reasoning.plan.map",
+        "count": 1
+      },
+      {
+        "id": "reasoning.plan.reconcile",
+        "count": 1
+      },
+      {
+        "id": "reasoning.plan.split",
+        "count": 1
+      },
+      {
+        "id": "reasoning.plan.synthesize",
+        "count": 1
+      },
+      {
+        "id": "reasoning.problem.split",
+        "count": 1
+      },
+      {
+        "id": "reasoning.request.normalize",
+        "count": 1
+      },
+      {
+        "id": "reasoning.task.plan",
+        "count": 1
+      },
+      {
+        "id": "reasoning.theme.cluster",
         "count": 1
       },
       {
@@ -310,31 +322,13 @@
         "count": 1
       },
       {
-        "id": "text.content.template",
-        "count": 1
-      },
-      {
-        "id": "text.content.transform",
-        "count": 1
-      },
-      {
-        "id": "text.content.translate",
-        "count": 1
-      },
-      {
         "id": "web.source.normalize",
         "count": 1
       }
     ],
     "unused": [
-      "agent.flow.catch",
       "agent.flow.iterate",
       "agent.flow.wait",
-      "agent.input.collect",
-      "agent.output.generate",
-      "agent.output.synthesize",
-      "agent.plan.create",
-      "agent.task.delegate",
       "audio.speaker.diarize",
       "audio.speech.synthesize",
       "code.snippet.execute",
@@ -345,9 +339,30 @@
       "data.record.deduplicate",
       "data.record.join",
       "data.record.merge",
+      "decision.flow.catch",
+      "decision.option.select",
+      "decision.strategy.select",
+      "decision.task.delegate",
+      "decision.uncertainty.prioritize",
       "doc.content.generate",
       "email.message.send",
-      "eval.output.validate",
+      "evaluation.assumption.validate",
+      "evaluation.constraint.validate",
+      "evaluation.failure.analyze",
+      "evaluation.framework.detect",
+      "evaluation.framework.rank",
+      "evaluation.hypothesis.compare",
+      "evaluation.hypothesis.evaluate",
+      "evaluation.output.validate",
+      "evaluation.response.score",
+      "evaluation.risk.score",
+      "evaluation.uncertainty.score",
+      "evidence.citation.generate",
+      "evidence.claim.verify",
+      "evidence.conflict.detect",
+      "evidence.gap.detect",
+      "evidence.source.assess",
+      "evidence.trace.summarize",
       "fs.file.list",
       "fs.file.read",
       "fs.file.write",
@@ -375,25 +390,50 @@
       "integration.record.reconcile",
       "integration.record.update",
       "integration.record.upsert",
+      "memory.context.compress",
+      "memory.context.reconcile",
+      "memory.context.retrieve",
+      "memory.context.store",
+      "memory.context.summarize",
+      "memory.context.update",
       "memory.record.store",
       "memory.vector.search",
       "message.content.format",
       "message.notification.send",
       "message.priority.classify",
-      "model.embedding.generate",
-      "model.output.classify",
-      "model.output.sanitize",
-      "model.output.score",
-      "model.prompt.template",
-      "model.risk.score",
       "ops.budget.estimate",
       "ops.event.acknowledge",
-      "ops.event.monitor",
-      "ops.trace.summarize",
+      "perception.case.get",
+      "perception.case.list",
+      "perception.case.search",
+      "perception.event.monitor",
+      "perception.input.collect",
+      "perception.input.structure",
+      "perception.language.detect",
+      "perception.sla.monitor",
       "policy.constraint.validate",
       "policy.risk.score",
-      "provenance.citation.generate",
-      "provenance.claim.verify",
+      "reasoning.assumption.extract",
+      "reasoning.constraint.extract",
+      "reasoning.constraint.reconcile",
+      "reasoning.content.compare",
+      "reasoning.content.generate",
+      "reasoning.embedding.generate",
+      "reasoning.hypothesis.generate",
+      "reasoning.output.classify",
+      "reasoning.output.normalize",
+      "reasoning.output.sanitize",
+      "reasoning.output.synthesize",
+      "reasoning.plan.create",
+      "reasoning.plan.decompose",
+      "reasoning.priority.classify",
+      "reasoning.problem.decompose",
+      "reasoning.prompt.template",
+      "reasoning.response.extract",
+      "reasoning.response.generate",
+      "reasoning.sentiment.analyze",
+      "reasoning.task.decompose",
+      "reasoning.uncertainty.extract",
       "security.secret.detect",
       "table.column.aggregate",
       "table.row.sort",
@@ -404,21 +444,12 @@
       "task.assignee.assign",
       "task.case.close",
       "task.case.create",
-      "task.case.get",
-      "task.case.list",
-      "task.case.search",
       "task.case.update",
       "task.event.acknowledge",
       "task.event.schedule",
       "task.incident.create",
       "task.milestone.schedule",
-      "task.priority.classify",
-      "task.sla.monitor",
       "task.state.transition",
-      "text.content.compare",
-      "text.content.generate",
-      "text.response.extract",
-      "text.sentiment.analyze",
       "video.frame.extract",
       "web.request.send",
       "web.source.verify"
@@ -431,7 +462,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 159,
+    "capabilities_with_nondefault_metadata": 190,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -825,6 +856,10 @@
     "top_capability_tags": [
       {
         "id": "agent-pipeline",
+        "count": 22
+      },
+      {
+        "id": "text",
         "count": 18
       },
       {
@@ -832,19 +867,19 @@
         "count": 17
       },
       {
-        "id": "text",
-        "count": 17
+        "id": "analysis",
+        "count": 14
       },
       {
         "id": "integration",
         "count": 13
       },
       {
-        "id": "data",
-        "count": 10
+        "id": "governance",
+        "count": 11
       },
       {
-        "id": "governance",
+        "id": "data",
         "count": 10
       },
       {
@@ -852,7 +887,23 @@
         "count": 10
       },
       {
+        "id": "memory",
+        "count": 10
+      },
+      {
+        "id": "evaluation",
+        "count": 9
+      },
+      {
         "id": "model",
+        "count": 9
+      },
+      {
+        "id": "extraction",
+        "count": 8
+      },
+      {
+        "id": "nlp",
         "count": 8
       },
       {
@@ -860,15 +911,19 @@
         "count": 8
       },
       {
-        "id": "extraction",
-        "count": 7
+        "id": "planning",
+        "count": 8
       },
       {
-        "id": "nlp",
+        "id": "generation",
         "count": 7
       },
       {
         "id": "record",
+        "count": 7
+      },
+      {
+        "id": "validation",
         "count": 7
       },
       {
@@ -880,11 +935,7 @@
         "count": 6
       },
       {
-        "id": "generation",
-        "count": 6
-      },
-      {
-        "id": "planning",
+        "id": "context",
         "count": 6
       },
       {
@@ -892,15 +943,19 @@
         "count": 6
       },
       {
-        "id": "analysis",
+        "id": "catalog",
         "count": 5
       },
       {
-        "id": "evaluation",
+        "id": "detection",
         "count": 5
       },
       {
         "id": "event",
+        "count": 5
+      },
+      {
+        "id": "input",
         "count": 5
       },
       {
@@ -912,6 +967,18 @@
         "count": 5
       },
       {
+        "id": "registry",
+        "count": 5
+      },
+      {
+        "id": "retrieval",
+        "count": 5
+      },
+      {
+        "id": "scoring",
+        "count": 5
+      },
+      {
         "id": "security",
         "count": 5
       },
@@ -920,15 +987,15 @@
         "count": 5
       },
       {
-        "id": "validation",
-        "count": 5
-      },
-      {
         "id": "code",
         "count": 4
       },
       {
         "id": "control-flow",
+        "count": 4
+      },
+      {
+        "id": "decision",
         "count": 4
       },
       {
@@ -944,19 +1011,11 @@
         "count": 4
       },
       {
-        "id": "input",
-        "count": 4
-      },
-      {
         "id": "llm",
         "count": 4
       },
       {
         "id": "lookup",
-        "count": 4
-      },
-      {
-        "id": "memory",
         "count": 4
       },
       {
@@ -968,6 +1027,10 @@
         "count": 4
       },
       {
+        "id": "pii",
+        "count": 4
+      },
+      {
         "id": "processing",
         "count": 4
       },
@@ -976,7 +1039,7 @@
         "count": 4
       },
       {
-        "id": "retrieval",
+        "id": "reasoning",
         "count": 4
       },
       {
@@ -984,7 +1047,7 @@
         "count": 4
       },
       {
-        "id": "scoring",
+        "id": "structuring",
         "count": 4
       },
       {
@@ -1004,11 +1067,15 @@
         "count": 3
       },
       {
-        "id": "catalog",
+        "id": "comparison",
         "count": 3
       },
       {
         "id": "connector",
+        "count": 3
+      },
+      {
+        "id": "constraint",
         "count": 3
       },
       {
@@ -1020,7 +1087,15 @@
         "count": 3
       },
       {
+        "id": "evidence",
+        "count": 3
+      },
+      {
         "id": "filesystem",
+        "count": 3
+      },
+      {
+        "id": "hypothesis",
         "count": 3
       },
       {
@@ -1040,11 +1115,11 @@
         "count": 3
       },
       {
-        "id": "ops",
+        "id": "normalization",
         "count": 3
       },
       {
-        "id": "pii",
+        "id": "ops",
         "count": 3
       },
       {
@@ -1056,11 +1131,11 @@
         "count": 3
       },
       {
-        "id": "registry",
+        "id": "role",
         "count": 3
       },
       {
-        "id": "role",
+        "id": "safety",
         "count": 3
       },
       {
@@ -1084,6 +1159,14 @@
         "count": 3
       },
       {
+        "id": "uncertainty",
+        "count": 3
+      },
+      {
+        "id": "update",
+        "count": 3
+      },
+      {
         "id": "vector",
         "count": 3
       },
@@ -1100,6 +1183,10 @@
         "count": 2
       },
       {
+        "id": "assumption",
+        "count": 2
+      },
+      {
         "id": "audit",
         "count": 2
       },
@@ -1112,11 +1199,11 @@
         "count": 2
       },
       {
-        "id": "comparison",
+        "id": "composition",
         "count": 2
       },
       {
-        "id": "composition",
+        "id": "content-filter",
         "count": 2
       },
       {
@@ -1124,11 +1211,7 @@
         "count": 2
       },
       {
-        "id": "decision",
-        "count": 2
-      },
-      {
-        "id": "detection",
+        "id": "decomposition",
         "count": 2
       },
       {
@@ -1156,6 +1239,10 @@
         "count": 2
       },
       {
+        "id": "gap-detection",
+        "count": 2
+      },
+      {
         "id": "gate",
         "count": 2
       },
@@ -1176,15 +1263,23 @@
         "count": 2
       },
       {
+        "id": "macro-planning",
+        "count": 2
+      },
+      {
         "id": "message",
         "count": 2
       },
       {
-        "id": "normalization",
+        "id": "notification",
         "count": 2
       },
       {
-        "id": "notification",
+        "id": "persistence",
+        "count": 2
+      },
+      {
+        "id": "plan-expansion",
         "count": 2
       },
       {
@@ -1197,6 +1292,14 @@
       },
       {
         "id": "provenance",
+        "count": 2
+      },
+      {
+        "id": "ranking",
+        "count": 2
+      },
+      {
+        "id": "reconcile",
         "count": 2
       },
       {
@@ -1216,11 +1319,15 @@
         "count": 2
       },
       {
-        "id": "safety",
+        "id": "sanitize",
         "count": 2
       },
       {
         "id": "scheduling",
+        "count": 2
+      },
+      {
+        "id": "selection",
         "count": 2
       },
       {
@@ -1232,7 +1339,7 @@
         "count": 2
       },
       {
-        "id": "structuring",
+        "id": "summarize",
         "count": 2
       },
       {
@@ -1245,10 +1352,6 @@
       },
       {
         "id": "triage",
-        "count": 2
-      },
-      {
-        "id": "update",
         "count": 2
       },
       {
@@ -1308,6 +1411,10 @@
         "count": 1
       },
       {
+        "id": "assessment",
+        "count": 1
+      },
+      {
         "id": "assumptions",
         "count": 1
       },
@@ -1356,6 +1463,10 @@
         "count": 1
       },
       {
+        "id": "cognition",
+        "count": 1
+      },
+      {
         "id": "coherence",
         "count": 1
       },
@@ -1376,11 +1487,11 @@
         "count": 1
       },
       {
-        "id": "constraint",
+        "id": "conflict",
         "count": 1
       },
       {
-        "id": "content-filter",
+        "id": "constraints",
         "count": 1
       },
       {
@@ -1408,10 +1519,6 @@
         "count": 1
       },
       {
-        "id": "decomposition",
-        "count": 1
-      },
-      {
         "id": "deduplication",
         "count": 1
       },
@@ -1421,6 +1528,10 @@
       },
       {
         "id": "delete",
+        "count": 1
+      },
+      {
+        "id": "diagnostics",
         "count": 1
       },
       {
@@ -1445,6 +1556,10 @@
       },
       {
         "id": "export",
+        "count": 1
+      },
+      {
+        "id": "failure",
         "count": 1
       },
       {
@@ -1480,7 +1595,7 @@
         "count": 1
       },
       {
-        "id": "gap-detection",
+        "id": "gap",
         "count": 1
       },
       {
@@ -1528,10 +1643,6 @@
         "count": 1
       },
       {
-        "id": "macro-planning",
-        "count": 1
-      },
-      {
         "id": "map",
         "count": 1
       },
@@ -1569,6 +1680,10 @@
       },
       {
         "id": "operations",
+        "count": 1
+      },
+      {
+        "id": "option",
         "count": 1
       },
       {
@@ -1612,19 +1727,15 @@
         "count": 1
       },
       {
-        "id": "persistence",
-        "count": 1
-      },
-      {
-        "id": "plan-expansion",
-        "count": 1
-      },
-      {
         "id": "plan-governance",
         "count": 1
       },
       {
         "id": "plan-repair",
+        "count": 1
+      },
+      {
+        "id": "prioritization",
         "count": 1
       },
       {
@@ -1645,14 +1756,6 @@
       },
       {
         "id": "quality-scoring",
-        "count": 1
-      },
-      {
-        "id": "ranking",
-        "count": 1
-      },
-      {
-        "id": "reasoning",
         "count": 1
       },
       {
@@ -1708,10 +1811,6 @@
         "count": 1
       },
       {
-        "id": "sanitize",
-        "count": 1
-      },
-      {
         "id": "scaffolding",
         "count": 1
       },
@@ -1740,6 +1839,10 @@
         "count": 1
       },
       {
+        "id": "source",
+        "count": 1
+      },
+      {
         "id": "speaker",
         "count": 1
       },
@@ -1765,6 +1868,10 @@
       },
       {
         "id": "statistics",
+        "count": 1
+      },
+      {
+        "id": "strategy",
         "count": 1
       },
       {

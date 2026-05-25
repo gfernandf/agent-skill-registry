@@ -1,0 +1,100 @@
+id: decision.option.select
+version: 1.0.0
+description: 'Select the final option from analyzed and scored candidates under explicit constraints and decision criteria.
+
+  '
+inputs:
+  options:
+    type: array
+    required: true
+    description: 'Candidate options to choose from.
+
+      '
+  option_analysis:
+    type: array
+    required: false
+    description: 'Qualitative analysis per option (pros, cons, assumptions, risks).
+
+      '
+  option_scores:
+    type: array
+    required: false
+    description: 'Quantitative scores per option, typically from evaluation.option.score.
+
+      '
+  criteria:
+    type: object
+    required: false
+    description: 'Decision criteria and optional weights used to choose the final option.
+
+      '
+  constraints:
+    type: object
+    required: false
+    description: 'Hard constraints that the selected option must satisfy.
+
+      '
+outputs:
+  selected_option:
+    type: object
+    required: true
+    description: 'The chosen option with its identifier and key attributes.
+
+      '
+  selection_rationale:
+    type: string
+    required: true
+    description: 'Concise rationale explaining why this option was selected.
+
+      '
+  rejected_options:
+    type: array
+    required: false
+    description: 'Other considered options with brief rejection reasons.
+
+      '
+  selection_confidence:
+    type: number
+    required: false
+    description: Confidence score in the option selection (0.0-1.0).
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+cognitive_hints:
+  role: decide
+  consumes:
+  - Option
+  - Score
+  - Criterion
+  produces:
+    selected_option:
+      type: Decision
+    selection_rationale:
+      type: Summary
+    selection_confidence:
+      type: Score
+metadata:
+  status: stable
+  tags:
+  - decision
+  - selection
+  - option
+  examples:
+  - summary: Select final rollout option from scored alternatives
+    inputs:
+      options:
+      - id: option_a
+      - id: option_b
+      option_scores:
+      - option_id: option_a
+        overall_score: 0.78
+      - option_id: option_b
+        overall_score: 0.86
+    outputs:
+      selected_option:
+        id: option_b
+      selection_rationale: Option B maximizes expected value under given constraints.
+  layer: cognitive

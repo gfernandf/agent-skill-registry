@@ -54,7 +54,7 @@ This validates the entire registry.
 You may validate an individual capability or skill:
 
 ```bash
-python tools/validate_registry.py capabilities/text.content.summarize.yaml
+python tools/validate_registry.py capabilities/reasoning.content.summarize.yaml
 ```
 
 ```bash
@@ -293,8 +293,8 @@ Example:
     "web.fetch-summary": {
       "capabilities": [
         "web.page.fetch",
-        "text.content.extract",
-        "text.content.summarize"
+        "perception.content.extract",
+        "reasoning.content.summarize"
       ],
       "skills": []
     }
@@ -408,7 +408,7 @@ python tools/enforce_capability_sunset.py --minimum-window-days 45
 Example step:
 
 ```
-uses: text.content.summarize
+uses: reasoning.content.summarize
 ```
 
 or
@@ -597,7 +597,7 @@ python tools/create_capability.py --domain text --verb summarize
 This will generate:
 
 ```
-capabilities/text.content.summarize.yaml
+capabilities/reasoning.content.summarize.yaml
 ```
 
 Create a capability with noun:
@@ -627,9 +627,9 @@ The canonical capability identifier is generated automatically.
 Examples:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 ```
 
 ---
@@ -658,7 +658,7 @@ This helps preserve consistency in the registry core language.
 The tool creates a minimal capability definition:
 
 ```yaml
-id: text.content.classify
+id: reasoning.content.classify
 version: 1.0.0
 description: Describe what this capability does.
 
@@ -745,7 +745,7 @@ It is designed for interactive use and is **not** part of the CI pipeline
 | `produces <Type>` | `produces Risk` | Capabilities that produce a cognitive type |
 | `consumes <Type>` | `consumes Option` | Capabilities that consume a cognitive type |
 | `role <role>` | `role analyze` | Capabilities with a given cognitive role |
-| `compatible <id>` | `compatible analysis.risk.extract` | Downstream capabilities compatible with outputs |
+| `compatible <id>` | `compatible reasoning.risk.extract` | Downstream capabilities compatible with outputs |
 | `coverage` | — | Type and role coverage report against vocabulary |
 | `safety` | — | Safety-block coverage and per-capability details |
 | `chain <A> <B>` | `chain Option Decision` | Capability chains (1-2 hops) between two types |
@@ -756,7 +756,7 @@ It is designed for interactive use and is **not** part of the CI pipeline
 python tools/catalog_query.py produces Risk
 python tools/catalog_query.py consumes Option
 python tools/catalog_query.py role analyze
-python tools/catalog_query.py compatible analysis.risk.extract
+python tools/catalog_query.py compatible reasoning.risk.extract
 python tools/catalog_query.py coverage
 python tools/catalog_query.py safety
 python tools/catalog_query.py chain Option Decision

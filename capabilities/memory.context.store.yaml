@@ -1,0 +1,67 @@
+id: memory.context.store
+version: 1.0.0
+description: >
+  Persist structured cognitive context for reuse across executions, sessions, or
+  iterative reasoning cycles. Stores contextual payloads by context_id with optional TTL.
+inputs:
+  context_id:
+    type: string
+    required: true
+    description: Stable identifier for the context record.
+  context:
+    type: object
+    required: true
+    description: Structured context payload to persist.
+  ttl_seconds:
+    type: number
+    required: false
+    description: Optional time-to-live in seconds. Omit for non-expiring storage.
+outputs:
+  stored:
+    type: boolean
+    required: true
+    description: Whether the context payload was stored successfully.
+  context_id:
+    type: string
+    required: true
+    description: Identifier of the stored context record.
+cognitive_hints:
+  role: act
+  consumes:
+  - Context
+  produces:
+    stored:
+      type: Evidence
+    context_id:
+      type: Entity
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: true
+  state_access: write
+  audit_level: strict
+safety:
+  trust_level: standard
+  data_classification: internal
+  reversible: true
+  requires_confirmation: false
+  description: Stores context state in bounded memory storage.
+metadata:
+  status: experimental
+  tags:
+  - memory
+  - context
+  - persistence
+  examples:
+  - summary: Store cognitive context after a planning step
+    inputs:
+      context_id: project-eu-launch
+      context:
+        constraints:
+        - budget_lt_2m
+        assumptions:
+        - legal_review_2_weeks
+    outputs:
+      stored: true
+      context_id: project-eu-launch
+  layer: cognitive

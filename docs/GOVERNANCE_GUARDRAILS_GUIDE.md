@@ -101,7 +101,7 @@ Skills referencing capability IDs that don't exist in the catalog.
 ### Semantic family alerts
 
 Groups capabilities by `(domain, verb)`. When multiple capabilities share
-the same domain and verb (e.g., `eval.option.score` and `eval.output.score`),
+the same domain and verb (e.g., `evaluation.option.score` and `evaluation.output.score`),
 it flags them for review — are they genuinely distinct, or should they be
 merged into one capability with a broader noun?
 

@@ -119,6 +119,14 @@ def validate_capability_id_against_vocab(
 
 ALLOWED_STATUS = {"stable", "experimental", "draft", "deprecated", "unspecified"}
 ALLOWED_CAPABILITY_LAYERS = {"cognitive", "orchestration", "operational", "governance"}
+ALLOWED_COGNITIVE_DOMAINS = {
+    "perception",
+    "reasoning",
+    "evaluation",
+    "decision",
+    "evidence",
+    "memory",
+}
 
 ALLOWED_STATE_ACCESS = {"none", "read", "write", "read_write"}
 ALLOWED_AUDIT_LEVEL = {"basic", "standard", "strict"}
@@ -239,6 +247,11 @@ def validate_metadata_block(
         if not isinstance(layer, str) or layer not in ALLOWED_CAPABILITY_LAYERS:
             errors.append(
                 f"{path}: metadata.layer must be one of {sorted(ALLOWED_CAPABILITY_LAYERS)}"
+            )
+
+        if metadata.get("cognitive_domain") is not None:
+            errors.append(
+                f"{path}: metadata.cognitive_domain is not allowed; cognitive taxonomy is encoded in capability id domain"
             )
 
     if skill_mode:
@@ -537,6 +550,14 @@ def validate_capability_structure(
         errors.append(f"{path}: 'outputs' must be mapping")
 
     validate_metadata_block(data.get("metadata"), path, errors)
+
+    metadata = data.get("metadata") if isinstance(data.get("metadata"), dict) else {}
+    layer = metadata.get("layer")
+    id_domain = capability_id.split(".", 1)[0]
+    if layer == "cognitive" and id_domain not in ALLOWED_COGNITIVE_DOMAINS:
+        errors.append(
+            f"{path}: cognitive capability id domain must be one of {sorted(ALLOWED_COGNITIVE_DOMAINS)}, got '{id_domain}'"
+        )
 
     validate_cognitive_hints_block(
         data.get("cognitive_hints"),

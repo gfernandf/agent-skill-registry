@@ -65,7 +65,7 @@ outputs:
       '
 steps:
 - id: select_strategy
-  uses: text.content.classify
+  uses: reasoning.content.classify
   input:
     text: inputs.problem
     labels:
@@ -80,7 +80,7 @@ steps:
   output:
     label: outputs.decomposition_strategy
 - id: split_problem
-  uses: analysis.problem.split
+  uses: reasoning.problem.split
   input:
     problem: inputs.problem
     strategy: outputs.decomposition_strategy
@@ -90,7 +90,7 @@ steps:
     gaps: outputs.gaps
     overlaps: outputs.overlaps
 - id: assess_quality
-  uses: eval.output.score
+  uses: evaluation.output.score
   input:
     output:
       components: outputs.components

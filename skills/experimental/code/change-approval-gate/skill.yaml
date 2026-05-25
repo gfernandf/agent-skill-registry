@@ -116,14 +116,14 @@ outputs:
 
 steps:
   - id: summarize_change
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
     input:
       text: inputs.diff_text
     output:
       summary: outputs.change_summary
 
   - id: extract_risks
-    uses: analysis.risk.extract
+    uses: reasoning.risk.extract
     input:
       target: inputs.change_package
       context: inputs.author_summary
@@ -160,7 +160,7 @@ steps:
         - classify_risk
 
   - id: determine_decision
-    uses: agent.flow.branch
+    uses: decision.flow.branch
     input:
       condition: >
         Select the correct outcome: "block" if gate_decision is block,
@@ -203,7 +203,7 @@ steps:
         - determine_decision
 
   - id: summarize_executive
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
     input:
       text: outputs.rationale
     output:

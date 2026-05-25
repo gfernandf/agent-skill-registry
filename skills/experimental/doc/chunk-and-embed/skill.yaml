@@ -29,7 +29,7 @@ steps:
   output:
     chunks: outputs.chunks
 - id: embed
-  uses: text.content.embed
+  uses: reasoning.content.embed
   input:
     text: inputs.text
   output:

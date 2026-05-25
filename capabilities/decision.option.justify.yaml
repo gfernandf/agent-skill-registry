@@ -1,8 +1,8 @@
 id: decision.option.justify
 version: 1.0.0
 description: "Select a final recommendation from evaluated options and produce a structured\
-  \ justification. Consumes qualitative analysis (from eval.option.analyze) and quantitative\
-  \ scores (from eval.option.score) to make an explicit, committed choice. Outputs\
+  \ justification. Consumes qualitative analysis (from reasoning.option.analyze) and quantitative\
+  \ scores (from evaluation.option.score) to make an explicit, committed choice. Outputs\
   \ the recommendation, justification narrative, failure modes, uncertainties, confidence\
   \ assessment, and concrete next steps.\nThis capability is the \"closing\" step\
   \ \u2014 it resolves ambiguity into action. It must never hedge with \"it depends\"\
@@ -11,21 +11,21 @@ inputs:
   scored_options:
     type: array
     required: true
-    description: 'Options with quantitative scores from eval.option.score. Each entry
+    description: 'Options with quantitative scores from evaluation.option.score. Each entry
       includes option_id, overall_score, per_criterion_scores, strengths, weaknesses.
 
       '
   analyzed_options:
     type: array
     required: true
-    description: 'Options with qualitative analysis from eval.option.analyze. Each
+    description: 'Options with qualitative analysis from reasoning.option.analyze. Each
       entry includes option_id, pros, cons, risks, assumptions.
 
       '
   tradeoffs:
     type: array
     required: false
-    description: 'Explicit trade-offs between top candidates from eval.option.score.
+    description: 'Explicit trade-offs between top candidates from evaluation.option.score.
 
       '
   goal:

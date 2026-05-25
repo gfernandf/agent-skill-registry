@@ -55,18 +55,18 @@ This document freezes the Phase A baseline with evidence-based traceability:
   - `agent-skill-registry/skills/official/web/search-summary/skill.yaml`
 - Capabilities (registry graph):
   - `web.source.search`
-  - `text.content.merge`
-  - `text.content.summarize`
+  - `reasoning.content.merge`
+  - `reasoning.content.summarize`
 - Runtime bindings (official):
   - `agent-skills/bindings/official/web.source.search/python_web_source_search.yaml`
-  - `agent-skills/bindings/official/text.content.merge/pythoncall.yaml`
-  - `agent-skills/bindings/official/text.content.summarize/python_text_summarize.yaml`
+  - `agent-skills/bindings/official/reasoning.content.merge/pythoncall.yaml`
+  - `agent-skills/bindings/official/reasoning.content.summarize/python_text_summarize.yaml`
   - OpenAPI alternative exists for summarize:
-    - `agent-skills/bindings/official/text.content.summarize/openapi_text_summarize_openai_chat.yaml`
+    - `agent-skills/bindings/official/reasoning.content.summarize/openapi_text_summarize_openai_chat.yaml`
 - Default selection:
   - `web.source.search: python_web_source_search`
-  - `text.content.merge: python_text_merge`
-  - `text.content.summarize: python_text_summarize`
+  - `reasoning.content.merge: python_text_merge`
+  - `reasoning.content.summarize: python_text_summarize`
   - Source: `agent-skills/policies/official_default_selection.yaml`
 - Test evidence found:
   - Historical failure traces for this skill in `agent-skills/test_results/skill_sweep.txt`
@@ -83,25 +83,25 @@ This document freezes the Phase A baseline with evidence-based traceability:
 - Skill contract:
   - `agent-skill-registry/skills/official/task/frame/skill.yaml`
 - Capabilities (registry graph):
-  - `text.content.classify`
-  - `text.content.extract`
-  - `agent.plan.generate`
-  - `agent.input.route`
+  - `reasoning.content.classify`
+  - `perception.content.extract`
+  - `reasoning.plan.generate`
+  - `decision.input.route`
 - Runtime bindings (official):
-  - `agent-skills/bindings/official/text.content.classify/python_text_classify.yaml`
-  - `agent-skills/bindings/official/text.content.extract/python_text_extract.yaml`
-  - `agent-skills/bindings/official/agent.plan.generate/python_agent_plan_generate.yaml`
-  - `agent-skills/bindings/official/agent.input.route/python_agent_route.yaml`
+  - `agent-skills/bindings/official/reasoning.content.classify/python_text_classify.yaml`
+  - `agent-skills/bindings/official/perception.content.extract/python_text_extract.yaml`
+  - `agent-skills/bindings/official/reasoning.plan.generate/python_agent_plan_generate.yaml`
+  - `agent-skills/bindings/official/decision.input.route/python_agent_route.yaml`
   - OpenAPI alternatives exist for classify/plan.generate/input.route and can be selected by environment-preferred policy.
 - Default selection:
-  - `text.content.classify: openapi_text_classify_openai_chat`
-  - `text.content.extract: python_text_extract`
-  - `agent.plan.generate: openapi_agent_plan_generate_openai_chat`
-  - `agent.input.route: openapi_agent_route_openai_chat`
+  - `reasoning.content.classify: openapi_text_classify_openai_chat`
+  - `perception.content.extract: python_text_extract`
+  - `reasoning.plan.generate: openapi_agent_plan_generate_openai_chat`
+  - `decision.input.route: openapi_agent_route_openai_chat`
   - Source: `agent-skills/policies/official_default_selection.yaml`
 - Resolver behavior relevant:
   - Environment-aware preference and python-preferred list in `agent-skills/runtime/binding_resolver.py`
-  - `agent.plan.generate` and `agent.input.route` are not in python-preferred capability set.
+  - `reasoning.plan.generate` and `decision.input.route` are not in python-preferred capability set.
 - Test evidence found:
   - Included in `agent-skills/test_new_skills.py`
   - Historical failure samples for output mapping in `agent-skills/artifacts/runtime_skill_audit.jsonl`
@@ -120,21 +120,21 @@ This document freezes the Phase A baseline with evidence-based traceability:
 - Capabilities (registry graph):
   - `security.pii.detect`
   - `security.pii.redact`
-  - `text.content.summarize`
+  - `reasoning.content.summarize`
   - `security.output.gate`
-  - `text.content.transform`
+  - `reasoning.content.transform`
 - Runtime bindings (official):
   - `agent-skills/bindings/official/security.pii.detect/python_security_pii_detect.yaml`
   - `agent-skills/bindings/official/security.pii.redact/python_security_pii_redact.yaml`
-  - `agent-skills/bindings/official/text.content.summarize/python_text_summarize.yaml`
+  - `agent-skills/bindings/official/reasoning.content.summarize/python_text_summarize.yaml`
   - `agent-skills/bindings/official/security.output.gate/python_security_output_gate.yaml`
-  - `agent-skills/bindings/official/text.content.transform/python_text_transform.yaml`
+  - `agent-skills/bindings/official/reasoning.content.transform/python_text_transform.yaml`
 - Default selection:
   - `security.pii.detect: python_security_pii_detect`
   - `security.pii.redact: python_security_pii_redact`
   - `security.output.gate: python_security_output_gate`
-  - `text.content.summarize: python_text_summarize`
-  - `text.content.transform: openapi_text_transform_openai_chat`
+  - `reasoning.content.summarize: python_text_summarize`
+  - `reasoning.content.transform: openapi_text_transform_openai_chat`
   - Source: `agent-skills/policies/official_default_selection.yaml`
 - Test evidence found:
   - Historical failure in `agent-skills/test_results/skill_sweep.txt`
@@ -151,27 +151,27 @@ This document freezes the Phase A baseline with evidence-based traceability:
 - Skill contract:
   - `agent-skill-registry/skills/official/decision/make/skill.yaml`
 - Capabilities (registry graph):
-  - `text.content.merge`
-  - `agent.option.generate`
-  - `eval.option.analyze`
-  - `eval.option.score`
+  - `reasoning.content.merge`
+  - `reasoning.option.generate`
+  - `reasoning.option.analyze`
+  - `evaluation.option.score`
   - `decision.option.justify`
-  - `eval.output.score`
+  - `evaluation.output.score`
 - Runtime bindings (official):
-  - `agent-skills/bindings/official/text.content.merge/pythoncall.yaml`
-  - `agent-skills/bindings/official/agent.option.generate/python_agent_option_generate.yaml`
-  - `agent-skills/bindings/official/eval.option.analyze/python_eval_option_analyze.yaml`
-  - `agent-skills/bindings/official/eval.option.score/python_eval_option_score.yaml`
+  - `agent-skills/bindings/official/reasoning.content.merge/pythoncall.yaml`
+  - `agent-skills/bindings/official/reasoning.option.generate/python_agent_option_generate.yaml`
+  - `agent-skills/bindings/official/reasoning.option.analyze/python_eval_option_analyze.yaml`
+  - `agent-skills/bindings/official/evaluation.option.score/python_eval_option_score.yaml`
   - `agent-skills/bindings/official/decision.option.justify/python_decision_option_justify.yaml`
-  - `agent-skills/bindings/official/eval.output.score/python_eval_output_score.yaml`
+  - `agent-skills/bindings/official/evaluation.output.score/python_eval_output_score.yaml`
   - OpenAPI alternatives exist for several of these steps and appear in real traces.
 - Default selection:
-  - `agent.option.generate: openapi_agent_option_generate_openai_chat`
-  - `eval.option.analyze: openapi_eval_option_analyze_openai_chat`
-  - `eval.option.score: openapi_eval_option_score_openai_chat`
+  - `reasoning.option.generate: openapi_agent_option_generate_openai_chat`
+  - `reasoning.option.analyze: openapi_eval_option_analyze_openai_chat`
+  - `evaluation.option.score: openapi_eval_option_score_openai_chat`
   - `decision.option.justify: openapi_decision_option_justify_openai_chat`
-  - `eval.output.score: openapi_eval_output_score_openai_chat`
-  - `text.content.merge: python_text_merge`
+  - `evaluation.output.score: openapi_eval_output_score_openai_chat`
+  - `reasoning.content.merge: python_text_merge`
   - Source: `agent-skills/policies/official_default_selection.yaml`
 - Test evidence found:
   - Included in `agent-skills/test_new_skills.py`

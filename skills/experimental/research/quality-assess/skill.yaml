@@ -84,7 +84,7 @@ steps:
     valid: vars.structure_valid
     errors: vars.structure_errors
 - id: score_synthesis_quality
-  uses: eval.output.score
+  uses: evaluation.output.score
   input:
     output: inputs.synthesis_object
     rubric:
@@ -105,7 +105,7 @@ steps:
     score: vars.eval_score
     dimensions: vars.eval_dimensions
 - id: validate_grounding
-  uses: model.response.validate
+  uses: evaluation.response.validate
   input:
     output: inputs.synthesis_object
     validation_policy:
@@ -120,7 +120,7 @@ steps:
     confidence_adjustment: vars.confidence_adjustment
     rationale: vars.grounding_rationale
 - id: compute_quality_metrics
-  uses: model.output.generate
+  uses: reasoning.output.generate
   input:
     instruction: "Using the provided context bundle, compute the final synthesis_quality block. The context includes synthesis_object,\
       \ findings_by_item, normalized_items, quality_profile, eval_score, eval_dimensions, grounding_valid, grounding_issues,\
@@ -185,7 +185,7 @@ metadata:
   status: deprecated
   deprecated_by: eval.validate
   deprecation_reason: 'Subsumed by eval.validate which provides generic artifact validation (structure + consistency + coverage)
-    without coupling to specific research inputs. Also, step 3 (compute_quality_metrics) uses the model.output.generate oracle
+    without coupling to specific research inputs. Also, step 3 (compute_quality_metrics) uses the reasoning.output.generate oracle
     pattern which the project is moving away from.
 
     '

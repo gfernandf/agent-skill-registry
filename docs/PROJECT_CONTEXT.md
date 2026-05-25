@@ -45,9 +45,9 @@ Capabilities represent **primitive operations** that can be reused across workfl
 Examples:
 
 ```
-text.content.summarize
-text.content.classify
-text.keyword.extract
+reasoning.content.summarize
+reasoning.content.classify
+perception.keyword.extract
 data.json.parse
 web.page.fetch
 fs.file.read
@@ -84,8 +84,8 @@ Example workflow:
 web.fetch-summary
 
 web.page.fetch
-→ text.content.extract
-→ text.content.summarize
+→ perception.content.extract
+→ reasoning.content.summarize
 ```
 
 ---
@@ -110,9 +110,9 @@ This vocabulary defines:
 Examples of valid identifiers:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 web.page.fetch
 ```
 

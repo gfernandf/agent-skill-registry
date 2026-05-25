@@ -13,7 +13,7 @@ Usage:
   python tools/catalog_query.py produces Risk
   python tools/catalog_query.py consumes Option
   python tools/catalog_query.py role analyze
-  python tools/catalog_query.py compatible analysis.risk.extract
+  python tools/catalog_query.py compatible reasoning.risk.extract
   python tools/catalog_query.py coverage
   python tools/catalog_query.py safety
   python tools/catalog_query.py chain Risk Decision

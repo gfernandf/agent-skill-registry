@@ -18,13 +18,13 @@ steps:
   output:
     content: vars.page_content
 - id: extract_text
-  uses: text.content.extract
+  uses: perception.content.extract
   input:
     text: vars.page_content
   output:
     text: vars.cleaned_text
 - id: summarize_text
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: vars.cleaned_text
   output:

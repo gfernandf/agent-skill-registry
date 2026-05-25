@@ -101,7 +101,7 @@ steps:
     valid: vars.events_valid
     errors: outputs.events_errors
 - id: analyze_trace
-  uses: ops.trace.analyze
+  uses: evidence.trace.analyze
   input:
     goal: inputs.goal
     context: inputs.context
@@ -127,7 +127,7 @@ steps:
     depends_on:
     - validate_events
 - id: monitor_trace
-  uses: ops.trace.monitor
+  uses: evidence.trace.monitor
   input:
     trace: outputs.updated_trace_state
     thresholds: inputs.thresholds

@@ -7,7 +7,7 @@ description: 'Identify risks, fragile assumptions, and failure modes associated 
   Pipeline: (1) extract risks, assumptions, failure modes, and mitigations, (2) classify risks by category, (3) quality gate
   on the risk analysis.
 
-  Typical upstream: decision.make, analysis.synthesize, agent.plan.generate, or any skill producing an artifact that needs
+  Typical upstream: decision.make, analysis.synthesize, reasoning.plan.generate, or any skill producing an artifact that needs
   stress-testing. Typical downstream: decision.make (risk-informed), eval.validate, human review.
 
   '
@@ -75,7 +75,7 @@ outputs:
       '
 steps:
 - id: extract_risks
-  uses: analysis.risk.extract
+  uses: reasoning.risk.extract
   input:
     target: inputs.target
     context: inputs.context
@@ -96,7 +96,7 @@ steps:
   output:
     records: outputs.risk_categories
 - id: assess_quality
-  uses: eval.output.score
+  uses: evaluation.output.score
   input:
     output:
       risks: outputs.identified_risks

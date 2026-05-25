@@ -103,7 +103,7 @@ outputs:
 steps:
   # ── COMMON: normalize + interpret ─────────────────────────────────────────
   - id: normalize_request
-    uses: agent.request.normalize
+    uses: reasoning.request.normalize
     input:
       user_message: inputs.prompt
       context: inputs.context
@@ -112,7 +112,7 @@ steps:
       language: vars.language
 
   - id: interpret_goal
-    uses: agent.goal.interpret
+    uses: reasoning.goal.interpret
     input:
       normalized_request: vars.normalized_request
       context: inputs.context
@@ -124,7 +124,7 @@ steps:
   # Decides fast_path (single-operation, no dependencies) vs
   # full_path (multi-step, sequencing, intermediate outputs).
   - id: classify_complexity
-    uses: agent.flow.branch
+    uses: decision.flow.branch
     input:
       condition: >
         The user goal requires sequencing multiple operations, depends on
@@ -147,7 +147,7 @@ steps:
 
   # ── COMMON: catalog search (both paths need ranked candidates) ─────────────
   - id: search_catalog
-    uses: agent.catalog.search
+    uses: perception.catalog.search
     input:
       goal: vars.interpreted_goal
       registry: inputs.registry
@@ -157,7 +157,7 @@ steps:
       total_matched: vars.total_matched
 
   - id: rank_catalog
-    uses: agent.catalog.rank
+    uses: evaluation.catalog.rank
     input:
       candidate_items: outputs.candidate_items
       interpreted_goal: vars.interpreted_goal
@@ -167,7 +167,7 @@ steps:
 
   # ── CORE PLANNER PIPELINE ─────────────────────────────────────────────────
   - id: define_criteria
-    uses: agent.criteria.define
+    uses: reasoning.criteria.define
     input:
       interpreted_goal: vars.interpreted_goal
     output:
@@ -176,7 +176,7 @@ steps:
       acceptance_criteria: vars.acceptance_criteria
 
   - id: detect_catalog_gaps
-    uses: agent.catalog.detect
+    uses: evaluation.catalog.detect
     input:
       interpreted_goal: vars.interpreted_goal
       candidate_items: outputs.candidate_items
@@ -186,7 +186,7 @@ steps:
       gap_severity: outputs.gap_severity
 
   - id: create_macro_plan
-    uses: agent.task.plan
+    uses: reasoning.task.plan
     input:
       interpreted_goal: vars.interpreted_goal
       candidate_skills: outputs.ranked_skills
@@ -197,7 +197,7 @@ steps:
       stage_count: vars.stage_count
 
   - id: split_plan
-    uses: agent.plan.split
+    uses: reasoning.plan.split
     input:
       macro_stage: vars.macro_plan
       candidate_skills: outputs.ranked_skills
@@ -208,7 +208,7 @@ steps:
       step_count: vars.step_count
 
   - id: map_plan_inputs
-    uses: agent.plan.map
+    uses: reasoning.plan.map
     input:
       expanded_steps: vars.expanded_steps
       state_schema: inputs.state_schema
@@ -217,7 +217,7 @@ steps:
       unresolved_bindings: vars.unresolved_bindings
 
   - id: validate_plan
-    uses: agent.plan.validate
+    uses: evaluation.plan.validate
     input:
       expanded_plan:
         bound_steps: vars.bound_steps
@@ -227,7 +227,7 @@ steps:
       validation_result: vars.validation_result
 
   - id: reconcile_plan
-    uses: agent.plan.reconcile
+    uses: reasoning.plan.reconcile
     input:
       invalid_plan:
         bound_steps: vars.bound_steps
@@ -239,7 +239,7 @@ steps:
       still_invalid: vars.still_invalid
 
   - id: synthesize_plan
-    uses: agent.plan.synthesize
+    uses: reasoning.plan.synthesize
     input:
       validated_plan: vars.repaired_plan
       runtime_config: inputs.runtime_config
@@ -250,7 +250,7 @@ steps:
 
   # ── COMMON: policy gate (always runs, reads outputs.compiled_plan) ─────────
   - id: gate_plan
-    uses: agent.plan.gate
+    uses: evaluation.plan.gate
     input:
       compiled_plan: outputs.compiled_plan
       user_permissions: inputs.user_permissions

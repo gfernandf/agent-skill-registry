@@ -1,0 +1,86 @@
+id: perception.input.structure
+version: 1.0.0
+description: 'Structure available input into a normalized cognitive payload before downstream reasoning and evaluation.
+
+  '
+inputs:
+  fields:
+    type: array
+    required: true
+    description: "Field definitions for the target input structure. Each element has: name (string), type (string - \"string\", \"number\", \"boolean\", \"object\", \"array\"), required (boolean), description (string), and optional default and options.\n"
+  instruction:
+    type: string
+    required: false
+    description: 'Optional structuring guidance (for example expected schema semantics).
+
+      '
+  context:
+    type: string
+    required: false
+    description: 'Background context used to disambiguate and normalize the input.
+
+      '
+  raw_input:
+    type: object
+    required: false
+    description: 'Optional raw or semi-structured payload to normalize into the target structure.
+
+      '
+outputs:
+  structured_input:
+    type: object
+    required: true
+    description: 'Normalized cognitive input object aligned to the requested fields.
+
+      '
+  complete:
+    type: boolean
+    required: true
+    description: Whether all required fields are present in the structured input.
+  missing_fields:
+    type: array
+    required: false
+    description: 'Names of required fields that remain missing after structuring.
+
+      '
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+cognitive_hints:
+  role: perceive
+  consumes:
+  - Context
+  produces:
+    structured_input:
+      type: Entity
+metadata:
+  status: stable
+  tags:
+  - input
+  - structuring
+  - normalization
+  - cognition
+  examples:
+  - summary: Structure intake payload into canonical fields
+    inputs:
+      fields:
+      - name: objective
+        type: string
+        required: true
+      - name: constraints
+        type: array
+        required: false
+      raw_input:
+        objective_text: Improve registry governance
+        hard_constraints:
+        - Do not break compatibility
+    outputs:
+      structured_input:
+        objective: Improve registry governance
+        constraints:
+        - Do not break compatibility
+      complete: true
+  layer: cognitive

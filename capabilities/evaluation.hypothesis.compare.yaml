@@ -1,0 +1,74 @@
+id: evaluation.hypothesis.compare
+version: 1.0.0
+description: >
+  Compare evaluated hypotheses and surface trade-offs, ranking, and a recommended
+  lead hypothesis. Designed for transparent hypothesis selection under competing
+  evidence and uncertainty.
+inputs:
+  evaluated_hypotheses:
+    type: array
+    required: true
+    description: Evaluated hypothesis results including support and contradiction signals.
+  comparison_axes:
+    type: array
+    required: false
+    description: Optional axes such as explanatory_power, simplicity, and actionability.
+outputs:
+  ranked_hypotheses:
+    type: array
+    required: true
+    description: Ranked hypothesis list with rank, score, and comparison rationale.
+  tradeoffs:
+    type: array
+    required: false
+    description: Explicit trade-offs between top-ranked hypotheses.
+  recommendation:
+    type: object
+    required: false
+    description: Recommended lead hypothesis with confidence and caveat summary.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Score
+  - Hypothesis
+  produces:
+    ranked_hypotheses:
+      type: Score
+    tradeoffs:
+      type: Tradeoff
+    recommendation:
+      type: Decision
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - hypothesis
+  - comparison
+  examples:
+  - summary: Compare evaluated hypotheses to select lead explanation
+    inputs:
+      evaluated_hypotheses:
+      - hypothesis_id: h1
+        support_score: 0.84
+        contradiction_score: 0.18
+      - hypothesis_id: h2
+        support_score: 0.63
+        contradiction_score: 0.35
+      comparison_axes:
+      - explanatory_power
+      - actionability
+    outputs:
+      ranked_hypotheses:
+      - hypothesis_id: h1
+        rank: 1
+        score: 0.82
+      - hypothesis_id: h2
+        rank: 2
+        score: 0.61
+  layer: cognitive

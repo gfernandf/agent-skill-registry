@@ -82,19 +82,19 @@ Optional: `author_summary`, `labels`, `test_evidence`, `rollback_plan`, `release
 ## Pipeline
 
 ```
-summarize_change   (text.content.summarize)
+summarize_change   (reasoning.content.summarize)
        │
-extract_risks      (analysis.risk.extract)
+extract_risks      (reasoning.risk.extract)
        │
 classify_risk      (policy.risk.classify)
        │
 apply_policy_gate  (policy.constraint.gate)
        │
-determine_decision (agent.flow.branch)
+determine_decision (decision.flow.branch)
        │
 justify_decision   (policy.decision.justify)
        │
-summarize_executive (text.content.summarize)
+summarize_executive (reasoning.content.summarize)
 ```
 
 ## Traceability

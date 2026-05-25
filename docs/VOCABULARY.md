@@ -56,10 +56,10 @@ domain.noun.verb
 Examples:
 
 ```
-text.content.summarize
+reasoning.content.summarize
 fs.file.read
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 web.page.fetch
 ```
 
@@ -129,7 +129,7 @@ For example:
 
 ```
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 web.page.fetch
 ```
 
@@ -144,8 +144,8 @@ Nouns should be:
 Preferred:
 
 ```
-text.keyword.extract
-text.entity.extract
+perception.keyword.extract
+perception.entity.extract
 web.page.fetch
 ```
 
@@ -208,13 +208,13 @@ only when necessary to disambiguate the target object.
 ### Good examples
 
 ```
-text.content.summarize
-text.content.classify
+reasoning.content.summarize
+reasoning.content.classify
 fs.file.read
 web.page.fetch
 data.parse
 data.json.parse
-text.keyword.extract
+perception.keyword.extract
 ```
 
 ### Less desirable examples

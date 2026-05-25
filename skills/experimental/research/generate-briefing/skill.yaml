@@ -7,7 +7,7 @@ description: >
   full page content (deep mode), extracts keywords and entities, summarizes the
   corpus, clusters information into thematic groups, and assesses risks.
 
-  Pipeline: 8 steps, 0 model.output.generate calls. All analysis is performed
+  Pipeline: 8 steps, 0 reasoning.output.generate calls. All analysis is performed
   by dedicated capabilities with stable contracts. Steps 5a-5c run in parallel.
 
   Modes:
@@ -147,7 +147,7 @@ steps:
   # Merge all item contents into a single text block for text-level
   # capabilities (keyword extraction, entity extraction, summarization).
   - id: merge_text
-    uses: text.content.merge
+    uses: reasoning.content.merge
     input:
       items: outputs.sources
     output:
@@ -158,7 +158,7 @@ steps:
   # Three independent extractions running on the merged corpus text.
 
   - id: extract_keywords
-    uses: text.keyword.extract
+    uses: perception.keyword.extract
     depends_on: []
     input:
       text: vars.corpus_text
@@ -166,7 +166,7 @@ steps:
       keywords: outputs.keywords
 
   - id: extract_entities
-    uses: text.entity.extract
+    uses: perception.entity.extract
     depends_on: []
     input:
       text: vars.corpus_text
@@ -174,7 +174,7 @@ steps:
       entities: outputs.entities
 
   - id: summarize
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
     depends_on: []
     input:
       text: vars.corpus_text
@@ -185,7 +185,7 @@ steps:
   # Cluster resolved items into coherent themes. Uses hint_labels to guide
   # thematic structure toward briefing-relevant dimensions.
   - id: cluster
-    uses: analysis.theme.cluster
+    uses: reasoning.theme.cluster
     input:
       items: outputs.sources
       hint_labels: inputs.theme_hints
@@ -196,7 +196,7 @@ steps:
   # ── PHASE 7: RISK EXTRACTION ───────────────────────────────────────────
   # Extract risks, assumptions, and failure modes from the clustered output.
   - id: extract_risks
-    uses: analysis.risk.extract
+    uses: reasoning.risk.extract
     input:
       target:
         clusters: outputs.clusters
@@ -213,7 +213,7 @@ steps:
   # ── PHASE 8: QUALITY GATE ──────────────────────────────────────────────
   # Evaluate the overall briefing quality across key dimensions.
   - id: assess_quality
-    uses: eval.output.score
+    uses: evaluation.output.score
     input:
       output:
         summary: outputs.summary

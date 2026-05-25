@@ -15,13 +15,13 @@ outputs:
     required: true
 steps:
 - id: extract_entities
-  uses: text.entity.extract
+  uses: perception.entity.extract
   input:
     text: inputs.text
   output:
     entities: outputs.entities
 - id: summarize
-  uses: text.content.summarize
+  uses: reasoning.content.summarize
   input:
     text: inputs.text
   output:

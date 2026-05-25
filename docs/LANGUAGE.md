@@ -37,7 +37,7 @@ They define:
 Example:
 
 ``` yaml
-id: text.content.summarize
+id: reasoning.content.summarize
 version: 0.1.0
 
 description: Generate a summary from text.
@@ -101,7 +101,7 @@ steps:
     uses: web.page.fetch
 
   - id: summarize
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
 ```
 
 Each step defines:
@@ -200,7 +200,7 @@ Capabilities are referenced by identifier.
 
 Example:
 
-    uses: text.content.summarize
+    uses: reasoning.content.summarize
 
 The runtime resolves the capability implementation.
 
@@ -306,7 +306,7 @@ Capability identifier grammar:
 
 Examples:
 
-    text.keyword.extract
+    perception.keyword.extract
     image.caption.generate
     data.schema.validate
 

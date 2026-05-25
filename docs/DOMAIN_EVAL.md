@@ -30,10 +30,10 @@ These capabilities are heavily consumed by decision-making skills
 
 | ID | Status | Deterministic | Purpose |
 |----|--------|---------------|---------|
-| `eval.option.analyze` | experimental | no | Qualitative pros/cons/risks/assumptions per option |
-| `eval.option.score` | experimental | no | Multi-criteria weighted scoring with tradeoff analysis |
-| `eval.output.score` | experimental | no | General output quality scoring against rubric |
-| `eval.output.validate` | experimental | no | Validate final output against success criteria |
+| `reasoning.option.analyze` | experimental | no | Qualitative pros/cons/risks/assumptions per option |
+| `evaluation.option.score` | experimental | no | Multi-criteria weighted scoring with tradeoff analysis |
+| `evaluation.output.score` | experimental | no | General output quality scoring against rubric |
+| `evaluation.output.validate` | experimental | no | Validate final output against success criteria |
 
 ---
 
@@ -41,18 +41,18 @@ These capabilities are heavily consumed by decision-making skills
 
 | Capability | pythoncall (baseline) | OpenAI chat | Notes |
 |---|---|---|---|
-| `eval.option.analyze` | `python_eval_option_analyze` — 1 pro/con/risk per option | `openapi_eval_option_analyze_openai_chat` — gpt-4o-mini, temp 0.2 | Deeper analysis with LLM |
-| `eval.option.score` | `python_eval_option_score` — field-fill heuristic scoring | `openapi_eval_option_score_openai_chat` — gpt-4o-mini, temp 0.1 | Real criteria evaluation with LLM |
-| `eval.output.score` | `python_eval_output_score` — coverage + depth heuristic | `openapi_eval_output_score_openai_chat` — gpt-4o-mini, temp 0.1 | Dimension-aware quality scoring |
-| `eval.output.validate` | `python_eval_output_validate` — baseline: assign 0.7 score per criterion | `openapi_eval_output_validate_openai_chat` — gpt-4o-mini, temp 0.1 | Per-criterion validation with LLM |
+| `reasoning.option.analyze` | `python_eval_option_analyze` — 1 pro/con/risk per option | `openapi_eval_option_analyze_openai_chat` — gpt-4o-mini, temp 0.2 | Deeper analysis with LLM |
+| `evaluation.option.score` | `python_eval_option_score` — field-fill heuristic scoring | `openapi_eval_option_score_openai_chat` — gpt-4o-mini, temp 0.1 | Real criteria evaluation with LLM |
+| `evaluation.output.score` | `python_eval_output_score` — coverage + depth heuristic | `openapi_eval_output_score_openai_chat` — gpt-4o-mini, temp 0.1 | Dimension-aware quality scoring |
+| `evaluation.output.validate` | `python_eval_output_validate` — baseline: assign 0.7 score per criterion | `openapi_eval_output_validate_openai_chat` — gpt-4o-mini, temp 0.1 | Per-criterion validation with LLM |
 
 ### Default selection policy
 
 All 4 default to OpenAI chat bindings, with pythoncall fallbacks:
-- `eval.option.analyze` → `openapi_eval_option_analyze_openai_chat`
-- `eval.option.score` → `openapi_eval_option_score_openai_chat`
-- `eval.output.score` → `openapi_eval_output_score_openai_chat`
-- `eval.output.validate` → `openapi_eval_output_validate_openai_chat`
+- `reasoning.option.analyze` → `openapi_eval_option_analyze_openai_chat`
+- `evaluation.option.score` → `openapi_eval_option_score_openai_chat`
+- `evaluation.output.score` → `openapi_eval_output_score_openai_chat`
+- `evaluation.output.validate` → `openapi_eval_output_validate_openai_chat`
 
 ---
 
@@ -71,7 +71,7 @@ All 4 default to OpenAI chat bindings, with pythoncall fallbacks:
 The eval.* capabilities form the evaluation backbone of decision workflows:
 
 ```
-agent.option.generate → eval.option.analyze → eval.option.score → decision.option.justify
+reasoning.option.generate → reasoning.option.analyze → evaluation.option.score → decision.option.justify
        (options)           (pros/cons/risks)      (ranked scores)        (recommendation)
 ```
 
@@ -79,23 +79,23 @@ agent.option.generate → eval.option.analyze → eval.option.score → decision
 
 | Skill | eval.* capabilities used |
 |-------|-------------------------|
-| `decision.make` | `eval.option.analyze` → `eval.option.score` → `decision.option.justify` |
-| `analysis.compare` | `eval.option.analyze` + `eval.option.score` |
-| `eval.validate` | `eval.output.score` as quality gate |
-| `research.quality-assess` | `eval.output.score` for output validation |
-| `analysis.decompose` | `eval.output.score` for quality gating |
-| `analysis.risk-assess` | `eval.output.score` for quality gating |
+| `decision.make` | `reasoning.option.analyze` → `evaluation.option.score` → `decision.option.justify` |
+| `analysis.compare` | `reasoning.option.analyze` + `evaluation.option.score` |
+| `eval.validate` | `evaluation.output.score` as quality gate |
+| `research.quality-assess` | `evaluation.output.score` for output validation |
+| `analysis.decompose` | `evaluation.output.score` for quality gating |
+| `analysis.risk-assess` | `evaluation.output.score` for quality gating |
 
 ---
 
 ## Boundary definitions
 
-- **eval.option.analyze vs eval.option.score**: `analyze` is qualitative
+- **reasoning.option.analyze vs evaluation.option.score**: `analyze` is qualitative
   (pros, cons, risks, assumptions); `score` is quantitative (0–1 scores per
   criterion). `analyze` feeds `score` in the decision pipeline.
-- **eval.output.score vs model.output.score**: `eval.output.score` is a
-  general-purpose quality scorer for any artifact; `model.output.score`
+- **evaluation.output.score vs evaluation.output.score**: `evaluation.output.score` is a
+  general-purpose quality scorer for any artifact; `evaluation.output.score`
   specifically evaluates LLM output quality (word overlap, sentence metrics).
-- **eval.option.score vs decision.option.justify**: `score` ranks options;
+- **evaluation.option.score vs decision.option.justify**: `score` ranks options;
   `justify` selects one and produces the justification narrative with
   confidence, failure modes, and next steps.

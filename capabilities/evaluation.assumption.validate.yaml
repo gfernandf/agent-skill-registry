@@ -1,0 +1,46 @@
+id: evaluation.assumption.validate
+version: 1.0.0
+description: Validate assumptions for plausibility, consistency, and evidentiary support.
+inputs:
+  assumptions:
+    type: array
+    required: true
+    description: Assumptions to validate.
+  evidence:
+    type: array
+    required: false
+    description: Supporting or contradicting evidence.
+outputs:
+  validated_assumptions:
+    type: array
+    required: true
+    description: Validation results with status(supported|weak|rejected) and rationale.
+  confidence_summary:
+    type: string
+    required: false
+    description: Overall confidence summary.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Hypothesis
+  - Evidence
+  produces:
+    validated_assumptions:
+      type: Score
+    confidence_summary:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - assumption
+  - validation
+  - evaluation
+  examples:
+  - summary: Validate market demand assumptions
+  layer: cognitive

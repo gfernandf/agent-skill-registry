@@ -1,0 +1,51 @@
+id: reasoning.constraint.extract
+version: 1.0.0
+description: Extract hard and soft constraints from goals, context, and artifacts.
+inputs:
+  target:
+    type: object
+    required: true
+    description: Goal, plan, or draft artifact.
+  context:
+    type: string
+    required: false
+    description: Optional domain context.
+outputs:
+  constraints:
+    type: array
+    required: true
+    description: Constraints with id, statement, type(hard|soft), and source.
+  gaps:
+    type: array
+    required: false
+    description: Missing or underspecified constraints.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Artifact
+  - Context
+  produces:
+    constraints:
+      type: Criterion
+    gaps:
+      type: Uncertainty
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - constraint
+  - analysis
+  - reasoning
+  examples:
+  - summary: Extract deployment constraints
+    inputs:
+      target:
+        objective: Deploy in EU
+        constraints:
+        - Budget under 2M EUR
+  layer: cognitive

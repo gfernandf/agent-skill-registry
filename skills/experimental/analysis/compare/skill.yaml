@@ -10,7 +10,7 @@ description: 'Compare alternatives, options, scenarios, or proposals in a struct
   Pipeline: (1) qualitative analysis per option, (2) multi-criteria scoring with comparative summary and trade-offs, (3) quality
   gate on the comparison.
 
-  Typical upstream: agent.option.generate, task.frame, or direct user input. Typical downstream: decision.make, human review,
+  Typical upstream: reasoning.option.generate, task.frame, or direct user input. Typical downstream: decision.make, human review,
   or analysis.risk-assess.
 
   '
@@ -86,7 +86,7 @@ outputs:
       '
 steps:
 - id: analyze_options
-  uses: eval.option.analyze
+  uses: reasoning.option.analyze
   input:
     options: inputs.options
     context: inputs.context
@@ -94,7 +94,7 @@ steps:
   output:
     analyzed_options: outputs.analyzed_options
 - id: score_options
-  uses: eval.option.score
+  uses: evaluation.option.score
   input:
     options: inputs.options
     criteria: inputs.criteria
@@ -105,7 +105,7 @@ steps:
     comparative_summary: outputs.comparative_summary
     tradeoffs: outputs.tradeoffs
 - id: assess_quality
-  uses: eval.output.score
+  uses: evaluation.output.score
   input:
     output:
       analyzed_options: outputs.analyzed_options

@@ -8,6 +8,11 @@ The architecture separates three fundamental layers:
 - capabilities
 - skills
 
+Within capabilities, ORCA intentionally decomposes cognition into reusable
+primitives across perception, memory, reasoning, evidence, evaluation, and
+decision. This avoids modeling reasoning as an opaque prompt-to-output step and
+instead makes cognitive operations composable, inspectable, and reusable.
+
 This layered design ensures both flexibility and long-term consistency.
 
 ---
@@ -55,8 +60,8 @@ domain.noun.verb
 Examples:
 
 ```
-text.content.summarize
-text.keyword.extract
+reasoning.content.summarize
+perception.keyword.extract
 data.json.parse
 web.page.fetch
 ```
@@ -76,9 +81,9 @@ Capabilities define **primitive operations** available to workflows.
 Examples:
 
 ```
-text.content.summarize
-text.content.classify
-text.keyword.extract
+reasoning.content.summarize
+reasoning.content.classify
+perception.keyword.extract
 data.json.parse
 web.page.fetch
 fs.file.read
@@ -115,8 +120,8 @@ Example workflow:
 web.fetch-summary
 
 web.page.fetch
-→ text.content.extract
-→ text.content.summarize
+→ perception.content.extract
+→ reasoning.content.summarize
 ```
 
 Skills are stored as:

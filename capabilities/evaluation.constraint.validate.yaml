@@ -1,0 +1,80 @@
+id: evaluation.constraint.validate
+version: 1.0.0
+description: 'Validate whether an artifact satisfies known constraints and report violations, coverage, and severity.
+
+  '
+inputs:
+  artifact:
+    type: object
+    required: true
+    description: 'Artifact to validate, such as a plan, output, response, or option.
+
+      '
+  constraints:
+    type: array
+    required: true
+    description: 'Constraint set to validate against. Each constraint can include id, statement, type, and severity.
+
+      '
+  validation_policy:
+    type: object
+    required: false
+    description: 'Optional policy controlling strictness and pass/fail thresholds.
+
+      '
+outputs:
+  validation_result:
+    type: object
+    required: true
+    description: 'Validation status summary with fields like status, pass_rate, and blocking_violations.
+
+      '
+  violations:
+    type: array
+    required: false
+    description: 'Constraint violations with ids, rationale, and severity.
+
+      '
+  satisfied_constraints:
+    type: array
+    required: false
+    description: 'Constraints that were satisfied by the artifact.
+
+      '
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Criterion
+  - Artifact
+  produces:
+    validation_result:
+      type: Score
+    violations:
+      type: Risk
+metadata:
+  status: stable
+  tags:
+  - evaluation
+  - constraints
+  - validation
+  examples:
+  - summary: Validate plan against budget and timeline constraints
+    inputs:
+      artifact:
+        id: plan_1
+      constraints:
+      - id: budget
+        statement: Total cost must remain below 2M
+      - id: deadline
+        statement: Delivery must complete before Q4
+    outputs:
+      validation_result:
+        status: failed
+        blocking_violations: 1
+  layer: cognitive

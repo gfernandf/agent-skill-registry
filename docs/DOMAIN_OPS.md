@@ -26,9 +26,9 @@ and failure scenarios.
 
 | ID | Status | Deterministic | Purpose |
 |----|--------|---------------|---------|
-| `ops.trace.analyze` | experimental | yes | Analyse execution trace for patterns and anomalies |
-| `ops.trace.monitor` | experimental | yes | Monitor live trace events for alerts and dashboards |
-| `ops.trace.summarize` | experimental | yes | Summarize execution trace into compact structured report |
+| `evidence.trace.analyze` | experimental | yes | Analyse execution trace for patterns and anomalies |
+| `evidence.trace.monitor` | experimental | yes | Monitor live trace events for alerts and dashboards |
+| `evidence.trace.summarize` | experimental | yes | Summarize execution trace into compact structured report |
 
 ---
 
@@ -36,15 +36,15 @@ and failure scenarios.
 
 | Capability | pythoncall (baseline) | OpenAI chat | Notes |
 |---|---|---|---|
-| `ops.trace.analyze` | `python_ops_analyze_trace` — structured fact extraction | — | Deterministic analysis, no LLM needed |
-| `ops.trace.monitor` | `python_ops_monitor_trace` — event stream aggregation | — | Real-time streaming capability |
-| `ops.trace.summarize` | `python_ops_trace_summarize` — extract steps/failures/duration | `openapi_ops_trace_summarize_openai_chat` — gpt-4o-mini, temp 0.0 | Natural language summary with LLM |
+| `evidence.trace.analyze` | `python_ops_analyze_trace` — structured fact extraction | — | Deterministic analysis, no LLM needed |
+| `evidence.trace.monitor` | `python_ops_monitor_trace` — event stream aggregation | — | Real-time streaming capability |
+| `evidence.trace.summarize` | `python_ops_trace_summarize` — extract steps/failures/duration | `openapi_ops_trace_summarize_openai_chat` — gpt-4o-mini, temp 0.0 | Natural language summary with LLM |
 
 ### Default selection policy
 
-- `ops.trace.analyze` → pythoncall (deterministic, no LLM needed)
-- `ops.trace.monitor` → pythoncall (streaming-first)
-- `ops.trace.summarize` → OpenAI chat (with pythoncall fallback)
+- `evidence.trace.analyze` → pythoncall (deterministic, no LLM needed)
+- `evidence.trace.monitor` → pythoncall (streaming-first)
+- `evidence.trace.summarize` → OpenAI chat (with pythoncall fallback)
 
 ---
 
@@ -62,7 +62,7 @@ and failure scenarios.
 
 | Skill | Capabilities used |
 |-------|-------------------|
-| `agent.trace` | `ops.trace.analyze` + `ops.trace.monitor` (observability sidecar) |
+| `agent.trace` | `evidence.trace.analyze` + `evidence.trace.monitor` (observability sidecar) |
 
 ---
 
@@ -70,18 +70,18 @@ and failure scenarios.
 
 ### Execution auditing
 ```
-plan.run() → ops.trace.summarize() → audit_log
+plan.run() → evidence.trace.summarize() → audit_log
 ```
 Captures what was executed, when, and what failed — useful for compliance.
 
 ### Real-time dashboards
 ```
-plan.run() (streaming trace) → ops.trace.monitor() (every 100ms) → dashboard feed
+plan.run() (streaming trace) → evidence.trace.monitor() (every 100ms) → dashboard feed
 ```
 Live operational visibility for long-running agents.
 
 ### Failure diagnosis
 ```
-Failed execution → ops.trace.analyze() → error_pattern extraction
+Failed execution → evidence.trace.analyze() → error_pattern extraction
 ```
 Quickly identify whether the failure was deterministic, rate-limited, or transient.

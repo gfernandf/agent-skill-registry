@@ -1,0 +1,46 @@
+id: memory.context.reconcile
+version: 1.0.0
+description: Reconcile multiple context snapshots into a coherent context view and
+  conflict log.
+inputs:
+  contexts:
+    type: array
+    required: true
+    description: Context snapshots to reconcile.
+  precedence_policy:
+    type: string
+    required: false
+    description: Policy latest_wins|trust_weighted|explicit_priority.
+outputs:
+  reconciled_context:
+    type: object
+    required: true
+    description: Unified context after reconciliation.
+  conflicts:
+    type: array
+    required: false
+    description: Conflicts detected and resolution rationale.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Context
+  produces:
+    reconciled_context:
+      type: Context
+    conflicts:
+      type: Evidence
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - memory
+  - context
+  - reconcile
+  examples:
+  - summary: Reconcile analyst and system context snapshots
+  layer: cognitive

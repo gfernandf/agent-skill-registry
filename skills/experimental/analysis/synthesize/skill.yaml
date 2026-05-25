@@ -138,7 +138,7 @@ steps:
       items: vars.resolved_items
 
   - id: synthesize
-    uses: model.output.generate
+    uses: reasoning.output.generate
     input:
       instruction: >
         You are a research synthesis engine. You receive a collection of source

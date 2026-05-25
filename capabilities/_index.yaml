@@ -2,39 +2,39 @@ version: 0.1
 
 capabilities:
 
-  - id: agent.task.delegate
+  - id: decision.task.delegate
     status: experimental
     description: Delegate a task to another agent or subsystem for execution with elevated trust and confirmation.
 
-  - id: agent.option.generate
+  - id: reasoning.option.generate
     status: experimental
     description: Generate a set of plausible, distinct options for a given situation or decision problem. Accepts a goal description and optional contextual constraints. Returns 2-5 structured options, each with a label, description, and key attributes. Designed to avoid combinatorial explosion and hallucinated options by grounding generation in the provided context.
 
 
-  - id: agent.plan.create
+  - id: reasoning.plan.create
     status: experimental
     description: Generates a valid skill YAML definition from a natural language intent description. Uses the local capability catalog as context so the generated skill only references capabilities that are registered and available.
 
 
-  - id: agent.plan.generate
+  - id: reasoning.plan.generate
     status: experimental
     description: Generate a structured execution plan with ordered steps, assumptions, and risk notes for a given objective.
 
-  - id: agent.input.route
+  - id: decision.input.route
     status: experimental
     description: Route an incoming request to the most appropriate handler or agent based on content and available targets.
 
-  - id: analysis.risk.extract
+  - id: reasoning.risk.extract
     status: experimental
     description: Extract risks, fragile assumptions, failure modes, and preliminary mitigation ideas from a target artifact (decision, plan, analysis, proposal, draft). Produces a structured risk inventory with severity hints. Does NOT score or rank risks — that is the responsibility of downstream capabilities.
 
 
-  - id: analysis.problem.split
+  - id: reasoning.problem.split
     status: experimental
     description: Split a complex problem, topic, or domain into a set of manageable, described components with a suggested analysis order. The decomposition strategy (by themes, dimensions, phases, questions, stakeholders, risks) is provided as input. Returns components with descriptions, dependencies between them, and flags for gaps or overlaps.
 
 
-  - id: analysis.theme.cluster
+  - id: reasoning.theme.cluster
     status: experimental
     description: Group a collection of text items into coherent thematic clusters. Identifies dominant themes, assigns each item to one or more clusters, and produces a summary per cluster with signal strength. Accepts optional hint labels to guide (not force) the thematic structure.
 
@@ -81,7 +81,7 @@ capabilities:
 
   - id: decision.option.justify
     status: experimental
-    description: "Select a final recommendation from evaluated options and produce a structured justification. Consumes qualitative analysis (from eval.option.analyze) and quantitative scores (from eval.option.score) to make an explicit, committed choice. Outputs the recommendation, justification narrative, failure modes, uncertainties, confidence assessment, and concrete next steps. This capability is the 'closing' step — it resolves ambiguity into action. It must never hedge with 'it depends' or 'consider both'."
+    description: "Select a final recommendation from evaluated options and produce a structured justification. Consumes qualitative analysis (from reasoning.option.analyze) and quantitative scores (from evaluation.option.score) to make an explicit, committed choice. Outputs the recommendation, justification narrative, failure modes, uncertainties, confidence assessment, and concrete next steps. This capability is the 'closing' step — it resolves ambiguity into action. It must never hedge with 'it depends' or 'consider both'."
 
 
   - id: doc.content.chunk
@@ -96,17 +96,17 @@ capabilities:
     status: draft
     description: Send an email message.
 
-  - id: eval.option.analyze
+  - id: reasoning.option.analyze
     status: experimental
-    description: Perform qualitative analysis of each option in a decision set. For every option, identify pros, cons, risks, and underlying assumptions. Does NOT assign numeric scores — that is the responsibility of eval.option.score. This capability produces the structured qualitative evidence that scoring and justification steps consume downstream.
+    description: Perform qualitative analysis of each option in a decision set. For every option, identify pros, cons, risks, and underlying assumptions. Does NOT assign numeric scores — that is the responsibility of evaluation.option.score. This capability produces the structured qualitative evidence that scoring and justification steps consume downstream.
 
 
-  - id: eval.option.score
+  - id: evaluation.option.score
     status: experimental
     description: Evaluate a set of options against weighted criteria and produce a comparative scoring. Each option is scored per-criterion and overall. Returns the ranked list, a comparative summary, and explicit trade-offs between top candidates. Designed for multi-criteria decision analysis where transparency of evaluation matters more than speed.
 
 
-  - id: eval.output.score
+  - id: evaluation.output.score
     status: experimental
     description: Score the quality of an output artifact against an optional rubric with per-dimension details and quality-level labels.
 
@@ -246,35 +246,35 @@ capabilities:
     status: draft
     description: Send a generic message.
 
-  - id: model.embedding.generate
+  - id: reasoning.embedding.generate
     status: draft
     description: Generate a vector embedding for a text input using a model-level embedding service.
 
-  - id: model.output.classify
+  - id: reasoning.output.classify
     status: draft
     description: Classify a model-generated output into one of the provided categories.
 
-  - id: model.output.generate
+  - id: reasoning.output.generate
     status: experimental
     description: Generate structured output from a model given an instruction, context items, and an output schema.
 
-  - id: model.output.sanitize
+  - id: reasoning.output.sanitize
     status: draft
     description: Sanitize a model-generated output by removing harmful content, PII, and prompt leakage.
 
-  - id: model.output.score
+  - id: evaluation.output.score
     status: draft
     description: Score a model-generated output on quality dimensions such as relevance, fluency, and completeness.
 
-  - id: model.prompt.template
+  - id: reasoning.prompt.template
     status: draft
     description: Render a model prompt from a template and variable bindings.
 
-  - id: model.response.validate
+  - id: evaluation.response.validate
     status: experimental
     description: Validate a model-generated output for semantic coherence, evidence grounding, and structural completeness.
 
-  - id: model.risk.score
+  - id: evaluation.risk.score
     status: draft
     description: Assess the risk level of a model-generated output across safety dimensions.
 
@@ -286,16 +286,16 @@ capabilities:
     status: draft
     description: Acknowledge receipt and handling of an operational event.
 
-  - id: ops.event.monitor
+  - id: perception.event.monitor
     status: draft
     description: Monitor a stream of operational events and return status with alerts for threshold violations.
 
-  - id: ops.trace.analyze
+  - id: evidence.trace.analyze
     status: experimental
     description: Analyze incremental execution traces as a cognitive interpretation unit. This capability reconstructs the agent's reasoning path from runtime events, infers assumptions, identifies plausible alternatives, estimates confidence, and returns structured views such as decision graphs. It is intended to be called repeatedly during execution (update mode) and once at run closure (finalize mode), without coupling to any specific model provider.
 
 
-  - id: ops.trace.monitor
+  - id: evidence.trace.monitor
     status: experimental
     description: Monitor trace state against operational thresholds as a control/governance cognitive unit. This capability does not infer new reasoning structure; instead it evaluates existing trace artifacts and emits deterministic control signals (status, risk flags, alerts, metrics) that can be used to continue, re-plan, or stop an agent workflow.
 
@@ -324,17 +324,17 @@ capabilities:
     status: draft
     description: Compute a numeric risk score for an action across policy dimensions.
 
-  - id: provenance.citation.generate
+  - id: evidence.citation.generate
     status: draft
     description: Generate a structured citation for a source fragment.
 
-  - id: provenance.claim.verify
+  - id: evidence.claim.verify
     status: draft
     description: Verify whether a claim is supported by provided sources.
 
   - id: research.source.retrieve
     status: draft
-    description: Resolve source_ref fields in a list of corpus items to actual text content. Handles pdf_path, fs_path, url, and raw_text source types. Items that already have content are passed through unchanged. The resolved items are suitable for passing to model.output.generate or further analysis steps.
+    description: Resolve source_ref fields in a list of corpus items to actual text content. Handles pdf_path, fs_path, url, and raw_text source types. Items that already have content are passed through unchanged. The resolved items are suitable for passing to reasoning.output.generate or further analysis steps.
 
 
   - id: security.output.gate
@@ -385,15 +385,15 @@ capabilities:
     status: draft
     description: Create a new case or ticket.
 
-  - id: task.case.get
+  - id: perception.case.get
     status: draft
     description: Retrieve a specific case by identifier.
 
-  - id: task.case.list
+  - id: perception.case.list
     status: draft
     description: List cases, optionally filtered by status or assignee.
 
-  - id: task.case.search
+  - id: perception.case.search
     status: draft
     description: Search cases by keyword or criteria.
 
@@ -413,11 +413,11 @@ capabilities:
     status: draft
     description: Schedule a project milestone with a target date and deliverables.
 
-  - id: task.priority.classify
+  - id: reasoning.priority.classify
     status: draft
     description: Classify the priority of a task based on its attributes and context.
 
-  - id: task.sla.monitor
+  - id: perception.sla.monitor
     status: draft
     description: Monitor SLA compliance for a set of tasks and raise alerts for breaches.
 
@@ -425,55 +425,55 @@ capabilities:
     status: draft
     description: Transition a task to a new state, validating the transition is allowed.
 
-  - id: text.content.classify
+  - id: reasoning.content.classify
     status: draft
     description: Classify a text into one or more predefined categories.
 
-  - id: text.content.embed
+  - id: reasoning.content.embed
     status: draft
     description: Generate vector embeddings from text.
 
-  - id: text.content.generate
+  - id: reasoning.content.generate
     status: experimental
     description: Generate new text from an instruction and optional context.
 
-  - id: text.entity.extract
+  - id: perception.entity.extract
     status: draft
     description: Extract named entities from a text block.
 
-  - id: text.content.extract
+  - id: perception.content.extract
     status: draft
     description: Extract relevant text content from an input text block.
 
-  - id: text.keyword.extract
+  - id: perception.keyword.extract
     status: draft
     description: Extract keywords from a text block.
 
-  - id: text.language.detect
+  - id: reasoning.language.detect
     status: draft
     description: Detect the language of a text.
 
-  - id: text.content.merge
+  - id: reasoning.content.merge
     status: stable
     description: Merge multiple text items into a single consolidated text block. Accepts an array of items with text content and produces a single string with configurable separator. Deterministic, no LLM required.
 
-  - id: text.response.extract
+  - id: reasoning.response.extract
     status: experimental
     description: Extract an answer to a question from a context passage.
 
-  - id: text.content.transform
+  - id: reasoning.content.transform
     status: experimental
     description: Transform existing text applying a directive.
 
-  - id: text.content.summarize
+  - id: reasoning.content.summarize
     status: draft
     description: Produce a condensed version of text preserving key ideas.
 
-  - id: text.content.template
+  - id: reasoning.content.template
     status: draft
     description: Render a text template using variables.
 
-  - id: text.content.translate
+  - id: reasoning.content.translate
     status: draft
     description: Translate text from one language to another.
 
@@ -504,7 +504,7 @@ capabilities:
 
   # ── Control-flow primitives ──
 
-  - id: agent.flow.branch
+  - id: decision.flow.branch
     status: experimental
     description: Evaluate a condition against the current context and select which execution branch to follow. Primary control-flow primitive for conditional workflows.
 
@@ -516,7 +516,7 @@ capabilities:
     status: experimental
     description: Pause workflow execution until an external condition is met or a timeout expires. Used for human-in-the-loop approvals, external event arrival, or timed delays.
 
-  - id: agent.flow.catch
+  - id: decision.flow.catch
     status: experimental
     description: Handle an error from a prior workflow step by selecting and applying a fallback strategy. Supports retry, skip, default value substitution, and escalation.
 
@@ -564,7 +564,7 @@ capabilities:
 
   # ── User interaction ──
 
-  - id: agent.input.collect
+  - id: perception.input.collect
     status: experimental
     description: Collect structured input from a user or external source by specifying required fields, types, and validation constraints.
 
@@ -586,11 +586,11 @@ capabilities:
 
   # ── Text analysis extensions ──
 
-  - id: text.content.compare
+  - id: reasoning.content.compare
     status: experimental
     description: Compare two text blocks for semantic and structural similarity. Reports similarity score, specific differences, and a narrative summary.
 
-  - id: text.sentiment.analyze
+  - id: reasoning.sentiment.analyze
     status: experimental
     description: Analyze the sentiment and emotional tone of text. Returns polarity classification, numeric score, and dimensional breakdown.
 
@@ -602,55 +602,55 @@ capabilities:
 
   # ── Multipurpose agent pipeline ──
 
-  - id: agent.request.normalize
+  - id: reasoning.request.normalize
     status: experimental
     description: Normalize a raw user request into a structured task object preserving intent, language, explicit constraints, urgency level, and any attached artifacts. First node in the multipurpose agent pipeline.
 
-  - id: agent.goal.interpret
+  - id: reasoning.goal.interpret
     status: experimental
     description: Convert a normalized request into an explicit operational goal with deliverable type, success criteria, assumptions, constraints, and open questions that must be resolved before planning.
 
-  - id: agent.criteria.define
+  - id: reasoning.criteria.define
     status: experimental
     description: Define measurable success, quality, and acceptance criteria for an interpreted goal. Produces the evaluation contract used downstream by plan validation and output evaluation nodes.
 
-  - id: agent.catalog.search
+  - id: perception.catalog.search
     status: experimental
     description: Search the ORCA registry catalog for skills and capabilities relevant to an interpreted goal. Filters by domain and kind. Returns candidate items with relevance scores and reasoning.
 
-  - id: agent.catalog.rank
+  - id: evaluation.catalog.rank
     status: experimental
     description: Rank a set of candidate registry items by relevance to the goal, considering composability, trust level, side effects, and expected utility. Returns ordered lists of skills and capabilities.
 
-  - id: agent.catalog.detect
+  - id: evaluation.catalog.detect
     status: experimental
     description: Detect gaps in the ORCA registry relative to an interpreted goal. Returns missing capabilities and skills required to fully satisfy the goal but absent from the registry.
 
-  - id: agent.task.plan
+  - id: reasoning.task.plan
     status: experimental
     description: Generate a high-level macro plan decomposing an interpreted goal into major stages without executing anything. Each stage has an objective, expected output, and an optional suggested skill reference.
 
-  - id: agent.plan.split
+  - id: reasoning.plan.split
     status: experimental
     description: Expand one macro plan stage into concrete ORCA-executable steps, each referencing a specific capability or skill with purpose, expected inputs, outputs, and inter-step dependencies.
 
-  - id: agent.plan.map
+  - id: reasoning.plan.map
     status: experimental
     description: Bind the inputs and outputs of expanded plan steps to explicit CognitiveState paths using dollar-prefixed references (e.g. $state.evidence.sources). Produces a fully wired step list ready for validation.
 
-  - id: agent.plan.validate
+  - id: evaluation.plan.validate
     status: experimental
     description: Validate that a proposed ORCA plan is structurally executable. Checks registry references, input availability, output declarations, DAG integrity, side-effect annotations, permission requirements, and absence of free-text execution steps.
 
-  - id: agent.plan.reconcile
+  - id: reasoning.plan.reconcile
     status: experimental
     description: Repair an invalid ORCA plan by replacing unresolvable references, inserting missing dependencies, binding unresolved inputs, or adding required policy gates. Produces a corrected plan and repair notes.
 
-  - id: agent.plan.synthesize
+  - id: reasoning.plan.synthesize
     status: experimental
     description: Compile a validated ORCA plan into an executable DAG with explicit node ordering, parallel execution groups, state bindings, policy gates, and scheduling hints. Output is consumed directly by the executor.
 
-  - id: agent.plan.gate
+  - id: evaluation.plan.gate
     status: experimental
     description: Determine whether a compiled plan can proceed under current permissions and policy constraints. Returns approval status, any blocked steps, and prompts for steps requiring explicit user authorization.
 
@@ -658,18 +658,18 @@ capabilities:
     status: experimental
     description: Execute a compiled, gate-approved ORCA plan DAG step by step using the embedded runtime. Calls each referenced skill, resolves $state.working.* bindings between steps, and returns full execution result with per-step status. Requires user confirmation (trust_level: elevated).
 
-  - id: agent.output.generate
+  - id: reasoning.output.generate
     status: experimental
     description: Generate the final user-facing report from execution outputs, evaluation results, and trace summary. Includes what was done, what was produced, limitations, decisions, evidence references, errors, and suggested next steps.
 
-  - id: agent.output.synthesize
+  - id: reasoning.output.synthesize
     status: experimental
     description: Convert a successful completed plan and its execution trace into a candidate reusable ORCA skill definition, capturing steps, inputs, outputs, and known constraints for registry contribution.
 
-  - id: eval.output.validate
+  - id: evaluation.output.validate
     status: experimental
     description: Evaluate whether a final output satisfies the explicit success and acceptance criteria defined for the task. Returns a pass/fail verdict, per-criterion scores, failed criteria list, and improvement suggestions.
 
-  - id: ops.trace.summarize
+  - id: evidence.trace.summarize
     status: experimental
     description: Summarize an execution trace into a compact report of steps executed, decisions made, gates triggered, failures encountered, and overall outcome. Used by the reporter node and for post-execution audit.

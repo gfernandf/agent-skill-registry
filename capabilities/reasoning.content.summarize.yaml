@@ -1,0 +1,40 @@
+id: reasoning.content.summarize
+version: 1.0.0
+description: Produce a condensed version of text preserving key ideas.
+inputs:
+  text:
+    type: string
+    required: true
+  max_length:
+    type: integer
+    required: false
+outputs:
+  summary:
+    type: string
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+cognitive_hints:
+  role: synthesize
+  consumes:
+  - Context
+  produces:
+    summary:
+      type: Summary
+metadata:
+  status: stable
+  tags:
+  - text
+  - nlp
+  - summarization
+  examples:
+  - summary: Summarize a passage of text
+    inputs:
+      text: Machine learning is a subset of AI that enables systems to learn from
+        data...
+    outputs:
+      summary: ML lets systems learn from data without explicit programming.
+  layer: cognitive

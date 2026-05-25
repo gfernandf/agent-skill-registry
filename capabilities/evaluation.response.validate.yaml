@@ -1,0 +1,77 @@
+id: evaluation.response.validate
+version: 1.0.0
+description: Validate a model-generated output for semantic coherence, evidence grounding,
+  and structural completeness.
+inputs:
+  output:
+    type: object
+    required: true
+    description: The model-generated structured output to validate.
+  validation_policy:
+    type: object
+    required: true
+    description: Policy object defining validation dimensions such as coherence, coverage,
+      grounding, and confidence thresholds.
+  evidence_context:
+    type: array
+    required: false
+    description: Optional source items used to verify grounding of claims in the output.
+outputs:
+  valid:
+    type: boolean
+    required: true
+    description: Whether the output passes all validation dimensions.
+  issues:
+    type: array
+    required: false
+    description: List of validation issues found, each with dimension, severity, and
+      description.
+  confidence_adjustment:
+    type: number
+    required: false
+    description: Suggested adjustment to the overall confidence score based on validation
+      findings.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the validation result.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: stable
+  tags:
+  - model
+  - validation
+  - grounding
+  - coherence
+  - quality
+  examples:
+  - summary: Validate a generated summary against source evidence
+    inputs:
+      output:
+        summary: Revenue grew 20%.
+        confidence: 0.85
+      validation_policy:
+        coherence: true
+        grounding: true
+        coverage: true
+      evidence_context:
+      - content: Revenue increased by 20% year-over-year.
+  layer: cognitive
+cognitive_hints:
+  role: evaluate
+  produces:
+    valid:
+      type: Score
+    issues:
+      type: Score
+    confidence_adjustment:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context

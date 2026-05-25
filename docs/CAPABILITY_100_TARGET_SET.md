@@ -31,9 +31,9 @@ For current operational scope and governance, use:
 
 ### Agent
 
-- agent.task.delegate
-- agent.plan.generate
-- agent.input.route
+- decision.task.delegate
+- reasoning.plan.generate
+- decision.input.route
 
 ### Audio
 
@@ -65,7 +65,7 @@ For current operational scope and governance, use:
 
 ### Eval
 
-- eval.output.score
+- evaluation.output.score
 
 ### Image / Video
 
@@ -81,7 +81,7 @@ For current operational scope and governance, use:
 ### Ops
 
 - ops.budget.estimate
-- ops.trace.monitor
+- evidence.trace.monitor
 
 ### Policy / Security
 
@@ -93,8 +93,8 @@ For current operational scope and governance, use:
 
 ### Provenance
 
-- provenance.citation.generate
-- provenance.claim.verify
+- evidence.citation.generate
+- evidence.claim.verify
 
 ### Table
 
@@ -102,15 +102,15 @@ For current operational scope and governance, use:
 
 ### Text
 
-- text.content.classify
-- text.content.embed
-- text.entity.extract
-- text.content.extract
-- text.keyword.extract
-- text.language.detect
-- text.content.summarize
-- text.content.template
-- text.content.translate
+- reasoning.content.classify
+- reasoning.content.embed
+- perception.entity.extract
+- perception.content.extract
+- perception.keyword.extract
+- reasoning.language.detect
+- reasoning.content.summarize
+- reasoning.content.template
+- reasoning.content.translate
 
 ### Web
 
@@ -131,14 +131,14 @@ the active governance and validation workflows rather than this snapshot.
 - task.case.create
 - task.case.update
 - task.case.close
-- task.case.list
-- task.case.get
-- task.case.search
+- perception.case.list
+- perception.case.get
+- perception.case.search
 - task.assignee.assign
-- task.priority.classify
+- reasoning.priority.classify
 - task.state.transition
 - task.milestone.schedule
-- task.sla.monitor
+- perception.sla.monitor
 - task.approval.approve
 - task.approval.reject
 - task.incident.create
@@ -174,14 +174,14 @@ the active governance and validation workflows rather than this snapshot.
 
 ### Model (8)
 
-- model.prompt.template
-- model.output.generate
-- model.output.classify
-- model.output.score
-- model.response.validate
-- model.embedding.generate
-- model.risk.score
-- model.output.sanitize
+- reasoning.prompt.template
+- reasoning.output.generate
+- reasoning.output.classify
+- evaluation.output.score
+- evaluation.response.validate
+- reasoning.embedding.generate
+- evaluation.risk.score
+- reasoning.output.sanitize
 
 ### Policy (4)
 
@@ -192,9 +192,9 @@ the active governance and validation workflows rather than this snapshot.
 
 ### Ops (3)
 
-- ops.event.monitor
+- perception.event.monitor
 - ops.event.acknowledge
-- ops.trace.analyze
+- evidence.trace.analyze
 
 ### Memory (2)
 

@@ -1,0 +1,50 @@
+id: evidence.gap.detect
+version: 1.0.0
+description: Detect missing evidence required to support claims or decisions.
+inputs:
+  claims:
+    type: array
+    required: true
+    description: Claims that require support.
+  evidence_items:
+    type: array
+    required: false
+    description: Available evidence corpus.
+  required_dimensions:
+    type: array
+    required: false
+    description: Optional required evidence dimensions.
+outputs:
+  evidence_gaps:
+    type: array
+    required: true
+    description: Identified evidence gaps with missing dimension and impact.
+  gap_severity:
+    type: string
+    required: false
+    description: Overall gap severity low|medium|high.
+cognitive_hints:
+  role: analyze
+  consumes:
+  - Evidence
+  - Context
+  produces:
+    evidence_gaps:
+      type: Uncertainty
+    gap_severity:
+      type: Score
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - evidence
+  - gap
+  - detection
+  examples:
+  - summary: Find unsupported claims in strategy memo
+  layer: cognitive

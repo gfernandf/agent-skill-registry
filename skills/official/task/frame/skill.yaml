@@ -90,7 +90,7 @@ outputs:
       '
 steps:
 - id: classify_task
-  uses: text.content.classify
+  uses: reasoning.content.classify
   input:
     text: inputs.task
     labels:
@@ -106,7 +106,7 @@ steps:
   output:
     label: outputs.task_type
 - id: extract_structure
-  uses: text.content.extract
+  uses: perception.content.extract
   input:
     text: inputs.task
     extraction_schema:
@@ -127,14 +127,14 @@ steps:
   output:
     text: outputs.problem_statement
 - id: propose_approach
-  uses: agent.plan.generate
+  uses: reasoning.plan.generate
   input:
     objective: outputs.problem_statement
     context: inputs.context
   output:
     plan: outputs.recommended_approach
 - id: suggest_skills
-  uses: agent.input.route
+  uses: decision.input.route
   input:
     query: inputs.task
   output:

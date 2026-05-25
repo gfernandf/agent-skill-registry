@@ -11,17 +11,17 @@ to be composed with downstream evaluation and decision capabilities.
 
 | Capability                  | Status       | Description |
 |-----------------------------|-------------|-------------|
-| `analysis.problem.split`   | experimental | Decompose a problem into components by a chosen strategy axis |
-| `analysis.risk.extract`    | experimental | Extract risks, assumptions, failure modes and mitigation ideas |
-| `analysis.theme.cluster`   | experimental | Group text items into coherent thematic clusters |
+| `reasoning.problem.split`   | experimental | Decompose a problem into components by a chosen strategy axis |
+| `reasoning.risk.extract`    | experimental | Extract risks, assumptions, failure modes and mitigation ideas |
+| `reasoning.theme.cluster`   | experimental | Group text items into coherent thematic clusters |
 
 ## Binding Matrix
 
 | Capability                  | pythoncall Binding                  | OpenAI Binding                            | Default |
 |-----------------------------|--------------------------------------|-------------------------------------------|---------|
-| `analysis.problem.split`   | `python_analysis_split`              | `openapi_analysis_split_openai_chat`      | openai  |
-| `analysis.risk.extract`    | `python_analysis_risk_extract`       | `openapi_analysis_risk_extract_openai_chat`| openai  |
-| `analysis.theme.cluster`   | `python_analysis_theme_cluster`      | `openapi_analysis_theme_cluster_openai_chat`| openai |
+| `reasoning.problem.split`   | `python_analysis_split`              | `openapi_analysis_split_openai_chat`      | openai  |
+| `reasoning.risk.extract`    | `python_analysis_risk_extract`       | `openapi_analysis_risk_extract_openai_chat`| openai  |
+| `reasoning.theme.cluster`   | `python_analysis_theme_cluster`      | `openapi_analysis_theme_cluster_openai_chat`| openai |
 
 All three default to their OpenAI binding when `OPENAI_API_KEY` is present.
 The pythoncall baselines are deterministic fallbacks.
@@ -45,14 +45,14 @@ cognitive-state router. `problem.split` consumes `Context` and produces
 
 | Skill                  | Capabilities Used |
 |------------------------|-------------------|
-| `analysis.synthesize`  | `analysis.problem.split`, `text.content.summarize` |
-| `analysis.risk-assess` | `analysis.risk.extract`, `eval.option.score` |
-| `analysis.compare`     | `analysis.theme.cluster`, `eval.option.analyze` |
+| `analysis.synthesize`  | `reasoning.problem.split`, `reasoning.content.summarize` |
+| `analysis.risk-assess` | `reasoning.risk.extract`, `evaluation.option.score` |
+| `analysis.compare`     | `reasoning.theme.cluster`, `reasoning.option.analyze` |
 
 ## Boundary Definitions
 
 - **problem.split** decomposes but does NOT evaluate or prioritise components.
 - **risk.extract** inventories risks but does NOT score or rank them — use
-  `eval.option.score` or a dedicated risk-scoring capability downstream.
+  `evaluation.option.score` or a dedicated risk-scoring capability downstream.
 - **theme.cluster** groups items but does NOT summarise or interpret the
   clusters — that is the consumer's responsibility.

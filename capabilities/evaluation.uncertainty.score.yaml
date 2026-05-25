@@ -1,0 +1,62 @@
+id: evaluation.uncertainty.score
+version: 1.0.0
+description: >
+  Score extracted uncertainties by expected impact and confidence gap. Helps
+  quantify which unknowns are most critical before commitment or execution.
+inputs:
+  uncertainties:
+    type: array
+    required: true
+    description: Uncertainty items, typically from reasoning.uncertainty.extract.
+  scoring_criteria:
+    type: array
+    required: false
+    description: Optional criteria and weights such as impact, likelihood, and reversibility.
+outputs:
+  scored_uncertainties:
+    type: array
+    required: true
+    description: >
+      Uncertainty scores with fields uncertainty_id, impact_score (0-1),
+      confidence_gap_score (0-1), and overall_score (0-1).
+  scoring_summary:
+    type: string
+    required: false
+    description: Summary of the highest-risk uncertainty clusters.
+cognitive_hints:
+  role: evaluate
+  consumes:
+  - Uncertainty
+  - Criterion
+  produces:
+    scored_uncertainties:
+      type: Score
+    scoring_summary:
+      type: Summary
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: standard
+metadata:
+  status: experimental
+  tags:
+  - analysis
+  - uncertainty
+  - scoring
+  examples:
+  - summary: Score uncertainty inventory before decision review
+    inputs:
+      uncertainties:
+      - id: u1
+        description: Market demand confidence is low in segment B.
+      - id: u2
+        description: Vendor SLA enforceability is unclear.
+    outputs:
+      scored_uncertainties:
+      - uncertainty_id: u1
+        overall_score: 0.78
+      - uncertainty_id: u2
+        overall_score: 0.65
+  layer: cognitive
