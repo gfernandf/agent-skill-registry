@@ -28,6 +28,10 @@ inputs:
       30.
 
       '
+  target_tenant_id:
+    type: string
+    required: false
+    description: Optional target tenant identifier for explicit same_tenant enforcement.
 outputs:
   accepted:
     type: boolean
@@ -52,6 +56,7 @@ safety:
   requires_confirmation: true
   allowed_targets:
   - approved_connectors
+  - same_tenant
 properties:
   deterministic: false
   side_effects: true
@@ -68,6 +73,7 @@ metadata:
       description: Summarize the Q3 financial report
       priority: high
     agent: summarizer
+    target_tenant_id: tenant-acme
     expected_accepted: true
   status: stable
   layer: orchestration

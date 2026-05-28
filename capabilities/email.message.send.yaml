@@ -14,6 +14,10 @@ inputs:
     type: string
     required: true
     description: Email body.
+  target_tenant_id:
+    type: string
+    required: false
+    description: Optional target tenant identifier for same_tenant enforcement.
 outputs:
   sent:
     type: boolean
@@ -33,6 +37,7 @@ safety:
   requires_confirmation: true
   allowed_targets:
   - internal_only
+  - same_tenant
   mandatory_pre_gates:
   - capability: security.pii.detect
     on_fail: block
@@ -54,6 +59,7 @@ metadata:
       to: bob@example.com
       subject: Follow-up
       body: Please review the proposal.
+      target_tenant_id: tenant-acme
     outputs:
       sent: true
       message_id: msg-001

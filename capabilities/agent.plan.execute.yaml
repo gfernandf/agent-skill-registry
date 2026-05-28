@@ -24,6 +24,10 @@ inputs:
       used.
 
       '
+  target_tenant_id:
+    type: string
+    required: false
+    description: Optional target tenant identifier for same_tenant enforcement.
 outputs:
   execution_result:
     type: object
@@ -51,6 +55,7 @@ safety:
   requires_confirmation: true
   allowed_targets:
   - internal_only
+  - same_tenant
   scope_constraints:
   - sandboxed_execution
 metadata:
@@ -74,6 +79,7 @@ metadata:
             query: energy storage Europe 2026
             mode: quick
             num_sources: 8
+            target_tenant_id: tenant-acme
           outputs:
             summary: $state.working.s1_step1_summary
     expected_execution_result:

@@ -10,6 +10,10 @@ inputs:
     type: string
     required: true
     description: Message body.
+  target_tenant_id:
+    type: string
+    required: false
+    description: Optional target tenant identifier for same_tenant enforcement.
 outputs:
   sent:
     type: boolean
@@ -22,6 +26,7 @@ safety:
   requires_confirmation: true
   allowed_targets:
   - internal_only
+  - same_tenant
 properties:
   deterministic: true
   side_effects: true
@@ -39,6 +44,7 @@ metadata:
     inputs:
       message: Build succeeded
       recipient: ops-channel
+      target_tenant_id: tenant-acme
     outputs:
       sent: true
       message_id: notif-001
