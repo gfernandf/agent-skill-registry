@@ -225,6 +225,11 @@
         "type": "object",
         "required": false,
         "description": "Initial CognitiveState snapshot. When omitted an empty state is used.\n"
+      },
+      "target_tenant_id": {
+        "type": "string",
+        "required": false,
+        "description": "Optional target tenant identifier for same_tenant enforcement."
       }
     },
     "outputs": {
@@ -268,7 +273,8 @@
                 "inputs": {
                   "query": "energy storage Europe 2026",
                   "mode": "quick",
-                  "num_sources": 8
+                  "num_sources": 8,
+                  "target_tenant_id": "tenant-acme"
                 },
                 "outputs": {
                   "summary": "$state.working.s1_step1_summary"
@@ -307,7 +313,8 @@
       "trust_level": "elevated",
       "requires_confirmation": true,
       "allowed_targets": [
-        "internal_only"
+        "internal_only",
+        "same_tenant"
       ],
       "scope_constraints": [
         "sandboxed_execution"
@@ -2263,6 +2270,11 @@
         "type": "number",
         "required": false,
         "description": "Maximum time to wait for acceptance acknowledgement. Defaults to 30.\n"
+      },
+      "target_tenant_id": {
+        "type": "string",
+        "required": false,
+        "description": "Optional target tenant identifier for explicit same_tenant enforcement."
       }
     },
     "outputs": {
@@ -2297,6 +2309,7 @@
             "priority": "high"
           },
           "agent": "summarizer",
+          "target_tenant_id": "tenant-acme",
           "expected_accepted": true
         }
       ]
@@ -2330,7 +2343,8 @@
       "reversible": false,
       "requires_confirmation": true,
       "allowed_targets": [
-        "approved_connectors"
+        "approved_connectors",
+        "same_tenant"
       ]
     }
   },
@@ -2694,6 +2708,11 @@
         "type": "string",
         "required": true,
         "description": "Email body."
+      },
+      "target_tenant_id": {
+        "type": "string",
+        "required": false,
+        "description": "Optional target tenant identifier for same_tenant enforcement."
       }
     },
     "outputs": {
@@ -2717,7 +2736,8 @@
           "inputs": {
             "to": "bob@example.com",
             "subject": "Follow-up",
-            "body": "Please review the proposal."
+            "body": "Please review the proposal.",
+            "target_tenant_id": "tenant-acme"
           },
           "outputs": {
             "sent": true,
@@ -2750,7 +2770,8 @@
       "reversible": false,
       "requires_confirmation": true,
       "allowed_targets": [
-        "internal_only"
+        "internal_only",
+        "same_tenant"
       ],
       "mandatory_pre_gates": [
         {
@@ -8303,6 +8324,11 @@
         "type": "string",
         "required": true,
         "description": "Message body."
+      },
+      "target_tenant_id": {
+        "type": "string",
+        "required": false,
+        "description": "Optional target tenant identifier for same_tenant enforcement."
       }
     },
     "outputs": {
@@ -8325,7 +8351,8 @@
           "summary": "Send a notification message",
           "inputs": {
             "message": "Build succeeded",
-            "recipient": "ops-channel"
+            "recipient": "ops-channel",
+            "target_tenant_id": "tenant-acme"
           },
           "outputs": {
             "sent": true,
@@ -8358,7 +8385,8 @@
       "reversible": false,
       "requires_confirmation": true,
       "allowed_targets": [
-        "internal_only"
+        "internal_only",
+        "same_tenant"
       ]
     }
   },
@@ -15756,6 +15784,11 @@
         "type": "number",
         "required": false,
         "description": "Request timeout in seconds. Default: 30."
+      },
+      "target_tenant_id": {
+        "type": "string",
+        "required": false,
+        "description": "Optional target tenant identifier for same_tenant enforcement."
       }
     },
     "outputs": {
@@ -15803,7 +15836,8 @@
               "name": "New Record",
               "status": "active"
             },
-            "timeout_seconds": 15
+            "timeout_seconds": 15,
+            "target_tenant_id": "tenant-acme"
           },
           "outputs": {
             "status_code": 201,
@@ -15842,7 +15876,8 @@
       "trust_level": "elevated",
       "requires_confirmation": true,
       "allowed_targets": [
-        "approved_connectors"
+        "approved_connectors",
+        "same_tenant"
       ],
       "scope_constraints": [
         "no_credential_passthrough"
