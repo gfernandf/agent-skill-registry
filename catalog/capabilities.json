@@ -1112,6 +1112,14 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "reversible": false,
+      "requires_confirmation": false,
+      "allowed_targets": [
+        "same_tenant"
+      ]
     }
   },
   {
@@ -1601,6 +1609,14 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "reversible": false,
+      "requires_confirmation": false,
+      "allowed_targets": [
+        "same_tenant"
+      ]
     }
   },
   {
@@ -1706,6 +1722,14 @@
           "type": "Evidence"
         }
       }
+    },
+    "safety": {
+      "trust_level": "standard",
+      "reversible": false,
+      "requires_confirmation": false,
+      "allowed_targets": [
+        "same_tenant"
+      ]
     }
   },
   {

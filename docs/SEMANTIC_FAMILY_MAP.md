@@ -3,6 +3,12 @@
 This map helps maintainers avoid near-duplicate skills by grouping skills into
 semantic families and marking canonical entries.
 
+Why this helps:
+
+1. It makes overlap visible before it becomes a governance problem.
+2. It keeps canonical contracts stable while still allowing meaningful variants.
+3. It improves registry quality by steering new skills toward precise, non-generic names.
+
 Status keys:
 
 - `canonical`: preferred skill for the family

@@ -39,3 +39,9 @@ cognitive_hints:
       type: Entity
   consumes:
   - Entity
+safety:
+  trust_level: standard
+  reversible: false
+  requires_confirmation: false
+  allowed_targets:
+  - same_tenant

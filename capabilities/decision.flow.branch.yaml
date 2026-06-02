@@ -90,3 +90,9 @@ metadata:
       rationale: risk_score is 0.85, which exceeds the 0.7 threshold
       confidence: 0.95
   layer: orchestration
+safety:
+  trust_level: standard
+  reversible: false
+  requires_confirmation: false
+  allowed_targets:
+  - same_tenant

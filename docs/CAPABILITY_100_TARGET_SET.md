@@ -3,6 +3,12 @@
 This document records the planning baseline that guided expansion from an
 initial 45-capability core toward a 100-capability language target.
 
+Why this document still matters:
+
+1. It explains how the vocabulary grew without collapsing into redundant synonyms.
+2. It shows that the registry now favors clear, governable capability boundaries over raw count growth.
+3. It provides historical context for why the current taxonomy is easier to validate and maintain.
+
 Current status:
 
 - The 100-capability milestone has been reached and exceeded.
@@ -212,6 +218,10 @@ the active governance and validation workflows rather than this snapshot.
 - Planned total: 100
 
 Current live total may differ as the registry continues evolving.
+
+The important point is not the count by itself. The value is that the live
+registry can now grow while keeping contract names, governance rules, and
+family boundaries much clearer than an unstructured expansion would allow.
 
 ## Internal Conflict Review Summary
 
