@@ -4,14 +4,13 @@
 > Capabilities: 4  
 > Last reviewed: 2026-05-08
 
-> Note: `eval.*` is the current compatibility surface for the evaluation
-> family. The expanded cognitive taxonomy is documented in
-> [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXONOMY.md), where the long-form family
-> name is `evaluation.*`.
+> Note: `eval.*` remains as a compatibility alias. New capability design should
+> prefer canonical names in the `evaluation.*` family as documented in
+> [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXONOMY.md).
 
 ## Overview
 
-The `eval.*` domain provides evaluation and scoring capabilities for decision
+The evaluation domain provides scoring and validation capabilities for decision
 workflows and output quality assessment. It covers three complementary steps:
 qualitative analysis of options, quantitative multi-criteria scoring, and
 general-purpose output quality scoring.
@@ -27,7 +26,7 @@ These capabilities are heavily consumed by decision-making skills
 | **Qualitative before quantitative** | `option.analyze` produces structured evidence (pros/cons/risks) that `option.score` consumes for informed scoring. |
 | **Multi-criteria transparency** | `option.score` makes criteria, weights, and per-criterion scores visible — no opaque single number. |
 | **Universal quality gate** | `output.score` can evaluate any structured artifact, making it reusable as a quality gate across domains. |
-| **LLM-enhanced, baseline-safe** | All 3 capabilities ship with OpenAI bindings (production) and pythoncall baselines (offline/testing). |
+| **LLM-enhanced, baseline-safe** | The core capabilities ship with OpenAI bindings (production) and pythoncall baselines (offline/testing). |
 
 ---
 
@@ -73,16 +72,16 @@ All 4 default to OpenAI chat bindings, with pythoncall fallbacks:
 
 ## Decision pipeline integration
 
-The eval.* capabilities form the evaluation backbone of decision workflows:
+The evaluation capabilities form the backbone of decision workflows:
 
 ```
 reasoning.option.generate → reasoning.option.analyze → evaluation.option.score → decision.option.justify
        (options)           (pros/cons/risks)      (ranked scores)        (recommendation)
 ```
 
-### Skills consuming eval.*
+### Skills consuming evaluation capabilities
 
-| Skill | eval.* capabilities used |
+| Skill | capabilities used |
 |-------|-------------------------|
 | `decision.make` | `reasoning.option.analyze` → `evaluation.option.score` → `decision.option.justify` |
 | `analysis.compare` | `reasoning.option.analyze` + `evaluation.option.score` |
@@ -98,9 +97,9 @@ reasoning.option.generate → reasoning.option.analyze → evaluation.option.sco
 - **reasoning.option.analyze vs evaluation.option.score**: `analyze` is qualitative
   (pros, cons, risks, assumptions); `score` is quantitative (0–1 scores per
   criterion). `analyze` feeds `score` in the decision pipeline.
-- **evaluation.output.score vs evaluation.output.score**: `evaluation.output.score` is a
-  general-purpose quality scorer for any artifact; `evaluation.output.score`
-  specifically evaluates LLM output quality (word overlap, sentence metrics).
+- **evaluation.output.score vs model.output.score**: `evaluation.output.score` is a
+  general-purpose quality scorer for any artifact; `model.output.score`
+  specifically evaluates model output quality.
 - **evaluation.option.score vs decision.option.justify**: `score` ranks options;
   `justify` selects one and produces the justification narrative with
   confidence, failure modes, and next steps.

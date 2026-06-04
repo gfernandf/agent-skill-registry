@@ -1,20 +1,21 @@
 # Cognitive Taxonomy
 
-This document defines the **pure cognitive layer** of the registry and how it
-maps to the current live capability set.
+This document defines the **pure cognitive layer** of the registry.
 
-The goal is to keep the cognitive layer **complete, coherent, and minimal**:
+Current status: the cognitive taxonomy is fully represented in the live
+registry capability set.
 
-- keep only capabilities that perform cognitive work
-- avoid operational / workflow-control capabilities in the pure layer
-- call out compatibility surfaces explicitly so old names do not leak into the
-  taxonomy
+## Design goals
+
+- keep the cognitive layer complete and coherent
+- keep operational/runtime control capabilities out of the pure cognitive core
+- avoid duplicate semantics unless a compatibility alias is explicitly required
 
 ## Layer boundaries
 
 ### Pure cognitive layer
 
-These families belong to the cognitive layer:
+Canonical cognitive families:
 
 - `decision.*`
 - `evaluation.*`
@@ -23,33 +24,20 @@ These families belong to the cognitive layer:
 - `perception.*`
 - `reasoning.*`
 
-### Compatibility layer
+### Legacy compatibility aliases
 
-The live registry still exposes a smaller legacy surface for evaluation:
+`eval.*` remains available for backward compatibility in existing skills and
+integrations. New capability design should prefer the canonical family names
+listed above.
 
-- `eval.*` is the current registry surface for the evaluation family
-- `evaluation.*` is the new family name used by the expanded cognitive taxonomy
+### Operational support layer (non-cognitive core)
 
-### Operational support layer
+Capabilities such as flow-control, routing, and delegation support execution
+behavior and should not be treated as cognitive reasoning primitives.
 
-These capabilities help execute workflows but are not part of the pure cognitive
-layer:
+## Live registry inventory (pure cognitive families)
 
-- `decision.flow.*`
-- `decision.input.route`
-- `decision.task.delegate`
-
-## Canonical inventory
-
-The tables below list the current cognitive capabilities by family.
-
-### decision
-
-Canonical registry capability:
-
-- `decision.option.justify`
-
-Expanded cognitive family in bindings:
+### decision (8)
 
 - `decision.flow.branch`
 - `decision.flow.catch`
@@ -60,9 +48,7 @@ Expanded cognitive family in bindings:
 - `decision.task.delegate`
 - `decision.uncertainty.prioritize`
 
-### evaluation
-
-Expanded cognitive family in bindings:
+### evaluation (18)
 
 - `evaluation.assumption.validate`
 - `evaluation.catalog.detect`
@@ -83,15 +69,7 @@ Expanded cognitive family in bindings:
 - `evaluation.risk.score`
 - `evaluation.uncertainty.score`
 
-Compatibility registry surface:
-
-- `eval.option.analyze`
-- `eval.option.score`
-- `eval.output.score`
-
-### evidence
-
-Expanded cognitive family in bindings:
+### evidence (8)
 
 - `evidence.citation.generate`
 - `evidence.claim.verify`
@@ -102,16 +80,7 @@ Expanded cognitive family in bindings:
 - `evidence.trace.monitor`
 - `evidence.trace.summarize`
 
-### memory
-
-Canonical registry capabilities:
-
-- `memory.entry.retrieve`
-- `memory.entry.store`
-- `memory.record.store`
-- `memory.vector.search`
-
-Expanded cognitive family in bindings:
+### memory (10)
 
 - `memory.context.compress`
 - `memory.context.reconcile`
@@ -124,9 +93,7 @@ Expanded cognitive family in bindings:
 - `memory.record.store`
 - `memory.vector.search`
 
-### perception
-
-Expanded cognitive family in bindings:
+### perception (12)
 
 - `perception.case.get`
 - `perception.case.list`
@@ -141,9 +108,7 @@ Expanded cognitive family in bindings:
 - `perception.language.detect`
 - `perception.sla.monitor`
 
-### reasoning
-
-Expanded cognitive family in bindings:
+### reasoning (44)
 
 - `reasoning.assumption.extract`
 - `reasoning.constraint.extract`
@@ -190,15 +155,10 @@ Expanded cognitive family in bindings:
 - `reasoning.theme.cluster`
 - `reasoning.uncertainty.extract`
 
-## Registry gap summary
+## Governance rule for future additions
 
-Current live registry coverage is narrower than the expanded cognitive
-taxonomy:
+When introducing new cognitive capabilities:
 
-- current registry canonical decision surface: `decision.option.justify`
-- current registry evaluation surface: `eval.option.analyze`, `eval.option.score`, `eval.output.score`
-- current registry memory surface: `memory.entry.retrieve`, `memory.entry.store`, `memory.record.store`, `memory.vector.search`
-- binding-only cognitive domains still to be reflected in the registry docs or migration plan: `evaluation.*`, `evidence.*`, `perception.*`, `reasoning.*`
-
-The taxonomy doc is intentionally explicit so future additions do not reintroduce
-operational utilities into the cognitive core.
+- place them in one of the canonical cognitive families
+- avoid creating synonym capabilities with the same semantics
+- if an alias is required for compatibility, mark and document it explicitly

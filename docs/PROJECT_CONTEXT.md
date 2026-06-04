@@ -217,8 +217,8 @@ The pure cognitive layer is documented in [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXO
 Use that document when you need to distinguish:
 
 - pure cognitive capabilities
-- compatibility surfaces such as `eval.*`
+- compatibility aliases such as `eval.*`
 - operational support capabilities that should not be counted in the cognitive core
 
 The taxonomy document is the canonical reference for the cognitive layer's
-current shape and for migration decisions when new capabilities are added.
+current shape and for admission decisions when new capabilities are added.
