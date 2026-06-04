@@ -39,6 +39,14 @@ outputs:
     description: 'Summary metrics used to evaluate thresholds. Schema: object with
       stable keys expected by downstream consumers; additional keys are optional unless
       otherwise specified.'
+  rationale:
+    type: string
+    required: true
+    description: Concise rationale explaining the output and key decision logic.
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: true
   side_effects: false

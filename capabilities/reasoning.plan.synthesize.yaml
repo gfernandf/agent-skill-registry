@@ -39,6 +39,14 @@ outputs:
     required: false
     description: JSON string representation of compiled_plan for systems that require
       text payloads.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: true
   side_effects: false

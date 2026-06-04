@@ -24,6 +24,14 @@ outputs:
     required: true
     description: 'Structured citation object. Schema: object with stable keys expected
       by downstream consumers; additional keys are optional unless otherwise specified.'
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: true
   side_effects: false

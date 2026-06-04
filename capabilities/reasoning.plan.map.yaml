@@ -36,6 +36,14 @@ outputs:
     description: 'Step ids and field names where a binding could not be resolved.
       Non-empty means the plan is not fully wired and requires repair. Schema: array
       of items with a stable item structure expected by downstream consumers.'
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: false
   side_effects: false

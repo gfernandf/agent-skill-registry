@@ -1,10 +1,12 @@
 id: reasoning.response.extract
 version: 1.0.0
-description: "Extract an answer to a question from a context passage. The response\
-  \ must be grounded in the provided context and should not fabricate information\
-  \ beyond what the context contains. For open-ended text production use reasoning.content.generate;\
-  \ for condensing a passage use reasoning.content.summarize; for entity and keyword\
-  \ extraction use perception.entity.extract and perception.keyword.extract.\n"
+description: 'Extract an answer to a question from a context passage. The response
+  must be grounded in the provided context and should not fabricate information beyond
+  what the context contains. For open-ended text production use reasoning.content.generate;
+  for condensing a passage use reasoning.content.summarize; for entity and keyword
+  extraction use perception.entity.extract and perception.keyword.extract.
+
+  '
 inputs:
   question:
     type: string
@@ -27,6 +29,14 @@ outputs:
     required: false
     description: "Confidence score (0.0\u20131.0) that the answer is supported by\
       \ the context."
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: false
   side_effects: false

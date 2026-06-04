@@ -1876,6 +1876,16 @@
         "type": "number",
         "required": false,
         "description": "Confidence score (0.0–1.0) for the selected route. Omitted when the baseline deterministic router is used.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -2248,6 +2258,16 @@
         "type": "number",
         "required": false,
         "description": "Confidence score 0.0-1.0 for strategy choice."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -2333,6 +2353,16 @@
         "type": "string",
         "required": false,
         "description": "Explanation when delegation is rejected (accepted=false).\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -2426,6 +2456,16 @@
         "type": "string",
         "required": false,
         "description": "Summary of why the selected ordering is appropriate."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -2849,6 +2889,16 @@
         "type": "string",
         "required": false,
         "description": "Overall confidence summary."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -3091,6 +3141,16 @@
         "type": "array",
         "required": false,
         "description": "Constraints that were satisfied by the artifact. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -3421,6 +3481,16 @@
         "type": "object",
         "required": false,
         "description": "Recommended lead hypothesis with confidence and caveat summary. Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -3771,6 +3841,16 @@
         "type": "string",
         "required": false,
         "description": "Human-readable quality label derived from score: excellent (>=0.9), good (>=0.7), fair (>=0.5), poor (<0.5).\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -3863,6 +3943,16 @@
         "type": "object",
         "required": true,
         "description": "Evaluation result with: passed (boolean), score (number 0-1), criteria_results (array of {criterion, met, score, rationale}), failed_criteria (array of strings), improvement_suggestions (array of strings).\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -3938,6 +4028,16 @@
         "type": "object",
         "required": true,
         "description": "Result object with: status (approved|denied|requires_user_approval), blocked_steps (array of {step_id, reason}), approval_prompts (array of {step_id, prompt_text}), risk_level (low|medium|high|critical).\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4151,7 +4251,7 @@
       },
       "rationale": {
         "type": "string",
-        "required": false,
+        "required": true,
         "description": "Human-readable summary of the scoring rationale."
       }
     },
@@ -4246,8 +4346,18 @@
       },
       "rationale": {
         "type": "string",
-        "required": false,
+        "required": true,
         "description": "Human-readable explanation of the validation result."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4437,6 +4547,16 @@
         "type": "string",
         "required": false,
         "description": "Summary of the highest-risk uncertainty clusters."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4527,6 +4647,16 @@
         "type": "object",
         "required": true,
         "description": "Structured citation object. Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4602,8 +4732,18 @@
       },
       "rationale": {
         "type": "string",
-        "required": false,
+        "required": true,
         "description": "Explanation for verification result."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4687,6 +4827,16 @@
         "type": "string",
         "required": false,
         "description": "Overall severity low|medium|high."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4758,6 +4908,16 @@
         "type": "string",
         "required": false,
         "description": "Overall gap severity low|medium|high."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -4824,6 +4984,16 @@
         "type": "string",
         "required": false,
         "description": "Overall source quality summary."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -5077,6 +5247,16 @@
         "type": "object",
         "required": false,
         "description": "Summary metrics used to evaluate thresholds. Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Concise rationale explaining the output and key decision logic."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -5157,6 +5337,16 @@
         "type": "object",
         "required": true,
         "description": "Summary object with: steps_executed (array of {step_id, ref, status, duration_ms}), decisions (array of {gate_id, decision, reason}), failures (array of {step_id, error, recovery_action}), overall_status (string), total_duration_ms (number), success_rate (number 0-1).\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -7569,6 +7759,16 @@
         "type": "string",
         "required": false,
         "description": "Notes about what information was dropped or preserved."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -7634,6 +7834,16 @@
         "type": "array",
         "required": false,
         "description": "Conflicts detected and resolution rationale. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -7699,6 +7909,16 @@
         "type": "string",
         "required": false,
         "description": "Optional freshness note such as fresh | stale | expired."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -7866,6 +8086,16 @@
         "type": "string",
         "required": false,
         "description": "Notes about what information was dropped or preserved."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -8004,6 +8234,16 @@
         "type": "boolean",
         "required": true,
         "description": "Whether the key was found."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -8071,6 +8311,16 @@
         "type": "boolean",
         "required": true,
         "description": "Whether storage succeeded."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -9056,6 +9306,16 @@
         "type": "number",
         "required": false,
         "description": "Total number of items matched before applying max_results limit.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -9123,6 +9383,16 @@
         "type": "string",
         "required": true,
         "description": "Extracted or cleaned text content."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -9181,6 +9451,16 @@
         "type": "array",
         "required": true,
         "description": "Extracted entities. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -9561,6 +9841,16 @@
         "type": "array",
         "required": true,
         "description": "Extracted keywords. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -9628,6 +9918,16 @@
         "type": "number",
         "required": false,
         "description": "Optional confidence score."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10238,6 +10538,16 @@
         "type": "string",
         "required": false,
         "description": "Method notes and caveats."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10310,6 +10620,16 @@
         "type": "array",
         "required": false,
         "description": "Missing or underspecified constraints. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10384,6 +10704,16 @@
         "type": "array",
         "required": false,
         "description": "Trade-offs introduced by reconciliation. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10450,6 +10780,16 @@
         "type": "number",
         "required": false,
         "description": "Confidence score for the classification."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10618,6 +10958,16 @@
         "type": "array",
         "required": true,
         "description": "Generated embedding vector. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10692,6 +11042,16 @@
         "type": "string",
         "required": true,
         "description": "The generated text."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10835,6 +11195,16 @@
         "type": "string",
         "required": true,
         "description": "Condensed summary preserving the key ideas from the input text."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10898,6 +11268,16 @@
         "type": "string",
         "required": true,
         "description": "Rendered text after applying variables to the template."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -10965,6 +11345,16 @@
         "type": "string",
         "required": true,
         "description": "The transformed text."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11035,6 +11425,16 @@
         "type": "string",
         "required": true,
         "description": "Translated text."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11104,6 +11504,16 @@
         "type": "array",
         "required": false,
         "description": "Array of conditions the final deliverable must meet from the stakeholder perspective.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11184,6 +11594,16 @@
         "type": "string",
         "required": false,
         "description": "Model actually used to produce the embedding."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11254,6 +11674,16 @@
         "type": "boolean",
         "required": false,
         "description": "True when open_questions are present and must be answered before planning can proceed safely.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11341,6 +11771,16 @@
         "type": "string",
         "required": false,
         "description": "Notes about assumptions, caveats, or missing information during generation."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11425,6 +11865,16 @@
         "type": "number",
         "required": false,
         "description": "Optional confidence score."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11503,6 +11953,16 @@
         "type": "string",
         "required": false,
         "description": "Brief note on methodology, gaps in available evidence, or caveats about the analysis.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11597,6 +12057,16 @@
         "type": "string",
         "required": false,
         "description": "Brief note on how options were derived and any assumptions made.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -11677,7 +12147,7 @@
       },
       "rationale": {
         "type": "string",
-        "required": false,
+        "required": true,
         "description": "Brief explanation of why this category was chosen."
       }
     },
@@ -11780,6 +12250,16 @@
         "type": "object",
         "required": false,
         "description": "Coverage metadata including processed_items count and ignored_items count. Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12040,6 +12520,16 @@
         "type": "number",
         "required": false,
         "description": "0-1 confidence score for the candidate skill being genuinely reusable as-is, based on execution stability and step generality.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12126,6 +12616,21 @@
       "validation_errors": {
         "type": "array",
         "description": "List of validation error strings found in the generated output. Empty list means the YAML is valid. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Concise rationale explaining the output and key decision logic."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12211,6 +12716,16 @@
         "type": "number",
         "required": false,
         "description": "Number of steps produced for this stage."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12292,6 +12807,16 @@
         "type": "number",
         "required": false,
         "description": "Number of steps in the generated plan."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12373,6 +12898,16 @@
         "type": "array",
         "required": false,
         "description": "Step ids and field names where a binding could not be resolved. Non-empty means the plan is not fully wired and requires repair. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12568,6 +13103,16 @@
         "type": "number",
         "required": false,
         "description": "Number of steps produced for this stage."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12650,6 +13195,16 @@
         "type": "string",
         "required": false,
         "description": "JSON string representation of compiled_plan for systems that require text payloads."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12853,6 +13408,16 @@
         "type": "string",
         "required": false,
         "description": "Brief note on the decomposition rationale and any trade-offs made.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -12959,6 +13524,16 @@
         "type": "string",
         "required": false,
         "description": "Brief note on the decomposition rationale and any trade-offs made.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13051,6 +13626,16 @@
         "type": "array",
         "required": false,
         "description": "List of placeholder names that could not be resolved from variables. Schema: array of items with a stable item structure expected by downstream consumers."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13124,6 +13709,16 @@
         "type": "string",
         "required": false,
         "description": "ISO 639-1 language code detected from the user message.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13194,6 +13789,16 @@
         "type": "number",
         "required": false,
         "description": "Confidence score (0.0–1.0) that the answer is supported by the context."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13274,6 +13879,16 @@
         "type": "string",
         "required": false,
         "description": "Overall task outcome as visible to the user: success | partial | failed | requires_followup.\n"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13570,6 +14185,16 @@
         "type": "number",
         "required": false,
         "description": "Number of macro stages in the plan."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13661,6 +14286,16 @@
         "type": "number",
         "required": false,
         "description": "Number of macro stages in the plan."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13757,6 +14392,16 @@
         "type": "object",
         "required": false,
         "description": "Self-assessment of clustering quality: coherence_score (0-1), coverage_ratio (fraction of items assigned), overlap_warnings (list of items assigned to multiple clusters). Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {
@@ -13866,6 +14511,16 @@
         "type": "string",
         "required": false,
         "description": "Notes on scope limits and potential blind spots."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
       }
     },
     "metadata": {

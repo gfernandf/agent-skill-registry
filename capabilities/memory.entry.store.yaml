@@ -19,6 +19,14 @@ outputs:
     type: boolean
     required: true
     description: Whether storage succeeded.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 safety:
   trust_level: standard
   data_classification: internal

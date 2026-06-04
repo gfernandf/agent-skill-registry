@@ -38,7 +38,7 @@ outputs:
     description: Weighted overall quality score between 0.0 and 1.0.
   rationale:
     type: string
-    required: false
+    required: true
     description: Human-readable summary of the scoring rationale.
 properties:
   deterministic: false

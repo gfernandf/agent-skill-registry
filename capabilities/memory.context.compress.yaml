@@ -23,6 +23,14 @@ outputs:
     type: string
     required: false
     description: Notes about what information was dropped or preserved.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 cognitive_hints:
   role: synthesize
   consumes:

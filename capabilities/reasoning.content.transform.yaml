@@ -2,7 +2,8 @@ id: reasoning.content.transform
 version: 1.0.0
 description: "Transform existing text applying a directive \u2014 change tone, simplify,\
   \ expand, formalize, or adjust style while preserving the original meaning. For\
-  \ producing entirely new content use reasoning.content.generate; for condensing use reasoning.content.summarize.\n"
+  \ producing entirely new content use reasoning.content.generate; for condensing\
+  \ use reasoning.content.summarize.\n"
 inputs:
   text:
     type: string
@@ -19,6 +20,14 @@ outputs:
     type: string
     required: true
     description: The transformed text.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: false
   side_effects: false

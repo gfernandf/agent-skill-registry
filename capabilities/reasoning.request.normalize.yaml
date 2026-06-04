@@ -33,6 +33,14 @@ outputs:
     description: 'ISO 639-1 language code detected from the user message.
 
       '
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: false
   side_effects: false

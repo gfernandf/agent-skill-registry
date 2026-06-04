@@ -30,7 +30,7 @@ outputs:
     description: Confidence score between 0.0 and 1.0.
   rationale:
     type: string
-    required: false
+    required: true
     description: Brief explanation of why this category was chosen.
 properties:
   deterministic: false

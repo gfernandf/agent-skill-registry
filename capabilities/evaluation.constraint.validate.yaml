@@ -40,6 +40,14 @@ outputs:
     required: false
     description: 'Constraints that were satisfied by the artifact. Schema: array of
       items with a stable item structure expected by downstream consumers.'
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 properties:
   deterministic: true
   side_effects: false

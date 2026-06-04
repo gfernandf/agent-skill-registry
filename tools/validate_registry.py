@@ -669,6 +669,60 @@ def validate_cognitive_contract_quality(
                     f"{path}: {section_name}.{field_name} must define a non-empty description"
                 )
 
+    required_output_count = sum(
+        1
+        for spec in outputs.values()
+        if isinstance(spec, dict) and spec.get("required") is True
+    )
+    if required_output_count < 2:
+        errors.append(
+            f"{path}: pure cognitive capability must define at least 2 required outputs"
+        )
+
+    status_spec = outputs.get("status")
+    if status_spec is not None:
+        if not isinstance(status_spec, dict):
+            errors.append(
+                f"{path}: outputs.status must be a mapping when present"
+            )
+        else:
+            if status_spec.get("type") != "string":
+                errors.append(
+                    f"{path}: outputs.status.type must be 'string'"
+                )
+            if status_spec.get("required") is not True:
+                errors.append(
+                    f"{path}: outputs.status.required must be true"
+                )
+
+    rationale_spec = outputs.get("rationale")
+    if rationale_spec is not None:
+        if not isinstance(rationale_spec, dict):
+            errors.append(
+                f"{path}: outputs.rationale must be a mapping when present"
+            )
+        else:
+            if rationale_spec.get("type") != "string":
+                errors.append(
+                    f"{path}: outputs.rationale.type must be 'string'"
+                )
+            if rationale_spec.get("required") is not True:
+                errors.append(
+                    f"{path}: outputs.rationale.required must be true"
+                )
+
+    trace_ref_spec = outputs.get("trace_ref")
+    if trace_ref_spec is not None:
+        if not isinstance(trace_ref_spec, dict):
+            errors.append(
+                f"{path}: outputs.trace_ref must be a mapping when present"
+            )
+        else:
+            if trace_ref_spec.get("type") != "string":
+                errors.append(
+                    f"{path}: outputs.trace_ref.type must be 'string'"
+                )
+
     metadata = data.get("metadata") if isinstance(data.get("metadata"), dict) else {}
     examples = metadata.get("examples")
     if examples is None:

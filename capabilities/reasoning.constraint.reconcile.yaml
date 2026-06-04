@@ -25,6 +25,14 @@ outputs:
     required: false
     description: 'Trade-offs introduced by reconciliation. Schema: array of items
       with a stable item structure expected by downstream consumers.'
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
 cognitive_hints:
   role: analyze
   consumes:
