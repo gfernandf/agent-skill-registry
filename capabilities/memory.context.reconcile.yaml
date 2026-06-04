@@ -6,7 +6,8 @@ inputs:
   contexts:
     type: array
     required: true
-    description: Context snapshots to reconcile.
+    description: 'Context snapshots to reconcile. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   precedence_policy:
     type: string
     required: false
@@ -15,11 +16,14 @@ outputs:
   reconciled_context:
     type: object
     required: true
-    description: Unified context after reconciliation.
+    description: 'Unified context after reconciliation. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   conflicts:
     type: array
     required: false
-    description: Conflicts detected and resolution rationale.
+    description: 'Conflicts detected and resolution rationale. Schema: array of items
+      with a stable item structure expected by downstream consumers.'
 cognitive_hints:
   role: analyze
   consumes:
@@ -36,7 +40,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - memory
   - context

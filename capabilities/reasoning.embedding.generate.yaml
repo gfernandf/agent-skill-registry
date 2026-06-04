@@ -20,7 +20,8 @@ outputs:
   embedding:
     type: array
     required: true
-    description: Numeric vector representing the text embedding.
+    description: 'Numeric vector representing the text embedding. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
   model:
     type: string
     required: false
@@ -32,7 +33,7 @@ properties:
   state_access: none
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - model
   - embedding

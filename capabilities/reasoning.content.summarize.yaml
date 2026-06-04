@@ -1,16 +1,21 @@
 id: reasoning.content.summarize
 version: 1.0.0
-description: Produce a condensed version of text preserving key ideas.
+description: Produce a condensed version of text while preserving key ideas and intent.
+  Returns a compact artifact suitable for review, indexing, or downstream synthesis.
 inputs:
   text:
     type: string
     required: true
+    description: Source text to summarize.
   max_length:
     type: integer
     required: false
+    description: Optional maximum summary length in words.
 outputs:
   summary:
     type: string
+    required: true
+    description: Condensed summary preserving the key ideas from the input text.
 properties:
   deterministic: false
   side_effects: false

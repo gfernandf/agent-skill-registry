@@ -17,9 +17,8 @@ inputs:
     type: array
     required: false
     description: 'List of available agent or handler identifiers. When provided, the
-      router restricts its selection to this set.
-
-      '
+      router restricts its selection to this set. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   routing_strategy:
     type: string
     required: false

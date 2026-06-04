@@ -1,33 +1,30 @@
 id: decision.option.justify
 version: 1.0.0
 description: "Select a final recommendation from evaluated options and produce a structured\
-  \ justification. Consumes qualitative analysis (from reasoning.option.analyze) and quantitative\
-  \ scores (from evaluation.option.score) to make an explicit, committed choice. Outputs\
-  \ the recommendation, justification narrative, failure modes, uncertainties, confidence\
-  \ assessment, and concrete next steps.\nThis capability is the \"closing\" step\
-  \ \u2014 it resolves ambiguity into action. It must never hedge with \"it depends\"\
+  \ justification. Consumes qualitative analysis (from reasoning.option.analyze) and\
+  \ quantitative scores (from evaluation.option.score) to make an explicit, committed\
+  \ choice. Outputs the recommendation, justification narrative, failure modes, uncertainties,\
+  \ confidence assessment, and concrete next steps.\nThis capability is the \"closing\"\
+  \ step \u2014 it resolves ambiguity into action. It must never hedge with \"it depends\"\
   \ or \"consider both\".\n"
 inputs:
   scored_options:
     type: array
     required: true
-    description: 'Options with quantitative scores from evaluation.option.score. Each entry
-      includes option_id, overall_score, per_criterion_scores, strengths, weaknesses.
-
-      '
+    description: 'Options with quantitative scores from evaluation.option.score. Each
+      entry includes option_id, overall_score, per_criterion_scores, strengths, weaknesses.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   analyzed_options:
     type: array
     required: true
-    description: 'Options with qualitative analysis from reasoning.option.analyze. Each
-      entry includes option_id, pros, cons, risks, assumptions.
-
-      '
+    description: 'Options with qualitative analysis from reasoning.option.analyze.
+      Each entry includes option_id, pros, cons, risks, assumptions. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   tradeoffs:
     type: array
     required: false
     description: 'Explicit trade-offs between top candidates from evaluation.option.score.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   goal:
     type: string
     required: true
@@ -38,8 +35,8 @@ inputs:
     type: object
     required: false
     description: 'Hard constraints the decision must respect (budget, time, regulation).
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   risk_tolerance:
     type: string
     required: false
@@ -58,9 +55,8 @@ outputs:
     type: array
     required: true
     description: 'All options that were evaluated, with a brief note on why each was
-      or was not selected.
-
-      '
+      or was not selected. Schema: array of items with a stable item structure expected
+      by downstream consumers.'
   confidence_score:
     type: number
     required: true
@@ -86,22 +82,19 @@ outputs:
     type: array
     required: true
     description: 'What is unknown or weakly supported that could change the outcome.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   failure_modes:
     type: array
     required: true
     description: 'Concrete conditions under which the recommendation could fail. Specific,
-      not generic.
-
-      '
+      not generic. Schema: array of items with a stable item structure expected by
+      downstream consumers.'
   next_steps:
     type: array
     required: true
     description: 'Concrete follow-up actions: validations, pilots, execution steps.
-      Prefers action over "more analysis".
-
-      '
+      Prefers action over "more analysis". Schema: array of items with a stable item
+      structure expected by downstream consumers.'
   human_readable:
     type: string
     required: true
@@ -149,10 +142,17 @@ metadata:
   - summary: Justify a recommended option
     inputs:
       scored_options:
-      - id: a
-        score: 0.9
+      - option_id: a
+        overall_score: 0.9
+      analyzed_options:
+      - option_id: a
+        pros:
+        - Highest expected value
+        cons:
+        - Higher onboarding effort
       goal: Choose deployment strategy
     outputs:
-      justification: Option A selected due to highest score.
-      recommended: a
+      recommendation: Option A is the recommended deployment strategy.
+      confidence_score: 0.82
+      confidence_level: high
   layer: cognitive

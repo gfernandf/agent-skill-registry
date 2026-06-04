@@ -1,6 +1,8 @@
 id: perception.language.detect
 version: 1.0.0
-description: Detect the language of input content as a perception signal.
+description: Detect the language of input content as a perception signal. Produces
+  language metadata that supports localization, translation routing, and policy controls
+  in multilingual workflows.
 inputs:
   text:
     type: string
@@ -22,7 +24,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - text
   - nlp

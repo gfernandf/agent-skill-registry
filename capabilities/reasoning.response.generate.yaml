@@ -1,6 +1,6 @@
 id: reasoning.response.generate
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Generate the final user-facing report from execution outputs, evaluation
   results, and trace summary. The report describes what was done, what was produced,
   what could not be done and why, key decisions made, evidence and source references,
@@ -13,29 +13,28 @@ inputs:
     type: object
     required: true
     description: 'Operational goal object from reasoning.goal.interpret, used to frame
-      the report in terms of the original objective.
-
-      '
+      the report in terms of the original objective. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   execution_result:
     type: object
     required: true
-    description: 'Execution result from operational.plan.execute.
-
-      '
+    description: 'Execution result from operational.plan.execute. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   evaluation:
     type: object
     required: false
-    description: 'Evaluation result from evaluation.output.validate. When provided, the
-      report includes pass/fail verdict and unmet criteria.
-
-      '
+    description: 'Evaluation result from evaluation.output.validate. When provided,
+      the report includes pass/fail verdict and unmet criteria. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   trace_summary:
     type: object
     required: false
-    description: 'Trace summary from evidence.trace.summarize for the decisions and gates
-      section of the report.
-
-      '
+    description: 'Trace summary from evidence.trace.summarize for the decisions and
+      gates section of the report. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   report:
     type: object

@@ -1,14 +1,17 @@
 id: reasoning.hypothesis.generate
 version: 1.0.0
-description: >
-  Generate explicit, testable hypotheses from a target artifact and its context.
-  Each hypothesis includes rationale and a confidence hint so downstream evaluation
-  can assess support and counter-evidence transparently.
+description: 'Generate explicit, testable hypotheses from a target artifact and its
+  context. Each hypothesis includes rationale and a confidence hint so downstream
+  evaluation can assess support and counter-evidence transparently.
+
+  '
 inputs:
   target:
     type: object
     required: true
-    description: Artifact to analyze, such as a plan, decision draft, report, or synthesis.
+    description: 'Artifact to analyze, such as a plan, decision draft, report, or
+      synthesis. Schema: object with stable keys expected by downstream consumers;
+      additional keys are optional unless otherwise specified.'
   context:
     type: string
     required: false
@@ -25,9 +28,9 @@ outputs:
   hypotheses:
     type: array
     required: true
-    description: >
-      List of generated hypotheses. Each entry includes id, statement,
-      rationale, and confidence_hint (low | medium | high).
+    description: 'List of generated hypotheses. Each entry includes id, statement,
+      rationale, and confidence_hint (low | medium | high). Schema: array of items
+      with a stable item structure expected by downstream consumers.'
   generation_notes:
     type: string
     required: false
@@ -49,7 +52,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - hypothesis

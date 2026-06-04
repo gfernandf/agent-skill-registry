@@ -1,13 +1,15 @@
 id: decision.uncertainty.prioritize
 version: 1.0.0
-description: >
-  Prioritize scored uncertainties into a decision-ready order, highlighting which
-  unknowns must be resolved first and which can be deferred.
+description: 'Prioritize scored uncertainties into a decision-ready order, highlighting
+  which unknowns must be resolved first and which can be deferred.
+
+  '
 inputs:
   scored_uncertainties:
     type: array
     required: true
-    description: Scored uncertainty items, typically from evaluation.uncertainty.score.
+    description: 'Scored uncertainty items, typically from evaluation.uncertainty.score.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   risk_tolerance:
     type: string
     required: false
@@ -20,11 +22,13 @@ outputs:
   prioritized_uncertainties:
     type: array
     required: true
-    description: Ordered uncertainty list with rank and prioritization rationale.
+    description: 'Ordered uncertainty list with rank and prioritization rationale.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   next_actions:
     type: array
     required: false
-    description: Recommended next actions to reduce top-ranked uncertainties.
+    description: 'Recommended next actions to reduce top-ranked uncertainties. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   prioritization_summary:
     type: string
     required: false
@@ -48,7 +52,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - uncertainty

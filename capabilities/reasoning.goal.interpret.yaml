@@ -1,6 +1,6 @@
 id: reasoning.goal.interpret
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Convert a normalized user request into an explicit operational goal.
   Defines what the task must produce, what success looks like, what assumptions are
   being made, what constraints apply, and what open questions must be resolved before
@@ -12,15 +12,14 @@ inputs:
     type: object
     required: true
     description: 'Structured request object produced by reasoning.request.normalize.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   context:
     type: object
     required: false
     description: 'Additional conversation context, user history, or prior session
-      data.
-
-      '
+      data. Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
 outputs:
   interpreted_goal:
     type: object

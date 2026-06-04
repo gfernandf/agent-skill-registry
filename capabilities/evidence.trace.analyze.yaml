@@ -16,15 +16,20 @@ inputs:
   context:
     type: object
     required: false
-    description: Optional contextual constraints or environment metadata for analysis.
+    description: 'Optional contextual constraints or environment metadata for analysis.
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   events:
     type: array
     required: true
-    description: Ordered batch of runtime events for this analysis cycle.
+    description: 'Ordered batch of runtime events for this analysis cycle. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   trace_state:
     type: object
     required: false
-    description: Inline accumulated trace state from previous cycles.
+    description: 'Inline accumulated trace state from previous cycles. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   trace_session_id:
     type: string
     required: false
@@ -40,8 +45,9 @@ inputs:
   output_views:
     type: array
     required: false
-    description: Optional list of requested views such as decision_graph, assumptions,
-      and summary.
+    description: 'Optional list of requested views such as decision_graph, assumptions,
+      and summary. Schema: array of items with a stable item structure expected by
+      downstream consumers.'
   thresholds:
     type: object
     required: false
@@ -55,7 +61,9 @@ outputs:
   updated_trace_state:
     type: object
     required: true
-    description: Updated accumulated trace state for subsequent cycles.
+    description: 'Updated accumulated trace state for subsequent cycles. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   state_checksum:
     type: string
     required: false
@@ -67,15 +75,19 @@ outputs:
   decision_graph:
     type: object
     required: false
-    description: Structured graph representation of detected decisions and dependencies.
+    description: 'Structured graph representation of detected decisions and dependencies.
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   assumptions:
     type: array
     required: false
-    description: Detected assumptions inferred from the analyzed execution path.
+    description: 'Detected assumptions inferred from the analyzed execution path.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   alternative_paths:
     type: array
     required: false
-    description: Alternative viable paths inferred from current evidence and goal.
+    description: 'Alternative viable paths inferred from current evidence and goal.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   confidence:
     type: number
     required: false
@@ -83,7 +95,8 @@ outputs:
   risk_candidates:
     type: array
     required: false
-    description: Candidate risk findings before thresholding/monitoring.
+    description: 'Candidate risk findings before thresholding/monitoring. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   summary:
     type: string
     required: false

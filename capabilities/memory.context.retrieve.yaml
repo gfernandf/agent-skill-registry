@@ -1,8 +1,9 @@
 id: memory.context.retrieve
 version: 1.0.0
-description: >
-  Retrieve previously stored cognitive context by context_id to ground ongoing
-  reasoning and decision steps.
+description: 'Retrieve previously stored cognitive context by context_id to ground
+  ongoing reasoning and decision steps.
+
+  '
 inputs:
   context_id:
     type: string
@@ -12,7 +13,9 @@ outputs:
   context:
     type: object
     required: false
-    description: Retrieved context payload when found.
+    description: 'Retrieved context payload when found. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   found:
     type: boolean
     required: true
@@ -39,7 +42,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - memory
   - context

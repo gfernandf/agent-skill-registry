@@ -1,6 +1,8 @@
 id: reasoning.content.classify
 version: 1.0.0
-description: Classify a text into one or more predefined categories.
+description: Classify text into one or more predefined categories using explicit label
+  semantics. Returns stable class assignments that can route downstream actions and
+  analytics.
 inputs:
   text:
     type: string
@@ -9,7 +11,8 @@ inputs:
   labels:
     type: array
     required: false
-    description: Optional list of candidate labels.
+    description: 'Optional list of candidate labels. Schema: array of items with a
+      stable item structure expected by downstream consumers.'
 outputs:
   label:
     type: string

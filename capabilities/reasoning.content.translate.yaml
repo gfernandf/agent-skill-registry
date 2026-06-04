@@ -1,6 +1,8 @@
 id: reasoning.content.translate
 version: 1.0.0
-description: Translate text from one language to another.
+description: Translate text between languages while preserving semantic intent and
+  core meaning. Produces a target-language artifact for multilingual communication
+  and downstream processing.
 inputs:
   text:
     type: string
@@ -37,7 +39,7 @@ metadata:
       text: Hello world
       target_language: es
     outputs:
-      text: Hola mundo
+      translation: Hola mundo
   layer: cognitive
 cognitive_hints:
   role: act

@@ -1,13 +1,17 @@
 id: perception.input.structure
 version: 1.0.0
-description: 'Structure available input into a normalized cognitive payload before downstream reasoning and evaluation.
+description: 'Structure available input into a normalized cognitive payload before
+  downstream reasoning and evaluation.
 
   '
 inputs:
   fields:
     type: array
     required: true
-    description: "Field definitions for the target input structure. Each element has: name (string), type (string - \"string\", \"number\", \"boolean\", \"object\", \"array\"), required (boolean), description (string), and optional default and options.\n"
+    description: 'Field definitions for the target input structure. Each element has:
+      name (string), type (string - "string", "number", "boolean", "object", "array"),
+      required (boolean), description (string), and optional default and options.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   instruction:
     type: string
     required: false
@@ -23,16 +27,16 @@ inputs:
   raw_input:
     type: object
     required: false
-    description: 'Optional raw or semi-structured payload to normalize into the target structure.
-
-      '
+    description: 'Optional raw or semi-structured payload to normalize into the target
+      structure. Schema: object with stable keys expected by downstream consumers;
+      additional keys are optional unless otherwise specified.'
 outputs:
   structured_input:
     type: object
     required: true
     description: 'Normalized cognitive input object aligned to the requested fields.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   complete:
     type: boolean
     required: true
@@ -41,8 +45,7 @@ outputs:
     type: array
     required: false
     description: 'Names of required fields that remain missing after structuring.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false

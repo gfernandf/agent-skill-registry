@@ -14,9 +14,8 @@ inputs:
     type: array
     required: false
     description: 'Sentiment dimensions to evaluate: "polarity", "emotion", "intensity",
-      "subjectivity". Default: ["polarity"].
-
-      '
+      "subjectivity". Default: ["polarity"]. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
 outputs:
   sentiment:
     type: string
@@ -35,9 +34,9 @@ outputs:
     type: object
     required: false
     description: 'Per-dimension analysis when multiple dimensions are requested. Each
-      key is a dimension name with sub-fields for label and score.
-
-      '
+      key is a dimension name with sub-fields for label and score. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   rationale:
     type: string
     required: true

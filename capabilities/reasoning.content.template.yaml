@@ -1,16 +1,24 @@
 id: reasoning.content.template
 version: 1.0.0
-description: Render a text template using variables.
+description: Render a text template using named variables and deterministic substitution
+  rules. Produces a normalized rendered artifact suitable for notifications, prompts,
+  and reports.
 inputs:
   template:
     type: string
     required: true
+    description: Template string with placeholders using double-brace syntax.
   variables:
     type: object
     required: true
+    description: 'Object mapping placeholder names to replacement values. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
 outputs:
   text:
     type: string
+    required: true
+    description: Rendered text after applying variables to the template.
 properties:
   deterministic: true
   side_effects: false

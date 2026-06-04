@@ -1,12 +1,14 @@
 id: evaluation.failure.analyze
 version: 1.0.0
 description: Analyze failure events, classify root causes, and estimate recurrence
-  risk.
+  risk. Returns structured findings that support remediation planning, reliability
+  reviews, and post-incident learning in heterogeneous operational contexts.
 inputs:
   failure:
     type: object
     required: true
-    description: Failure event payload.
+    description: 'Failure event payload. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   context:
     type: string
     required: false
@@ -15,7 +17,8 @@ outputs:
   root_causes:
     type: array
     required: true
-    description: Candidate root causes with confidence.
+    description: 'Candidate root causes with confidence. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
   failure_class:
     type: string
     required: true
@@ -43,7 +46,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - failure
   - evaluation

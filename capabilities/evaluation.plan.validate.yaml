@@ -1,6 +1,6 @@
 id: evaluation.plan.validate
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Validate that a proposed ORCA plan is structurally executable. Performs
   deterministic checks including: registry reference resolution, required input availability,
   output declaration completeness, DAG cycle detection, dependency existence, side-effect
@@ -13,17 +13,16 @@ inputs:
   expanded_plan:
     type: object
     required: true
-    description: 'Plan object containing bound_steps from reasoning.plan.map plus metadata
-      such as goal_ref and strategy.
-
-      '
+    description: 'Plan object containing bound_steps from reasoning.plan.map plus
+      metadata such as goal_ref and strategy. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   registry:
     type: object
     required: false
     description: 'Registry snapshot for resolving capability and skill references.
-      When omitted the runtime uses the current local registry.
-
-      '
+      When omitted the runtime uses the current local registry. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   state_schema:
     type: object
     required: false
@@ -39,6 +38,32 @@ outputs:
       check_count (number).
 
       '
+  validated_plan:
+    type: object
+    required: false
+    description: 'Echo of expanded_plan when validation_result.status is passed. Downstream
+      compilers can consume this as a validated plan artifact. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
+  validation_errors:
+    type: array
+    required: true
+    description: 'Convenience projection of validation_result.errors. Empty array
+      when no errors are present. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
+  validation_warnings:
+    type: array
+    required: true
+    description: 'Convenience projection of validation_result.warnings. Empty array
+      when no warnings are present. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
+  repairable:
+    type: boolean
+    required: true
+    description: 'Convenience projection of validation_result.repairable for routing
+      and remediation steps.
+
+      '
 properties:
   deterministic: true
   side_effects: false
@@ -52,18 +77,29 @@ metadata:
   - plan-governance
   - agent-pipeline
   examples:
-  - expanded_plan:
-      bound_steps:
-      - id: s1_step1
-        ref: web.source.search
-        inputs:
-          query: $state.intake.normalized_request.raw_request
-        outputs:
-          results: $state.working.search_results
-        depends_on: []
-    expected_validation_result:
-      status: passed
-      errors: []
+  - summary: Validate an expanded plan and emit downstream-friendly projections
+    inputs:
+      expanded_plan:
+        bound_steps:
+        - id: s1_step1
+          ref: web.source.search
+          inputs:
+            query: $state.intake.normalized_request.raw_request
+          outputs:
+            results: $state.working.search_results
+          depends_on: []
+    outputs:
+      validation_result:
+        status: passed
+        errors: []
+        warnings: []
+        repairable: false
+        check_count: 9
+      validated_plan:
+        bound_steps:
+        - id: s1_step1
+      validation_errors: []
+      validation_warnings: []
       repairable: false
   layer: cognitive
 cognitive_hints:

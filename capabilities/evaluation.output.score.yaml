@@ -12,9 +12,9 @@ inputs:
     type: object
     required: true
     description: 'Output artifact to evaluate. Can be any structured or semi-structured
-      object (e.g. a plan, analysis result, generated content).
-
-      '
+      object (e.g. a plan, analysis result, generated content). Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   rubric:
     type: object
     required: false

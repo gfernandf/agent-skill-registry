@@ -1,6 +1,8 @@
 id: reasoning.priority.classify
 version: 1.0.0
-description: Classify the priority of a task based on its attributes and context.
+description: Classify task priority from attributes, urgency signals, and contextual
+  constraints. Returns prioritization labels that support triage, scheduling, and
+  escalation workflows.
 inputs:
   task:
     type: object
@@ -9,7 +11,9 @@ inputs:
   context:
     type: object
     required: false
-    description: Contextual information such as SLA tier or impacted users.
+    description: 'Contextual information such as SLA tier or impacted users. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
 outputs:
   priority:
     type: string

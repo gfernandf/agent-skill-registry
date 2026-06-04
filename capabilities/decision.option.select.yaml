@@ -1,46 +1,52 @@
 id: decision.option.select
 version: 1.0.0
-description: 'Select the final option from analyzed and scored candidates under explicit constraints and decision criteria.
+description: 'Select the final option from analyzed and scored candidates under explicit
+  constraints and decision criteria.
 
   '
 inputs:
   options:
     type: array
     required: true
-    description: 'Candidate options to choose from.
-
-      '
+    description: 'Candidate options to choose from. Schema: array of items with a
+      stable item structure expected by downstream consumers.'
   option_analysis:
     type: array
     required: false
     description: 'Qualitative analysis per option (pros, cons, assumptions, risks).
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   option_scores:
     type: array
     required: false
-    description: 'Quantitative scores per option, typically from evaluation.option.score.
-
-      '
+    description: 'Legacy alias for quantitative scores per option. Prefer scored_options
+      for direct compatibility with evaluation.option.score output naming. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
+  scored_options:
+    type: array
+    required: false
+    description: 'Quantitative scores per option from evaluation.option.score.scored_options.
+      If both scored_options and option_scores are provided, scored_options takes
+      precedence. Schema: array of items with a stable item structure expected by
+      downstream consumers.'
   criteria:
     type: object
     required: false
-    description: 'Decision criteria and optional weights used to choose the final option.
-
-      '
+    description: 'Decision criteria and optional weights used to choose the final
+      option. Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   constraints:
     type: object
     required: false
-    description: 'Hard constraints that the selected option must satisfy.
-
-      '
+    description: 'Hard constraints that the selected option must satisfy. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
 outputs:
   selected_option:
     type: object
     required: true
-    description: 'The chosen option with its identifier and key attributes.
-
-      '
+    description: 'The chosen option with its identifier and key attributes. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
   selection_rationale:
     type: string
     required: true
@@ -50,9 +56,8 @@ outputs:
   rejected_options:
     type: array
     required: false
-    description: 'Other considered options with brief rejection reasons.
-
-      '
+    description: 'Other considered options with brief rejection reasons. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   selection_confidence:
     type: number
     required: false

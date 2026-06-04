@@ -6,20 +6,25 @@ inputs:
   constraints:
     type: array
     required: true
-    description: Constraint set to reconcile.
+    description: 'Constraint set to reconcile. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   policy:
     type: object
     required: false
-    description: Optional prioritization policy.
+    description: 'Optional prioritization policy. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
 outputs:
   reconciled_constraints:
     type: array
     required: true
-    description: Conflict-resolved constraints with precedence.
+    description: 'Conflict-resolved constraints with precedence. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
   tradeoffs:
     type: array
     required: false
-    description: Trade-offs introduced by reconciliation.
+    description: 'Trade-offs introduced by reconciliation. Schema: array of items
+      with a stable item structure expected by downstream consumers.'
 cognitive_hints:
   role: analyze
   consumes:
@@ -37,7 +42,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - constraint
   - reconcile

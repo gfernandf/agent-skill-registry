@@ -12,7 +12,8 @@ inputs:
   value:
     type: object
     required: true
-    description: Value to store.
+    description: 'Value to store. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   stored:
     type: boolean

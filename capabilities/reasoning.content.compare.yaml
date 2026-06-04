@@ -18,9 +18,8 @@ inputs:
     type: array
     required: false
     description: 'Aspects to compare: "meaning", "structure", "tone", "detail", "completeness".
-      Default: all dimensions.
-
-      '
+      Default: all dimensions. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
 outputs:
   similarity:
     type: number
@@ -33,9 +32,8 @@ outputs:
     type: array
     required: true
     description: 'List of identified differences, each with a dimension, description,
-      and severity ("minor", "moderate", "major").
-
-      '
+      and severity ("minor", "moderate", "major"). Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   summary:
     type: string
     required: true

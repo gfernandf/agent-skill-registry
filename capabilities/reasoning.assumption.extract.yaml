@@ -1,11 +1,15 @@
 id: reasoning.assumption.extract
 version: 1.0.0
 description: Extract explicit and implicit assumptions from an artifact and context.
+  Produces structured assumption candidates that can be validated, compared, and traced
+  in downstream evaluation steps.
 inputs:
   target:
     type: object
     required: true
-    description: Artifact to inspect for assumptions.
+    description: 'Artifact to inspect for assumptions. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   context:
     type: string
     required: false
@@ -14,7 +18,8 @@ outputs:
   assumptions:
     type: array
     required: true
-    description: Assumptions with id, statement, scope, and fragility_hint.
+    description: 'Assumptions with id, statement, scope, and fragility_hint. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   extraction_notes:
     type: string
     required: false
@@ -36,7 +41,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - assumption
   - analysis

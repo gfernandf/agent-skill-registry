@@ -11,11 +11,13 @@ inputs:
   trace:
     type: object
     required: true
-    description: Trace payload to inspect.
+    description: 'Trace payload to inspect. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   thresholds:
     type: object
     required: false
-    description: Alert thresholds.
+    description: 'Alert thresholds. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   status:
     type: string
@@ -24,15 +26,19 @@ outputs:
   risk_flags:
     type: array
     required: false
-    description: Thresholded risk flags derived from the trace.
+    description: 'Thresholded risk flags derived from the trace. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
   alerts:
     type: array
     required: false
-    description: Raised alerts.
+    description: 'Raised alerts. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
   metrics:
     type: object
     required: false
-    description: Summary metrics used to evaluate thresholds.
+    description: 'Summary metrics used to evaluate thresholds. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
 properties:
   deterministic: true
   side_effects: false

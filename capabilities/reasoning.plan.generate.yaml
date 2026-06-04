@@ -61,7 +61,7 @@ metadata:
         description: Extract price data from HTML content
       - action: data.schema.validate
         description: Validate extracted price records
-  status: experimental
+  status: stable
   layer: cognitive
 cognitive_hints:
   role: synthesize

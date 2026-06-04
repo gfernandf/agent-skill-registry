@@ -1,33 +1,32 @@
 id: reasoning.plan.decompose
 version: 1.0.0
-status: experimental
-description: Decompose a plan into stages, steps, and dependency structure.
+status: stable
+description: Decompose a plan into stages, executable steps, and dependency structure.
+  Produces planning artifacts that can be mapped, validated, and compiled by downstream
+  orchestration capabilities.
 inputs:
   macro_stage:
     type: object
     required: true
     description: 'Single stage object from reasoning.task.plan macro_plan.stages.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   candidate_skills:
     type: array
     required: false
-    description: 'Ranked skill candidates available for step assignment.
-
-      '
+    description: 'Ranked skill candidates available for step assignment. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   candidate_capabilities:
     type: array
     required: false
-    description: 'Ranked capability candidates available for step assignment.
-
-      '
+    description: 'Ranked capability candidates available for step assignment. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   current_state:
     type: object
     required: false
     description: 'Current CognitiveState snapshot, used to infer which inputs are
-      already available from prior steps.
-
-      '
+      already available from prior steps. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
 outputs:
   expanded_steps:
     type: array
@@ -61,7 +60,7 @@ metadata:
       ref: web.source.search
       type: capability
   layer: cognitive
-  status: experimental
+  status: stable
 cognitive_hints:
   role: synthesize
   produces:

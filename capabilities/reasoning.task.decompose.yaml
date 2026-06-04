@@ -1,28 +1,27 @@
 id: reasoning.task.decompose
 version: 1.0.0
-status: experimental
+status: stable
 description: Decompose a task into coherent sub-tasks, dependencies, and execution
-  units.
+  units. Produces explicit work breakdown artifacts that support planning, delegation,
+  and progress tracking.
 inputs:
   interpreted_goal:
     type: object
     required: true
-    description: 'Interpreted goal from reasoning.goal.interpret.
-
-      '
+    description: 'Interpreted goal from reasoning.goal.interpret. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   candidate_skills:
     type: array
     required: false
     description: 'Ranked skill candidates from evaluation.catalog.rank for grounding
-      stage suggestions in available registry items.
-
-      '
+      stage suggestions in available registry items. Schema: array of items with a
+      stable item structure expected by downstream consumers.'
   candidate_capabilities:
     type: array
     required: false
-    description: 'Ranked capability candidates from evaluation.catalog.rank.
-
-      '
+    description: 'Ranked capability candidates from evaluation.catalog.rank. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   planning_strategy:
     type: string
     required: false

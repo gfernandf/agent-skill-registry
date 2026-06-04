@@ -1,6 +1,7 @@
 id: reasoning.language.detect
 version: 1.0.0
-description: Detect the language of a text.
+description: Detect the language of text for routing, localization, and policy-aware
+  processing decisions. Provides a language signal usable across downstream capabilities.
 inputs:
   text:
     type: string

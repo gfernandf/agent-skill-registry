@@ -1,11 +1,14 @@
 id: reasoning.constraint.extract
 version: 1.0.0
 description: Extract hard and soft constraints from goals, context, and artifacts.
+  Produces reusable constraint structures that support planning, option scoring, and
+  feasibility checks.
 inputs:
   target:
     type: object
     required: true
-    description: Goal, plan, or draft artifact.
+    description: 'Goal, plan, or draft artifact. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   context:
     type: string
     required: false
@@ -14,11 +17,13 @@ outputs:
   constraints:
     type: array
     required: true
-    description: Constraints with id, statement, type(hard|soft), and source.
+    description: 'Constraints with id, statement, type(hard|soft), and source. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   gaps:
     type: array
     required: false
-    description: Missing or underspecified constraints.
+    description: 'Missing or underspecified constraints. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
 cognitive_hints:
   role: analyze
   consumes:
@@ -36,7 +41,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - constraint
   - analysis

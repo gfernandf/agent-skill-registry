@@ -1,31 +1,39 @@
 id: evaluation.hypothesis.compare
 version: 1.0.0
-description: >
-  Compare evaluated hypotheses and surface trade-offs, ranking, and a recommended
-  lead hypothesis. Designed for transparent hypothesis selection under competing
-  evidence and uncertainty.
+description: 'Compare evaluated hypotheses and surface trade-offs, ranking, and a
+  recommended lead hypothesis. Designed for transparent hypothesis selection under
+  competing evidence and uncertainty.
+
+  '
 inputs:
   evaluated_hypotheses:
     type: array
     required: true
-    description: Evaluated hypothesis results including support and contradiction signals.
+    description: 'Evaluated hypothesis results including support and contradiction
+      signals. Schema: array of items with a stable item structure expected by downstream
+      consumers.'
   comparison_axes:
     type: array
     required: false
-    description: Optional axes such as explanatory_power, simplicity, and actionability.
+    description: 'Optional axes such as explanatory_power, simplicity, and actionability.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 outputs:
   ranked_hypotheses:
     type: array
     required: true
-    description: Ranked hypothesis list with rank, score, and comparison rationale.
+    description: 'Ranked hypothesis list with rank, score, and comparison rationale.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   tradeoffs:
     type: array
     required: false
-    description: Explicit trade-offs between top-ranked hypotheses.
+    description: 'Explicit trade-offs between top-ranked hypotheses. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   recommendation:
     type: object
     required: false
-    description: Recommended lead hypothesis with confidence and caveat summary.
+    description: 'Recommended lead hypothesis with confidence and caveat summary.
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
 cognitive_hints:
   role: evaluate
   consumes:
@@ -45,7 +53,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - hypothesis

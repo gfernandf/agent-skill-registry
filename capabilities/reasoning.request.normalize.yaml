@@ -1,6 +1,6 @@
 id: reasoning.request.normalize
 version: 1.0.0
-status: experimental
+status: stable
 description: "Normalize a raw user request into a structured task object. Extracts\
   \ intent, language, explicit constraints, urgency level, and attached artifacts.\
   \ Does not plan or execute \u2014 only converts the input into a machine-usable\
@@ -16,9 +16,8 @@ inputs:
     type: object
     required: false
     description: 'Conversation or session context including prior messages, user profile,
-      and runtime metadata.
-
-      '
+      and runtime metadata. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   normalized_request:
     type: object

@@ -10,7 +10,9 @@ inputs:
   variables:
     type: object
     required: true
-    description: Key-value mapping of variable names to their values.
+    description: 'Key-value mapping of variable names to their values. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   format:
     type: string
     required: false
@@ -23,7 +25,8 @@ outputs:
   unresolved:
     type: array
     required: false
-    description: List of placeholder names that could not be resolved from variables.
+    description: 'List of placeholder names that could not be resolved from variables.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: true
   side_effects: false

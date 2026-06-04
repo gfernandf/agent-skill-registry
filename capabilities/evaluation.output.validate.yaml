@@ -1,6 +1,6 @@
 id: evaluation.output.validate
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Evaluate whether a final output satisfies the explicit success and acceptance
   criteria defined for the task. Each criterion is assessed individually and the overall
   evaluation returns a pass/fail verdict with per-criterion scores, a list of unmet
@@ -12,9 +12,9 @@ inputs:
     type: object
     required: true
     description: 'Output artefact to evaluate. May be a report, document, data object,
-      or any structured result produced by the execution pipeline.
-
-      '
+      or any structured result produced by the execution pipeline. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   success_criteria:
     type: array
     required: true
@@ -26,9 +26,8 @@ inputs:
     type: object
     required: false
     description: 'Optional supporting evidence (sources, trace, intermediate outputs)
-      to help evaluate criterion satisfaction.
-
-      '
+      to help evaluate criterion satisfaction. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
 outputs:
   evaluation:
     type: object

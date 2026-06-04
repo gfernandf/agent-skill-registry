@@ -1,14 +1,17 @@
 id: reasoning.uncertainty.extract
 version: 1.0.0
-description: >
-  Extract explicit uncertainties, unknowns, and ambiguity points from a target
-  artifact. Produces a structured uncertainty inventory and optional clarification
+description: 'Extract explicit uncertainties, unknowns, and ambiguity points from
+  a target artifact. Produces a structured uncertainty inventory and optional clarification
   questions for downstream planning.
+
+  '
 inputs:
   target:
     type: object
     required: true
-    description: Artifact to inspect for uncertainty signals.
+    description: 'Artifact to inspect for uncertainty signals. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   context:
     type: string
     required: false
@@ -17,13 +20,14 @@ outputs:
   uncertainties:
     type: array
     required: true
-    description: >
-      Extracted uncertainties with fields id, description, category,
-      impact_area, and severity_hint (low | medium | high).
+    description: 'Extracted uncertainties with fields id, description, category, impact_area,
+      and severity_hint (low | medium | high). Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   clarification_questions:
     type: array
     required: false
-    description: Questions that would reduce uncertainty if answered.
+    description: 'Questions that would reduce uncertainty if answered. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   extraction_notes:
     type: string
     required: false
@@ -47,7 +51,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - uncertainty

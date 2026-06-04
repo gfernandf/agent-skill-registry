@@ -1,24 +1,30 @@
 id: evidence.gap.detect
 version: 1.0.0
-description: Detect missing evidence required to support claims or decisions.
+description: Detect missing evidence required to support claims or decisions. Surfaces
+  explicit coverage gaps and missing support links so investigative and evaluation
+  pipelines can prioritize targeted evidence collection.
 inputs:
   claims:
     type: array
     required: true
-    description: Claims that require support.
+    description: 'Claims that require support. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   evidence_items:
     type: array
     required: false
-    description: Available evidence corpus.
+    description: 'Available evidence corpus. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   required_dimensions:
     type: array
     required: false
-    description: Optional required evidence dimensions.
+    description: 'Optional required evidence dimensions. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
 outputs:
   evidence_gaps:
     type: array
     required: true
-    description: Identified evidence gaps with missing dimension and impact.
+    description: 'Identified evidence gaps with missing dimension and impact. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   gap_severity:
     type: string
     required: false
@@ -40,7 +46,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - evidence
   - gap

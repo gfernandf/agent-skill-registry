@@ -1,6 +1,8 @@
 id: memory.context.update
 version: 1.0.0
-description: Update an existing context record with partial or full changes.
+description: Update an existing context record with partial or full changes while
+  preserving continuity semantics. Supports iterative workflows that require stable
+  context evolution and auditable state transitions over time.
 inputs:
   context_id:
     type: string
@@ -9,7 +11,8 @@ inputs:
   patch:
     type: object
     required: true
-    description: Partial update payload.
+    description: 'Partial update payload. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   merge_strategy:
     type: string
     required: false
@@ -45,7 +48,7 @@ safety:
   requires_confirmation: false
   description: Updates bounded context memory records.
 metadata:
-  status: experimental
+  status: stable
   tags:
   - memory
   - context

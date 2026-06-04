@@ -1,6 +1,6 @@
 id: reasoning.output.synthesize
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Convert a successfully completed ORCA plan and its execution trace into
   a candidate reusable ORCA skill definition. Captures the step sequence, input/output
   contracts, known constraints, and observed execution characteristics. The generated
@@ -13,15 +13,14 @@ inputs:
     type: object
     required: true
     description: 'Compiled plan that completed with execution_result.status success.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   execution_trace:
     type: object
     required: true
     description: 'Execution trace or result from agent.plan.execute containing per-step
-      outputs, durations, and state snapshots.
-
-      '
+      outputs, durations, and state snapshots. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
 outputs:
   candidate_skill:
     type: object

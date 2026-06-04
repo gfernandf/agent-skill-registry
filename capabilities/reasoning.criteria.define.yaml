@@ -1,6 +1,6 @@
 id: reasoning.criteria.define
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Define measurable success, quality, and acceptance criteria for an interpreted
   goal. Produces the evaluation contract that plan validation and output evaluation
   nodes use to determine whether the task has been completed correctly and completely.
@@ -10,9 +10,9 @@ inputs:
   interpreted_goal:
     type: object
     required: true
-    description: 'Operational goal object produced by reasoning.goal.interpret.
-
-      '
+    description: 'Operational goal object produced by reasoning.goal.interpret. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
 outputs:
   success_criteria:
     type: array

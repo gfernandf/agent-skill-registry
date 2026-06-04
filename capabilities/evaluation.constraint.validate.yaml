@@ -1,6 +1,7 @@
 id: evaluation.constraint.validate
 version: 1.0.0
-description: 'Validate whether an artifact satisfies known constraints and report violations, coverage, and severity.
+description: 'Validate whether an artifact satisfies known constraints and report
+  violations, coverage, and severity.
 
   '
 inputs:
@@ -8,39 +9,37 @@ inputs:
     type: object
     required: true
     description: 'Artifact to validate, such as a plan, output, response, or option.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   constraints:
     type: array
     required: true
-    description: 'Constraint set to validate against. Each constraint can include id, statement, type, and severity.
-
-      '
+    description: 'Constraint set to validate against. Each constraint can include
+      id, statement, type, and severity. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
   validation_policy:
     type: object
     required: false
     description: 'Optional policy controlling strictness and pass/fail thresholds.
-
-      '
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
 outputs:
   validation_result:
     type: object
     required: true
-    description: 'Validation status summary with fields like status, pass_rate, and blocking_violations.
-
-      '
+    description: 'Validation status summary with fields like status, pass_rate, and
+      blocking_violations. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
   violations:
     type: array
     required: false
-    description: 'Constraint violations with ids, rationale, and severity.
-
-      '
+    description: 'Constraint violations with ids, rationale, and severity. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   satisfied_constraints:
     type: array
     required: false
-    description: 'Constraints that were satisfied by the artifact.
-
-      '
+    description: 'Constraints that were satisfied by the artifact. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: true
   side_effects: false

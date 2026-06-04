@@ -1,30 +1,33 @@
 id: evaluation.hypothesis.evaluate
 version: 1.0.0
-description: >
-  Evaluate candidate hypotheses against available evidence and explicit criteria.
-  Produces support and contradiction scores per hypothesis plus a structured
+description: 'Evaluate candidate hypotheses against available evidence and explicit
+  criteria. Produces support and contradiction scores per hypothesis plus a structured
   status that can be consumed by comparison and decision steps.
+
+  '
 inputs:
   hypotheses:
     type: array
     required: true
-    description: Hypotheses to evaluate, typically from reasoning.hypothesis.generate.
+    description: 'Hypotheses to evaluate, typically from reasoning.hypothesis.generate.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   evidence:
     type: array
     required: false
-    description: Supporting or conflicting evidence items used during evaluation.
+    description: 'Supporting or conflicting evidence items used during evaluation.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   criteria:
     type: array
     required: false
-    description: Optional evaluation criteria and weights for scoring.
+    description: 'Optional evaluation criteria and weights for scoring. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
 outputs:
   evaluated_hypotheses:
     type: array
     required: true
-    description: >
-      Evaluation results per hypothesis with fields hypothesis_id,
-      support_score (0-1), contradiction_score (0-1), and status
-      (supported | mixed | weak | rejected).
+    description: 'Evaluation results per hypothesis with fields hypothesis_id, support_score
+      (0-1), contradiction_score (0-1), and status (supported | mixed | weak | rejected).
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   evaluation_summary:
     type: string
     required: true
@@ -32,7 +35,8 @@ outputs:
   evidence_gaps:
     type: array
     required: false
-    description: Missing evidence needed to raise confidence in unresolved hypotheses.
+    description: 'Missing evidence needed to raise confidence in unresolved hypotheses.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 cognitive_hints:
   role: evaluate
   consumes:
@@ -53,7 +57,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - hypothesis

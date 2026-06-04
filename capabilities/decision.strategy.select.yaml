@@ -6,11 +6,13 @@ inputs:
   strategies:
     type: array
     required: true
-    description: Candidate strategies with pros/cons and prerequisites.
+    description: 'Candidate strategies with pros/cons and prerequisites. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   constraints:
     type: array
     required: false
-    description: Applicable constraints for strategy selection.
+    description: 'Applicable constraints for strategy selection. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
   objective:
     type: string
     required: true
@@ -19,11 +21,14 @@ outputs:
   selected_strategy:
     type: object
     required: true
-    description: Chosen strategy with identifier and rationale.
+    description: 'Chosen strategy with identifier and rationale. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   rejected_strategies:
     type: array
     required: false
-    description: Rejected strategies and rejection rationale.
+    description: 'Rejected strategies and rejection rationale. Schema: array of items
+      with a stable item structure expected by downstream consumers.'
   selection_confidence:
     type: number
     required: false
@@ -48,7 +53,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - decision
   - strategy

@@ -6,7 +6,9 @@ inputs:
   output:
     type: object
     required: true
-    description: The model-generated output to assess.
+    description: 'The model-generated output to assess. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   context:
     type: string
     required: false
@@ -14,8 +16,9 @@ inputs:
   dimensions:
     type: array
     required: false
-    description: Risk dimensions to evaluate. Defaults to ['toxicity', 'bias', 'hallucination',
-      'prompt_injection'].
+    description: 'Risk dimensions to evaluate. Defaults to [''toxicity'', ''bias'',
+      ''hallucination'', ''prompt_injection'']. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
 outputs:
   risk_score:
     type: number
@@ -24,11 +27,14 @@ outputs:
   dimension_scores:
     type: object
     required: true
-    description: "Mapping of dimension name to individual risk score (0.0\u20131.0)."
+    description: "Mapping of dimension name to individual risk score (0.0\u20131.0).\
+      \ Schema: object with stable keys expected by downstream consumers; additional\
+      \ keys are optional unless otherwise specified."
   flags:
     type: array
     required: false
-    description: List of specific risk flags triggered, each with dimension and detail.
+    description: 'List of specific risk flags triggered, each with dimension and detail.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   safe:
     type: boolean
     required: true

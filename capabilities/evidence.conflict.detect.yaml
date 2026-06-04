@@ -1,20 +1,25 @@
 id: evidence.conflict.detect
 version: 1.0.0
-description: Detect contradictions and tension between evidence items or claims.
+description: Detect contradictions and tension between evidence items or claims. Identifies
+  incompatible statements and uncertainty hotspots that should be resolved before
+  synthesis, recommendation, or policy gating.
 inputs:
   evidence_items:
     type: array
     required: true
-    description: Evidence items to compare for conflict.
+    description: 'Evidence items to compare for conflict. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
   claims:
     type: array
     required: false
-    description: Optional claims linked to evidence items.
+    description: 'Optional claims linked to evidence items. Schema: array of items
+      with a stable item structure expected by downstream consumers.'
 outputs:
   conflicts:
     type: array
     required: true
-    description: Detected conflicts with involved item ids and conflict rationale.
+    description: 'Detected conflicts with involved item ids and conflict rationale.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   conflict_severity:
     type: string
     required: false
@@ -36,7 +41,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - evidence
   - conflict

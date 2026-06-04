@@ -12,7 +12,9 @@ inputs:
   record:
     type: object
     required: true
-    description: The structured record to store, must include an id field.
+    description: 'The structured record to store, must include an id field. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
   ttl_seconds:
     type: number
     required: false

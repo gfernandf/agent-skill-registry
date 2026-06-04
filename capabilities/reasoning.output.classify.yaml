@@ -6,12 +6,15 @@ inputs:
   output:
     type: object
     required: true
-    description: The model-generated output to classify.
+    description: 'The model-generated output to classify. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   categories:
     type: array
     required: true
-    description: List of candidate category labels (e.g. ['summary', 'analysis', 'code',
-      'list', 'error']).
+    description: 'List of candidate category labels (e.g. [''summary'', ''analysis'',
+      ''code'', ''list'', ''error'']). Schema: array of items with a stable item structure
+      expected by downstream consumers.'
   context:
     type: string
     required: false

@@ -2,17 +2,16 @@ id: reasoning.option.analyze
 version: 1.0.0
 description: "Perform qualitative analysis of each option in a decision set. For every\
   \ option, identify pros, cons, risks, and underlying assumptions. Does NOT assign\
-  \ numeric scores \u2014 that is the responsibility of evaluation.option.score. This capability\
-  \ produces the structured qualitative evidence that scoring and justification steps\
-  \ consume downstream.\n"
+  \ numeric scores \u2014 that is the responsibility of evaluation.option.score. This\
+  \ capability produces the structured qualitative evidence that scoring and justification\
+  \ steps consume downstream.\n"
 inputs:
   options:
     type: array
     required: true
     description: 'List of options to analyze. Each option should have at minimum:
       id, label, description. May include key_attributes from reasoning.option.generate.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   context:
     type: string
     required: false

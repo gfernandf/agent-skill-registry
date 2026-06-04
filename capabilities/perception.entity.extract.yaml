@@ -12,7 +12,8 @@ outputs:
   entities:
     type: array
     required: true
-    description: Extracted entities.
+    description: 'Extracted entities. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false

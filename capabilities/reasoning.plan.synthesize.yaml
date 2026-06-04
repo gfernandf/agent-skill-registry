@@ -1,6 +1,6 @@
 id: reasoning.plan.synthesize
 version: 1.0.0
-status: experimental
+status: stable
 description: "Compile a validated ORCA plan into an executable DAG. Resolves the final\
   \ execution order, identifies steps that can run in parallel, emits state binding\
   \ contracts, and inserts policy gate checkpoints. The compiled DAG is the only artefact\
@@ -11,15 +11,15 @@ inputs:
     type: object
     required: true
     description: 'Plan object that has passed evaluation.plan.validate (status: passed).
-
-      '
+      Typically sourced from evaluation.plan.validate.validated_plan. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   runtime_config:
     type: object
     required: false
     description: 'Runtime configuration hints: parallelism_limit (number), timeout_seconds
-      (number), fail_fast (boolean).
-
-      '
+      (number), fail_fast (boolean). Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   compiled_plan:
     type: object

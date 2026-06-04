@@ -1,6 +1,8 @@
 id: memory.entry.retrieve
 version: 1.0.0
-description: Retrieve content from a memory system.
+description: Retrieve content from a memory system using explicit keys or selectors.
+  Returns stable retrieval payloads suitable for downstream reasoning, planning, and
+  evidence-building steps.
 inputs:
   key:
     type: string
@@ -10,7 +12,8 @@ outputs:
   value:
     type: object
     required: false
-    description: Retrieved value.
+    description: 'Retrieved value. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
   found:
     type: boolean
     required: true

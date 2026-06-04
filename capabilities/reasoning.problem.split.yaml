@@ -47,14 +47,15 @@ outputs:
   gaps:
     type: array
     required: false
-    description: "Areas that may be missing from the decomposition \u2014 known unknowns.\n"
+    description: "Areas that may be missing from the decomposition \u2014 known unknowns.\
+      \ Schema: array of items with a stable item structure expected by downstream\
+      \ consumers."
   overlaps:
     type: array
     required: false
     description: 'Potential overlaps between components that the analyst should watch
-      for.
-
-      '
+      for. Schema: array of items with a stable item structure expected by downstream
+      consumers.'
   decomposition_notes:
     type: string
     required: false

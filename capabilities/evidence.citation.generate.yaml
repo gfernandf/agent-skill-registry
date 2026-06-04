@@ -1,11 +1,15 @@
 id: evidence.citation.generate
 version: 1.0.0
-description: Generate a structured citation for a source fragment.
+description: Generate a structured citation for a source fragment. Standardizes attribution
+  metadata so downstream verification, reporting, and audit capabilities can consistently
+  reference the same evidence anchor.
 inputs:
   source:
     type: object
     required: true
-    description: Source descriptor including origin metadata.
+    description: 'Source descriptor including origin metadata. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   excerpt:
     type: string
     required: false
@@ -18,7 +22,8 @@ outputs:
   citation:
     type: object
     required: true
-    description: Structured citation object.
+    description: 'Structured citation object. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
 properties:
   deterministic: true
   side_effects: false

@@ -37,13 +37,13 @@ outputs:
     description: Suggested workflow skill id (domain.slug) inferred from the intent.
   capabilities_used:
     type: array
-    description: Capability IDs referenced in the generated steps.
+    description: 'Capability IDs referenced in the generated steps. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
   validation_errors:
     type: array
     description: 'List of validation error strings found in the generated output.
-      Empty list means the YAML is valid.
-
-      '
+      Empty list means the YAML is valid. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false

@@ -6,21 +6,28 @@ inputs:
   output:
     type: object
     required: true
-    description: The model-generated output to sanitize.
+    description: 'The model-generated output to sanitize. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   policy:
     type: object
     required: false
-    description: Sanitization policy with toggles such as remove_pii, remove_harmful,
-      remove_prompt_leakage. Defaults to all enabled.
+    description: 'Sanitization policy with toggles such as remove_pii, remove_harmful,
+      remove_prompt_leakage. Defaults to all enabled. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
 outputs:
   sanitized_output:
     type: object
     required: true
-    description: The sanitized output with disallowed content removed or masked.
+    description: 'The sanitized output with disallowed content removed or masked.
+      Schema: object with stable keys expected by downstream consumers; additional
+      keys are optional unless otherwise specified.'
   removals:
     type: array
     required: false
-    description: List of removal actions taken, each with field, pattern, and action.
+    description: 'List of removal actions taken, each with field, pattern, and action.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   clean:
     type: boolean
     required: true
@@ -32,7 +39,7 @@ properties:
   state_access: none
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - model
   - safety

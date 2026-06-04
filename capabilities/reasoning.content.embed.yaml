@@ -1,6 +1,7 @@
 id: reasoning.content.embed
 version: 1.0.0
-description: Generate vector embeddings from text.
+description: Generate vector embeddings from text for semantic retrieval and similarity
+  matching workflows. Maintained as a compatibility capability and replaced by reasoning.embedding.generate.
 inputs:
   text:
     type: string
@@ -10,7 +11,8 @@ outputs:
   embedding:
     type: array
     required: true
-    description: Generated embedding vector.
+    description: 'Generated embedding vector. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false
@@ -29,7 +31,7 @@ metadata:
     inputs:
       text: This is a test sentence.
     outputs:
-      vector:
+      embedding:
       - 0.01
       - -0.03
       - 0.12

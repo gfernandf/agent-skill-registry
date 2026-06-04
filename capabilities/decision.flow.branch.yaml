@@ -18,9 +18,8 @@ inputs:
     type: object
     required: true
     description: 'The execution context containing variables and prior step outputs
-      against which the condition is evaluated.
-
-      '
+      against which the condition is evaluated. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   branches:
     type: array
     required: true

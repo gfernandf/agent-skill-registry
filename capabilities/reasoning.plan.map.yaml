@@ -1,6 +1,6 @@
 id: reasoning.plan.map
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Bind the inputs and outputs of expanded plan steps to explicit CognitiveState
   paths using dollar-prefixed path references such as $state.working.summary. Resolves
   which step outputs feed which step inputs. Produces a fully wired step list where
@@ -34,9 +34,8 @@ outputs:
     type: array
     required: false
     description: 'Step ids and field names where a binding could not be resolved.
-      Non-empty means the plan is not fully wired and requires repair.
-
-      '
+      Non-empty means the plan is not fully wired and requires repair. Schema: array
+      of items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false

@@ -1,6 +1,6 @@
 id: reasoning.plan.reconcile
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Repair an invalid ORCA plan based on validation errors. Repairs include:
   replacing unresolvable capability or skill references with closest valid alternatives,
   inserting missing inter-step dependencies, resolving unbound input paths, adding
@@ -13,21 +13,21 @@ inputs:
   invalid_plan:
     type: object
     required: true
-    description: 'Plan object that failed evaluation.plan.validate.
-
-      '
+    description: 'Plan object that failed evaluation.plan.validate. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   validation_errors:
     type: array
     required: true
-    description: 'Error list from validation_result.errors produced by evaluation.plan.validate.
-
-      '
+    description: 'Error list produced by evaluation.plan.validate. Accepts either
+      the top-level validation_errors projection or validation_result.errors. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   registry:
     type: object
     required: false
-    description: 'Registry snapshot for resolving replacement references.
-
-      '
+    description: 'Registry snapshot for resolving replacement references. Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
 outputs:
   repaired_plan:
     type: object

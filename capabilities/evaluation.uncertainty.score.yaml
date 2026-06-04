@@ -1,24 +1,27 @@
 id: evaluation.uncertainty.score
 version: 1.0.0
-description: >
-  Score extracted uncertainties by expected impact and confidence gap. Helps
-  quantify which unknowns are most critical before commitment or execution.
+description: 'Score extracted uncertainties by expected impact and confidence gap.
+  Helps quantify which unknowns are most critical before commitment or execution.
+
+  '
 inputs:
   uncertainties:
     type: array
     required: true
-    description: Uncertainty items, typically from reasoning.uncertainty.extract.
+    description: 'Uncertainty items, typically from reasoning.uncertainty.extract.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   scoring_criteria:
     type: array
     required: false
-    description: Optional criteria and weights such as impact, likelihood, and reversibility.
+    description: 'Optional criteria and weights such as impact, likelihood, and reversibility.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 outputs:
   scored_uncertainties:
     type: array
     required: true
-    description: >
-      Uncertainty scores with fields uncertainty_id, impact_score (0-1),
-      confidence_gap_score (0-1), and overall_score (0-1).
+    description: 'Uncertainty scores with fields uncertainty_id, impact_score (0-1),
+      confidence_gap_score (0-1), and overall_score (0-1). Schema: array of items
+      with a stable item structure expected by downstream consumers.'
   scoring_summary:
     type: string
     required: false
@@ -40,7 +43,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - uncertainty

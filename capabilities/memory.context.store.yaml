@@ -1,8 +1,10 @@
 id: memory.context.store
 version: 1.0.0
-description: >
-  Persist structured cognitive context for reuse across executions, sessions, or
-  iterative reasoning cycles. Stores contextual payloads by context_id with optional TTL.
+description: 'Persist structured cognitive context for reuse across executions, sessions,
+  or iterative reasoning cycles. Stores contextual payloads by context_id with optional
+  TTL.
+
+  '
 inputs:
   context_id:
     type: string
@@ -11,7 +13,9 @@ inputs:
   context:
     type: object
     required: true
-    description: Structured context payload to persist.
+    description: 'Structured context payload to persist. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   ttl_seconds:
     type: number
     required: false
@@ -47,7 +51,7 @@ safety:
   requires_confirmation: false
   description: Stores context state in bounded memory storage.
 metadata:
-  status: experimental
+  status: stable
   tags:
   - memory
   - context

@@ -1,20 +1,25 @@
 id: evaluation.assumption.validate
 version: 1.0.0
-description: Validate assumptions for plausibility, consistency, and evidentiary support.
+description: Validate assumptions for plausibility, internal consistency, and evidentiary
+  support. Produces structured validation outcomes that can be reused across planning,
+  analysis, and decision workflows without domain-specific coupling.
 inputs:
   assumptions:
     type: array
     required: true
-    description: Assumptions to validate.
+    description: 'Assumptions to validate. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
   evidence:
     type: array
     required: false
-    description: Supporting or contradicting evidence.
+    description: 'Supporting or contradicting evidence. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
 outputs:
   validated_assumptions:
     type: array
     required: true
-    description: Validation results with status(supported|weak|rejected) and rationale.
+    description: 'Validation results with status(supported|weak|rejected) and rationale.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   confidence_summary:
     type: string
     required: false
@@ -36,7 +41,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - assumption
   - validation

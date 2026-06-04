@@ -1,6 +1,6 @@
 id: evaluation.plan.gate
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Determine whether a compiled plan can proceed under current permissions
   and policy constraints. Checks each step against the user''s permission set and
   applicable policies. Returns an authorization result that is either fully approved,
@@ -11,23 +11,22 @@ inputs:
   compiled_plan:
     type: object
     required: true
-    description: 'Compiled plan object from reasoning.plan.synthesize.
-
-      '
+    description: 'Compiled plan object from reasoning.plan.synthesize. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   user_permissions:
     type: object
     required: false
     description: 'Principal permission set. When omitted, a conservative deny policy
-      applies to all steps with side_effects: true.
-
-      '
+      applies to all steps with side_effects: true. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   policy_context:
     type: object
     required: false
     description: 'Active policy profile including risk thresholds, banned operations,
-      and approval requirements.
-
-      '
+      and approval requirements. Schema: object with stable keys expected by downstream
+      consumers; additional keys are optional unless otherwise specified.'
 outputs:
   authorization_result:
     type: object

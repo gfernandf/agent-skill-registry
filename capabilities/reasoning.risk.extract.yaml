@@ -9,9 +9,9 @@ inputs:
     type: object
     required: true
     description: 'The artifact to analyze for risks. Can be a decision, plan, analysis
-      output, proposal, or any structured object.
-
-      '
+      output, proposal, or any structured object. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   context:
     type: string
     required: false
@@ -52,9 +52,8 @@ outputs:
     type: array
     required: false
     description: 'Preliminary mitigation suggestions per risk. Each has: risk_id,
-      suggestion, effort_hint (low | medium | high).
-
-      '
+      suggestion, effort_hint (low | medium | high). Schema: array of items with a
+      stable item structure expected by downstream consumers.'
   extraction_notes:
     type: string
     required: false

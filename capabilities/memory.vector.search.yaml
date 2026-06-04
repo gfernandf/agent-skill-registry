@@ -1,6 +1,8 @@
 id: memory.vector.search
 version: 1.0.0
 description: Search memory records by vector similarity against a query embedding.
+  Returns semantically related memory candidates to support retrieval-augmented reasoning
+  and context reconstruction flows.
 inputs:
   query:
     type: string
@@ -18,7 +20,8 @@ outputs:
   results:
     type: array
     required: true
-    description: Ranked search results with record, score, and optional metadata.
+    description: 'Ranked search results with record, score, and optional metadata.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   total_searched:
     type: number
     required: true

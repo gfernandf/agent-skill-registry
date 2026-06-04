@@ -1,28 +1,36 @@
 id: perception.sla.monitor
 version: 1.0.0
 description: Monitor SLA compliance for a set of tasks and raise alerts for breaches.
+  Produces time- and threshold-aware monitoring signals that can be consumed by decision
+  and escalation capabilities.
 inputs:
   tasks:
     type: array
     required: true
-    description: List of tasks with created_at, priority, and status fields.
+    description: 'List of tasks with created_at, priority, and status fields. Schema:
+      array of items with a stable item structure expected by downstream consumers.'
   sla_rules:
     type: object
     required: true
-    description: SLA rules mapping priority to max_resolution_hours.
+    description: 'SLA rules mapping priority to max_resolution_hours. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
 outputs:
   compliant:
     type: array
     required: true
-    description: Tasks within SLA.
+    description: 'Tasks within SLA. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
   breached:
     type: array
     required: true
-    description: Tasks that have breached SLA.
+    description: 'Tasks that have breached SLA. Schema: array of items with a stable
+      item structure expected by downstream consumers.'
   at_risk:
     type: array
     required: true
-    description: Tasks approaching SLA breach (within 80% of limit).
+    description: 'Tasks approaching SLA breach (within 80% of limit). Schema: array
+      of items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: true
   side_effects: false

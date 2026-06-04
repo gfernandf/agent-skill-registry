@@ -1,6 +1,6 @@
 id: perception.catalog.search
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Search the ORCA registry catalog for skills and capabilities relevant
   to an interpreted goal. Applies optional domain and kind filters. Returns candidate
   items with relevance scores and a brief rationale for each match. Used to pre-select
@@ -12,16 +12,15 @@ inputs:
   goal:
     type: object
     required: true
-    description: 'Interpreted goal object from reasoning.goal.interpret.
-
-      '
+    description: 'Interpreted goal object from reasoning.goal.interpret. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   registry:
     type: object
     required: false
     description: 'Snapshot of the ORCA catalog. When omitted the runtime loads the
-      current local catalog automatically.
-
-      '
+      current local catalog automatically. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   filters:
     type: object
     required: false

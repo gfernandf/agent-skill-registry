@@ -1,6 +1,8 @@
 id: reasoning.problem.decompose
 version: 1.0.0
-description: Decompose a problem into structured sub-problems and dependencies.
+description: Decompose a problem into structured sub-problems, dependencies, and analysis
+  units. Produces reusable decomposition artifacts for planning, hypothesis generation,
+  and iterative resolution.
 inputs:
   problem:
     type: string
@@ -41,14 +43,15 @@ outputs:
   gaps:
     type: array
     required: false
-    description: "Areas that may be missing from the decomposition \u2014 known unknowns.\n"
+    description: "Areas that may be missing from the decomposition \u2014 known unknowns.\
+      \ Schema: array of items with a stable item structure expected by downstream\
+      \ consumers."
   overlaps:
     type: array
     required: false
     description: 'Potential overlaps between components that the analyst should watch
-      for.
-
-      '
+      for. Schema: array of items with a stable item structure expected by downstream
+      consumers.'
   decomposition_notes:
     type: string
     required: false
@@ -73,7 +76,7 @@ properties:
   state_access: none
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - analysis
   - decomposition

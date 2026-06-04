@@ -1,6 +1,8 @@
 id: perception.case.get
 version: 1.0.0
-description: Retrieve a specific case by identifier.
+description: Retrieve a specific case by identifier with stable field semantics for
+  downstream consumers. Supports deterministic case hydration in monitoring, analysis,
+  and response workflows.
 inputs:
   case_id:
     type: string

@@ -1,12 +1,14 @@
 id: evaluation.response.score
 version: 1.0.0
-description: Score a model-generated response on multiple quality dimensions such as
-  relevance, fluency, completeness, and faithfulness.
+description: Score a model-generated response on multiple quality dimensions such
+  as relevance, fluency, completeness, and faithfulness.
 inputs:
   output:
     type: object
     required: true
-    description: The model-generated output to score.
+    description: 'The model-generated output to score. Schema: object with stable
+      keys expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   instruction:
     type: string
     required: true
@@ -14,17 +16,22 @@ inputs:
   reference:
     type: object
     required: false
-    description: Optional reference or ground truth to compare against.
+    description: 'Optional reference or ground truth to compare against. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   dimensions:
     type: array
     required: false
-    description: Quality dimensions to evaluate. Defaults to ['relevance', 'fluency',
-      'completeness', 'faithfulness'].
+    description: 'Quality dimensions to evaluate. Defaults to [''relevance'', ''fluency'',
+      ''completeness'', ''faithfulness'']. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
 outputs:
   scores:
     type: object
     required: true
-    description: "Mapping of dimension name to score (0.0\u20131.0)."
+    description: "Mapping of dimension name to score (0.0\u20131.0). Schema: object\
+      \ with stable keys expected by downstream consumers; additional keys are optional\
+      \ unless otherwise specified."
   overall:
     type: number
     required: true
@@ -40,7 +47,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - model
   - quality

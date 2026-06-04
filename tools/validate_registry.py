@@ -622,6 +622,84 @@ def validate_capability_semantics(
         errors.append(f"{path}: replacement must be a string when present")
 
 
+def _is_pure_cognitive_capability(data: Dict[str, Any]) -> bool:
+    cid = data.get("id")
+    if not isinstance(cid, str) or "." not in cid:
+        return False
+    domain = cid.split(".", 1)[0]
+
+    metadata = data.get("metadata")
+    if not isinstance(metadata, dict):
+        return False
+
+    return metadata.get("layer") == "cognitive" and domain in ALLOWED_COGNITIVE_DOMAINS
+
+
+def validate_cognitive_contract_quality(
+    path: Path,
+    data: Dict[str, Any],
+    errors: List[str],
+) -> None:
+    """Enforce contract hygiene for pure cognitive capabilities.
+
+    These checks intentionally focus on clarity and interoperability:
+    - every declared input/output field must include a non-empty description
+    - examples.inputs/examples.outputs keys must match declared contracts
+    """
+    if not _is_pure_cognitive_capability(data):
+        return
+
+    inputs = data.get("inputs")
+    outputs = data.get("outputs")
+    if not isinstance(inputs, dict) or not isinstance(outputs, dict):
+        return
+
+    for section_name, section in (("inputs", inputs), ("outputs", outputs)):
+        for field_name, field_spec in section.items():
+            if not isinstance(field_name, str):
+                continue
+            if not isinstance(field_spec, dict):
+                errors.append(
+                    f"{path}: {section_name}.{field_name} must be a mapping"
+                )
+                continue
+            desc = field_spec.get("description")
+            if not isinstance(desc, str) or not desc.strip():
+                errors.append(
+                    f"{path}: {section_name}.{field_name} must define a non-empty description"
+                )
+
+    metadata = data.get("metadata") if isinstance(data.get("metadata"), dict) else {}
+    examples = metadata.get("examples")
+    if examples is None:
+        return
+    if not isinstance(examples, list):
+        return
+
+    input_fields = set(inputs.keys())
+    output_fields = set(outputs.keys())
+
+    for idx, example in enumerate(examples):
+        if not isinstance(example, dict):
+            continue
+
+        ex_inputs = example.get("inputs")
+        if isinstance(ex_inputs, dict):
+            extra_inputs = sorted(set(ex_inputs.keys()) - input_fields)
+            if extra_inputs:
+                errors.append(
+                    f"{path}: metadata.examples[{idx}].inputs contains unknown keys {extra_inputs}"
+                )
+
+        ex_outputs = example.get("outputs")
+        if isinstance(ex_outputs, dict):
+            extra_outputs = sorted(set(ex_outputs.keys()) - output_fields)
+            if extra_outputs:
+                errors.append(
+                    f"{path}: metadata.examples[{idx}].outputs contains unknown keys {extra_outputs}"
+                )
+
+
 # ----------------------------------------------------------------------
 # Skill validation
 # ----------------------------------------------------------------------
@@ -823,6 +901,7 @@ def main() -> int:
             continue
 
         validate_capability_structure(path, data, vocab, errors, cognitive_types, safety_vocab)
+        validate_cognitive_contract_quality(path, data, errors)
 
         cid = data.get("id")
         if isinstance(cid, str):

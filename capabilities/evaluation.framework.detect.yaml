@@ -1,21 +1,20 @@
 id: evaluation.framework.detect
 version: 1.0.0
-status: experimental
+status: stable
 description: Detect the most suitable evaluation framework for a given artifact, objective,
   and context.
 inputs:
   interpreted_goal:
     type: object
     required: true
-    description: 'Interpreted goal object from reasoning.goal.interpret.
-
-      '
+    description: 'Interpreted goal object from reasoning.goal.interpret. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   candidate_items:
     type: array
     required: true
     description: 'Candidate registry items already matched by perception.catalog.search.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 outputs:
   missing_capabilities:
     type: array
@@ -57,7 +56,7 @@ metadata:
     candidate_items: []
     expected_gap_severity: blocking
   layer: cognitive
-  status: experimental
+  status: stable
 cognitive_hints:
   role: evaluate
   produces:

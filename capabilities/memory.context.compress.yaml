@@ -6,7 +6,8 @@ inputs:
   context:
     type: object
     required: true
-    description: Context object to summarize.
+    description: 'Context object to summarize. Schema: object with stable keys expected
+      by downstream consumers; additional keys are optional unless otherwise specified.'
   target_length:
     type: number
     required: false
@@ -15,7 +16,9 @@ outputs:
   summary_context:
     type: object
     required: true
-    description: Compressed context representation for reuse.
+    description: 'Compressed context representation for reuse. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
   summary_notes:
     type: string
     required: false
@@ -36,7 +39,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - memory
   - context

@@ -1,20 +1,25 @@
 id: evidence.source.assess
 version: 1.0.0
 description: Assess source credibility, relevance, and recency for evidence quality.
+  Produces consistent source-quality judgments that can be reused by verification,
+  ranking, and justification capabilities across domains.
 inputs:
   sources:
     type: array
     required: true
-    description: Sources to assess.
+    description: 'Sources to assess. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
   criteria:
     type: array
     required: false
-    description: Optional assessment criteria and weights.
+    description: 'Optional assessment criteria and weights. Schema: array of items
+      with a stable item structure expected by downstream consumers.'
 outputs:
   source_scores:
     type: array
     required: true
-    description: Scores per source with credibility, relevance, and recency dimensions.
+    description: 'Scores per source with credibility, relevance, and recency dimensions.
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   assessment_summary:
     type: string
     required: false
@@ -36,7 +41,7 @@ properties:
   state_access: read
   audit_level: standard
 metadata:
-  status: experimental
+  status: stable
   tags:
   - evidence
   - source

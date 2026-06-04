@@ -1,6 +1,8 @@
 id: perception.case.search
 version: 1.0.0
-description: Search cases by keyword or criteria.
+description: Search cases by keyword or structured criteria across indexed case attributes.
+  Returns discoverable candidates suitable for ranking, diagnosis, and escalation
+  pipelines.
 inputs:
   query:
     type: string
@@ -9,12 +11,15 @@ inputs:
   filters:
     type: object
     required: false
-    description: Additional filters (status, priority, date_range).
+    description: 'Additional filters (status, priority, date_range). Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
 outputs:
   results:
     type: array
     required: true
-    description: Matching case objects.
+    description: 'Matching case objects. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
   total:
     type: number
     required: true

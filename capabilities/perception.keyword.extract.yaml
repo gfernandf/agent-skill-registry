@@ -11,7 +11,8 @@ outputs:
   keywords:
     type: array
     required: true
-    description: Extracted keywords.
+    description: 'Extracted keywords. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
 properties:
   deterministic: true
   side_effects: false

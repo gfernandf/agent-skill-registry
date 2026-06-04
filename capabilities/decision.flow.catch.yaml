@@ -11,9 +11,9 @@ inputs:
     type: object
     required: true
     description: 'The error payload from the failed step, including at minimum a message
-      field. May also include step_id, error_code, and original_input.
-
-      '
+      field. May also include step_id, error_code, and original_input. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   fallback_strategy:
     type: string
     required: true
@@ -25,9 +25,9 @@ inputs:
   default_value:
     type: object
     required: false
-    description: 'Value to use as the step result when strategy is "default".
-
-      '
+    description: 'Value to use as the step result when strategy is "default". Schema:
+      object with stable keys expected by downstream consumers; additional keys are
+      optional unless otherwise specified.'
   max_retries:
     type: number
     required: false
@@ -46,7 +46,8 @@ outputs:
     required: true
     description: "The recovery result to pass to the next step \u2014 either from\
       \ retry success, the default_value, an empty object (skip), or an escalation\
-      \ ticket reference.\n"
+      \ ticket reference. Schema: object with stable keys expected by downstream consumers;\
+      \ additional keys are optional unless otherwise specified."
   strategy_applied:
     type: string
     required: true

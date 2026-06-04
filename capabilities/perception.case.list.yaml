@@ -1,6 +1,8 @@
 id: perception.case.list
 version: 1.0.0
-description: List cases, optionally filtered by status or assignee.
+description: List cases with optional filtering by status, assignee, or related criteria.
+  Provides consistent case inventory outputs for routing, triage, and workload-planning
+  capabilities.
 inputs:
   status_filter:
     type: string
@@ -14,7 +16,8 @@ outputs:
   cases:
     type: array
     required: true
-    description: List of case objects.
+    description: 'List of case objects. Schema: array of items with a stable item
+      structure expected by downstream consumers.'
   total:
     type: number
     required: true

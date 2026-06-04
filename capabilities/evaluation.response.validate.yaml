@@ -6,16 +6,22 @@ inputs:
   output:
     type: object
     required: true
-    description: The model-generated structured output to validate.
+    description: 'The model-generated structured output to validate. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   validation_policy:
     type: object
     required: true
-    description: Policy object defining validation dimensions such as coherence, coverage,
-      grounding, and confidence thresholds.
+    description: 'Policy object defining validation dimensions such as coherence,
+      coverage, grounding, and confidence thresholds. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
   evidence_context:
     type: array
     required: false
-    description: Optional source items used to verify grounding of claims in the output.
+    description: 'Optional source items used to verify grounding of claims in the
+      output. Schema: array of items with a stable item structure expected by downstream
+      consumers.'
 outputs:
   valid:
     type: boolean
@@ -24,8 +30,9 @@ outputs:
   issues:
     type: array
     required: false
-    description: List of validation issues found, each with dimension, severity, and
-      description.
+    description: 'List of validation issues found, each with dimension, severity,
+      and description. Schema: array of items with a stable item structure expected
+      by downstream consumers.'
   confidence_adjustment:
     type: number
     required: false

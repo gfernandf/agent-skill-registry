@@ -1,6 +1,6 @@
 id: evaluation.framework.rank
 version: 1.0.0
-status: experimental
+status: stable
 description: Rank candidate evaluation frameworks by fitness against task criteria
   and constraints.
 inputs:
@@ -13,24 +13,22 @@ inputs:
   interpreted_goal:
     type: object
     required: true
-    description: 'Interpreted goal object for relevance context.
-
-      '
+    description: 'Interpreted goal object for relevance context. Schema: object with
+      stable keys expected by downstream consumers; additional keys are optional unless
+      otherwise specified.'
 outputs:
   ranked_skills:
     type: array
     required: true
     description: 'Ordered list of skill candidates, each with rank, ref, score, and
-      rationale.
-
-      '
+      rationale. Schema: array of items with a stable item structure expected by downstream
+      consumers.'
   ranked_capabilities:
     type: array
     required: true
     description: 'Ordered list of capability candidates, each with rank, ref, score,
-      and rationale.
-
-      '
+      and rationale. Schema: array of items with a stable item structure expected
+      by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false
@@ -55,7 +53,7 @@ metadata:
     - rank: 1
       ref: research.generate-briefing
   layer: cognitive
-  status: experimental
+  status: stable
 cognitive_hints:
   role: evaluate
   produces:

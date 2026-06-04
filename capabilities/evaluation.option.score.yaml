@@ -13,8 +13,7 @@ inputs:
     required: true
     description: 'List of options to evaluate. Each option should have at minimum:
       id, label, description. May include key_attributes from reasoning.option.generate.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   criteria:
     type: array
     required: false
@@ -50,9 +49,8 @@ outputs:
     type: array
     required: true
     description: 'Final criteria applied, including any inferred ones. Each with name,
-      description, and weight.
-
-      '
+      description, and weight. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
   comparative_summary:
     type: string
     required: true
@@ -63,9 +61,8 @@ outputs:
     type: array
     required: true
     description: 'Explicit trade-offs between top candidates. Each entry names the
-      tension and what is gained/lost.
-
-      '
+      tension and what is gained/lost. Schema: array of items with a stable item structure
+      expected by downstream consumers.'
 cognitive_hints:
   role: evaluate
   consumes:

@@ -1,6 +1,6 @@
 id: evidence.trace.summarize
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Summarize an execution trace into a compact human-readable and machine-parseable
   report. Extracts the list of steps executed, key decisions made at gates, failures
   and their causes, and the overall outcome. Used by the reporter node for user-facing
@@ -12,9 +12,9 @@ inputs:
     type: object
     required: true
     description: 'Raw execution result or trace object from agent.plan.execute. Must
-      contain at minimum step_results and status.
-
-      '
+      contain at minimum step_results and status. Schema: object with stable keys
+      expected by downstream consumers; additional keys are optional unless otherwise
+      specified.'
 outputs:
   trace_summary:
     type: object

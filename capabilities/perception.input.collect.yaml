@@ -12,7 +12,8 @@ inputs:
     description: "Field definitions for the data to collect. Each element has: name\
       \ (string), type (string \u2014 \"string\", \"number\", \"boolean\", \"object\"\
       , \"array\"), required (boolean), description (string), and optional default\
-      \ and options (for constrained choices).\n"
+      \ and options (for constrained choices). Schema: array of items with a stable\
+      \ item structure expected by downstream consumers."
   instruction:
     type: string
     required: false
@@ -40,9 +41,8 @@ outputs:
   missing_fields:
     type: array
     required: false
-    description: 'Names of required fields that were not provided.
-
-      '
+    description: 'Names of required fields that were not provided. Schema: array of
+      items with a stable item structure expected by downstream consumers.'
 properties:
   deterministic: false
   side_effects: false

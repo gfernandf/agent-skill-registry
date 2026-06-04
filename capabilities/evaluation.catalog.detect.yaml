@@ -1,6 +1,6 @@
 id: evaluation.catalog.detect
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Detect gaps in the ORCA registry relative to an interpreted goal and
   its candidate items. Returns missing capabilities and skills required to fully satisfy
   the goal but absent from the current registry, with a suggested specification for
@@ -11,15 +11,14 @@ inputs:
   interpreted_goal:
     type: object
     required: true
-    description: 'Interpreted goal object from reasoning.goal.interpret.
-
-      '
+    description: 'Interpreted goal object from reasoning.goal.interpret. Schema: object
+      with stable keys expected by downstream consumers; additional keys are optional
+      unless otherwise specified.'
   candidate_items:
     type: array
     required: true
     description: 'Candidate registry items already matched by perception.catalog.search.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
 outputs:
   missing_capabilities:
     type: array

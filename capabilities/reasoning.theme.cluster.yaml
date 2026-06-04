@@ -19,9 +19,8 @@ inputs:
     required: false
     description: 'Suggested theme labels to guide clustering. The implementation may
       merge, split, rename, or add themes beyond hints. Example: ["market_overview",
-      "key_players", "trends", "risks", "opportunities"].
-
-      '
+      "key_players", "trends", "risks", "opportunities"]. Schema: array of items with
+      a stable item structure expected by downstream consumers.'
   max_clusters:
     type: number
     required: false
@@ -37,22 +36,19 @@ outputs:
     description: 'Themed clusters. Each cluster contains: theme (label), description,
       item_ids (list of assigned item ids), summary (text summary of the cluster content),
       signal_strength (0-1 estimate of how well-supported the theme is by the corpus).
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   unclustered:
     type: array
     required: false
     description: 'Items that did not fit any cluster. Each entry contains id and reason.
-
-      '
+      Schema: array of items with a stable item structure expected by downstream consumers.'
   cluster_quality:
     type: object
     required: false
     description: 'Self-assessment of clustering quality: coherence_score (0-1), coverage_ratio
       (fraction of items assigned), overlap_warnings (list of items assigned to multiple
-      clusters).
-
-      '
+      clusters). Schema: object with stable keys expected by downstream consumers;
+      additional keys are optional unless otherwise specified.'
 cognitive_hints:
   role: analyze
   consumes:
