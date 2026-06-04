@@ -207,3 +207,18 @@ The registry aims to provide:
 - strong validation guarantees
 
 This foundation enables a growing ecosystem of reusable workflows that remain consistent and discoverable over time.
+
+---
+
+# Cognitive Layer Taxonomy
+
+The pure cognitive layer is documented in [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXONOMY.md).
+
+Use that document when you need to distinguish:
+
+- pure cognitive capabilities
+- compatibility surfaces such as `eval.*`
+- operational support capabilities that should not be counted in the cognitive core
+
+The taxonomy document is the canonical reference for the cognitive layer's
+current shape and for migration decisions when new capabilities are added.

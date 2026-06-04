@@ -4,6 +4,11 @@
 > Capabilities: 4  
 > Last reviewed: 2026-05-08
 
+> Note: `eval.*` is the current compatibility surface for the evaluation
+> family. The expanded cognitive taxonomy is documented in
+> [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXONOMY.md), where the long-form family
+> name is `evaluation.*`.
+
 ## Overview
 
 The `eval.*` domain provides evaluation and scoring capabilities for decision
