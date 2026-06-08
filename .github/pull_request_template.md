@@ -21,6 +21,7 @@ List overlapping existing IDs and explain why extension/reuse is insufficient.
 ## Canonical-First Check
 
 - [ ] I reviewed `docs/SKILL_ADMISSION_POLICY.md`
+- [ ] I reviewed `docs/LAYER_TAXONOMY_RELEASE_CHECKLIST.md`
 - [ ] I verified this does not introduce avoidable semantic duplication
 - [ ] If overlap exists, I documented merge/deprecation rationale
 
@@ -50,11 +51,30 @@ Paste command outputs:
 
 ```bash
 python tools/validate_registry.py
-python tools/generate_catalog.py
-python tools/governance_guardrails.py
+python tools/governance_guardrails.py --fail-on-high-risk-overlap-channels community,official
 python tools/capability_governance_guardrails.py
 python tools/enforce_capability_sunset.py
+python tools/generate_catalog.py
+python tools/registry_stats.py
 ```
+
+## Layer Taxonomy Release Evidence (Required when taxonomy/governance docs are touched)
+
+- Objective:
+- In scope:
+- Out of scope:
+- Layer model changed? (must be No):
+- Validation commands executed:
+	- validate_registry: PASS/FAIL
+	- governance_guardrails: PASS/FAIL
+	- capability_governance_guardrails: PASS/FAIL
+	- enforce_capability_sunset: PASS/FAIL
+	- generate_catalog: PASS/FAIL
+	- registry_stats: PASS/FAIL
+- Catalog drift after regeneration: YES/NO
+- Risks:
+- Rollback:
+- Approvers:
 
 ## Notes for Maintainers
 

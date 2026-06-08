@@ -1,0 +1,121 @@
+# Non-cognitive Capability Audit (strict, de-biased evidence)
+
+Evaluated: 85 | Misclassified(excluded): 20 | Net reduction proposal: 48.8%
+
+## Summary
+- keep: 24
+- merge: 6
+- deprecate: 55
+- remove: 0
+- rename/re-scope: 0
+
+## Misclassified
+- doc.content.generate
+- evidence.trace.monitor
+- identity.decision.justify
+- identity.risk.score
+- image.caption.generate
+- image.content.classify
+- image.content.extract
+- image.content.generate
+- message.priority.classify
+- perception.case.get
+- perception.case.list
+- perception.case.search
+- perception.catalog.search
+- perception.event.monitor
+- perception.sla.monitor
+- policy.decision.justify
+- policy.risk.classify
+- policy.risk.score
+- reasoning.prompt.template
+- research.source.retrieve
+
+## Full matrix
+| capability_id | capa | estado actual | evidencia concreta (rutas) | overlap candidates | score total | recomendación final | justificación breve | riesgo de cambio | esfuerzo |
+|---|---|---|---|---|---:|---|---|---|---|
+| integration.record.reconcile | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.compare, integration.record.create, integration.record.delete | 4 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| integration.record.compare | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.create, integration.record.delete, integration.record.reconcile | 5 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| integration.record.create | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.compare, integration.record.delete, integration.record.reconcile | 5 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| integration.record.update | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.compare, integration.record.create, integration.record.delete | 5 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| integration.record.upsert | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.compare, integration.record.create, integration.record.delete | 5 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| integration.record.delete | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.record.compare, integration.record.create, integration.record.reconcile | 6 | merge | solapamiento alto; consolidar contrato en capability troncal | medio | L |
+| data.record.join | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | data.record.deduplicate, data.record.merge, data.record.transform | 8 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| data.record.merge | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | data.record.deduplicate, data.record.join, data.record.transform | 9 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.permission.gate | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.permission.get, identity.permission.list, identity.permission.verify | 9 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.permission.list | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.permission.gate, identity.permission.get, identity.permission.verify | 9 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.permission.verify | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.permission.gate, identity.permission.get, identity.permission.list | 9 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.permission.get | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.permission.gate, identity.permission.list, identity.permission.verify | 10 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.role.assign | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.role.get, identity.role.list | 11 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| data.record.deduplicate | operational | stable | source_refs:8@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | data.record.join, data.record.merge, data.record.transform | 12 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| fs.file.list | operational | stable | source_refs:6@c:\Users\Usuario\agent-skills\bindings\official\fs.file.list\python_fs_list.yaml | fs.file.read, fs.file.write | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.role.get | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.role.assign, identity.role.list | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| identity.role.list | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | identity.role.assign, identity.role.get | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.connector.list | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.connector.get, integration.connector.sync | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.connector.sync | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.connector.get, integration.connector.list | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| table.sheet.write | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | table.sheet.read | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.case.close | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.case.create, task.case.update | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.case.create | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.case.close, task.case.update | 12 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| audio.speech.synthesize | operational | stable | source_refs:4@c:\Users\Usuario\agent-skills\bindings\official\audio.speech.synthesize\python_audio_synthesize.yaml | audio.speech.transcribe | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.connector.get | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.connector.list, integration.connector.sync | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.mapping.transform | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.mapping.validate | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.mapping.validate | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | integration.mapping.transform | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| table.sheet.read | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | table.sheet.write | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.case.update | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.case.close, task.case.create | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.event.schedule | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | task.event.acknowledge | 13 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| data.record.transform | operational | stable | skills:1@skills/experimental/analysis/risk-assess/skill.yaml; source_refs:11@c:\Users\Usuario\agent-skill-registry\skills\experimental\analysis\risk-assess\skill.yaml; catalog_most_used:1@catalog/stats.json | data.record.deduplicate, data.record.join, data.record.merge | 14 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| table.row.sort | operational | stable | source_refs:4@c:\Users\Usuario\agent-skills\bindings\official\table.row.sort\python_table_sort.yaml | table.row.filter | 14 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.approval.approve | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.approval.reject | 14 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.approval.reject | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.approval.approve | 14 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.event.acknowledge | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | task.event.schedule | 14 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| web.source.verify | operational | stable | source_refs:9@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | web.source.normalize, web.source.search | 14 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| audio.speaker.diarize | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| data.field.map | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| decision.flow.catch | orchestration | stable | source_refs:8@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | decision.flow.branch | 15 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| identity.assignee.identify | governance | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| integration.event.acknowledge | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| memory.record.store | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| memory.vector.search | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| ops.budget.estimate | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| ops.event.acknowledge | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| table.column.aggregate | operational | stable | source_refs:4@c:\Users\Usuario\agent-skills\bindings\official\table.column.aggregate\python_table_aggregate.yaml | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.assignee.assign | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.incident.create | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.milestone.schedule | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| task.state.transition | operational | stable | source_refs:6@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 15 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| code.source.analyze | operational | stable | source_refs:10@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_ADMISSION_POLICY.md | code.source.format | 16 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| policy.constraint.validate | governance | stable | source_refs:10@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | policy.constraint.gate | 16 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| security.secret.detect | governance | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 16 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| video.frame.extract | operational | stable | source_refs:7@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 16 | deprecate | evidencia insuficiente para exposición externa | medio | S |
+| code.source.format | operational | stable | source_refs:12@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | code.source.analyze | 17 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| decision.task.delegate | orchestration | stable | source_refs:19@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 17 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| web.request.send | operational | stable | source_refs:12@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 17 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| code.snippet.execute | operational | stable | source_refs:34@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 18 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| data.array.map | operational | stable | source_refs:8@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 18 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| email.message.send | operational | stable | source_refs:24@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 18 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| message.content.format | operational | stable | source_refs:8@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | - | 18 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| message.notification.send | operational | stable | source_refs:11@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md | - | 18 | deprecate | evidencia insuficiente para exposición externa | alto | S |
+| fs.file.read | operational | stable | source_refs:44@c:\Users\Usuario\agent-skill-registry\.github\workflows\copilot-instructions.md | fs.file.list, fs.file.write | 15 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| fs.file.write | operational | stable | source_refs:12@c:\Users\Usuario\agent-skills\bindings\legacy_missing_capability\agent.plan.gate\openapi_agent_plan_gate_openai_chat.yaml | fs.file.list, fs.file.read | 15 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| agent.flow.iterate | orchestration | stable | source_refs:9@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | agent.flow.wait | 16 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| agent.flow.wait | orchestration | stable | source_refs:8@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md | agent.flow.iterate | 16 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| web.source.normalize | operational | stable | skills:1@skills/experimental/research/generate-briefing/skill.yaml; source_refs:9@c:\Users\Usuario\agent-skill-registry\docs\DOMAIN_WEB.md; catalog_most_used:1@catalog/stats.json | web.source.search, web.source.verify | 17 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| decision.flow.branch | orchestration | stable | skills:2@skills/experimental/code/change-approval-gate/skill.yaml,skills/official/agent/orchestrate-from-prompt/skill.yaml; source_refs:12@c:\Users\Usuario\agent-skill-registry\CHANGELOG.md; catalog_most_used:2@catalog/stats.json | decision.flow.catch | 18 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| memory.entry.retrieve | operational | stable | skills:1@skills/official/memory/retrieve-summary/skill.yaml; source_refs:9@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:1@catalog/stats.json | memory.entry.store | 18 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| memory.entry.store | operational | deprecated | skills:2@skills/experimental/memory/store-embedding/skill.yaml,skills/official/memory/store-summary/skill.yaml; source_refs:12@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:2@catalog/stats.json | memory.entry.retrieve | 18 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| policy.constraint.gate | governance | stable | skills:1@skills/experimental/code/change-approval-gate/skill.yaml; source_refs:10@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:1@catalog/stats.json | policy.constraint.validate | 18 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| web.source.search | operational | stable | skills:2@skills/experimental/research/generate-briefing/skill.yaml,skills/official/web/search-summary/skill.yaml; source_refs:41@c:\Users\Usuario\agent-skill-registry\docs\DOMAIN_WEB.md; catalog_most_used:2@catalog/stats.json | web.source.normalize, web.source.verify | 18 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| agent.plan.execute | orchestration | experimental | skills:1@skills/official/agent/execute-from-plan/skill.yaml; source_refs:18@c:\Users\Usuario\agent-skill-registry\skills\official\agent\execute-from-plan\skill.yaml; catalog_most_used:1@catalog/stats.json | - | 19 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| audio.speech.transcribe | operational | stable | skills:1@skills/experimental/audio/transcribe-summary/skill.yaml; source_refs:34@c:\Users\Usuario\agent-skill-registry\README.md; catalog_most_used:1@catalog/stats.json | audio.speech.synthesize | 19 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| doc.content.chunk | operational | stable | skills:3@skills/experimental/doc/chunk-and-embed/skill.yaml,skills/experimental/pdf/chunk-and-embed/skill.yaml; source_refs:13@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:3@catalog/stats.json | doc.content.generate | 19 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| table.row.filter | operational | stable | skills:1@skills/official/table/filter-summary/skill.yaml; source_refs:9@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:1@catalog/stats.json | table.row.sort | 19 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| security.output.gate | governance | stable | skills:1@skills/official/security/safe-summarize/skill.yaml; source_refs:16@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITIES.md; catalog_most_used:1@catalog/stats.json | - | 20 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| security.pii.detect | governance | stable | skills:1@skills/official/security/safe-summarize/skill.yaml; source_refs:57@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITIES.md; runtime:2@artifacts/runtime_skill_audit.jsonl; catalog_most_used:1@catalog/stats.json | security.pii.redact | 20 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| security.pii.redact | governance | stable | skills:1@skills/official/security/safe-summarize/skill.yaml; source_refs:14@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:1@catalog/stats.json | security.pii.detect | 20 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| web.page.extract | operational | stable | skills:3@skills/experimental/web/page-chunk-and-embed/skill.yaml,skills/official/web/fetch-classify/skill.yaml; source_refs:19@c:\Users\Usuario\agent-skill-registry\README.md; catalog_most_used:3@catalog/stats.json | web.page.fetch | 20 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| web.page.fetch | operational | stable | skills:3@skills/experimental/web/page-chunk-and-embed/skill.yaml,skills/official/web/fetch-classify/skill.yaml; source_refs:97@c:\Users\Usuario\agent-skill-registry\README.md; catalog_most_used:3@catalog/stats.json | web.page.extract | 20 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| code.diff.extract | operational | stable | skills:1@skills/official/code/diff-summary/skill.yaml; source_refs:14@c:\Users\Usuario\agent-skill-registry\README.md; catalog_most_used:1@catalog/stats.json | - | 21 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| data.json.parse | operational | stable | skills:1@skills/official/data/parse-and-validate/skill.yaml; source_refs:44@c:\Users\Usuario\agent-skill-registry\docs\ARCHITECTURE.md; catalog_most_used:1@catalog/stats.json | - | 21 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| data.schema.validate | operational | stable | skills:4@skills/experimental/eval/validate/skill.yaml,skills/experimental/research/quality-assess/skill.yaml; source_refs:109@c:\Users\Usuario\agent-skill-registry\README.md; catalog_most_used:4@catalog/stats.json | - | 21 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| email.inbox.read | operational | stable | skills:1@skills/official/email/read-summary/skill.yaml; source_refs:8@c:\Users\Usuario\agent-skill-registry\docs\CAPABILITY_100_TARGET_SET.md; catalog_most_used:1@catalog/stats.json | - | 21 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |
+| pdf.document.read | operational | stable | skills:3@skills/experimental/pdf/chunk-and-embed/skill.yaml,skills/official/pdf/read-keyword-summary/skill.yaml; source_refs:42@c:\Users\Usuario\agent-skill-registry\.github\workflows\copilot-instructions.md; catalog_most_used:3@catalog/stats.json | - | 22 | keep | valor diferencial con uso comprobado y riesgo alto al retirar | alto | S |

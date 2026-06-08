@@ -58,6 +58,22 @@ reusable**.
 
 The registry defines two fundamental building blocks.
 
+## Capability Layer Model (Canonical)
+
+The project uses a frozen four-layer model for capability classification:
+
+- cognitive
+- orchestration
+- operational
+- governance
+
+Classification is determined by `metadata.layer` in each capability contract.
+ID prefixes (for example `decision.*`) are semantic families and do not
+override layer classification by themselves.
+
+When classifying ambiguous capabilities, apply governance precedence documented
+in `docs/CAPABILITY_ADMISSION_POLICY.md`.
+
 ## Capabilities
 
 Capabilities represent **primitive operations**.
@@ -218,6 +234,10 @@ Validation checks:
 -   vocabulary compliance
 -   capability references
 -   skill dependency cycles
+
+For layer taxonomy governance release criteria, see:
+
+- docs/LAYER_TAXONOMY_RELEASE_CHECKLIST.md
 -   identifier correctness
 
 Run validation:

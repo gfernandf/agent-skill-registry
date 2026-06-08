@@ -297,4 +297,10 @@ The registry structure follows several principles:
 - **controlled vocabulary** — stable naming of capabilities
 - **composability** — skills can build on other capabilities or skills
 
+Layer taxonomy consistency is part of structural governance:
+
+- capability contracts must declare `metadata.layer`
+- supported values are fixed to `cognitive`, `orchestration`, `operational`, `governance`
+- `metadata.layer` is authoritative over naming/domain-prefix heuristics
+
 This structure supports long-term growth of the ecosystem while maintaining consistency and readability.

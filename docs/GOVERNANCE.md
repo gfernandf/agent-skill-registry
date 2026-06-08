@@ -12,6 +12,7 @@ Additional governance artifacts:
 
 - `docs/SKILL_ADMISSION_POLICY.md`
 - `docs/SEMANTIC_FAMILY_MAP.md`
+- `docs/LAYER_TAXONOMY_RELEASE_CHECKLIST.md`
 - `catalog/governance_guardrails.json`
 - `docs/CAPABILITY_ADMISSION_POLICY.md`
 - `docs/CAPABILITY_COMPATIBILITY_POLICY.md`
@@ -30,6 +31,22 @@ Because capabilities define the **core language of the registry**, they are gove
 # Governance Principles
 
 The registry governance follows these principles:
+
+### Frozen Capability Layer Taxonomy
+
+Capability layer taxonomy is frozen to exactly four categories:
+
+- `cognitive`
+- `orchestration`
+- `operational`
+- `governance`
+
+`metadata.layer` in each capability contract is the authoritative
+classification source for governance, catalog profiling, and external exposure
+decisions.
+
+Naming/domain prefixes (for example `decision.*`) are semantic families only.
+They do not force layer assignment without `metadata.layer`.
 
 ### Stability of the Core Language
 

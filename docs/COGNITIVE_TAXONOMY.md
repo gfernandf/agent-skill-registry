@@ -2,6 +2,10 @@
 
 This document defines the **pure cognitive layer** of the registry.
 
+Layer classification is always determined by `metadata.layer` in each
+capability contract. This document defines cognitive semantics and boundaries;
+it does not override the declared layer.
+
 Current status: the cognitive taxonomy is fully represented in the live
 registry capability set.
 
@@ -24,6 +28,11 @@ Canonical cognitive families:
 - `perception.*`
 - `reasoning.*`
 
+Boundary note: this is a semantic family view. Contracts that are explicit
+flow-control or routing primitives (for example `decision.flow.*` and
+`decision.input.route`) can be intentionally classified as
+`layer: orchestration` when they do not add cognitive inference semantics.
+
 ### Legacy compatibility aliases
 
 `eval.*` remains available for backward compatibility in existing skills and
@@ -35,9 +44,13 @@ listed above.
 Capabilities such as flow-control, routing, and delegation support execution
 behavior and should not be treated as cognitive reasoning primitives.
 
-## Live registry inventory (pure cognitive families)
+## Live registry inventory by cognitive-domain naming (mixed)
 
-### decision (8)
+Important: the inventory below is grouped by domain prefix. For layer-level
+governance and external exposure decisions, always use `metadata.layer` as the
+source of truth.
+
+### decision domain (mixed; verify `metadata.layer` per contract)
 
 - `decision.flow.branch`
 - `decision.flow.catch`

@@ -214,6 +214,16 @@ This foundation enables a growing ecosystem of reusable workflows that remain co
 
 The pure cognitive layer is documented in [COGNITIVE_TAXONOMY.md](COGNITIVE_TAXONOMY.md).
 
+Project-wide layer taxonomy is frozen to four categories only:
+
+- `cognitive`
+- `orchestration`
+- `operational`
+- `governance`
+
+`metadata.layer` in each capability contract is the authoritative
+classification source.
+
 Use that document when you need to distinguish:
 
 - pure cognitive capabilities

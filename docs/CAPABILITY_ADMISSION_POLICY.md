@@ -52,6 +52,14 @@ Additionally, every capability must declare execution governance properties:
 - `properties.audit_level` in `{basic, standard, strict}`
 - `metadata.layer` in `{cognitive, orchestration, operational, governance}`
 
+Layer taxonomy is frozen to these four categories only. New layer categories
+are out of scope unless explicitly approved through governance and reflected in
+runtime + documentation.
+
+`metadata.layer` is authoritative for classification. Capability ID prefixes
+(for example `decision.*`) are semantic hints and do not override layer by
+themselves.
+
 For `metadata.layer: cognitive`, taxonomy is encoded in the capability id domain.
 The first segment of the id must be one of:
 
@@ -62,6 +70,9 @@ The first segment of the id must be one of:
 - `evidence`
 - `memory`
 
+This is a one-way constraint: if layer is cognitive, domain must be in this
+set. It does not imply every `decision.*` capability must be cognitive.
+
 Domain intent for cognitive layer:
 
 - `perception`: structures raw or semi-structured input into cognitive signals
@@ -70,6 +81,8 @@ Domain intent for cognitive layer:
 - `evidence`: verifies claims, assesses sources, detects conflicts and gaps
 - `evaluation`: scores, validates, compares, gates, and diagnoses artifacts including assumptions, constraints, hypotheses, options, plans, outputs, responses, risks, and uncertainties
 - `decision`: routes inputs, prioritizes uncertainty, selects strategies and options, and justifies selected options
+
+For non-cognitive routing and control flow, use `layer: orchestration`.
 
 These fields are mandatory for catalog profiling and runtime governance.
 
@@ -86,6 +99,7 @@ Additional tie-break rules:
 
 - Policy/security/identity capabilities are governance by default.
 - `agent.plan.*`, `agent.flow.*`, `agent.input.*`, `agent.request.*`, `agent.catalog.*`, `agent.task.*` are orchestration by default.
+- `decision.flow.*`, `decision.input.route`, and similar explicit flow-control/routing contracts are orchestration when they do not introduce cognitive inference semantics.
 - Cognitive role hints (`analyze`, `evaluate`, `decide`, `synthesize`, `reflect`, `perceive`) can override orchestration default to cognitive.
 - Side-effecting capabilities default to operational unless governance/orchestration rules apply.
 

@@ -16,6 +16,10 @@ The validator (`tools/validate_registry.py`) enforces these statuses:
 | **deprecated** | Scheduled for removal. Must declare `replacement`, `deprecation_date`, and `sunset_date`. |
 | **unspecified** | Legacy or uncategorized. Treated as experimental for governance purposes. |
 
+Status is orthogonal to layer classification. Layer is governed by
+`metadata.layer` (`cognitive`, `orchestration`, `operational`, `governance`)
+as defined in `docs/CAPABILITIES.md` and `docs/CAPABILITY_ADMISSION_POLICY.md`.
+
 ---
 
 ## Current registry snapshot

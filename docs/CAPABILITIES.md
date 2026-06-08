@@ -226,6 +226,22 @@ Required fields in `metadata`:
 
 - `layer` in `{cognitive, orchestration, operational, governance}`
 
+### Layer model freeze (project-wide)
+
+The capability layer model is frozen to exactly four categories:
+
+- `cognitive`
+- `orchestration`
+- `operational`
+- `governance`
+
+No additional layer category should be introduced without an explicit
+governance approval and coordinated documentation/runtime update.
+
+`metadata.layer` is the authoritative source of classification. Capability ID
+prefixes (for example `decision.*`) describe semantic family, but do not by
+themselves force the runtime/governance layer.
+
 Additional fields remain as before (`tags`, `category`, `status`, `examples`).
 
 ### Layer values
@@ -245,7 +261,12 @@ For capabilities classified as `layer: cognitive`, the **capability ID domain**
 - `reasoning`: interprets goals, decomposes problems, extracts assumptions and constraints, generates options and plans, transforms content, and synthesizes outputs
 - `evidence`: verifies claims, assesses sources, detects conflicts, identifies evidence gaps, and generates citations or trace summaries
 - `evaluation`: scores, validates, compares, gates, and diagnoses cognitive artifacts such as assumptions, constraints, hypotheses, options, plans, outputs, responses, risks, and uncertainties
-- `decision`: selects cognitive strategies and options, routes inputs, prioritizes uncertainty, and justifies selected options
+- `decision`: selects cognitive strategies and options, prioritizes uncertainty, and justifies selected options
+
+Note: this rule applies only when `metadata.layer` is already `cognitive`.
+Some `decision.*` contracts can legitimately be non-cognitive when they are
+explicit control-flow/routing primitives and are classified as
+`layer: orchestration`.
 
 "ORCA decomposes cognition into reusable capabilities. Instead of treating
 reasoning as an opaque prompt-to-output behavior, ORCA exposes perception,
@@ -253,6 +274,9 @@ memory, reasoning, evidence handling, evaluation, and decision-making as
 composable, inspectable, and reusable cognitive primitives."
 
 ### Tie-break policy (when ambiguous)
+
+Use this only when assigning `metadata.layer` for a new or ambiguous contract.
+Once assigned, `metadata.layer` is canonical.
 
 1. Governance wins over all other layers.
 2. Explicit orchestration families (`agent.plan.*`, `agent.flow.*`, etc.) default to orchestration.
