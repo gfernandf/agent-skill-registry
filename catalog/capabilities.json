@@ -10203,6 +10203,13 @@
         "Context",
         "Evidence"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Policy constraint gating must remain scoped to the caller tenant."
     }
   },
   {
@@ -10515,6 +10522,13 @@
         "Context",
         "Evidence"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Policy decision justification must remain scoped to the caller tenant."
     }
   },
   {
@@ -10716,6 +10730,13 @@
         "Context",
         "Evidence"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Policy risk classification must remain scoped to the caller tenant."
     }
   },
   {

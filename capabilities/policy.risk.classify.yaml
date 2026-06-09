@@ -29,6 +29,11 @@ properties:
   idempotent: true
   state_access: read
   audit_level: strict
+safety:
+  trust_level: standard
+  allowed_targets:
+  - same_tenant
+  description: Policy risk classification must remain scoped to the caller tenant.
 metadata:
   status: stable
   tags:
