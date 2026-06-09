@@ -13,6 +13,7 @@ Additional governance artifacts:
 - `docs/SKILL_ADMISSION_POLICY.md`
 - `docs/SEMANTIC_FAMILY_MAP.md`
 - `docs/LAYER_TAXONOMY_RELEASE_CHECKLIST.md`
+- `docs/GOVERNANCE_EXTERNAL_PRODUCTION_PLAYBOOK.md`
 - `catalog/governance_guardrails.json`
 - `docs/CAPABILITY_ADMISSION_POLICY.md`
 - `docs/CAPABILITY_COMPATIBILITY_POLICY.md`

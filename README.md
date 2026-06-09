@@ -238,6 +238,7 @@ Validation checks:
 For layer taxonomy governance release criteria, see:
 
 - docs/LAYER_TAXONOMY_RELEASE_CHECKLIST.md
+- docs/GOVERNANCE_EXTERNAL_PRODUCTION_PLAYBOOK.md
 -   identifier correctness
 
 Run validation:
