@@ -29,6 +29,11 @@ properties:
   idempotent: true
   state_access: none
   audit_level: strict
+safety:
+  trust_level: standard
+  allowed_targets:
+  - same_tenant
+  description: Access checks must be evaluated within tenant boundaries.
 metadata:
   status: stable
   tags:

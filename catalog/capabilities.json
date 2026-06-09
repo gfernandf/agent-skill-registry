@@ -5898,6 +5898,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Access checks must be evaluated within tenant boundaries."
     }
   },
   {
@@ -5968,6 +5975,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Permission lookup must remain scoped to the caller tenant."
     }
   },
   {
@@ -6044,6 +6058,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Permission listing must remain scoped to the caller tenant."
     }
   },
   {
@@ -6126,6 +6147,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Permission verification evidence must remain scoped to the caller tenant."
     }
   },
   {
@@ -6367,6 +6395,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Role lookup must remain scoped to the caller tenant."
     }
   },
   {
@@ -6441,6 +6476,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Role listing must remain scoped to the caller tenant."
     }
   },
   {
