@@ -6255,6 +6255,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Identity risk scoring must remain scoped to the caller tenant."
     }
   },
   {
