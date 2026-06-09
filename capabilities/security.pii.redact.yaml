@@ -21,6 +21,11 @@ properties:
   idempotent: true
   state_access: none
   audit_level: strict
+safety:
+  trust_level: standard
+  allowed_targets:
+  - same_tenant
+  description: PII redaction must remain scoped to the caller tenant.
 metadata:
   status: stable
   tags:
