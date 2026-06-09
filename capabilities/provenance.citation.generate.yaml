@@ -27,6 +27,14 @@ outputs:
     type: string
     required: false
     description: Optional trace or correlation reference for audit and observability.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence used to produce the citation.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of citation generation.
 properties:
   deterministic: true
   side_effects: false
@@ -50,11 +58,16 @@ metadata:
       status: ok
       citation:
         title: Example
+      rationale: Citation generated from source title and URL.
   layer: governance
 cognitive_hints:
   role: synthesize
   produces:
     citation:
       type: Entity
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
   consumes:
   - Context

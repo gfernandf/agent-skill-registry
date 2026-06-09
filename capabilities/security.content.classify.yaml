@@ -54,6 +54,7 @@ metadata:
       - pii
       - financial
       sensitivity_level: high
+      rationale: Transcript contains PII and financial details.
   layer: governance
 cognitive_hints:
   role: evaluate
@@ -64,6 +65,10 @@ cognitive_hints:
       type: Score
     category_scores:
       type: Score
+    rationale:
+      type: Evidence
+    evidence:
+      type: Evidence
   consumes:
   - Context
   - Entity

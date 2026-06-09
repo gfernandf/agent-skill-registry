@@ -70,6 +70,7 @@ metadata:
       decision: conditional_allow
       conditions:
       - require_additional_approval
+      rationale: Additional approval required for sensitive export.
   layer: governance
 cognitive_hints:
   role: evaluate

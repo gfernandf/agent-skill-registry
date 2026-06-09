@@ -27,6 +27,10 @@ outputs:
     type: string
     required: true
     description: Explanation for assigned sensitivity.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the sensitivity classification.
 properties:
   deterministic: true
   side_effects: false
@@ -54,6 +58,7 @@ metadata:
       sensitivity_level: restricted
       categories:
       - pii
+      rationale: Record contains customer and pii labels.
   layer: governance
 cognitive_hints:
   role: evaluate
@@ -64,6 +69,8 @@ cognitive_hints:
       type: Entity
     sensitivity_score:
       type: Score
+    evidence:
+      type: Evidence
   consumes:
   - Context
   - Entity

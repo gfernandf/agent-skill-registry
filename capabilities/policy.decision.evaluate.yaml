@@ -64,6 +64,7 @@ metadata:
       decision: conditional_allow
       conditions:
       - redact_pii
+      rationale: Redaction is required before release.
   layer: governance
 cognitive_hints:
   role: evaluate

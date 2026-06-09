@@ -43,6 +43,14 @@ outputs:
     type: string
     required: true
     description: Record creation timestamp in ISO-8601 format.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence stored with or derived from the audit record.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable summary of the stored decision record.
 properties:
   deterministic: true
   side_effects: true
@@ -75,6 +83,7 @@ metadata:
     outputs:
       recorded: true
       record_id: aud-987
+      rationale: Decision stored with principal, action, and policy references.
   layer: governance
 cognitive_hints:
   role: act
@@ -84,6 +93,10 @@ cognitive_hints:
     record_id:
       type: Entity
     timestamp:
+      type: Evidence
+    evidence:
+      type: Evidence
+    rationale:
       type: Evidence
   consumes:
   - Context
