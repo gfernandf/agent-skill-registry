@@ -19,6 +19,14 @@ outputs:
     type: string
     required: false
     description: Optional trace or correlation reference for audit and observability.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence used to produce the trace summary.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the trace summary.
 properties:
   deterministic: true
   side_effects: false
@@ -45,11 +53,16 @@ metadata:
       status: ok
       trace_summary:
         overall_status: success
+      rationale: Trace summarized from successful step results.
   layer: governance
 cognitive_hints:
   role: synthesize
   produces:
     trace_summary:
       type: Summary
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
   consumes:
   - Artifact
