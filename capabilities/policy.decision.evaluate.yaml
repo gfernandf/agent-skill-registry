@@ -1,0 +1,91 @@
+id: policy.decision.evaluate
+version: 1.0.0
+description: Evaluate policy decision outcomes and derive conditions, transforms, and evidence for non-trivial governance decisions.
+inputs:
+  decision_context:
+    type: object
+    required: true
+    description: Decision context including principal, action, resource, and current findings.
+  violations:
+    type: array
+    required: false
+    description: Policy violations and warnings detected upstream.
+  risk:
+    type: object
+    required: false
+    description: Risk signals used to derive conditions.
+outputs:
+  decision:
+    type: string
+    required: true
+    description: 'Decision outcome: allow, deny, conditional_allow, escalate, or transform.'
+  conditions:
+    type: array
+    required: false
+    description: Conditions to satisfy before execution (approval, redaction, logging, scope limit).
+  transforms:
+    type: array
+    required: false
+    description: Suggested transformations to reduce risk.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence used to support the decision.
+  risk:
+    type: object
+    required: false
+    description: Risk summary associated with the decision.
+  rationale:
+    type: string
+    required: true
+    description: Reasoning behind resolved conditions.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: strict
+safety:
+  trust_level: standard
+  allowed_targets:
+  - same_tenant
+  description: Policy decision evaluation must remain scoped to the caller tenant.
+metadata:
+  status: experimental
+  tags:
+  - policy
+  - conditions
+  - governance
+  - decision-control
+  examples:
+  - summary: Require redaction before release
+    inputs:
+      decision_context:
+        action:
+          type: release_output
+      violations:
+      - type: pii_detected
+    outputs:
+      decision: conditional_allow
+      conditions:
+      - redact_pii
+      rationale: Redaction is required before release.
+  layer: governance
+cognitive_hints:
+  role: evaluate
+  produces:
+    decision:
+      type: Decision
+    conditions:
+      type: Plan
+    transforms:
+      type: Plan
+    evidence:
+      type: Evidence
+    risk:
+      type: Score
+    rationale:
+      type: Evidence
+  consumes:
+  - Context
+  - Evidence

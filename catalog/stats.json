@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 190,
+    "capability_count": 192,
     "skill_count": 39,
     "domain_count": 29,
     "channel_count": 2
@@ -45,8 +45,8 @@
       "data": 8,
       "decision": 8,
       "evidence": 8,
+      "policy": 7,
       "web": 6,
-      "policy": 5,
       "table": 5,
       "code": 4,
       "image": 4,
@@ -65,7 +65,8 @@
     "by_status": {
       "stable": 163,
       "unspecified": 14,
-      "deprecated": 13
+      "deprecated": 13,
+      "experimental": 2
     },
     "most_used": [
       {
@@ -411,6 +412,8 @@
       "perception.language.detect",
       "perception.sla.monitor",
       "policy.constraint.validate",
+      "policy.decision.evaluate",
+      "policy.record.classify",
       "policy.risk.score",
       "reasoning.assumption.extract",
       "reasoning.constraint.extract",
@@ -461,7 +464,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 190,
+    "capabilities_with_nondefault_metadata": 192,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -870,12 +873,12 @@
         "count": 14
       },
       {
-        "id": "integration",
+        "id": "governance",
         "count": 13
       },
       {
-        "id": "governance",
-        "count": 11
+        "id": "integration",
+        "count": 13
       },
       {
         "id": "data",
@@ -914,11 +917,19 @@
         "count": 8
       },
       {
+        "id": "record",
+        "count": 8
+      },
+      {
+        "id": "classification",
+        "count": 7
+      },
+      {
         "id": "generation",
         "count": 7
       },
       {
-        "id": "record",
+        "id": "policy",
         "count": 7
       },
       {
@@ -927,10 +938,6 @@
       },
       {
         "id": "case",
-        "count": 6
-      },
-      {
-        "id": "classification",
         "count": 6
       },
       {
@@ -959,10 +966,6 @@
       },
       {
         "id": "listing",
-        "count": 5
-      },
-      {
-        "id": "policy",
         "count": 5
       },
       {
@@ -1486,6 +1489,10 @@
         "count": 1
       },
       {
+        "id": "conditions",
+        "count": 1
+      },
+      {
         "id": "conflict",
         "count": 1
       },
@@ -1515,6 +1522,10 @@
       },
       {
         "id": "dag",
+        "count": 1
+      },
+      {
+        "id": "decision-control",
         "count": 1
       },
       {
@@ -1815,6 +1826,10 @@
       },
       {
         "id": "secret-detection",
+        "count": 1
+      },
+      {
+        "id": "sensitivity",
         "count": 1
       },
       {
