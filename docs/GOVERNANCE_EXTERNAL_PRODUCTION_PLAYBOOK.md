@@ -32,11 +32,11 @@ Rule: governance consumes typed outputs from cognitive/operational capabilities.
 
 ## 3) Target Capability Coverage
 
-Current governance capabilities: 19
+Current governance capabilities: 26
 
 Planned target for production-grade governance layer: 34
 
-### Keep (current 19)
+### Keep (baseline set; unchanged contracts)
 - identity.assignee.identify
 - identity.decision.justify
 - identity.permission.gate

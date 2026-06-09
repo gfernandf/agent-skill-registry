@@ -10,6 +10,8 @@ Deliver initial production-grade governance primitives without breaking compatib
 - policy.decision.evaluate
 - security.content.classify
 - provenance.decision.store
+- provenance.trace.summarize
+- provenance.citation.generate
 
 ## Scope
 
@@ -28,6 +30,7 @@ Out of scope:
 ### Slice 1: Access decision core
 - Add identity.permission.evaluate
 - Add policy.record.classify
+- Add provenance.decision.store
 - Validation gates
 
 ### Slice 2: Conditional policy control
@@ -36,7 +39,8 @@ Out of scope:
 - Validation gates
 
 ### Slice 3: Auditability baseline
-- Add provenance.decision.store
+- Add provenance.trace.summarize
+- Add provenance.citation.generate
 - Validation gates and catalog refresh
 
 ## Contract Quality Gates (per slice)
@@ -59,7 +63,7 @@ python tools/registry_stats.py
 
 ## Acceptance Criteria
 
-- 5 new governance contracts added and index-registered
+- 7 new governance contracts added and index-registered
 - Validation and governance scripts pass
 - No taxonomy inconsistency introduced
 - New contracts align with decision-model orientation (decision, conditions, rationale, evidence, risk where applicable)
