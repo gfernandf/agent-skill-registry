@@ -1,0 +1,71 @@
+id: policy.decision.evaluate
+version: 1.0.0
+description: Evaluate policy decision outcomes and derive required conditions when a request is not directly allow/deny.
+inputs:
+  decision_context:
+    type: object
+    required: true
+    description: Decision context including principal, action, resource, and current findings.
+  violations:
+    type: array
+    required: false
+    description: Policy violations and warnings detected upstream.
+  risk:
+    type: object
+    required: false
+    description: Risk signals used to derive conditions.
+outputs:
+  resolution:
+    type: string
+    required: true
+    description: 'Resolution outcome: allow, deny, conditional_allow, escalate, or transform.'
+  required_conditions:
+    type: array
+    required: false
+    description: Conditions to satisfy before execution (approval, redaction, logging, scope limit).
+  transforms:
+    type: array
+    required: false
+    description: Suggested transformations to reduce risk.
+  rationale:
+    type: string
+    required: true
+    description: Reasoning behind resolved conditions.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: strict
+metadata:
+  status: draft
+  tags:
+  - policy
+  - conditions
+  - governance
+  - decision-control
+  examples:
+  - summary: Require redaction before release
+    inputs:
+      decision_context:
+        action:
+          type: release_output
+      violations:
+      - type: pii_detected
+    outputs:
+      resolution: conditional_allow
+      required_conditions:
+      - redact_pii
+  layer: governance
+cognitive_hints:
+  role: evaluate
+  produces:
+    resolution:
+      type: Decision
+    required_conditions:
+      type: Plan
+    rationale:
+      type: Evidence
+  consumes:
+  - Context
+  - Evidence

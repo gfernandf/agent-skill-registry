@@ -1,0 +1,64 @@
+id: security.content.classify
+version: 1.0.0
+description: Classify sensitive content categories in payloads to support security and governance controls beyond PII and secret detection.
+inputs:
+  payload:
+    type: object
+    required: true
+    description: Input payload to classify.
+  context:
+    type: object
+    required: false
+    description: Optional context for domain-aware classification.
+outputs:
+  categories:
+    type: array
+    required: true
+    description: Detected categories such as pii, phi, financial, legal, credentials, source_code.
+  sensitivity_level:
+    type: string
+    required: true
+    description: 'Overall sensitivity: low, medium, high, critical.'
+  category_scores:
+    type: object
+    required: false
+    description: Per-category confidence or severity scores.
+  rationale:
+    type: string
+    required: false
+    description: Explanation of the classification outcome.
+properties:
+  deterministic: false
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: strict
+metadata:
+  status: draft
+  tags:
+  - security
+  - data-classification
+  - governance
+  examples:
+  - summary: Detect sensitive categories in support transcript
+    inputs:
+      payload:
+        text: Customer provided SSN and account number for refund.
+    outputs:
+      categories:
+      - pii
+      - financial
+      sensitivity_level: high
+  layer: governance
+cognitive_hints:
+  role: evaluate
+  produces:
+    categories:
+      type: Entity
+    sensitivity_level:
+      type: Score
+    category_scores:
+      type: Score
+  consumes:
+  - Context
+  - Entity

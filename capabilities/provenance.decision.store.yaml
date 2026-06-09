@@ -1,0 +1,91 @@
+id: provenance.decision.store
+version: 1.0.0
+description: Store a governance decision with context, policy references, and supporting evidence for auditability.
+inputs:
+  decision_id:
+    type: string
+    required: true
+    description: Client- or runtime-provided decision identifier.
+  principal:
+    type: object
+    required: true
+    description: Principal involved in the decision.
+  action:
+    type: object
+    required: true
+    description: Action that was evaluated.
+  resource:
+    type: object
+    required: false
+    description: Resource targeted by the action.
+  decision:
+    type: object
+    required: true
+    description: Decision payload including outcome and rationale.
+  policy_refs:
+    type: array
+    required: false
+    description: Applied policy references.
+  evidence:
+    type: object
+    required: false
+    description: Supporting evidence collected during evaluation.
+outputs:
+  recorded:
+    type: boolean
+    required: true
+    description: Whether the audit record was successfully persisted.
+  record_id:
+    type: string
+    required: true
+    description: Persistent audit record identifier.
+  timestamp:
+    type: string
+    required: true
+    description: Record creation timestamp in ISO-8601 format.
+properties:
+  deterministic: true
+  side_effects: true
+  idempotent: false
+  state_access: write
+  audit_level: strict
+safety:
+  trust_level: elevated
+  data_classification: internal
+  reversible: false
+  requires_confirmation: false
+  scope_constraints:
+  - no_credential_passthrough
+metadata:
+  status: draft
+  tags:
+  - provenance
+  - governance
+  - decision-trace
+  examples:
+  - summary: Persist blocked decision for external output
+    inputs:
+      decision_id: dec-001
+      principal:
+        id: agent-1
+      action:
+        type: release_output
+      decision:
+        outcome: deny
+    outputs:
+      recorded: true
+      record_id: aud-987
+  layer: governance
+cognitive_hints:
+  role: act
+  produces:
+    recorded:
+      type: Entity
+    record_id:
+      type: Entity
+    timestamp:
+      type: Evidence
+  consumes:
+  - Context
+  - Evidence
+  - Entity

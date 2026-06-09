@@ -5822,6 +5822,125 @@
     }
   },
   {
+    "id": "identity.permission.evaluate",
+    "version": "1.0.0",
+    "description": "Evaluate access suitability by combining permission context, action/resource metadata, policy references, and risk signals.",
+    "file": "capabilities/identity.permission.evaluate.yaml",
+    "inputs": {
+      "principal": {
+        "type": "object",
+        "required": true,
+        "description": "Principal context (id, type, roles, attributes)."
+      },
+      "action": {
+        "type": "object",
+        "required": true,
+        "description": "Requested action metadata."
+      },
+      "resource": {
+        "type": "object",
+        "required": true,
+        "description": "Target resource metadata and sensitivity hints."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Runtime context (session, channel, time, environment)."
+      },
+      "policy_refs": {
+        "type": "array",
+        "required": false,
+        "description": "Policy references considered during evaluation."
+      }
+    },
+    "outputs": {
+      "decision": {
+        "type": "string",
+        "required": true,
+        "description": "Decision outcome: allow, deny, conditional_allow, escalate, or transform."
+      },
+      "conditions": {
+        "type": "array",
+        "required": false,
+        "description": "Conditions that must be met before execution."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Human-readable reason for the decision."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the decision."
+      },
+      "risk": {
+        "type": "object",
+        "required": false,
+        "description": "Aggregated risk signals relevant to the decision."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "identity",
+        "permission",
+        "evaluation",
+        "authorization",
+        "governance"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Conditional allow for sensitive export",
+          "inputs": {
+            "principal": {
+              "id": "analyst-1"
+            },
+            "action": {
+              "type": "export"
+            },
+            "resource": {
+              "id": "customer-report"
+            }
+          },
+          "outputs": {
+            "decision": "conditional_allow",
+            "conditions": [
+              "require_additional_approval"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "decision": {
+          "type": "Decision"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "risk": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence",
+        "Entity"
+      ]
+    }
+  },
+  {
     "id": "identity.permission.gate",
     "version": "1.0.0",
     "description": "Gate an action by checking whether a principal holds the required permission.",
@@ -10241,6 +10360,109 @@
     }
   },
   {
+    "id": "policy.decision.evaluate",
+    "version": "1.0.0",
+    "description": "Evaluate policy decision outcomes and derive required conditions when a request is not directly allow/deny.",
+    "file": "capabilities/policy.decision.evaluate.yaml",
+    "inputs": {
+      "decision_context": {
+        "type": "object",
+        "required": true,
+        "description": "Decision context including principal, action, resource, and current findings."
+      },
+      "violations": {
+        "type": "array",
+        "required": false,
+        "description": "Policy violations and warnings detected upstream."
+      },
+      "risk": {
+        "type": "object",
+        "required": false,
+        "description": "Risk signals used to derive conditions."
+      }
+    },
+    "outputs": {
+      "resolution": {
+        "type": "string",
+        "required": true,
+        "description": "Resolution outcome: allow, deny, conditional_allow, escalate, or transform."
+      },
+      "required_conditions": {
+        "type": "array",
+        "required": false,
+        "description": "Conditions to satisfy before execution (approval, redaction, logging, scope limit)."
+      },
+      "transforms": {
+        "type": "array",
+        "required": false,
+        "description": "Suggested transformations to reduce risk."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Reasoning behind resolved conditions."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "policy",
+        "conditions",
+        "governance",
+        "decision-control"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Require redaction before release",
+          "inputs": {
+            "decision_context": {
+              "action": {
+                "type": "release_output"
+              }
+            },
+            "violations": [
+              {
+                "type": "pii_detected"
+              }
+            ]
+          },
+          "outputs": {
+            "resolution": "conditional_allow",
+            "required_conditions": [
+              "redact_pii"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "resolution": {
+          "type": "Decision"
+        },
+        "required_conditions": {
+          "type": "Plan"
+        },
+        "rationale": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence"
+      ]
+    }
+  },
+  {
     "id": "policy.decision.justify",
     "version": "1.0.0",
     "description": "Justify a policy decision by linking it to applicable rules and evidence.",
@@ -10332,6 +10554,103 @@
       "consumes": [
         "Context",
         "Evidence"
+      ]
+    }
+  },
+  {
+    "id": "policy.record.classify",
+    "version": "1.0.0",
+    "description": "Classify record sensitivity and policy-relevant categories to support governance decisions.",
+    "file": "capabilities/policy.record.classify.yaml",
+    "inputs": {
+      "record": {
+        "type": "object",
+        "required": true,
+        "description": "Record descriptor (type, owner, labels, fields, destination)."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Optional runtime context that affects sensitivity."
+      }
+    },
+    "outputs": {
+      "sensitivity_level": {
+        "type": "string",
+        "required": true,
+        "description": "Sensitivity class: public, internal, confidential, restricted, or critical."
+      },
+      "categories": {
+        "type": "array",
+        "required": false,
+        "description": "Sensitivity categories detected (pii, financial, legal, security, etc.)."
+      },
+      "sensitivity_score": {
+        "type": "number",
+        "required": false,
+        "description": "Numeric sensitivity score (0.0 to 1.0)."
+      },
+      "rationale": {
+        "type": "string",
+        "required": true,
+        "description": "Explanation for assigned sensitivity."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "policy",
+        "record",
+        "sensitivity",
+        "classification",
+        "governance"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Classify CRM record as restricted",
+          "inputs": {
+            "record": {
+              "id": "crm-export",
+              "type": "dataset",
+              "labels": [
+                "customer",
+                "pii"
+              ]
+            }
+          },
+          "outputs": {
+            "sensitivity_level": "restricted",
+            "categories": [
+              "pii"
+            ]
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "sensitivity_level": {
+          "type": "Score"
+        },
+        "categories": {
+          "type": "Entity"
+        },
+        "sensitivity_score": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Entity"
       ]
     }
   },
@@ -10508,6 +10827,131 @@
       "consumes": [
         "Context",
         "Evidence"
+      ]
+    }
+  },
+  {
+    "id": "provenance.decision.store",
+    "version": "1.0.0",
+    "description": "Store a governance decision with context, policy references, and supporting evidence for auditability.",
+    "file": "capabilities/provenance.decision.store.yaml",
+    "inputs": {
+      "decision_id": {
+        "type": "string",
+        "required": true,
+        "description": "Client- or runtime-provided decision identifier."
+      },
+      "principal": {
+        "type": "object",
+        "required": true,
+        "description": "Principal involved in the decision."
+      },
+      "action": {
+        "type": "object",
+        "required": true,
+        "description": "Action that was evaluated."
+      },
+      "resource": {
+        "type": "object",
+        "required": false,
+        "description": "Resource targeted by the action."
+      },
+      "decision": {
+        "type": "object",
+        "required": true,
+        "description": "Decision payload including outcome and rationale."
+      },
+      "policy_refs": {
+        "type": "array",
+        "required": false,
+        "description": "Applied policy references."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Supporting evidence collected during evaluation."
+      }
+    },
+    "outputs": {
+      "recorded": {
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the audit record was successfully persisted."
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "description": "Persistent audit record identifier."
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true,
+        "description": "Record creation timestamp in ISO-8601 format."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "provenance",
+        "governance",
+        "decision-trace"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Persist blocked decision for external output",
+          "inputs": {
+            "decision_id": "dec-001",
+            "principal": {
+              "id": "agent-1"
+            },
+            "action": {
+              "type": "release_output"
+            },
+            "decision": {
+              "outcome": "deny"
+            }
+          },
+          "outputs": {
+            "recorded": true,
+            "record_id": "aud-987"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": true,
+      "idempotent": false,
+      "state_access": "write",
+      "audit_level": "strict"
+    },
+    "cognitive_hints": {
+      "role": "act",
+      "produces": {
+        "recorded": {
+          "type": "Entity"
+        },
+        "record_id": {
+          "type": "Entity"
+        },
+        "timestamp": {
+          "type": "Evidence"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Evidence",
+        "Entity"
+      ]
+    },
+    "safety": {
+      "trust_level": "elevated",
+      "data_classification": "internal",
+      "reversible": false,
+      "requires_confirmation": false,
+      "scope_constraints": [
+        "no_credential_passthrough"
       ]
     }
   },
@@ -14648,6 +15092,97 @@
       },
       "consumes": [
         "Context"
+      ]
+    }
+  },
+  {
+    "id": "security.content.classify",
+    "version": "1.0.0",
+    "description": "Classify sensitive content categories in payloads to support security and governance controls beyond PII and secret detection.",
+    "file": "capabilities/security.content.classify.yaml",
+    "inputs": {
+      "payload": {
+        "type": "object",
+        "required": true,
+        "description": "Input payload to classify."
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Optional context for domain-aware classification."
+      }
+    },
+    "outputs": {
+      "categories": {
+        "type": "array",
+        "required": true,
+        "description": "Detected categories such as pii, phi, financial, legal, credentials, source_code."
+      },
+      "sensitivity_level": {
+        "type": "string",
+        "required": true,
+        "description": "Overall sensitivity: low, medium, high, critical."
+      },
+      "category_scores": {
+        "type": "object",
+        "required": false,
+        "description": "Per-category confidence or severity scores."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Explanation of the classification outcome."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "security",
+        "data-classification",
+        "governance"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Detect sensitive categories in support transcript",
+          "inputs": {
+            "payload": {
+              "text": "Customer provided SSN and account number for refund."
+            }
+          },
+          "outputs": {
+            "categories": [
+              "pii",
+              "financial"
+            ],
+            "sensitivity_level": "high"
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": false,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "read",
+      "audit_level": "strict"
+    },
+    "cognitive_hints": {
+      "role": "evaluate",
+      "produces": {
+        "categories": {
+          "type": "Entity"
+        },
+        "sensitivity_level": {
+          "type": "Score"
+        },
+        "category_scores": {
+          "type": "Score"
+        }
+      },
+      "consumes": [
+        "Context",
+        "Entity"
       ]
     }
   },

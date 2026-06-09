@@ -162,6 +162,10 @@ capabilities:
     status: draft
     description: List all available roles, optionally filtered by scope or tag.
 
+  - id: identity.permission.evaluate
+    status: draft
+    description: Evaluate access suitability by combining permission context, action/resource metadata, policy references, and risk signals.
+
   - id: image.caption.generate
     status: draft
     description: Generate a caption for an image.
@@ -304,6 +308,18 @@ capabilities:
     status: draft
     description: Read a PDF document and extract textual content.
 
+  - id: provenance.decision.store
+    status: draft
+    description: Store a governance decision with context, policy references, and supporting evidence for auditability.
+
+  - id: policy.record.classify
+    status: draft
+    description: Classify record sensitivity and policy-relevant categories to support governance decisions.
+
+  - id: policy.decision.evaluate
+    status: draft
+    description: Evaluate policy decision outcomes and derive required conditions when a request is not directly allow or deny.
+
   - id: policy.constraint.gate
     status: draft
     description: Evaluate a payload against a policy gate and return a pass/block decision with rationale.
@@ -340,6 +356,10 @@ capabilities:
   - id: security.output.gate
     status: stable
     description: Apply policy gates to decide whether an output can be released.
+
+  - id: security.content.classify
+    status: draft
+    description: Classify sensitive content categories in payloads to support security and governance controls beyond PII and secret detection.
 
   - id: security.pii.detect
     status: stable

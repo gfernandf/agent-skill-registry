@@ -1,8 +1,8 @@
 {
   "summary": {
-    "capability_count": 190,
+    "capability_count": 195,
     "skill_count": 39,
-    "domain_count": 29,
+    "domain_count": 30,
     "channel_count": 2
   },
   "skills": {
@@ -39,18 +39,18 @@
       "evaluation": 18,
       "integration": 12,
       "perception": 12,
+      "identity": 11,
       "task": 11,
-      "identity": 10,
       "memory": 10,
       "data": 8,
       "decision": 8,
       "evidence": 8,
+      "policy": 7,
       "web": 6,
-      "policy": 5,
+      "security": 5,
       "table": 5,
       "code": 4,
       "image": 4,
-      "security": 4,
       "agent": 3,
       "audio": 3,
       "fs": 3,
@@ -59,13 +59,15 @@
       "email": 2,
       "ops": 2,
       "pdf": 1,
+      "provenance": 1,
       "research": 1,
       "video": 1
     },
     "by_status": {
       "stable": 163,
       "unspecified": 14,
-      "deprecated": 13
+      "deprecated": 13,
+      "draft": 5
     },
     "most_used": [
       {
@@ -367,6 +369,7 @@
       "fs.file.write",
       "identity.assignee.identify",
       "identity.decision.justify",
+      "identity.permission.evaluate",
       "identity.permission.gate",
       "identity.permission.get",
       "identity.permission.list",
@@ -411,7 +414,10 @@
       "perception.language.detect",
       "perception.sla.monitor",
       "policy.constraint.validate",
+      "policy.decision.evaluate",
+      "policy.record.classify",
       "policy.risk.score",
+      "provenance.decision.store",
       "reasoning.assumption.extract",
       "reasoning.constraint.extract",
       "reasoning.constraint.reconcile",
@@ -433,6 +439,7 @@
       "reasoning.sentiment.analyze",
       "reasoning.task.decompose",
       "reasoning.uncertainty.extract",
+      "security.content.classify",
       "security.secret.detect",
       "table.column.aggregate",
       "table.row.sort",
@@ -461,7 +468,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 190,
+    "capabilities_with_nondefault_metadata": 195,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -866,6 +873,10 @@
         "count": 17
       },
       {
+        "id": "governance",
+        "count": 16
+      },
+      {
         "id": "analysis",
         "count": 14
       },
@@ -874,7 +885,7 @@
         "count": 13
       },
       {
-        "id": "governance",
+        "id": "identity",
         "count": 11
       },
       {
@@ -882,16 +893,12 @@
         "count": 10
       },
       {
-        "id": "identity",
+        "id": "evaluation",
         "count": 10
       },
       {
         "id": "memory",
         "count": 10
-      },
-      {
-        "id": "evaluation",
-        "count": 9
       },
       {
         "id": "model",
@@ -914,11 +921,19 @@
         "count": 8
       },
       {
+        "id": "record",
+        "count": 8
+      },
+      {
+        "id": "classification",
+        "count": 7
+      },
+      {
         "id": "generation",
         "count": 7
       },
       {
-        "id": "record",
+        "id": "policy",
         "count": 7
       },
       {
@@ -930,11 +945,11 @@
         "count": 6
       },
       {
-        "id": "classification",
+        "id": "context",
         "count": 6
       },
       {
-        "id": "context",
+        "id": "security",
         "count": 6
       },
       {
@@ -962,7 +977,7 @@
         "count": 5
       },
       {
-        "id": "policy",
+        "id": "permission",
         "count": 5
       },
       {
@@ -975,10 +990,6 @@
       },
       {
         "id": "scoring",
-        "count": 5
-      },
-      {
-        "id": "security",
         "count": 5
       },
       {
@@ -1019,10 +1030,6 @@
       },
       {
         "id": "monitoring",
-        "count": 4
-      },
-      {
-        "id": "permission",
         "count": 4
       },
       {
@@ -1126,6 +1133,10 @@
         "count": 3
       },
       {
+        "id": "provenance",
+        "count": 3
+      },
+      {
         "id": "quality",
         "count": 3
       },
@@ -1187,6 +1198,10 @@
       },
       {
         "id": "audit",
+        "count": 2
+      },
+      {
+        "id": "authorization",
         "count": 2
       },
       {
@@ -1287,10 +1302,6 @@
       },
       {
         "id": "priority",
-        "count": 2
-      },
-      {
-        "id": "provenance",
         "count": 2
       },
       {
@@ -1422,10 +1433,6 @@
         "count": 1
       },
       {
-        "id": "authorization",
-        "count": 1
-      },
-      {
         "id": "batch",
         "count": 1
       },
@@ -1486,6 +1493,10 @@
         "count": 1
       },
       {
+        "id": "conditions",
+        "count": 1
+      },
+      {
         "id": "conflict",
         "count": 1
       },
@@ -1515,6 +1526,18 @@
       },
       {
         "id": "dag",
+        "count": 1
+      },
+      {
+        "id": "data-classification",
+        "count": 1
+      },
+      {
+        "id": "decision-control",
+        "count": 1
+      },
+      {
+        "id": "decision-trace",
         "count": 1
       },
       {
@@ -1815,6 +1838,10 @@
       },
       {
         "id": "secret-detection",
+        "count": 1
+      },
+      {
+        "id": "sensitivity",
         "count": 1
       },
       {

@@ -1,0 +1,69 @@
+id: policy.record.classify
+version: 1.0.0
+description: Classify record sensitivity and policy-relevant categories to support governance decisions.
+inputs:
+  record:
+    type: object
+    required: true
+    description: Record descriptor (type, owner, labels, fields, destination).
+  context:
+    type: object
+    required: false
+    description: Optional runtime context that affects sensitivity.
+outputs:
+  sensitivity_level:
+    type: string
+    required: true
+    description: 'Sensitivity class: public, internal, confidential, restricted, or critical.'
+  categories:
+    type: array
+    required: false
+    description: Sensitivity categories detected (pii, financial, legal, security, etc.).
+  sensitivity_score:
+    type: number
+    required: false
+    description: Numeric sensitivity score (0.0 to 1.0).
+  rationale:
+    type: string
+    required: true
+    description: Explanation for assigned sensitivity.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: read
+  audit_level: strict
+metadata:
+  status: draft
+  tags:
+  - policy
+  - record
+  - sensitivity
+  - classification
+  - governance
+  examples:
+  - summary: Classify CRM record as restricted
+    inputs:
+      record:
+        id: crm-export
+        type: dataset
+        labels:
+        - customer
+        - pii
+    outputs:
+      sensitivity_level: restricted
+      categories:
+      - pii
+  layer: governance
+cognitive_hints:
+  role: evaluate
+  produces:
+    sensitivity_level:
+      type: Score
+    categories:
+      type: Entity
+    sensitivity_score:
+      type: Score
+  consumes:
+  - Context
+  - Entity
