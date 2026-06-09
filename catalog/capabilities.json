@@ -5826,6 +5826,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Identity decision justification must remain scoped to the caller tenant."
     }
   },
   {
