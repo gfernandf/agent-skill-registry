@@ -20,6 +20,10 @@ outputs:
     type: string
     required: true
     description: Human-readable justification.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the justification.
   applicable_policies:
     type: array
     required: true
@@ -50,12 +54,16 @@ metadata:
       policies: []
     outputs:
       justification: Access granted based on role.
+      evidence:
+        source: role-inherited
       confidence: 0.9
   layer: governance
 cognitive_hints:
   role: decide
   produces:
     justification:
+      type: Evidence
+    evidence:
       type: Evidence
     applicable_policies:
       type: Decision

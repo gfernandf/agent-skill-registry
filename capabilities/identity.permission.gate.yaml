@@ -19,10 +19,22 @@ outputs:
     type: boolean
     required: true
     description: Whether the action is allowed.
+  decision:
+    type: string
+    required: false
+    description: Canonical decision outcome (allow, deny, conditional_allow, escalate).
   reason:
     type: string
     required: true
     description: Explanation for the gate decision.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable rationale for the gate decision.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the gate decision.
 properties:
   deterministic: true
   side_effects: false
@@ -43,6 +55,7 @@ metadata:
       permission: resource:read
     outputs:
       allowed: true
+      decision: allow
       reason: Permission granted via admin role.
   layer: governance
 cognitive_hints:
@@ -50,7 +63,13 @@ cognitive_hints:
   produces:
     allowed:
       type: Decision
+    decision:
+      type: Decision
     reason:
+      type: Evidence
+    rationale:
+      type: Evidence
+    evidence:
       type: Evidence
   consumes:
   - Entity

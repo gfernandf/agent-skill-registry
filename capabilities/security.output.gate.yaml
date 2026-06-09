@@ -15,10 +15,22 @@ outputs:
     type: boolean
     required: true
     description: Whether output is allowed.
+  decision:
+    type: string
+    required: false
+    description: Canonical decision outcome (allow, deny, conditional_allow, escalate).
   reasons:
     type: array
     required: false
     description: Reasons for blocking or warnings.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable rationale for the gate decision.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the gate decision.
 properties:
   deterministic: true
   side_effects: false
@@ -38,13 +50,20 @@ metadata:
       block_pii: true
       block_secrets: false
     expected_allowed: false
+    expected_decision: deny
   layer: governance
 cognitive_hints:
   role: evaluate
   produces:
     allowed:
       type: Decision
+    decision:
+      type: Decision
     reasons:
       type: Score
+    rationale:
+      type: Evidence
+    evidence:
+      type: Evidence
   consumes:
   - Context

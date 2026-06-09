@@ -17,6 +17,10 @@ outputs:
     type: string
     required: true
     description: 'Gate decision: pass or block.'
+  conditions:
+    type: array
+    required: false
+    description: Conditions required to pass the gate when decision is conditional.
   violations:
     type: array
     required: true
@@ -25,6 +29,10 @@ outputs:
     type: string
     required: true
     description: Human-readable justification for the decision.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the decision.
 properties:
   deterministic: true
   side_effects: false
@@ -49,16 +57,21 @@ metadata:
           - title
         action: block
     outputs:
-      allowed: true
+      decision: pass
+      violations: []
   layer: governance
 cognitive_hints:
   role: evaluate
   produces:
     decision:
       type: Decision
+    conditions:
+      type: Plan
     violations:
       type: Score
     rationale:
+      type: Evidence
+    evidence:
       type: Evidence
   consumes:
   - Context
