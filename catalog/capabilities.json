@@ -15133,6 +15133,13 @@
       "consumes": [
         "Context"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "PII detection must remain scoped to the caller tenant."
     }
   },
   {
