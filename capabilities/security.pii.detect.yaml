@@ -15,6 +15,14 @@ outputs:
     type: array
     required: false
     description: Detected PII findings with types and spans.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the detection.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the detection result.
 properties:
   deterministic: false
   side_effects: false
@@ -30,6 +38,7 @@ metadata:
   examples:
   - text: Email me at john.doe@example.com or call +1 650 555 1234
     expected_contains_pii: true
+    expected_rationale: Email and phone number patterns detected.
   layer: governance
 cognitive_hints:
   role: act
@@ -38,5 +47,9 @@ cognitive_hints:
       type: Entity
     findings:
       type: Entity
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
   consumes:
   - Context

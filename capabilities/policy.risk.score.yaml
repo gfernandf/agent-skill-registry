@@ -23,6 +23,14 @@ outputs:
     type: boolean
     required: true
     description: Whether the action is within acceptable risk thresholds.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence that influenced the risk assessment.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the scoring outcome.
 properties:
   deterministic: true
   side_effects: false
@@ -44,6 +52,7 @@ metadata:
         involves_pii: true
     outputs:
       risk_score: 0.7
+      safe: false
       breakdown:
         pii: 0.3
         external: 0.2
@@ -57,6 +66,10 @@ cognitive_hints:
       type: Score
     safe:
       type: Score
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
   consumes:
   - Context
   - Evidence

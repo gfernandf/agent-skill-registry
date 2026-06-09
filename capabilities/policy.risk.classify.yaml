@@ -23,6 +23,10 @@ outputs:
     type: string
     required: true
     description: Explanation of the classification.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the risk classification.
 properties:
   deterministic: true
   side_effects: false
@@ -47,6 +51,7 @@ metadata:
       risk_level: medium
       factors:
       - external
+      rationale: External action increases exposure.
   layer: governance
 cognitive_hints:
   role: analyze
@@ -56,6 +61,8 @@ cognitive_hints:
     factors:
       type: Decision
     rationale:
+      type: Evidence
+    evidence:
       type: Evidence
   consumes:
   - Context

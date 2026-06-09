@@ -11,6 +11,10 @@ inputs:
     required: true
     description: Permission to verify.
 outputs:
+  decision:
+    type: string
+    required: false
+    description: Canonical decision outcome (allow, deny, conditional_allow, escalate).
   verified:
     type: boolean
     required: true
@@ -23,6 +27,10 @@ outputs:
     type: object
     required: false
     description: Supporting evidence such as the role or group that grants the permission.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable reason for the verification outcome.
 properties:
   deterministic: true
   side_effects: false
@@ -42,17 +50,22 @@ metadata:
       principal_id: alice
       permission: resource:read
     outputs:
+      decision: allow
       verified: true
       source: role-inherited
   layer: governance
 cognitive_hints:
   role: evaluate
   produces:
+    decision:
+      type: Decision
     verified:
       type: Score
     source:
       type: Score
     evidence:
+      type: Evidence
+    rationale:
       type: Evidence
   consumes:
   - Entity

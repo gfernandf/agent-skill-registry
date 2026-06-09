@@ -15,6 +15,14 @@ outputs:
     type: array
     required: false
     description: Redaction findings with type metadata.
+  evidence:
+    type: object
+    required: false
+    description: Structured evidence supporting the redaction.
+  rationale:
+    type: string
+    required: false
+    description: Human-readable explanation of the redaction result.
 properties:
   deterministic: false
   side_effects: false
@@ -30,6 +38,7 @@ metadata:
   examples:
   - text: Contact john.doe@example.com for the report
     expected_redacted_text: Contact REDACTED_EMAIL for the report
+    expected_rationale: Email address redacted.
   layer: governance
 cognitive_hints:
   role: act
@@ -38,5 +47,9 @@ cognitive_hints:
       type: Entity
     findings:
       type: Entity
+    evidence:
+      type: Evidence
+    rationale:
+      type: Evidence
   consumes:
   - Context
