@@ -5729,6 +5729,13 @@
       "consumes": [
         "Entity"
       ]
+    },
+    "safety": {
+      "trust_level": "standard",
+      "allowed_targets": [
+        "same_tenant"
+      ],
+      "description": "Assignee identification must remain scoped to the caller tenant."
     }
   },
   {
