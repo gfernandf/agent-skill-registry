@@ -42,7 +42,7 @@ properties:
   state_access: none
   audit_level: standard
 metadata:
-  status: draft
+  status: experimental
   tags:
   - provenance
   - citation

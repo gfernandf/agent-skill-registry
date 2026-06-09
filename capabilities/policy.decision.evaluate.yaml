@@ -46,7 +46,7 @@ properties:
   state_access: read
   audit_level: strict
 metadata:
-  status: draft
+  status: experimental
   tags:
   - policy
   - conditions

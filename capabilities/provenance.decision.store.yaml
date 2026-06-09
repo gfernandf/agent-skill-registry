@@ -65,7 +65,7 @@ safety:
   scope_constraints:
   - no_credential_passthrough
 metadata:
-  status: draft
+  status: experimental
   tags:
   - provenance
   - governance
