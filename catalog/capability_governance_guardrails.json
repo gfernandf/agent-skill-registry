@@ -1,9 +1,9 @@
 {
   "summary": {
-    "capabilities_total": 190,
-    "covered_domains": 26,
-    "uncovered_domains": 5,
-    "semantic_family_alerts": 28,
+    "capabilities_total": 197,
+    "covered_domains": 27,
+    "uncovered_domains": 4,
+    "semantic_family_alerts": 29,
     "duplicate_description_alerts": 0,
     "metadata_issues": 0
   },
@@ -11,7 +11,6 @@
     "analysis",
     "eval",
     "model",
-    "provenance",
     "text"
   ],
   "semantic_family_alerts": [
@@ -223,6 +222,19 @@
       "noun_variants": [
         "case",
         "catalog"
+      ],
+      "recommendation": "review-for-canonical-operation"
+    },
+    {
+      "domain": "policy",
+      "verb": "classify",
+      "capability_ids": [
+        "policy.record.classify",
+        "policy.risk.classify"
+      ],
+      "noun_variants": [
+        "record",
+        "risk"
       ],
       "recommendation": "review-for-canonical-operation"
     },

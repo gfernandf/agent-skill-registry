@@ -5759,6 +5759,11 @@
         "required": true,
         "description": "Human-readable justification."
       },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the justification."
+      },
       "applicable_policies": {
         "type": "array",
         "required": true,
@@ -5791,6 +5796,9 @@
           },
           "outputs": {
             "justification": "Access granted based on role.",
+            "evidence": {
+              "source": "role-inherited"
+            },
             "confidence": 0.9
           }
         }
@@ -5807,6 +5815,9 @@
       "role": "decide",
       "produces": {
         "justification": {
+          "type": "Evidence"
+        },
+        "evidence": {
           "type": "Evidence"
         },
         "applicable_policies": {
@@ -5889,7 +5900,7 @@
         "governance"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Conditional allow for sensitive export",
@@ -5908,7 +5919,8 @@
             "decision": "conditional_allow",
             "conditions": [
               "require_additional_approval"
-            ]
+            ],
+            "rationale": "Additional approval required for sensitive export."
           }
         }
       ]
@@ -5968,10 +5980,25 @@
         "required": true,
         "description": "Whether the action is allowed."
       },
+      "decision": {
+        "type": "string",
+        "required": false,
+        "description": "Canonical decision outcome (allow, deny, conditional_allow, escalate)."
+      },
       "reason": {
         "type": "string",
         "required": true,
         "description": "Explanation for the gate decision."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable rationale for the gate decision."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the gate decision."
       }
     },
     "metadata": {
@@ -5992,6 +6019,7 @@
           },
           "outputs": {
             "allowed": true,
+            "decision": "allow",
             "reason": "Permission granted via admin role."
           }
         }
@@ -6010,7 +6038,16 @@
         "allowed": {
           "type": "Decision"
         },
+        "decision": {
+          "type": "Decision"
+        },
         "reason": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
+        },
+        "evidence": {
           "type": "Evidence"
         }
       },
@@ -6183,6 +6220,11 @@
       }
     },
     "outputs": {
+      "decision": {
+        "type": "string",
+        "required": false,
+        "description": "Canonical decision outcome (allow, deny, conditional_allow, escalate)."
+      },
       "verified": {
         "type": "boolean",
         "required": true,
@@ -6197,6 +6239,11 @@
         "type": "object",
         "required": false,
         "description": "Supporting evidence such as the role or group that grants the permission."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable reason for the verification outcome."
       }
     },
     "metadata": {
@@ -6216,6 +6263,7 @@
             "permission": "resource:read"
           },
           "outputs": {
+            "decision": "allow",
             "verified": true,
             "source": "role-inherited"
           }
@@ -6232,6 +6280,9 @@
     "cognitive_hints": {
       "role": "evaluate",
       "produces": {
+        "decision": {
+          "type": "Decision"
+        },
         "verified": {
           "type": "Score"
         },
@@ -6239,6 +6290,9 @@
           "type": "Score"
         },
         "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
           "type": "Evidence"
         }
       },
@@ -10211,6 +10265,11 @@
         "required": true,
         "description": "Gate decision: pass or block."
       },
+      "conditions": {
+        "type": "array",
+        "required": false,
+        "description": "Conditions required to pass the gate when decision is conditional."
+      },
       "violations": {
         "type": "array",
         "required": true,
@@ -10220,6 +10279,11 @@
         "type": "string",
         "required": true,
         "description": "Human-readable justification for the decision."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the decision."
       }
     },
     "metadata": {
@@ -10248,7 +10312,8 @@
             }
           },
           "outputs": {
-            "allowed": true
+            "decision": "pass",
+            "violations": []
           }
         }
       ]
@@ -10266,10 +10331,16 @@
         "decision": {
           "type": "Decision"
         },
+        "conditions": {
+          "type": "Plan"
+        },
         "violations": {
           "type": "Score"
         },
         "rationale": {
+          "type": "Evidence"
+        },
+        "evidence": {
           "type": "Evidence"
         }
       },
@@ -10421,7 +10492,7 @@
         "decision-control"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Require redaction before release",
@@ -10441,7 +10512,8 @@
             "decision": "conditional_allow",
             "conditions": [
               "redact_pii"
-            ]
+            ],
+            "rationale": "Redaction is required before release."
           }
         }
       ]
@@ -10509,6 +10581,11 @@
         "required": true,
         "description": "Human-readable justification narrative."
       },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the justification."
+      },
       "applicable_rules": {
         "type": "array",
         "required": true,
@@ -10543,6 +10620,9 @@
           },
           "outputs": {
             "justification": "Approved per rule R1.",
+            "evidence": {
+              "rule": "R1"
+            },
             "applicable_rules": [
               "R1"
             ]
@@ -10561,6 +10641,9 @@
       "role": "decide",
       "produces": {
         "justification": {
+          "type": "Evidence"
+        },
+        "evidence": {
           "type": "Evidence"
         },
         "applicable_rules": {
@@ -10613,6 +10696,11 @@
         "type": "string",
         "required": true,
         "description": "Explanation for assigned sensitivity."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the sensitivity classification."
       }
     },
     "metadata": {
@@ -10624,7 +10712,7 @@
         "governance"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Classify CRM record as restricted",
@@ -10642,7 +10730,8 @@
             "sensitivity_level": "restricted",
             "categories": [
               "pii"
-            ]
+            ],
+            "rationale": "Record contains customer and pii labels."
           }
         }
       ]
@@ -10665,6 +10754,9 @@
         },
         "sensitivity_score": {
           "type": "Score"
+        },
+        "evidence": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -10705,6 +10797,11 @@
         "type": "string",
         "required": true,
         "description": "Explanation of the classification."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the risk classification."
       }
     },
     "metadata": {
@@ -10730,7 +10827,8 @@
             "risk_level": "medium",
             "factors": [
               "external"
-            ]
+            ],
+            "rationale": "External action increases exposure."
           }
         }
       ]
@@ -10752,6 +10850,9 @@
           "type": "Decision"
         },
         "rationale": {
+          "type": "Evidence"
+        },
+        "evidence": {
           "type": "Evidence"
         }
       },
@@ -10793,6 +10894,16 @@
         "type": "boolean",
         "required": true,
         "description": "Whether the action is within acceptable risk thresholds."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence that influenced the risk assessment."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the scoring outcome."
       }
     },
     "metadata": {
@@ -10815,6 +10926,7 @@
           },
           "outputs": {
             "risk_score": 0.7,
+            "safe": false,
             "breakdown": {
               "pii": 0.3,
               "external": 0.2
@@ -10841,6 +10953,12 @@
         },
         "safe": {
           "type": "Score"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -10886,6 +11004,16 @@
         "type": "string",
         "required": false,
         "description": "Optional trace or correlation reference for audit and observability."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence used to produce the citation."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of citation generation."
       }
     },
     "metadata": {
@@ -10895,7 +11023,7 @@
         "generation"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Generate a citation from a source fragment",
@@ -10910,7 +11038,8 @@
             "status": "ok",
             "citation": {
               "title": "Example"
-            }
+            },
+            "rationale": "Citation generated from source title and URL."
           }
         }
       ]
@@ -10927,6 +11056,12 @@
       "produces": {
         "citation": {
           "type": "Entity"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -10991,6 +11126,16 @@
         "type": "string",
         "required": true,
         "description": "Record creation timestamp in ISO-8601 format."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence stored with or derived from the audit record."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable summary of the stored decision record."
       }
     },
     "metadata": {
@@ -11000,7 +11145,7 @@
         "decision-trace"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Persist blocked decision for external output",
@@ -11018,7 +11163,8 @@
           },
           "outputs": {
             "recorded": true,
-            "record_id": "aud-987"
+            "record_id": "aud-987",
+            "rationale": "Decision stored with principal, action, and policy references."
           }
         }
       ]
@@ -11040,6 +11186,12 @@
           "type": "Entity"
         },
         "timestamp": {
+          "type": "Evidence"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
           "type": "Evidence"
         }
       },
@@ -11086,6 +11238,16 @@
         "type": "string",
         "required": false,
         "description": "Optional trace or correlation reference for audit and observability."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence used to produce the trace summary."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the trace summary."
       }
     },
     "metadata": {
@@ -11096,7 +11258,7 @@
         "reporting"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Summarize a governed execution trace",
@@ -11116,7 +11278,8 @@
             "status": "ok",
             "trace_summary": {
               "overall_status": "success"
-            }
+            },
+            "rationale": "Trace summarized from successful step results."
           }
         }
       ]
@@ -11133,6 +11296,12 @@
       "produces": {
         "trace_summary": {
           "type": "Summary"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -15332,7 +15501,7 @@
         "classification"
       ],
       "category": null,
-      "status": "draft",
+      "status": "experimental",
       "examples": [
         {
           "summary": "Detect sensitive categories in support transcript",
@@ -15346,7 +15515,8 @@
               "pii",
               "financial"
             ],
-            "sensitivity_level": "high"
+            "sensitivity_level": "high",
+            "rationale": "Transcript contains PII and financial details."
           }
         }
       ]
@@ -15369,6 +15539,12 @@
         },
         "category_scores": {
           "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        },
+        "evidence": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -15400,10 +15576,25 @@
         "required": true,
         "description": "Whether output is allowed."
       },
+      "decision": {
+        "type": "string",
+        "required": false,
+        "description": "Canonical decision outcome (allow, deny, conditional_allow, escalate)."
+      },
       "reasons": {
         "type": "array",
         "required": false,
         "description": "Reasons for blocking or warnings."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable rationale for the gate decision."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the gate decision."
       }
     },
     "metadata": {
@@ -15423,7 +15614,8 @@
             "block_pii": true,
             "block_secrets": false
           },
-          "expected_allowed": false
+          "expected_allowed": false,
+          "expected_decision": "deny"
         }
       ]
     },
@@ -15440,8 +15632,17 @@
         "allowed": {
           "type": "Decision"
         },
+        "decision": {
+          "type": "Decision"
+        },
         "reasons": {
           "type": "Score"
+        },
+        "rationale": {
+          "type": "Evidence"
+        },
+        "evidence": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -15471,6 +15672,16 @@
         "type": "array",
         "required": false,
         "description": "Detected PII findings with types and spans."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the detection."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the detection result."
       }
     },
     "metadata": {
@@ -15484,7 +15695,8 @@
       "examples": [
         {
           "text": "Email me at john.doe@example.com or call +1 650 555 1234",
-          "expected_contains_pii": true
+          "expected_contains_pii": true,
+          "expected_rationale": "Email and phone number patterns detected."
         }
       ]
     },
@@ -15503,6 +15715,12 @@
         },
         "findings": {
           "type": "Entity"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -15532,6 +15750,16 @@
         "type": "array",
         "required": false,
         "description": "Redaction findings with type metadata."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the redaction."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the redaction result."
       }
     },
     "metadata": {
@@ -15545,7 +15773,8 @@
       "examples": [
         {
           "text": "Contact john.doe@example.com for the report",
-          "expected_redacted_text": "Contact REDACTED_EMAIL for the report"
+          "expected_redacted_text": "Contact REDACTED_EMAIL for the report",
+          "expected_rationale": "Email address redacted."
         }
       ]
     },
@@ -15564,6 +15793,12 @@
         },
         "findings": {
           "type": "Entity"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
@@ -15593,6 +15828,16 @@
         "type": "array",
         "required": false,
         "description": "Detected secret findings."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence supporting the secret detection."
+      },
+      "rationale": {
+        "type": "string",
+        "required": false,
+        "description": "Human-readable explanation of the detection result."
       }
     },
     "metadata": {
@@ -15606,7 +15851,8 @@
       "examples": [
         {
           "text": "My API key is sk-1234567890ABCDEFGHIJ",
-          "expected_contains_secret": true
+          "expected_contains_secret": true,
+          "expected_rationale": "Secret-like token pattern detected."
         }
       ]
     },
@@ -15625,6 +15871,12 @@
         },
         "findings": {
           "type": "Entity"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "rationale": {
+          "type": "Evidence"
         }
       },
       "consumes": [
