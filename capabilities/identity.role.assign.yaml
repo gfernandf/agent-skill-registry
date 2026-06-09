@@ -28,6 +28,8 @@ properties:
 safety:
   trust_level: elevated
   requires_confirmation: true
+  allowed_targets:
+  - same_tenant
   description: Assigns a role which may grant new permissions to a principal.
 metadata:
   status: stable
