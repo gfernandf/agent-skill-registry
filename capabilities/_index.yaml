@@ -312,6 +312,14 @@ capabilities:
     status: draft
     description: Store a governance decision with context, policy references, and supporting evidence for auditability.
 
+  - id: provenance.trace.summarize
+    status: draft
+    description: Summarize an execution trace into a compact audit-focused report for downstream review and observability.
+
+  - id: provenance.citation.generate
+    status: draft
+    description: Generate a structured citation for a source fragment so downstream governance steps can reference the same anchor consistently.
+
   - id: policy.record.classify
     status: draft
     description: Classify record sensitivity and policy-relevant categories to support governance decisions.

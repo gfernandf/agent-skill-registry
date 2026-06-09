@@ -1,0 +1,55 @@
+id: provenance.trace.summarize
+version: 1.0.0
+description: Summarize an execution trace into a compact audit-focused report for downstream review and observability.
+inputs:
+  execution_trace:
+    type: object
+    required: true
+    description: Raw execution result or trace object with step results, decisions, and status.
+outputs:
+  trace_summary:
+    type: object
+    required: true
+    description: Summary object containing steps executed, decisions made, failures, and overall outcome.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  status: draft
+  tags:
+  - provenance
+  - trace
+  - audit
+  - reporting
+  examples:
+  - summary: Summarize a governed execution trace
+    inputs:
+      execution_trace:
+        status: success
+        step_results:
+        - step_id: s1_step1
+          status: success
+          duration_ms: 340
+    outputs:
+      status: ok
+      trace_summary:
+        overall_status: success
+  layer: governance
+cognitive_hints:
+  role: synthesize
+  produces:
+    trace_summary:
+      type: Summary
+  consumes:
+  - Artifact

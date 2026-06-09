@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 195,
+    "capability_count": 197,
     "skill_count": 39,
     "domain_count": 30,
     "channel_count": 2
@@ -55,11 +55,11 @@
       "audio": 3,
       "fs": 3,
       "message": 3,
+      "provenance": 3,
       "doc": 2,
       "email": 2,
       "ops": 2,
       "pdf": 1,
-      "provenance": 1,
       "research": 1,
       "video": 1
     },
@@ -67,7 +67,7 @@
       "stable": 163,
       "unspecified": 14,
       "deprecated": 13,
-      "draft": 5
+      "draft": 7
     },
     "most_used": [
       {
@@ -417,7 +417,9 @@
       "policy.decision.evaluate",
       "policy.record.classify",
       "policy.risk.score",
+      "provenance.citation.generate",
       "provenance.decision.store",
+      "provenance.trace.summarize",
       "reasoning.assumption.extract",
       "reasoning.constraint.extract",
       "reasoning.constraint.reconcile",
@@ -468,7 +470,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 195,
+    "capabilities_with_nondefault_metadata": 197,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -905,7 +907,15 @@
         "count": 9
       },
       {
+        "id": "classification",
+        "count": 8
+      },
+      {
         "id": "extraction",
+        "count": 8
+      },
+      {
+        "id": "generation",
         "count": 8
       },
       {
@@ -923,14 +933,6 @@
       {
         "id": "record",
         "count": 8
-      },
-      {
-        "id": "classification",
-        "count": 7
-      },
-      {
-        "id": "generation",
-        "count": 7
       },
       {
         "id": "policy",
@@ -978,6 +980,10 @@
       },
       {
         "id": "permission",
+        "count": 5
+      },
+      {
+        "id": "provenance",
         "count": 5
       },
       {
@@ -1057,6 +1063,10 @@
         "count": 4
       },
       {
+        "id": "trace",
+        "count": 4
+      },
+      {
         "id": "workflow",
         "count": 4
       },
@@ -1070,6 +1080,14 @@
       },
       {
         "id": "audio",
+        "count": 3
+      },
+      {
+        "id": "audit",
+        "count": 3
+      },
+      {
+        "id": "citation",
         "count": 3
       },
       {
@@ -1133,11 +1151,11 @@
         "count": 3
       },
       {
-        "id": "provenance",
+        "id": "quality",
         "count": 3
       },
       {
-        "id": "quality",
+        "id": "reporting",
         "count": 3
       },
       {
@@ -1158,10 +1176,6 @@
       },
       {
         "id": "storage",
-        "count": 3
-      },
-      {
-        "id": "trace",
         "count": 3
       },
       {
@@ -1197,15 +1211,7 @@
         "count": 2
       },
       {
-        "id": "audit",
-        "count": 2
-      },
-      {
         "id": "authorization",
-        "count": 2
-      },
-      {
-        "id": "citation",
         "count": 2
       },
       {
@@ -1318,10 +1324,6 @@
       },
       {
         "id": "records",
-        "count": 2
-      },
-      {
-        "id": "reporting",
         "count": 2
       },
       {

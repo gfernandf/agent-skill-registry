@@ -10362,7 +10362,7 @@
   {
     "id": "policy.decision.evaluate",
     "version": "1.0.0",
-    "description": "Evaluate policy decision outcomes and derive required conditions when a request is not directly allow/deny.",
+    "description": "Evaluate policy decision outcomes and derive conditions, transforms, and evidence for non-trivial governance decisions.",
     "file": "capabilities/policy.decision.evaluate.yaml",
     "inputs": {
       "decision_context": {
@@ -10382,12 +10382,12 @@
       }
     },
     "outputs": {
-      "resolution": {
+      "decision": {
         "type": "string",
         "required": true,
-        "description": "Resolution outcome: allow, deny, conditional_allow, escalate, or transform."
+        "description": "Decision outcome: allow, deny, conditional_allow, escalate, or transform."
       },
-      "required_conditions": {
+      "conditions": {
         "type": "array",
         "required": false,
         "description": "Conditions to satisfy before execution (approval, redaction, logging, scope limit)."
@@ -10396,6 +10396,16 @@
         "type": "array",
         "required": false,
         "description": "Suggested transformations to reduce risk."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Structured evidence used to support the decision."
+      },
+      "risk": {
+        "type": "object",
+        "required": false,
+        "description": "Risk summary associated with the decision."
       },
       "rationale": {
         "type": "string",
@@ -10428,8 +10438,8 @@
             ]
           },
           "outputs": {
-            "resolution": "conditional_allow",
-            "required_conditions": [
+            "decision": "conditional_allow",
+            "conditions": [
               "redact_pii"
             ]
           }
@@ -10446,11 +10456,20 @@
     "cognitive_hints": {
       "role": "evaluate",
       "produces": {
-        "resolution": {
+        "decision": {
           "type": "Decision"
         },
-        "required_conditions": {
+        "conditions": {
           "type": "Plan"
+        },
+        "transforms": {
+          "type": "Plan"
+        },
+        "evidence": {
+          "type": "Evidence"
+        },
+        "risk": {
+          "type": "Score"
         },
         "rationale": {
           "type": "Evidence"
@@ -10831,6 +10850,91 @@
     }
   },
   {
+    "id": "provenance.citation.generate",
+    "version": "1.0.0",
+    "description": "Generate a structured citation for a source fragment so downstream governance steps can reference the same anchor consistently.",
+    "file": "capabilities/provenance.citation.generate.yaml",
+    "inputs": {
+      "source": {
+        "type": "object",
+        "required": true,
+        "description": "Source descriptor including origin metadata."
+      },
+      "excerpt": {
+        "type": "string",
+        "required": false,
+        "description": "Optional quoted excerpt."
+      },
+      "locator": {
+        "type": "string",
+        "required": false,
+        "description": "Optional source locator such as page or section."
+      }
+    },
+    "outputs": {
+      "citation": {
+        "type": "object",
+        "required": true,
+        "description": "Structured citation object with stable reference fields."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "provenance",
+        "citation",
+        "generation"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Generate a citation from a source fragment",
+          "inputs": {
+            "source": {
+              "url": "https://example.com/article",
+              "title": "Example"
+            },
+            "excerpt": "Key fact"
+          },
+          "outputs": {
+            "status": "ok",
+            "citation": {
+              "title": "Example"
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "citation": {
+          "type": "Entity"
+        }
+      },
+      "consumes": [
+        "Context"
+      ]
+    }
+  },
+  {
     "id": "provenance.decision.store",
     "version": "1.0.0",
     "description": "Store a governance decision with context, policy references, and supporting evidence for auditability.",
@@ -10952,6 +11056,87 @@
       "requires_confirmation": false,
       "scope_constraints": [
         "no_credential_passthrough"
+      ]
+    }
+  },
+  {
+    "id": "provenance.trace.summarize",
+    "version": "1.0.0",
+    "description": "Summarize an execution trace into a compact audit-focused report for downstream review and observability.",
+    "file": "capabilities/provenance.trace.summarize.yaml",
+    "inputs": {
+      "execution_trace": {
+        "type": "object",
+        "required": true,
+        "description": "Raw execution result or trace object with step results, decisions, and status."
+      }
+    },
+    "outputs": {
+      "trace_summary": {
+        "type": "object",
+        "required": true,
+        "description": "Summary object containing steps executed, decisions made, failures, and overall outcome."
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "description": "Execution outcome status for downstream routing (ok | partial | error)."
+      },
+      "trace_ref": {
+        "type": "string",
+        "required": false,
+        "description": "Optional trace or correlation reference for audit and observability."
+      }
+    },
+    "metadata": {
+      "tags": [
+        "provenance",
+        "trace",
+        "audit",
+        "reporting"
+      ],
+      "category": null,
+      "status": "draft",
+      "examples": [
+        {
+          "summary": "Summarize a governed execution trace",
+          "inputs": {
+            "execution_trace": {
+              "status": "success",
+              "step_results": [
+                {
+                  "step_id": "s1_step1",
+                  "status": "success",
+                  "duration_ms": 340
+                }
+              ]
+            }
+          },
+          "outputs": {
+            "status": "ok",
+            "trace_summary": {
+              "overall_status": "success"
+            }
+          }
+        }
+      ]
+    },
+    "properties": {
+      "deterministic": true,
+      "side_effects": false,
+      "idempotent": true,
+      "state_access": "none",
+      "audit_level": "standard"
+    },
+    "cognitive_hints": {
+      "role": "synthesize",
+      "produces": {
+        "trace_summary": {
+          "type": "Summary"
+        }
+      },
+      "consumes": [
+        "Artifact"
       ]
     }
   },
@@ -15132,13 +15317,19 @@
         "type": "string",
         "required": false,
         "description": "Explanation of the classification outcome."
+      },
+      "evidence": {
+        "type": "object",
+        "required": false,
+        "description": "Supporting spans, labels, or signals used for classification."
       }
     },
     "metadata": {
       "tags": [
         "security",
         "data-classification",
-        "governance"
+        "governance",
+        "classification"
       ],
       "category": null,
       "status": "draft",

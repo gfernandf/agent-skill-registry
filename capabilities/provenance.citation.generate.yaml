@@ -1,0 +1,60 @@
+id: provenance.citation.generate
+version: 1.0.0
+description: Generate a structured citation for a source fragment so downstream governance steps can reference the same anchor consistently.
+inputs:
+  source:
+    type: object
+    required: true
+    description: Source descriptor including origin metadata.
+  excerpt:
+    type: string
+    required: false
+    description: Optional quoted excerpt.
+  locator:
+    type: string
+    required: false
+    description: Optional source locator such as page or section.
+outputs:
+  citation:
+    type: object
+    required: true
+    description: Structured citation object with stable reference fields.
+  status:
+    type: string
+    required: true
+    description: Execution outcome status for downstream routing (ok | partial | error).
+  trace_ref:
+    type: string
+    required: false
+    description: Optional trace or correlation reference for audit and observability.
+properties:
+  deterministic: true
+  side_effects: false
+  idempotent: true
+  state_access: none
+  audit_level: standard
+metadata:
+  status: draft
+  tags:
+  - provenance
+  - citation
+  - generation
+  examples:
+  - summary: Generate a citation from a source fragment
+    inputs:
+      source:
+        url: https://example.com/article
+        title: Example
+      excerpt: Key fact
+    outputs:
+      status: ok
+      citation:
+        title: Example
+  layer: governance
+cognitive_hints:
+  role: synthesize
+  produces:
+    citation:
+      type: Entity
+  consumes:
+  - Context
