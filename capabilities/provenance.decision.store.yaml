@@ -52,7 +52,7 @@ outputs:
     required: false
     description: Human-readable summary of the stored decision record.
 properties:
-  deterministic: true
+  deterministic: false
   side_effects: true
   idempotent: false
   state_access: write

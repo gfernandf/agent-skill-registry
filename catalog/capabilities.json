@@ -11170,7 +11170,7 @@
       ]
     },
     "properties": {
-      "deterministic": true,
+      "deterministic": false,
       "side_effects": true,
       "idempotent": false,
       "state_access": "write",
