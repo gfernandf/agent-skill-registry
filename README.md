@@ -8,7 +8,11 @@ definitions**.
 ```bash
 pip install -r requirements.txt
 python tools/validate_registry.py
+python tools/governance_guardrails.py --fail-on-high-risk-overlap-channels community,official
+python tools/capability_governance_guardrails.py
+python tools/enforce_capability_sunset.py
 python tools/generate_catalog.py
+python tools/registry_stats.py
 ```
 
 See the companion runtime at [agent-skills](https://github.com/gfernandf/agent-skills) for execution.
@@ -147,7 +151,7 @@ code.diff.extract
 
 The vocabulary is defined in:
 
-vocabulary.json
+vocabulary/vocabulary.json
 
 This ensures:
 
@@ -165,16 +169,29 @@ Each step references a capability or another skill.
 
 Example:
 
+```yaml
 steps:
+    - id: fetch
+        uses: web.page.fetch
+        input:
+            url: inputs.url
+        output:
+            content: vars.page
 
--   id: fetch uses: web.page.fetch input: url: inputs.url output: content:
-    vars.page
+    - id: extract
+        uses: web.page.extract
+        input:
+            content: vars.page
+        output:
+            text: vars.text
 
--   id: extract uses: web.page.extract input: content: vars.page output:
-    text: vars.text
-
--   id: summarize uses: reasoning.content.summarize input: text: vars.text output:
-    summary: outputs.summary
+    - id: summarize
+        uses: reasoning.content.summarize
+        input:
+            text: vars.text
+        output:
+            summary: outputs.summary
+```
 
 Execution semantics:
 
@@ -266,11 +283,11 @@ Typical workflow:
 Commands:
 
 python tools/validate_registry.py\
-python tools/generate_catalog.py\
-python tools/registry_stats.py\
-python tools/governance_guardrails.py\
+python tools/governance_guardrails.py --fail-on-high-risk-overlap-channels community,official\
 python tools/capability_governance_guardrails.py\
-python tools/enforce_capability_sunset.py
+python tools/enforce_capability_sunset.py\
+python tools/generate_catalog.py\
+python tools/registry_stats.py
 
 ------------------------------------------------------------------------
 
