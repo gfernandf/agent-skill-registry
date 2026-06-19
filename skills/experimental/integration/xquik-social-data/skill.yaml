@@ -1,0 +1,137 @@
+id: integration.xquik-social-data
+version: 0.1.0
+name: Xquik Social Data
+description: >
+  Fetch public Xquik API responses for X and Twitter social data workflows,
+  normalize returned records, and gate the output before release.
+
+inputs:
+  url:
+    type: string
+    required: true
+    description: >
+      Fully qualified public Xquik API URL selected from the public API
+      reference, for example an /api/v1 route on xquik.com.
+  headers:
+    type: object
+    required: true
+    description: >
+      Runtime authentication and request headers. Provide credentials from the
+      execution environment and never store them in the skill definition.
+  record_mapping:
+    type: object
+    required: true
+    description: >
+      Field projection or rename mapping for returned records.
+  release_policy:
+    type: object
+    required: true
+    description: >
+      Output release policy. Set it to block secrets and private runtime details
+      while allowing public social-data records.
+  timeout_seconds:
+    type: number
+    required: false
+    description: Request timeout in seconds.
+
+outputs:
+  status_code:
+    type: number
+    required: true
+    description: HTTP response status code from Xquik.
+  success:
+    type: boolean
+    required: true
+    description: Whether the request returned a successful HTTP status.
+  records:
+    type: array
+    required: true
+    description: Normalized social-data records suitable for downstream analysis.
+  response_body:
+    type: object
+    required: true
+    description: Parsed public API response body.
+  allowed:
+    type: boolean
+    required: true
+    description: Whether the normalized output passed the release policy.
+  gate_reasons:
+    type: array
+    required: false
+    description: Reasons returned by the output gate.
+
+steps:
+  - id: request_xquik
+    uses: web.request.send
+    input:
+      url: inputs.url
+      method: GET
+      headers: inputs.headers
+      timeout_seconds: inputs.timeout_seconds
+    output:
+      status_code: outputs.status_code
+      success: outputs.success
+      body: outputs.response_body
+
+  - id: normalize_records
+    uses: data.record.transform
+    input:
+      records: outputs.response_body.items
+      mapping: inputs.record_mapping
+    output:
+      records: outputs.records
+
+  - id: gate_release
+    uses: security.output.gate
+    input:
+      output:
+        status_code: outputs.status_code
+        success: outputs.success
+        records: outputs.records
+      policy: inputs.release_policy
+    output:
+      allowed: outputs.allowed
+      reasons: outputs.gate_reasons
+
+metadata:
+  status: experimental
+  tags:
+    - integration
+    - xquik
+    - x
+    - twitter
+    - social-data
+    - api
+  category: integration
+  classification:
+    role: procedure
+    invocation: direct
+    effect_mode: enrich
+  use_cases:
+    - Collect public X or Twitter social data through Xquik API routes.
+    - Normalize tweet, user, trend, or monitor records for analysis workflows.
+    - Gate API output before sharing records with downstream agents or reports.
+  examples:
+    - description: Fetch a public Xquik API route and normalize returned records
+      input:
+        url: https://xquik.com/api/v1/x/trends
+        headers:
+          X-API-Key: "${XQUIK_API_KEY}"
+        record_mapping:
+          select:
+            - id
+            - name
+            - url
+            - count
+        release_policy:
+          block_secrets: true
+          block_private_runtime_details: true
+      output:
+        status_code: 200
+        success: true
+        records:
+          - id: trend_1
+            name: Example Topic
+            url: https://x.com/search?q=Example
+            count: 1200
+        allowed: true
