@@ -1,6 +1,6 @@
 id: agent.plan.execute
 version: 1.0.0
-status: experimental
+status: stable
 description: 'Execute a compiled ORCA plan DAG step by step, calling each referenced
   skill via the embedded runtime and chaining outputs through CognitiveState bindings.
   Returns a full execution result including per-step status, final state, and any
@@ -59,6 +59,7 @@ safety:
   scope_constraints:
   - sandboxed_execution
 metadata:
+  status: stable
   tags:
   - execution
   - orchestration

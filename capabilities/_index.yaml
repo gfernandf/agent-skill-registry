@@ -230,10 +230,6 @@ capabilities:
     status: draft
     description: Retrieve content from a memory system.
 
-  - id: memory.entry.store
-    status: draft
-    description: Store content in a memory system.
-
   - id: memory.vector.search
     status: draft
     description: Search memory records by vector similarity against a query embedding.
@@ -655,7 +651,7 @@ capabilities:
     description: Determine whether a compiled plan can proceed under current permissions and policy constraints. Returns approval status, any blocked steps, and prompts for steps requiring explicit user authorization.
 
   - id: agent.plan.execute
-    status: experimental
+    status: stable
     description: Execute a compiled, gate-approved ORCA plan DAG step by step using the embedded runtime. Calls each referenced skill, resolves $state.working.* bindings between steps, and returns full execution result with per-step status. Requires user confirmation (trust_level: elevated).
 
   - id: reasoning.output.generate

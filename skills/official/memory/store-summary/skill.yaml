@@ -24,10 +24,11 @@ steps:
   output:
     summary: outputs.summary
 - id: store_memory
-  uses: memory.entry.store
+  uses: memory.record.store
   input:
-    key: inputs.key
-    value:
+    namespace: memory
+    record:
+      id: inputs.key
       summary: outputs.summary
       source_text: inputs.text
   output:

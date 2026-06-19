@@ -89,7 +89,6 @@ behavior and should not be treated as cognitive reasoning primitives.
 - `memory.context.summarize`
 - `memory.context.update`
 - `memory.entry.retrieve`
-- `memory.entry.store`
 - `memory.record.store`
 - `memory.vector.search`
 

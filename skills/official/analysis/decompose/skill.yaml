@@ -80,7 +80,7 @@ steps:
   output:
     label: outputs.decomposition_strategy
 - id: split_problem
-  uses: reasoning.problem.split
+  uses: reasoning.problem.decompose
   input:
     problem: inputs.problem
     strategy: outputs.decomposition_strategy

@@ -18,16 +18,17 @@ outputs:
     required: true
 steps:
 - id: embed_text
-  uses: reasoning.content.embed
+  uses: reasoning.embedding.generate
   input:
     text: inputs.text
   output:
     embedding: outputs.embedding
 - id: store_embedding
-  uses: memory.entry.store
+  uses: memory.record.store
   input:
-    key: inputs.key
-    value:
+    namespace: memory
+    record:
+      id: inputs.key
       embedding: outputs.embedding
       source_text: inputs.text
   output:

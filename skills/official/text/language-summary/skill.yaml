@@ -15,7 +15,7 @@ outputs:
     required: true
 steps:
 - id: detect_language
-  uses: reasoning.language.detect
+  uses: perception.language.detect
   input:
     text: inputs.text
   output:

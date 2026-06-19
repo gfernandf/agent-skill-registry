@@ -82,7 +82,7 @@ For current operational scope and governance, use:
 ### Memory
 
 - memory.entry.retrieve
-- memory.entry.store
+- memory.record.store
 
 ### Ops
 
