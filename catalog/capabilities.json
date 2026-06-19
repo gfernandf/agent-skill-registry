@@ -251,7 +251,7 @@
         "agent-pipeline"
       ],
       "category": null,
-      "status": "unspecified",
+      "status": "stable",
       "examples": [
         {
           "compiled_plan": {
@@ -8277,87 +8277,6 @@
       "consumes": [
         "Entity"
       ]
-    }
-  },
-  {
-    "id": "memory.entry.store",
-    "version": "1.0.0",
-    "description": "Legacy memory write alias. Prefer memory.record.store for canonical structured memory writes.\n",
-    "file": "capabilities/memory.entry.store.yaml",
-    "inputs": {
-      "key": {
-        "type": "string",
-        "required": true,
-        "description": "Memory key."
-      },
-      "value": {
-        "type": "object",
-        "required": true,
-        "description": "Value to store. Schema: object with stable keys expected by downstream consumers; additional keys are optional unless otherwise specified."
-      }
-    },
-    "outputs": {
-      "stored": {
-        "type": "boolean",
-        "required": true,
-        "description": "Whether storage succeeded."
-      },
-      "status": {
-        "type": "string",
-        "required": true,
-        "description": "Execution outcome status for downstream routing (ok | partial | error)."
-      },
-      "trace_ref": {
-        "type": "string",
-        "required": false,
-        "description": "Optional trace or correlation reference for audit and observability."
-      }
-    },
-    "metadata": {
-      "tags": [
-        "memory",
-        "storage",
-        "persistence",
-        "legacy"
-      ],
-      "category": null,
-      "status": "deprecated",
-      "examples": [
-        {
-          "summary": "Store a key-value memory entry",
-          "inputs": {
-            "key": "user_preference",
-            "value": "dark_mode"
-          },
-          "outputs": {
-            "stored": true
-          }
-        }
-      ]
-    },
-    "properties": {
-      "deterministic": true,
-      "side_effects": true,
-      "idempotent": true,
-      "state_access": "write",
-      "audit_level": "strict"
-    },
-    "replacement": "memory.record.store",
-    "cognitive_hints": {
-      "role": "act",
-      "produces": {
-        "stored": {
-          "type": "Entity"
-        }
-      },
-      "consumes": [
-        "Entity"
-      ]
-    },
-    "safety": {
-      "trust_level": "standard",
-      "data_classification": "internal",
-      "reversible": true
     }
   },
   {

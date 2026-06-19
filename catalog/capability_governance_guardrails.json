@@ -1,9 +1,9 @@
 {
   "summary": {
-    "capabilities_total": 192,
+    "capabilities_total": 184,
     "covered_domains": 26,
     "uncovered_domains": 5,
-    "semantic_family_alerts": 29,
+    "semantic_family_alerts": 28,
     "duplicate_description_alerts": 0,
     "metadata_issues": 0
   },
@@ -175,12 +175,10 @@
       "verb": "store",
       "capability_ids": [
         "memory.context.store",
-        "memory.entry.store",
         "memory.record.store"
       ],
       "noun_variants": [
         "context",
-        "entry",
         "record"
       ],
       "recommendation": "review-for-canonical-operation"
@@ -347,19 +345,6 @@
       "noun_variants": [
         "constraint",
         "plan"
-      ],
-      "recommendation": "review-for-canonical-operation"
-    },
-    {
-      "domain": "reasoning",
-      "verb": "split",
-      "capability_ids": [
-        "reasoning.plan.split",
-        "reasoning.problem.split"
-      ],
-      "noun_variants": [
-        "plan",
-        "problem"
       ],
       "recommendation": "review-for-canonical-operation"
     },

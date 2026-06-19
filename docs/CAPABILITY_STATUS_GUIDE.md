@@ -23,8 +23,8 @@ The validator (`tools/validate_registry.py`) enforces these statuses:
 As of v0.1.0:
 
 - **6 capabilities** marked `draft` — stubs with placeholder contracts.
-- **109 capabilities** marked `experimental` — contracts defined, under validation.
-- **7 capabilities** marked `stable` — contracts finalized, production-ready.
+- **108 capabilities** marked `experimental` — contracts defined, under validation.
+- **8 capabilities** marked `stable` — contracts finalized, production-ready.
 - **0 capabilities** marked `deprecated`.
 
 ---

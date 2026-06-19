@@ -154,14 +154,14 @@
     },
     "memory.store-embedding": {
       "capabilities": [
-        "memory.entry.store",
+        "memory.record.store",
         "reasoning.content.embed"
       ],
       "skills": []
     },
     "memory.store-summary": {
       "capabilities": [
-        "memory.entry.store",
+        "memory.record.store",
         "reasoning.content.summarize"
       ],
       "skills": []

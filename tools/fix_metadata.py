@@ -300,11 +300,6 @@ EXAMPLES: dict[str, dict[str, Any]] = {
         "inputs": {"key": "user_preference"},
         "outputs": {"value": "dark_mode", "found": True},
     },
-    "memory.entry.store": {
-        "summary": "Store a key-value memory entry",
-        "inputs": {"key": "user_preference", "value": "dark_mode"},
-        "outputs": {"stored": True},
-    },
     "memory.record.store": {
         "summary": "Store a structured record in a namespace",
         "inputs": {"namespace": "session", "record": {"id": "r1", "content": "Context data"}},

@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 185,
+    "capability_count": 184,
     "skill_count": 39,
     "domain_count": 29,
     "channel_count": 2
@@ -41,10 +41,10 @@
       "perception": 11,
       "task": 11,
       "identity": 10,
-      "memory": 9,
       "data": 8,
       "decision": 8,
       "evidence": 8,
+      "memory": 8,
       "policy": 7,
       "web": 6,
       "table": 5,
@@ -63,9 +63,9 @@
       "video": 1
     },
     "by_status": {
-      "stable": 163,
-      "unspecified": 14,
-      "deprecated": 6,
+      "stable": 164,
+      "unspecified": 13,
+      "deprecated": 5,
       "experimental": 2
     },
     "most_used": [
@@ -146,7 +146,7 @@
         "count": 2
       },
       {
-        "id": "memory.entry.store",
+        "id": "memory.record.store",
         "count": 2
       },
       {
@@ -395,7 +395,6 @@
       "memory.context.retrieve",
       "memory.context.store",
       "memory.context.update",
-      "memory.record.store",
       "memory.vector.search",
       "message.content.format",
       "message.notification.send",
@@ -460,7 +459,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 185,
+    "capabilities_with_nondefault_metadata": 184,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -889,11 +888,11 @@
         "count": 9
       },
       {
-        "id": "memory",
-        "count": 9
+        "id": "extraction",
+        "count": 8
       },
       {
-        "id": "extraction",
+        "id": "memory",
         "count": 8
       },
       {
@@ -1137,10 +1136,6 @@
         "count": 3
       },
       {
-        "id": "storage",
-        "count": 3
-      },
-      {
         "id": "structuring",
         "count": 3
       },
@@ -1253,10 +1248,6 @@
         "count": 2
       },
       {
-        "id": "persistence",
-        "count": 2
-      },
-      {
         "id": "plan-expansion",
         "count": 2
       },
@@ -1314,6 +1305,10 @@
       },
       {
         "id": "spreadsheet",
+        "count": 2
+      },
+      {
+        "id": "storage",
         "count": 2
       },
       {
@@ -1621,10 +1616,6 @@
         "count": 1
       },
       {
-        "id": "legacy",
-        "count": 1
-      },
-      {
         "id": "loop",
         "count": 1
       },
@@ -1706,6 +1697,10 @@
       },
       {
         "id": "pdf",
+        "count": 1
+      },
+      {
+        "id": "persistence",
         "count": 1
       },
       {

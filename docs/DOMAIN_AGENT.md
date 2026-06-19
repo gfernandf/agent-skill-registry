@@ -49,7 +49,7 @@ the backbone of agentic workflows and skill composition.
 | `reasoning.plan.reconcile` | experimental | no | no | pythoncall, OpenAI chat |
 | `reasoning.plan.synthesize` | experimental | yes | no | pythoncall, OpenAI chat |
 | `evaluation.plan.gate` | experimental | no | no | pythoncall, OpenAI chat |
-| `agent.plan.run` | experimental | no | yes | pythoncall, OpenAI chat |
+| `agent.plan.execute` | stable | no | yes | pythoncall |
 | `reasoning.output.generate` | experimental | no | no | pythoncall, OpenAI chat |
 | `reasoning.output.synthesize` | experimental | no | no | pythoncall, OpenAI chat |
 
@@ -82,7 +82,7 @@ the backbone of agentic workflows and skill composition.
 | `reasoning.plan.reconcile` | `python_agent_plan_reconcile` — repair invalid plans | `openapi_agent_plan_reconcile_openai_chat` — gpt-4o-mini | — |
 | `reasoning.plan.synthesize` | `python_agent_plan_synthesize` — compile plan into DAG (deterministic) | `openapi_agent_plan_synthesize_openai_chat` — gpt-4o-mini | — |
 | `evaluation.plan.gate` | `python_agent_plan_gate` — authorization check before execution | `openapi_agent_plan_gate_openai_chat` — gpt-4o-mini | — |
-| `agent.plan.run` | `python_agent_plan_run` — execute compiled plan (stub: returns success) | `openapi_agent_plan_run_openai_chat` — gpt-4o-mini, temp 0.1 | — |
+| `agent.plan.execute` | `python_agent_plan_execute` — execute compiled ORCA DAG with runtime enforcement | — | — |
 | `reasoning.output.generate` | `python_agent_output_generate` — produce final user-facing report | `openapi_agent_output_generate_openai_chat` — gpt-4o-mini | — |
 | `reasoning.output.synthesize` | `python_agent_output_synthesize` — extract reusable skill from trace | `openapi_agent_output_synthesize_openai_chat` — gpt-4o-mini, temp 0.3 | — |
 
