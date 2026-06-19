@@ -3,35 +3,13 @@
     "skills_total": 39,
     "skills_with_metadata_issues": 0,
     "overlap_alerts": 0,
-    "unknown_capability_references": 7,
+    "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
     "min_shared_capabilities": 2
   },
   "skills_with_metadata_issues": [],
   "overlap_alerts": [],
-  "unknown_capability_references": {
-    "analysis.decompose": [
-      "reasoning.problem.split"
-    ],
-    "doc.chunk-and-embed": [
-      "reasoning.content.embed"
-    ],
-    "memory.store-embedding": [
-      "reasoning.content.embed"
-    ],
-    "pdf.chunk-and-embed": [
-      "reasoning.content.embed"
-    ],
-    "text.detect-language-and-classify": [
-      "reasoning.language.detect"
-    ],
-    "text.language-summary": [
-      "reasoning.language.detect"
-    ],
-    "web.page-chunk-and-embed": [
-      "reasoning.content.embed"
-    ]
-  },
+  "unknown_capability_references": {},
   "policy_hints": {
     "canonical_first": "Prefer one canonical skill per job-to-be-done; model variants with inputs/profiles.",
     "new_skill_gate": "Require explicit differentiation from existing skills with similar capability graph.",
