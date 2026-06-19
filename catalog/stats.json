@@ -1,6 +1,6 @@
 {
   "summary": {
-    "capability_count": 192,
+    "capability_count": 185,
     "skill_count": 39,
     "domain_count": 29,
     "channel_count": 2
@@ -35,13 +35,13 @@
   },
   "capabilities": {
     "by_domain": {
-      "reasoning": 44,
+      "reasoning": 39,
       "evaluation": 18,
       "integration": 12,
-      "perception": 12,
+      "perception": 11,
       "task": 11,
       "identity": 10,
-      "memory": 10,
+      "memory": 9,
       "data": 8,
       "decision": 8,
       "evidence": 8,
@@ -65,7 +65,7 @@
     "by_status": {
       "stable": 163,
       "unspecified": 14,
-      "deprecated": 13,
+      "deprecated": 6,
       "experimental": 2
     },
     "most_used": [
@@ -394,7 +394,6 @@
       "memory.context.reconcile",
       "memory.context.retrieve",
       "memory.context.store",
-      "memory.context.summarize",
       "memory.context.update",
       "memory.record.store",
       "memory.vector.search",
@@ -407,7 +406,6 @@
       "perception.case.list",
       "perception.case.search",
       "perception.event.monitor",
-      "perception.input.collect",
       "perception.input.structure",
       "perception.language.detect",
       "perception.sla.monitor",
@@ -424,9 +422,7 @@
       "reasoning.hypothesis.generate",
       "reasoning.output.classify",
       "reasoning.output.normalize",
-      "reasoning.output.sanitize",
       "reasoning.output.synthesize",
-      "reasoning.plan.create",
       "reasoning.plan.decompose",
       "reasoning.priority.classify",
       "reasoning.problem.decompose",
@@ -464,7 +460,7 @@
   },
   "metadata": {
     "skills_with_nondefault_metadata": 39,
-    "capabilities_with_nondefault_metadata": 192,
+    "capabilities_with_nondefault_metadata": 185,
     "top_skill_tags": [
       {
         "id": "summarization",
@@ -861,16 +857,16 @@
         "count": 22
       },
       {
-        "id": "text",
-        "count": 18
-      },
-      {
         "id": "task",
         "count": 17
       },
       {
+        "id": "text",
+        "count": 16
+      },
+      {
         "id": "analysis",
-        "count": 14
+        "count": 13
       },
       {
         "id": "governance",
@@ -889,15 +885,11 @@
         "count": 10
       },
       {
-        "id": "memory",
-        "count": 10
-      },
-      {
         "id": "evaluation",
         "count": 9
       },
       {
-        "id": "model",
+        "id": "memory",
         "count": 9
       },
       {
@@ -905,7 +897,7 @@
         "count": 8
       },
       {
-        "id": "nlp",
+        "id": "model",
         "count": 8
       },
       {
@@ -941,7 +933,7 @@
         "count": 6
       },
       {
-        "id": "context",
+        "id": "nlp",
         "count": 6
       },
       {
@@ -953,15 +945,11 @@
         "count": 5
       },
       {
-        "id": "detection",
+        "id": "context",
         "count": 5
       },
       {
         "id": "event",
-        "count": 5
-      },
-      {
-        "id": "input",
         "count": 5
       },
       {
@@ -1005,11 +993,15 @@
         "count": 4
       },
       {
-        "id": "developer-tools",
+        "id": "detection",
         "count": 4
       },
       {
         "id": "image",
+        "count": 4
+      },
+      {
+        "id": "input",
         "count": 4
       },
       {
@@ -1029,10 +1021,6 @@
         "count": 4
       },
       {
-        "id": "pii",
-        "count": 4
-      },
-      {
         "id": "processing",
         "count": 4
       },
@@ -1046,10 +1034,6 @@
       },
       {
         "id": "risk",
-        "count": 4
-      },
-      {
-        "id": "structuring",
         "count": 4
       },
       {
@@ -1082,6 +1066,10 @@
       },
       {
         "id": "create",
+        "count": 3
+      },
+      {
+        "id": "developer-tools",
         "count": 3
       },
       {
@@ -1125,6 +1113,10 @@
         "count": 3
       },
       {
+        "id": "pii",
+        "count": 3
+      },
+      {
         "id": "preprocessing",
         "count": 3
       },
@@ -1137,10 +1129,6 @@
         "count": 3
       },
       {
-        "id": "safety",
-        "count": 3
-      },
-      {
         "id": "search",
         "count": 3
       },
@@ -1150,6 +1138,10 @@
       },
       {
         "id": "storage",
+        "count": 3
+      },
+      {
+        "id": "structuring",
         "count": 3
       },
       {
@@ -1166,10 +1158,6 @@
       },
       {
         "id": "update",
-        "count": 3
-      },
-      {
-        "id": "vector",
         "count": 3
       },
       {
@@ -1205,15 +1193,7 @@
         "count": 2
       },
       {
-        "id": "content-filter",
-        "count": 2
-      },
-      {
         "id": "csv",
-        "count": 2
-      },
-      {
-        "id": "decomposition",
         "count": 2
       },
       {
@@ -1222,10 +1202,6 @@
       },
       {
         "id": "email",
-        "count": 2
-      },
-      {
-        "id": "embedding",
         "count": 2
       },
       {
@@ -1321,7 +1297,7 @@
         "count": 2
       },
       {
-        "id": "sanitize",
+        "id": "safety",
         "count": 2
       },
       {
@@ -1341,10 +1317,6 @@
         "count": 2
       },
       {
-        "id": "summarize",
-        "count": 2
-      },
-      {
         "id": "template",
         "count": 2
       },
@@ -1358,6 +1330,10 @@
       },
       {
         "id": "utility",
+        "count": 2
+      },
+      {
+        "id": "vector",
         "count": 2
       },
       {
@@ -1378,10 +1354,6 @@
       },
       {
         "id": "adapter",
-        "count": 1
-      },
-      {
-        "id": "agent",
         "count": 1
       },
       {
@@ -1473,10 +1445,6 @@
         "count": 1
       },
       {
-        "id": "collection",
-        "count": 1
-      },
-      {
         "id": "compilation",
         "count": 1
       },
@@ -1498,6 +1466,10 @@
       },
       {
         "id": "constraints",
+        "count": 1
+      },
+      {
+        "id": "content-filter",
         "count": 1
       },
       {
@@ -1529,6 +1501,10 @@
         "count": 1
       },
       {
+        "id": "decomposition",
+        "count": 1
+      },
+      {
         "id": "deduplication",
         "count": 1
       },
@@ -1554,6 +1530,10 @@
       },
       {
         "id": "document-processing",
+        "count": 1
+      },
+      {
+        "id": "embedding",
         "count": 1
       },
       {
@@ -1590,10 +1570,6 @@
       },
       {
         "id": "filtering",
-        "count": 1
-      },
-      {
-        "id": "form",
         "count": 1
       },
       {
@@ -1662,10 +1638,6 @@
       },
       {
         "id": "media",
-        "count": 1
-      },
-      {
-        "id": "meta",
         "count": 1
       },
       {
@@ -1821,7 +1793,7 @@
         "count": 1
       },
       {
-        "id": "scaffolding",
+        "id": "sanitize",
         "count": 1
       },
       {
@@ -1901,6 +1873,10 @@
         "count": 1
       },
       {
+        "id": "summarize",
+        "count": 1
+      },
+      {
         "id": "sync",
         "count": 1
       },
@@ -1946,10 +1922,6 @@
       },
       {
         "id": "upsert",
-        "count": 1
-      },
-      {
-        "id": "user-interaction",
         "count": 1
       },
       {
