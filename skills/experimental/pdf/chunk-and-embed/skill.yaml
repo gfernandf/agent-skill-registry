@@ -38,7 +38,7 @@ steps:
   output:
     chunks: outputs.chunks
 - id: embed
-  uses: reasoning.content.embed
+  uses: reasoning.embedding.generate
   input:
     text: outputs.text
   output:

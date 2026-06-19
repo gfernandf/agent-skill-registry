@@ -1082,7 +1082,7 @@
       },
       {
         "id": "split_problem",
-        "uses": "reasoning.problem.split",
+        "uses": "reasoning.problem.decompose",
         "input": {
           "problem": "inputs.problem",
           "strategy": "outputs.decomposition_strategy",
@@ -1133,7 +1133,7 @@
     "uses_capabilities": [
       "evaluation.output.score",
       "reasoning.content.classify",
-      "reasoning.problem.split"
+      "reasoning.problem.decompose"
     ],
     "uses_skills": [],
     "metadata": {
@@ -2620,7 +2620,7 @@
       },
       {
         "id": "embed",
-        "uses": "reasoning.content.embed",
+        "uses": "reasoning.embedding.generate",
         "input": {
           "text": "inputs.text"
         },
@@ -2631,7 +2631,7 @@
     ],
     "uses_capabilities": [
       "doc.content.chunk",
-      "reasoning.content.embed"
+      "reasoning.embedding.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3189,7 +3189,7 @@
     "steps": [
       {
         "id": "embed_text",
-        "uses": "reasoning.content.embed",
+        "uses": "reasoning.embedding.generate",
         "input": {
           "text": "inputs.text"
         },
@@ -3215,7 +3215,7 @@
     ],
     "uses_capabilities": [
       "memory.record.store",
-      "reasoning.content.embed"
+      "reasoning.embedding.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -3415,7 +3415,7 @@
       },
       {
         "id": "embed",
-        "uses": "reasoning.content.embed",
+        "uses": "reasoning.embedding.generate",
         "input": {
           "text": "outputs.text"
         },
@@ -3427,7 +3427,7 @@
     "uses_capabilities": [
       "doc.content.chunk",
       "pdf.document.read",
-      "reasoning.content.embed"
+      "reasoning.embedding.generate"
     ],
     "uses_skills": [],
     "metadata": {
@@ -4935,7 +4935,7 @@
     "steps": [
       {
         "id": "detect_language",
-        "uses": "reasoning.language.detect",
+        "uses": "perception.language.detect",
         "input": {
           "text": "inputs.text"
         },
@@ -4957,8 +4957,8 @@
       }
     ],
     "uses_capabilities": [
-      "reasoning.content.classify",
-      "reasoning.language.detect"
+      "perception.language.detect",
+      "reasoning.content.classify"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5229,7 +5229,7 @@
     "steps": [
       {
         "id": "detect_language",
-        "uses": "reasoning.language.detect",
+        "uses": "perception.language.detect",
         "input": {
           "text": "inputs.text"
         },
@@ -5249,8 +5249,8 @@
       }
     ],
     "uses_capabilities": [
-      "reasoning.content.summarize",
-      "reasoning.language.detect"
+      "perception.language.detect",
+      "reasoning.content.summarize"
     ],
     "uses_skills": [],
     "metadata": {
@@ -5667,7 +5667,7 @@
       },
       {
         "id": "embed",
-        "uses": "reasoning.content.embed",
+        "uses": "reasoning.embedding.generate",
         "input": {
           "text": "outputs.text"
         },
@@ -5678,7 +5678,7 @@
     ],
     "uses_capabilities": [
       "doc.content.chunk",
-      "reasoning.content.embed",
+      "reasoning.embedding.generate",
       "web.page.extract",
       "web.page.fetch"
     ],

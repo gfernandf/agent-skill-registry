@@ -20,12 +20,13 @@ The validator (`tools/validate_registry.py`) enforces these statuses:
 
 ## Current registry snapshot
 
-As of v0.1.0:
+Based on `catalog/stats.json`:
 
-- **6 capabilities** marked `draft` — stubs with placeholder contracts.
-- **108 capabilities** marked `experimental` — contracts defined, under validation.
-- **8 capabilities** marked `stable` — contracts finalized, production-ready.
-- **0 capabilities** marked `deprecated`.
+- **0 capabilities** marked `draft`.
+- **2 capabilities** marked `experimental` — contracts defined, under validation.
+- **164 capabilities** marked `stable` — contracts finalized, production-ready.
+- **5 capabilities** marked `deprecated`.
+- **13 capabilities** marked `unspecified` — legacy or uncategorized.
 
 ---
 

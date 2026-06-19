@@ -90,7 +90,7 @@
         "count": 4
       },
       {
-        "id": "reasoning.content.embed",
+        "id": "reasoning.embedding.generate",
         "count": 4
       },
       {
@@ -154,7 +154,7 @@
         "count": 2
       },
       {
-        "id": "reasoning.language.detect",
+        "id": "perception.language.detect",
         "count": 2
       },
       {
@@ -290,7 +290,7 @@
         "count": 1
       },
       {
-        "id": "reasoning.problem.split",
+        "id": "reasoning.problem.decompose",
         "count": 1
       },
       {
@@ -406,7 +406,6 @@
       "perception.case.search",
       "perception.event.monitor",
       "perception.input.structure",
-      "perception.language.detect",
       "perception.sla.monitor",
       "policy.constraint.validate",
       "policy.decision.evaluate",
@@ -417,14 +416,12 @@
       "reasoning.constraint.reconcile",
       "reasoning.content.compare",
       "reasoning.content.generate",
-      "reasoning.embedding.generate",
       "reasoning.hypothesis.generate",
       "reasoning.output.classify",
       "reasoning.output.normalize",
       "reasoning.output.synthesize",
       "reasoning.plan.decompose",
       "reasoning.priority.classify",
-      "reasoning.problem.decompose",
       "reasoning.prompt.template",
       "reasoning.response.extract",
       "reasoning.response.generate",

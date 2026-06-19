@@ -52,7 +52,7 @@
       "capabilities": [
         "evaluation.output.score",
         "reasoning.content.classify",
-        "reasoning.problem.split"
+        "reasoning.problem.decompose"
       ],
       "skills": []
     },
@@ -117,7 +117,7 @@
     "doc.chunk-and-embed": {
       "capabilities": [
         "doc.content.chunk",
-        "reasoning.content.embed"
+        "reasoning.embedding.generate"
       ],
       "skills": []
     },
@@ -155,7 +155,7 @@
     "memory.store-embedding": {
       "capabilities": [
         "memory.record.store",
-        "reasoning.content.embed"
+        "reasoning.embedding.generate"
       ],
       "skills": []
     },
@@ -170,7 +170,7 @@
       "capabilities": [
         "doc.content.chunk",
         "pdf.document.read",
-        "reasoning.content.embed"
+        "reasoning.embedding.generate"
       ],
       "skills": []
     },
@@ -250,8 +250,8 @@
     },
     "text.detect-language-and-classify": {
       "capabilities": [
-        "reasoning.content.classify",
-        "reasoning.language.detect"
+        "perception.language.detect",
+        "reasoning.content.classify"
       ],
       "skills": []
     },
@@ -272,8 +272,8 @@
     },
     "text.language-summary": {
       "capabilities": [
-        "reasoning.content.summarize",
-        "reasoning.language.detect"
+        "perception.language.detect",
+        "reasoning.content.summarize"
       ],
       "skills": []
     },
@@ -303,7 +303,7 @@
     "web.page-chunk-and-embed": {
       "capabilities": [
         "doc.content.chunk",
-        "reasoning.content.embed",
+        "reasoning.embedding.generate",
         "web.page.extract",
         "web.page.fetch"
       ],
