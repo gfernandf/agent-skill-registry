@@ -5928,5 +5928,190 @@
         "effect_mode": "enrich"
       }
     }
+  },
+  {
+    "id": "xquik.public-post-search",
+    "version": "0.1.0",
+    "name": "Xquik Public Post Search",
+    "description": "Search public X posts through the Xquik REST API and normalize the paginated response.",
+    "channel": "experimental",
+    "domain": "social",
+    "slug": "xquik-public-post-search",
+    "file": "skills/experimental/social/xquik-public-post-search/skill.yaml",
+    "inputs": {
+      "search_url": {
+        "type": "string",
+        "required": true,
+        "description": "Fully encoded Xquik search URL, for example https://xquik.com/api/v1/x/tweets/search?q=AI&limit=20."
+      },
+      "headers": {
+        "type": "object",
+        "required": true,
+        "description": "Request headers supplied by the caller, including Xquik API authentication."
+      },
+      "timeout_seconds": {
+        "type": "number",
+        "required": false,
+        "description": "Optional request timeout in seconds."
+      }
+    },
+    "outputs": {
+      "tweets": {
+        "type": "array",
+        "required": true,
+        "description": "Normalized public post records returned by Xquik."
+      },
+      "pagination": {
+        "type": "object",
+        "required": true,
+        "description": "Pagination metadata with has_next_page and next_cursor."
+      },
+      "request_status": {
+        "type": "object",
+        "required": true,
+        "description": "HTTP status and success metadata from the Xquik request."
+      }
+    },
+    "steps": [
+      {
+        "id": "fetch_public_posts",
+        "uses": "web.request.send",
+        "input": {
+          "url": "inputs.search_url",
+          "method": "GET",
+          "headers": "inputs.headers",
+          "timeout_seconds": "inputs.timeout_seconds"
+        },
+        "output": {
+          "status_code": "outputs.request_status.status_code",
+          "success": "outputs.request_status.success",
+          "body": "vars.search_response"
+        }
+      },
+      {
+        "id": "validate_paginated_response",
+        "uses": "data.schema.validate",
+        "input": {
+          "data": "vars.search_response",
+          "schema": {
+            "type": "object",
+            "required": [
+              "tweets",
+              "has_next_page",
+              "next_cursor"
+            ],
+            "properties": {
+              "tweets": {
+                "type": "array"
+              },
+              "has_next_page": {
+                "type": "boolean"
+              },
+              "next_cursor": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "output": {
+          "valid": "vars.response_valid",
+          "errors": "vars.response_errors"
+        }
+      },
+      {
+        "id": "normalize_posts",
+        "uses": "data.record.transform",
+        "input": {
+          "records": "vars.search_response.tweets",
+          "mapping": {
+            "select": [
+              "id",
+              "text",
+              "author",
+              "created_at",
+              "url"
+            ]
+          }
+        },
+        "output": {
+          "records": "outputs.tweets"
+        }
+      },
+      {
+        "id": "expose_pagination",
+        "uses": "data.field.map",
+        "input": {
+          "record": "vars.search_response",
+          "mapping": {
+            "has_next_page": "has_next_page",
+            "next_cursor": "next_cursor"
+          },
+          "drop_unmapped": true
+        },
+        "output": {
+          "record": "outputs.pagination"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.field.map",
+      "data.record.transform",
+      "data.schema.validate",
+      "web.request.send"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "xquik",
+        "x",
+        "search",
+        "social-data",
+        "api"
+      ],
+      "category": null,
+      "status": "experimental",
+      "use_cases": [
+        "Search public X posts for market, community, or incident monitoring.",
+        "Normalize Xquik paginated search responses for downstream analysis."
+      ],
+      "examples": [
+        {
+          "description": "Search recent public posts about AI agents",
+          "input": {
+            "search_url": "https://xquik.com/api/v1/x/tweets/search?q=AI%20agents&limit=20",
+            "headers": {
+              "Authorization": "Bearer ${XQUIK_API_KEY}"
+            },
+            "timeout_seconds": 30
+          },
+          "output": {
+            "tweets": [
+              {
+                "id": "1840000000000000000",
+                "text": "AI agents are moving into production workflows.",
+                "author": {
+                  "username": "example"
+                },
+                "created_at": "2026-06-22T12:00:00Z",
+                "url": "https://x.com/example/status/1840000000000000000"
+              }
+            ],
+            "pagination": {
+              "has_next_page": true,
+              "next_cursor": "DAACCgACGRElMJcAAA"
+            },
+            "request_status": {
+              "status_code": 200,
+              "success": true
+            }
+          }
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
   }
 ]
