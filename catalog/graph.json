@@ -103,6 +103,23 @@
       ],
       "skills": []
     },
+    "decision.action-preflight-forecast": {
+      "capabilities": [
+        "data.record.merge",
+        "decision.flow.branch",
+        "decision.option.justify",
+        "evaluation.option.score",
+        "perception.entity.extract",
+        "policy.risk.classify",
+        "policy.risk.score",
+        "reasoning.goal.interpret",
+        "reasoning.option.analyze",
+        "reasoning.option.generate",
+        "reasoning.request.normalize",
+        "reasoning.risk.extract"
+      ],
+      "skills": []
+    },
     "decision.make": {
       "capabilities": [
         "decision.option.justify",

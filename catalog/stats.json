@@ -1,7 +1,7 @@
 {
   "summary": {
     "capability_count": 184,
-    "skill_count": 39,
+    "skill_count": 40,
     "domain_count": 29,
     "channel_count": 2
   },
@@ -15,9 +15,9 @@
       "pdf": 3,
       "research": 3,
       "code": 2,
+      "decision": 2,
       "audio": 1,
       "data": 1,
-      "decision": 1,
       "doc": 1,
       "email": 1,
       "eval": 1,
@@ -27,10 +27,10 @@
       "task": 1
     },
     "by_channel": {
-      "official": 25,
+      "official": 26,
       "experimental": 14
     },
-    "average_steps": 3.33,
+    "average_steps": 3.65,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -94,7 +94,19 @@
         "count": 4
       },
       {
+        "id": "reasoning.risk.extract",
+        "count": 4
+      },
+      {
+        "id": "decision.flow.branch",
+        "count": 3
+      },
+      {
         "id": "doc.content.chunk",
+        "count": 3
+      },
+      {
+        "id": "evaluation.option.score",
         "count": 3
       },
       {
@@ -106,15 +118,19 @@
         "count": 3
       },
       {
+        "id": "perception.entity.extract",
+        "count": 3
+      },
+      {
         "id": "perception.keyword.extract",
         "count": 3
       },
       {
-        "id": "reasoning.output.generate",
+        "id": "reasoning.option.analyze",
         "count": 3
       },
       {
-        "id": "reasoning.risk.extract",
+        "id": "reasoning.output.generate",
         "count": 3
       },
       {
@@ -130,15 +146,11 @@
         "count": 3
       },
       {
-        "id": "decision.flow.branch",
-        "count": 2
-      },
-      {
         "id": "decision.input.route",
         "count": 2
       },
       {
-        "id": "evaluation.option.score",
+        "id": "decision.option.justify",
         "count": 2
       },
       {
@@ -150,19 +162,27 @@
         "count": 2
       },
       {
-        "id": "perception.entity.extract",
-        "count": 2
-      },
-      {
         "id": "perception.language.detect",
         "count": 2
       },
       {
-        "id": "reasoning.option.analyze",
+        "id": "policy.risk.classify",
+        "count": 2
+      },
+      {
+        "id": "reasoning.goal.interpret",
+        "count": 2
+      },
+      {
+        "id": "reasoning.option.generate",
         "count": 2
       },
       {
         "id": "reasoning.plan.generate",
+        "count": 2
+      },
+      {
+        "id": "reasoning.request.normalize",
         "count": 2
       },
       {
@@ -186,11 +206,11 @@
         "count": 1
       },
       {
-        "id": "data.record.transform",
+        "id": "data.record.merge",
         "count": 1
       },
       {
-        "id": "decision.option.justify",
+        "id": "data.record.transform",
         "count": 1
       },
       {
@@ -246,7 +266,7 @@
         "count": 1
       },
       {
-        "id": "policy.risk.classify",
+        "id": "policy.risk.score",
         "count": 1
       },
       {
@@ -263,14 +283,6 @@
       },
       {
         "id": "reasoning.criteria.define",
-        "count": 1
-      },
-      {
-        "id": "reasoning.goal.interpret",
-        "count": 1
-      },
-      {
-        "id": "reasoning.option.generate",
         "count": 1
       },
       {
@@ -291,10 +303,6 @@
       },
       {
         "id": "reasoning.problem.decompose",
-        "count": 1
-      },
-      {
-        "id": "reasoning.request.normalize",
         "count": 1
       },
       {
@@ -338,7 +346,6 @@
       "data.field.map",
       "data.record.deduplicate",
       "data.record.join",
-      "data.record.merge",
       "decision.flow.catch",
       "decision.option.select",
       "decision.strategy.select",
@@ -410,7 +417,6 @@
       "policy.constraint.validate",
       "policy.decision.evaluate",
       "policy.record.classify",
-      "policy.risk.score",
       "reasoning.assumption.extract",
       "reasoning.constraint.extract",
       "reasoning.constraint.reconcile",
@@ -450,12 +456,12 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 129,
+    "skill_to_capability_edges": 141,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 14
   },
   "metadata": {
-    "skills_with_nondefault_metadata": 39,
+    "skills_with_nondefault_metadata": 40,
     "capabilities_with_nondefault_metadata": 184,
     "top_skill_tags": [
       {
@@ -519,6 +525,10 @@
         "count": 3
       },
       {
+        "id": "decision-support",
+        "count": 3
+      },
+      {
         "id": "extraction",
         "count": 3
       },
@@ -551,15 +561,15 @@
         "count": 2
       },
       {
-        "id": "decision-support",
-        "count": 2
-      },
-      {
         "id": "execution",
         "count": 2
       },
       {
         "id": "fetching",
+        "count": 2
+      },
+      {
+        "id": "governance",
         "count": 2
       },
       {
@@ -583,6 +593,10 @@
         "count": 2
       },
       {
+        "id": "risk-assessment",
+        "count": 2
+      },
+      {
         "id": "routing",
         "count": 2
       },
@@ -592,6 +606,10 @@
       },
       {
         "id": "adversarial-thinking",
+        "count": 1
+      },
+      {
+        "id": "agent-pipeline",
         "count": 1
       },
       {
@@ -703,10 +721,6 @@
         "count": 1
       },
       {
-        "id": "governance",
-        "count": 1
-      },
-      {
         "id": "grounding",
         "count": 1
       },
@@ -755,6 +769,10 @@
         "count": 1
       },
       {
+        "id": "preflight",
+        "count": 1
+      },
+      {
         "id": "preprocessing",
         "count": 1
       },
@@ -787,7 +805,7 @@
         "count": 1
       },
       {
-        "id": "risk-assessment",
+        "id": "safety",
         "count": 1
       },
       {

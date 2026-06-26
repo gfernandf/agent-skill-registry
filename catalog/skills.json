@@ -2275,6 +2275,501 @@
     }
   },
   {
+    "id": "decision.action-preflight-forecast",
+    "version": "0.1.0",
+    "name": "Action Preflight Forecast",
+    "description": "Execute a structured pre-action deliberation before a consequential action is taken. Makes intermediate reasoning explicit by: normalizing intent, modeling the action, extracting entities and risks, forecasting consequences, scoring alternatives, justifying a strategy, and mapping that strategy to a canonical continuation decision.\nDesigned to be naturally calibrated — permissive for low-risk actions, escalating only when risk evidence is concrete. Does NOT ask for clarification on trivial inputs; ambiguity triggers ask_clarification only when risk level is high or critical AND consequence confidence is low.\nPipeline uses zero generic generators at the decision layer. All branching is deterministic based on structured signals from risk scoring and consequence evaluation.\n",
+    "channel": "official",
+    "domain": "decision",
+    "slug": "action-preflight-forecast",
+    "file": "skills/official/decision/action-preflight-forecast/skill.yaml",
+    "inputs": {
+      "candidate_action": {
+        "type": "object",
+        "required": true,
+        "description": "The action under consideration. Should include at minimum: type (string), and any relevant parameters (target, scope, method, etc.). Sparse inputs are accepted — the skill will model and surface implicit assumptions.\n"
+      },
+      "intended_goal": {
+        "type": "string",
+        "required": true,
+        "description": "The outcome the action is intended to achieve. Used to ground all downstream analysis in intent, not just mechanics.\n"
+      },
+      "context": {
+        "type": "object",
+        "required": false,
+        "description": "Optional operational context: environment state, prior events, active constraints, user permissions, session history.\n"
+      },
+      "available_evidence": {
+        "type": "array",
+        "required": false,
+        "description": "Evidence items that support or challenge assumptions about the action. Each item: {id, content, source, reliability_hint}.\n"
+      },
+      "known_constraints": {
+        "type": "array",
+        "required": false,
+        "description": "Policies, permission boundaries, and operational constraints that apply. Each item: {id, description, enforcement: hard|soft}.\n"
+      },
+      "risk_tolerance": {
+        "type": "string",
+        "required": false,
+        "description": "Risk appetite: low | medium | high. Defaults to medium. Influences how scoring weights downside scenarios.\n"
+      },
+      "agent_permissions": {
+        "type": "object",
+        "required": false,
+        "description": "Active permission set for the executing agent. Used to contextualize whether the action is within authorization boundaries.\n"
+      }
+    },
+    "outputs": {
+      "continuation_decision": {
+        "type": "object",
+        "required": true,
+        "description": "Final decision object. Fields: decision (string enum), rationale (string), confidence_score (number), risk_level (string), risk_score (number), affected_entities (array), risks (array), safer_alternatives (array), uncertainties (array), action_assumptions (array).\n"
+      },
+      "human_readable": {
+        "type": "string",
+        "required": true,
+        "description": "Narrative explanation of the preflight reasoning suitable for direct human consumption or audit logging.\n"
+      },
+      "action_model": {
+        "type": "object",
+        "required": true,
+        "description": "Structured model of the candidate action with explicit assumptions and expected state change. Intermediate artifact for traceability.\n"
+      },
+      "consequence_forecast": {
+        "type": "array",
+        "required": true,
+        "description": "Ranked consequence hypotheses with impact scores and confidence per consequence. Intermediate artifact for traceability.\n"
+      },
+      "safer_alternatives": {
+        "type": "array",
+        "required": true,
+        "description": "Scored alternatives to the original action, covering at least 6 structural angles (guardrails, staged, alternative path, defer, no-action). Intermediate artifact for traceability.\n"
+      }
+    },
+    "steps": [
+      {
+        "id": "normalize_request",
+        "uses": "reasoning.request.normalize",
+        "input": {
+          "user_message": "inputs.intended_goal",
+          "context": "inputs.context"
+        },
+        "output": {
+          "normalized_request": "vars.normalized_request"
+        }
+      },
+      {
+        "id": "interpret_goal",
+        "uses": "reasoning.goal.interpret",
+        "input": {
+          "normalized_request": "vars.normalized_request",
+          "context": "inputs.context"
+        },
+        "output": {
+          "interpreted_goal": "vars.interpreted_goal"
+        }
+      },
+      {
+        "id": "build_action_model",
+        "uses": "data.record.merge",
+        "input": {
+          "records": [
+            "inputs.candidate_action",
+            {
+              "intended_goal": "inputs.intended_goal",
+              "action_summary": "inputs.intended_goal",
+              "interpreted_goal": "vars.interpreted_goal"
+            },
+            {
+              "known_constraints": "inputs.known_constraints",
+              "available_evidence": "inputs.available_evidence"
+            }
+          ],
+          "strategy": "deep_merge"
+        },
+        "output": {
+          "record": "outputs.action_model"
+        }
+      },
+      {
+        "id": "extract_affected_entities",
+        "uses": "perception.entity.extract",
+        "input": {
+          "text": "inputs.intended_goal"
+        },
+        "output": {
+          "entities": "vars.affected_entities"
+        }
+      },
+      {
+        "id": "extract_action_risks",
+        "uses": "reasoning.risk.extract",
+        "input": {
+          "target": "outputs.action_model",
+          "context": "inputs.intended_goal",
+          "risk_scope": "broad"
+        },
+        "output": {
+          "risks": "vars.raw_risks",
+          "assumptions": "vars.extracted_assumptions",
+          "failure_modes": "vars.failure_modes"
+        }
+      },
+      {
+        "id": "classify_action_risk",
+        "uses": "policy.risk.classify",
+        "input": {
+          "action": "outputs.action_model",
+          "categories": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "output": {
+          "risk_level": "vars.risk_level",
+          "factors": "vars.risk_factors",
+          "rationale": "vars.risk_rationale"
+        }
+      },
+      {
+        "id": "score_action_risk",
+        "uses": "policy.risk.score",
+        "input": {
+          "action": "outputs.action_model",
+          "dimensions": [
+            "data_exposure",
+            "reversibility",
+            "blast_radius",
+            "authorization_compliance",
+            "regulatory_exposure"
+          ]
+        },
+        "output": {
+          "risk_score": "vars.risk_score",
+          "dimension_scores": "vars.dimension_scores",
+          "safe": "vars.risk_safe"
+        }
+      },
+      {
+        "id": "generate_consequence_hypotheses",
+        "uses": "reasoning.option.generate",
+        "input": {
+          "goal": "Generate 6 structurally distinct consequence hypotheses for the action. Cover these angles: (1) best-case expected outcome, (2) worst-case failure scenario, (3) lateral/unintended side effects, (4) cascading downstream effects, (5) near-term impact within hours/days, (6) long-term systemic impact.\n",
+          "context": "inputs.intended_goal",
+          "constraints": {
+            "must_cover_angles": [
+              "best_case",
+              "worst_case",
+              "lateral_effects",
+              "cascading_effects",
+              "near_term",
+              "long_term"
+            ]
+          },
+          "max_options": 6
+        },
+        "output": {
+          "options": "vars.consequence_hypotheses"
+        }
+      },
+      {
+        "id": "analyze_consequences",
+        "uses": "reasoning.option.analyze",
+        "input": {
+          "options": "vars.consequence_hypotheses",
+          "context": "inputs.intended_goal",
+          "goal": "inputs.intended_goal"
+        },
+        "output": {
+          "analyzed_options": "vars.analyzed_consequences",
+          "analysis_notes": "vars.consequence_analysis_notes"
+        }
+      },
+      {
+        "id": "rank_consequences",
+        "uses": "evaluation.option.score",
+        "input": {
+          "options": "vars.consequence_hypotheses",
+          "goal": "inputs.intended_goal",
+          "risk_tolerance": "inputs.risk_tolerance",
+          "criteria": [
+            {
+              "name": "likelihood",
+              "description": "How probable is this consequence given the action and context?",
+              "weight": 0.35
+            },
+            {
+              "name": "severity",
+              "description": "How severe is the impact if this consequence materializes?",
+              "weight": 0.4
+            },
+            {
+              "name": "reversibility",
+              "description": "Can this consequence be undone or mitigated after the fact?",
+              "weight": 0.25
+            }
+          ]
+        },
+        "output": {
+          "scored_options": "vars.ranked_consequences",
+          "comparative_summary": "vars.consequence_summary",
+          "tradeoffs": "vars.consequence_tradeoffs"
+        }
+      },
+      {
+        "id": "generate_safer_options",
+        "uses": "reasoning.option.generate",
+        "input": {
+          "goal": "Generate 6 structurally distinct safer alternatives to the candidate action. The alternatives must achieve the same intended goal but with reduced risk exposure. Cover these structural angles: (1) original action with minimal guardrails added, (2) modified action to reduce blast radius, (3) staged/reversible version of the action, (4) alternative means to the same goal via a different path, (5) defer with explicit conditions that must be met first, (6) no-action option with explicit consequences of not acting.\n",
+          "context": "vars.consequence_summary",
+          "constraints": {
+            "risk_factors": "vars.risk_factors",
+            "known_constraints": "inputs.known_constraints",
+            "agent_permissions": "inputs.agent_permissions"
+          },
+          "max_options": 6
+        },
+        "output": {
+          "options": "vars.safer_options"
+        }
+      },
+      {
+        "id": "analyze_safer_options",
+        "uses": "reasoning.option.analyze",
+        "input": {
+          "options": "vars.safer_options",
+          "context": "vars.consequence_summary",
+          "goal": "inputs.intended_goal"
+        },
+        "output": {
+          "analyzed_options": "vars.analyzed_alternatives",
+          "analysis_notes": "vars.alternatives_analysis_notes"
+        }
+      },
+      {
+        "id": "score_safer_options",
+        "uses": "evaluation.option.score",
+        "input": {
+          "options": "vars.safer_options",
+          "goal": "inputs.intended_goal",
+          "risk_tolerance": "inputs.risk_tolerance",
+          "criteria": [
+            {
+              "name": "goal_achievement",
+              "description": "Does this alternative still achieve the intended goal?",
+              "weight": 0.4
+            },
+            {
+              "name": "risk_reduction",
+              "description": "How much does this alternative reduce the identified risks?",
+              "weight": 0.35
+            },
+            {
+              "name": "feasibility",
+              "description": "Is this alternative actionable given current constraints?",
+              "weight": 0.25
+            }
+          ]
+        },
+        "output": {
+          "scored_options": "vars.scored_alternatives",
+          "criteria_used": "vars.alternatives_criteria",
+          "comparative_summary": "vars.alternatives_summary",
+          "tradeoffs": "vars.alternatives_tradeoffs"
+        }
+      },
+      {
+        "id": "justify_strategy",
+        "uses": "decision.option.justify",
+        "input": {
+          "scored_options": "vars.scored_alternatives",
+          "analyzed_options": "vars.analyzed_alternatives",
+          "tradeoffs": "vars.alternatives_tradeoffs",
+          "goal": "inputs.intended_goal",
+          "constraints": {
+            "risk_level": "vars.risk_level",
+            "risk_score": "vars.risk_score",
+            "risk_factors": "vars.risk_factors",
+            "known_constraints": "inputs.known_constraints"
+          },
+          "risk_tolerance": "inputs.risk_tolerance"
+        },
+        "output": {
+          "recommendation": "vars.strategy_recommendation",
+          "alternatives_considered": "vars.strategy_alternatives",
+          "confidence_score": "vars.strategy_confidence",
+          "confidence_level": "vars.strategy_confidence_level",
+          "uncertainties": "vars.strategy_uncertainties",
+          "failure_modes": "vars.strategy_failure_modes"
+        }
+      },
+      {
+        "id": "map_continuation_decision",
+        "uses": "decision.flow.branch",
+        "input": {
+          "condition": "Select the appropriate continuation decision based on risk_level, risk_score, risk_safe, and strategy_confidence. Evaluate branches in priority order — first matching branch wins.\n",
+          "context": {
+            "risk_level": "vars.risk_level",
+            "risk_score": "vars.risk_score",
+            "risk_safe": "vars.risk_safe",
+            "strategy_confidence": "vars.strategy_confidence"
+          },
+          "default_branch": "proceed",
+          "branches": [
+            {
+              "id": "abort",
+              "label": "Abort",
+              "match_expression": "risk_level == 'critical' and risk_safe == false\n"
+            },
+            {
+              "id": "escalate",
+              "label": "Escalate",
+              "match_expression": "risk_level == 'critical'\n"
+            },
+            {
+              "id": "require_confirmation",
+              "label": "Require confirmation",
+              "match_expression": "risk_level == 'high' and risk_safe == false\n"
+            },
+            {
+              "id": "modify_action",
+              "label": "Modify action",
+              "match_expression": "risk_level == 'high' and risk_score <= 0.7\n"
+            },
+            {
+              "id": "ask_clarification",
+              "label": "Ask clarification",
+              "match_expression": "risk_level in ('high', 'critical') and strategy_confidence < 0.4\n"
+            },
+            {
+              "id": "simulate_first",
+              "label": "Simulate first",
+              "match_expression": "risk_level == 'medium' and risk_score > 0.5\n"
+            },
+            {
+              "id": "proceed_with_limits",
+              "label": "Proceed with limits",
+              "match_expression": "risk_level == 'medium'\n"
+            },
+            {
+              "id": "proceed",
+              "label": "Proceed",
+              "match_expression": "risk_level == 'low'\n"
+            }
+          ]
+        },
+        "output": {
+          "selected_branch": "vars.decision_token",
+          "rationale": "vars.decision_rationale",
+          "confidence": "vars.decision_confidence"
+        }
+      },
+      {
+        "id": "assemble_output",
+        "uses": "data.record.merge",
+        "input": {
+          "records": [
+            {
+              "continuation_decision": {
+                "decision": "vars.decision_token",
+                "rationale": "vars.strategy_recommendation",
+                "confidence_score": "vars.strategy_confidence",
+                "confidence_level": "vars.strategy_confidence_level",
+                "risk_level": "vars.risk_level",
+                "risk_score": "vars.risk_score",
+                "risk_safe": "vars.risk_safe",
+                "affected_entities": "vars.affected_entities",
+                "risks": "vars.raw_risks",
+                "uncertainties": "vars.strategy_uncertainties",
+                "action_assumptions": "vars.extracted_assumptions",
+                "branch_rationale": "vars.decision_rationale"
+              }
+            },
+            {
+              "human_readable": "vars.strategy_recommendation"
+            },
+            {
+              "safer_alternatives": "vars.scored_alternatives"
+            },
+            {
+              "consequence_forecast": "vars.ranked_consequences"
+            }
+          ],
+          "strategy": "deep_merge"
+        },
+        "output": {
+          "record.continuation_decision": "outputs.continuation_decision",
+          "record.human_readable": "outputs.human_readable",
+          "record.safer_alternatives": "outputs.safer_alternatives",
+          "record.consequence_forecast": "outputs.consequence_forecast"
+        }
+      }
+    ],
+    "uses_capabilities": [
+      "data.record.merge",
+      "decision.flow.branch",
+      "decision.option.justify",
+      "evaluation.option.score",
+      "perception.entity.extract",
+      "policy.risk.classify",
+      "policy.risk.score",
+      "reasoning.goal.interpret",
+      "reasoning.option.analyze",
+      "reasoning.option.generate",
+      "reasoning.request.normalize",
+      "reasoning.risk.extract"
+    ],
+    "uses_skills": [],
+    "metadata": {
+      "tags": [
+        "decision-support",
+        "safety",
+        "risk-assessment",
+        "agent-pipeline",
+        "preflight",
+        "governance"
+      ],
+      "category": "decision",
+      "status": "unspecified",
+      "use_cases": [
+        "Pre-action risk assessment before irreversible operations",
+        "Agent safety layer before file/data/system modifications",
+        "Authorization and consequence forecasting for agentic tasks",
+        "Governance checkpoint for high-stakes automated actions"
+      ],
+      "examples": [
+        {
+          "candidate_action": {
+            "type": "delete_files",
+            "target": "/home/user/documents/",
+            "recursive": true
+          },
+          "intended_goal": "Free up disk space on the user's machine",
+          "risk_tolerance": "medium"
+        },
+        {
+          "candidate_action": {
+            "type": "send_email",
+            "recipients": [
+              "all-staff@company.com"
+            ],
+            "subject": "Quarterly results"
+          },
+          "intended_goal": "Communicate quarterly results to all staff",
+          "risk_tolerance": "low"
+        }
+      ],
+      "classification": {
+        "role": "procedure",
+        "invocation": "direct",
+        "effect_mode": "enrich"
+      }
+    }
+  },
+  {
     "id": "decision.make",
     "version": "0.1.0",
     "name": "Make Decision",
