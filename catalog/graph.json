@@ -340,6 +340,15 @@
         "web.source.search"
       ],
       "skills": []
+    },
+    "xquik.public-post-search": {
+      "capabilities": [
+        "data.field.map",
+        "data.record.transform",
+        "data.schema.validate",
+        "web.request.send"
+      ],
+      "skills": []
     }
   }
 }
