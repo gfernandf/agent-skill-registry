@@ -3,6 +3,18 @@
 An open registry of reusable **AI agent skills** and **capability
 definitions**.
 
+## Terminology Note
+
+For cognitive runtime terminology, we use:
+
+- COGIT = capability
+- SYLLOG = skill
+
+In this repository implementation, we keep the canonical technical terms
+`capability/capabilities` and `skill/skills` (directory structure, schemas,
+tooling, catalogs, and validation contracts) to preserve architecture and
+compatibility.
+
 ## Quick Start
 
 ```bash
