@@ -109,14 +109,15 @@
         "decision.flow.branch",
         "decision.option.justify",
         "evaluation.option.score",
+        "evaluation.uncertainty.score",
         "perception.entity.extract",
         "policy.risk.classify",
         "policy.risk.score",
         "reasoning.goal.interpret",
         "reasoning.option.analyze",
         "reasoning.option.generate",
-        "reasoning.request.normalize",
-        "reasoning.risk.extract"
+        "reasoning.output.classify",
+        "reasoning.uncertainty.extract"
       ],
       "skills": []
     },

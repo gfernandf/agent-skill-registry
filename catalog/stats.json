@@ -30,7 +30,7 @@
       "official": 26,
       "experimental": 14
     },
-    "average_steps": 3.65,
+    "average_steps": 3.8,
     "with_skill_dependencies": 0
   },
   "capabilities": {
@@ -94,10 +94,6 @@
         "count": 4
       },
       {
-        "id": "reasoning.risk.extract",
-        "count": 4
-      },
-      {
         "id": "decision.flow.branch",
         "count": 3
       },
@@ -131,6 +127,10 @@
       },
       {
         "id": "reasoning.output.generate",
+        "count": 3
+      },
+      {
+        "id": "reasoning.risk.extract",
         "count": 3
       },
       {
@@ -182,10 +182,6 @@
         "count": 2
       },
       {
-        "id": "reasoning.request.normalize",
-        "count": 2
-      },
-      {
         "id": "web.source.search",
         "count": 2
       },
@@ -231,6 +227,10 @@
       },
       {
         "id": "evaluation.plan.validate",
+        "count": 1
+      },
+      {
+        "id": "evaluation.uncertainty.score",
         "count": 1
       },
       {
@@ -286,6 +286,10 @@
         "count": 1
       },
       {
+        "id": "reasoning.output.classify",
+        "count": 1
+      },
+      {
         "id": "reasoning.plan.map",
         "count": 1
       },
@@ -306,11 +310,19 @@
         "count": 1
       },
       {
+        "id": "reasoning.request.normalize",
+        "count": 1
+      },
+      {
         "id": "reasoning.task.plan",
         "count": 1
       },
       {
         "id": "reasoning.theme.cluster",
+        "count": 1
+      },
+      {
+        "id": "reasoning.uncertainty.extract",
         "count": 1
       },
       {
@@ -363,7 +375,6 @@
       "evaluation.output.validate",
       "evaluation.response.score",
       "evaluation.risk.score",
-      "evaluation.uncertainty.score",
       "evidence.citation.generate",
       "evidence.claim.verify",
       "evidence.conflict.detect",
@@ -423,7 +434,6 @@
       "reasoning.content.compare",
       "reasoning.content.generate",
       "reasoning.hypothesis.generate",
-      "reasoning.output.classify",
       "reasoning.output.normalize",
       "reasoning.output.synthesize",
       "reasoning.plan.decompose",
@@ -433,7 +443,6 @@
       "reasoning.response.generate",
       "reasoning.sentiment.analyze",
       "reasoning.task.decompose",
-      "reasoning.uncertainty.extract",
       "security.secret.detect",
       "table.column.aggregate",
       "table.row.sort",
@@ -456,7 +465,7 @@
     ]
   },
   "dependencies": {
-    "skill_to_capability_edges": 141,
+    "skill_to_capability_edges": 142,
     "skill_to_skill_edges": 0,
     "max_capabilities_per_skill": 14
   },
@@ -525,10 +534,6 @@
         "count": 3
       },
       {
-        "id": "decision-support",
-        "count": 3
-      },
-      {
         "id": "extraction",
         "count": 3
       },
@@ -561,15 +566,15 @@
         "count": 2
       },
       {
+        "id": "decision-support",
+        "count": 2
+      },
+      {
         "id": "execution",
         "count": 2
       },
       {
         "id": "fetching",
-        "count": 2
-      },
-      {
-        "id": "governance",
         "count": 2
       },
       {
@@ -593,10 +598,6 @@
         "count": 2
       },
       {
-        "id": "risk-assessment",
-        "count": 2
-      },
-      {
         "id": "routing",
         "count": 2
       },
@@ -606,10 +607,6 @@
       },
       {
         "id": "adversarial-thinking",
-        "count": 1
-      },
-      {
-        "id": "agent-pipeline",
         "count": 1
       },
       {
@@ -721,6 +718,10 @@
         "count": 1
       },
       {
+        "id": "governance",
+        "count": 1
+      },
+      {
         "id": "grounding",
         "count": 1
       },
@@ -769,10 +770,6 @@
         "count": 1
       },
       {
-        "id": "preflight",
-        "count": 1
-      },
-      {
         "id": "preprocessing",
         "count": 1
       },
@@ -805,7 +802,7 @@
         "count": 1
       },
       {
-        "id": "safety",
+        "id": "risk-assessment",
         "count": 1
       },
       {
