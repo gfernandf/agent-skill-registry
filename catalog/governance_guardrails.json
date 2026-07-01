@@ -1,13 +1,24 @@
 {
   "summary": {
     "skills_total": 40,
-    "skills_with_metadata_issues": 0,
+    "skills_with_metadata_issues": 1,
     "overlap_alerts": 0,
     "unknown_capability_references": 0,
     "overlap_threshold": 0.8,
     "min_shared_capabilities": 2
   },
-  "skills_with_metadata_issues": [],
+  "skills_with_metadata_issues": [
+    {
+      "skill_id": "decision.action-preflight-forecast",
+      "channel": "official",
+      "issues": [
+        "missing_use_cases",
+        "missing_examples",
+        "missing_tags",
+        "missing_classification"
+      ]
+    }
+  ],
   "overlap_alerts": [],
   "unknown_capability_references": {},
   "policy_hints": {
