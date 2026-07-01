@@ -162,6 +162,14 @@
       ],
       "skills": []
     },
+    "integration.xquik-social-data": {
+      "capabilities": [
+        "data.record.transform",
+        "security.output.gate",
+        "web.request.send"
+      ],
+      "skills": []
+    },
     "memory.retrieve-summary": {
       "capabilities": [
         "memory.entry.retrieve",
